@@ -16,7 +16,7 @@ import { ResaResultatComponent } from './pages/search/steps/resa-resultat/resa-r
 import { BookingcalendarComponent } from './modals/bookingcalendar/bookingcalendar.component';
 import { BookingdetailsComponent } from './modals/bookingdetails/bookingdetails.component';
 import { ResaCaracteristiqueComponent } from './pages/search/steps/resa-caracteristique/resa-caracteristique.component';
-
+ 
 
 @NgModule({
   declarations: [
