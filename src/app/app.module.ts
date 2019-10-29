@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,10 +18,13 @@ import { BookingcalendarComponent } from './modals/bookingcalendar/bookingcalend
 import { BookingdetailsComponent } from './modals/bookingdetails/bookingdetails.component';
 import { ResaCaracteristiqueComponent } from './pages/search/steps/resa-caracteristique/resa-caracteristique.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+
+
 
 @NgModule({
   declarations: [
@@ -37,17 +41,18 @@ import { MatIconModule } from '@angular/material/icon';
     ResaResultatComponent,
     BookingcalendarComponent,
     BookingdetailsComponent,
-    ResaCaracteristiqueComponent,
-
+    ResaCaracteristiqueComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatSliderModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    MatMenuModule,
     MatSidenavModule,
+    FlexLayoutModule,
     MatToolbarModule,
-    MatIconModule,
-    BrowserAnimationsModule
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

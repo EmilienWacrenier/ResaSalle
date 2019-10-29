@@ -1,5 +1,32 @@
-<mat-sidenav-container class="example-container" >
-        <mat-sidenav mode="side" opened style="width:7%;"><mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">home</mat-icon></mat-sidenav>
-        <mat-sidenav mode="side" opened style="width:7%;"><mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">dashboard</mat-icon></mat-sidenav>
-        <mat-sidenav-content>Main content</mat-sidenav-content>
+<mat-sidenav-container class="example-container" fxLayoutAlign="start stretch">
+        <mat-sidenav mode="side" opened id="sidebar">
+          <button id="button_home" (click)="Home()"> 
+            <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">home</mat-icon>
+            <p>Acceuil</p>
+          </button>
+          <button id="button_dashboard" (click)="Dashboard()"> 
+            <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">dashboard</mat-icon>
+            <p>Dashboard</p>
+          </button>
+          <button id="button_search" (click)="Search()"> 
+            <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">search</mat-icon>
+            <p>Recherche</p>
+          </button>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+
+          <div *ngIf="!home">
+            <app-home></app-home>
+          </div>
+
+          <div *ngIf="!dashboard">
+              <app-dashboard></app-dashboard>
+          </div>
+
+          <div *ngIf="!search">
+              <app-search></app-search>
+          </div>
+          
+        </mat-sidenav-content>
 </mat-sidenav-container>

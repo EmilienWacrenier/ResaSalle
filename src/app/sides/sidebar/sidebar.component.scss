@@ -1,9 +1,46 @@
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-
 .example-container {
+    position: absolute;
+    background: #eee;
+    color: black;
     height: 100%;
+    width: 100%;
   }
 
-.icon{
+#sidebar {
+  width: 10%;
+  text-align: center;
+  background:rgb(115, 154, 224);
+  font-size: 20px;
+}
 
+.icon {
+  margin: 10px;
+  transform: scale(2);
+  padding-top:15%;
+}
+
+button {
+  color:rgba(255, 255, 255, 0.712);
+  background: transparent;
+  width: 100%;
+  border: none;
+}
+
+button:hover{
+  color:rgba(255, 255, 255, 0.774);
+  border-left-style: solid;
+  border-left-color: rgba(255, 255, 255, 0.774);
+} 
+
+button:active{
+  border-left-width:5px ;
+  color:white;
+  border-left-style: solid;
+  border-left-color: white;
+
+}
+
+button:focus, button:active:focus, button.active:focus {
+  outline:none;
+  outline-style: none;
 }
