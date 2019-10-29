@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+export interface Periode {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,4 +17,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
+}
+
+export class selectPeriode {
+  periodes: Periode[] = [
+    {value: 'matin-0', viewValue: 'Matin'},
+    {value: 'apresmidi-1', viewValue: 'Après-midi'},
+  ];
 }

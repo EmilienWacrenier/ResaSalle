@@ -13,17 +13,27 @@
   font-size: 20px;
 }
 
-.margin {
-  margin: 10px;
-  color: white;
+.icon {
+
+  transform: scale(2);
+  padding-top: 15%;
+  padding-bottom: 3%;
 }
 
-#bouton_home {
+.description_icon {
+  font-size: 12px;
+}
+
+button {
   background: transparent;
-  width: 98%;
+  color: rgb(209, 209, 209);
+  width: 100%;
   border: none;
+}
+
+button:active {
   border-left-style: solid;
   border-left-color: white;
   border-left-width: 5px;
-  margin-top: 20px
+  color: white;
 }

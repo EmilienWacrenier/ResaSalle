@@ -1,11 +1,27 @@
 <mat-sidenav-container class="example-container" fxLayoutAlign="start stretch">
         <mat-sidenav mode="side" opened id="sidebar">
-          <button id="bouton_home"> 
-            <mat-icon aria-hidden="false" aria-label="Example home icon" class="margin">home</mat-icon>
+          <button mat-button style="margin-top: 20px;" (click)="Home()">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">home</mat-icon>
+            <p class="description_icon"> Accueil </p>
           </button>
-          <button id="bouton_home"> 
-            <mat-icon aria-hidden="false" aria-label="Example home icon" class="margin">dashboard</mat-icon>
+          <button mat-button (click)="Dashboard()">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">dashboard</mat-icon>
+            <p class="description_icon"> Dashboard </p>
+          </button>
+          <button mat-button (click)="Search()">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">search</mat-icon>
+            <p class="description_icon"> Recherche </p>
           </button>
         </mat-sidenav>
-        <mat-sidenav-content>Main content</mat-sidenav-content>
+        <mat-sidenav-content style="width: 100%;">
+            <div *ngIf="!home">
+                <app-home></app-home>
+              </div>
+              <div *ngIf="!dashboard">
+                  <app-dashboard></app-dashboard>
+              </div>
+              <div *ngIf="!search">
+                  <app-search></app-search>
+              </div>
+        </mat-sidenav-content>
 </mat-sidenav-container>
