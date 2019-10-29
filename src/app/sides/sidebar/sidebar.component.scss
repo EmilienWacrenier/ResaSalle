@@ -1,0 +1,29 @@
+.example-container {
+    position: absolute;
+    background: #eee;
+    color: black;
+    height: 100%;
+    width: 100%;
+  }
+
+#sidebar {
+  width: 10%;
+  text-align: center;
+  background:rgb(115, 154, 224);
+  font-size: 20px;
+}
+
+.margin {
+  margin: 10px;
+  color: white;
+}
+
+#bouton_home {
+  background: transparent;
+  width: 98%;
+  border: none;
+  border-left-style: solid;
+  border-left-color: white;
+  border-left-width: 5px;
+  margin-top: 20px
+}
