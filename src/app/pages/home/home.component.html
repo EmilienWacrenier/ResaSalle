@@ -1,1 +1,11 @@
-<p>home works!</p>
+<div id="div_global">
+    <h1 fxLayout="column"> Disponible ce jour : </h1>
+    <mat-form-field fxLayout="column">
+            <mat-label>Période</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let periode of periodes" [value]="periode.value">
+                {{periode.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+</div>
