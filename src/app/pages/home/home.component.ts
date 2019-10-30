@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BookingcalendarComponent } from 'src/app/modals/bookingcalendar/bookingcalendar.component';
-import { BookingdetailsComponent } from 'src/app/modals/bookingdetails/bookingdetails.component';
 
 export interface Periode {
   value: string;
@@ -15,7 +14,7 @@ export interface Periode {
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private bookingCalendarDialog: MatDialog, private bookingDetailsDialog: MatDialog) { }
+  constructor(private bookingCalendarDialog: MatDialog) { }
 
   ngOnInit() {
   }
