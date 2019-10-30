@@ -63,6 +63,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule, ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    BookingcalendarComponent,
+    BookingdetailsComponent
+  ]
 })
 export class AppModule { }
