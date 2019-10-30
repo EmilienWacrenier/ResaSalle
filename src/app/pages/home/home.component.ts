@@ -28,6 +28,6 @@ export class HomeComponent implements OnInit {
     const bookingCalendarDialogConfig = new MatDialogConfig();
     bookingCalendarDialogConfig.width = "150px";
     bookingCalendarDialogConfig.heigth = "250px";
-    this.bookingCalendarDialog.open(BookingcalendarComponent, dialogConfig);
+    this.bookingCalendarDialog.open(BookingcalendarComponent, bookingCalendarDialogConfig);
   }
 }
