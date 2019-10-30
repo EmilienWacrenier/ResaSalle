@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+//import { BookingcalendarComponent } from 'src/app/app.module';
 
 export interface Periode {
   value: string;
@@ -21,4 +22,10 @@ export class HomeComponent implements OnInit {
     {value: 'matin-0', viewValue: 'Matin'},
     {value: 'apresmidi-1', viewValue: 'Après-midi'},
   ];
+
+  //Méthode pr ouvrir la modale bookingCalendarDialog
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    this.bookingCalendarDialog.open(BookingcalendarComponent, dialogConfig);
+  }
 }
