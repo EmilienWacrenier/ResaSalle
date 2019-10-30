@@ -13,4 +13,8 @@ export class BookingdetailsComponent implements OnInit {
   ngOnInit() {
   }
 
+  close() {
+    this.bookingDetailsDialogRef.close();
+  }
+
 }
