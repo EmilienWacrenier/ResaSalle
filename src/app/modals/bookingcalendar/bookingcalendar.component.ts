@@ -20,7 +20,7 @@ export class BookingcalendarComponent implements OnInit {
     //config et ouverture de la 2eme test_modaleconst bookingCalendarDialogConfig = new MatDialogConfig();
     const bookingDetailsDialogConfig = new MatDialogConfig();
     bookingDetailsDialogConfig.width = "30%";
-    bookingDetailsDialogConfig.heigth = "80%";
+    bookingDetailsDialogConfig.height = "80%";
     this.bookingDetailsDialog.open(BookingdetailsComponent, bookingDetailsDialogConfig);
   }
 
