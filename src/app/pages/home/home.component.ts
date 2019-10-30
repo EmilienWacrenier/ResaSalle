@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-//import { BookingcalendarComponent } from 'src/app/app.module';
+import { BookingcalendarComponent } from 'src/app/modals/bookingcalendar/bookingcalendar.component';
 
 export interface Periode {
   value: string;
