@@ -15,7 +15,13 @@ export class BookingcalendarComponent implements OnInit {
   }
   //fermeture de la modale avec DialogRef
   next() {
+    //fermeture de la 1ere modale
     this.bookingCalendarDialogRef.close();
+    //config et ouverture de la 2eme test_modaleconst bookingCalendarDialogConfig = new MatDialogConfig();
+    const bookingDetailsDialogConfig = new MatDialogConfig();
+    bookingDetailsDialogConfig.width = "30%";
+    bookingDetailsDialogConfig.heigth = "80%";
+    this.bookingDetailsDialog.open(BookingdetailsComponent, bookingDetailsDialogConfig);
   }
 
 }
