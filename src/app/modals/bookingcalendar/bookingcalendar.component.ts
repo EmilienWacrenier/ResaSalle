@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
+import { BookingdetailsComponent } from 'src/app/modals/bookingdetails/bookingdetails.component';
 
 @Component({
   selector: 'app-bookingcalendar',
@@ -8,7 +9,7 @@ import { MatDialogRef } from "@angular/material/dialog";
 })
 export class BookingcalendarComponent implements OnInit {
 
-  constructor(public bookingCalendarDialogRef: MatDialogRef<BookingcalendarComponent>) { }
+  constructor( private bookingDetailsDialog: MatDialog, public bookingCalendarDialogRef: MatDialogRef<BookingcalendarComponent>) { }
 
   ngOnInit() {
   }
