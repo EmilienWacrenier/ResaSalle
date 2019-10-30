@@ -26,8 +26,8 @@ export class HomeComponent implements OnInit {
   //Méthode pr ouvrir la modale bookingCalendarDialog
   openDialog() {
     const bookingCalendarDialogConfig = new MatDialogConfig();
-    bookingCalendarDialogConfig.width = "150px";
-    bookingCalendarDialogConfig.heigth = "250px";
+    bookingCalendarDialogConfig.width = "50%";
+    bookingCalendarDialogConfig.heigth = "50%";
     this.bookingCalendarDialog.open(BookingcalendarComponent, bookingCalendarDialogConfig);
   }
 }
