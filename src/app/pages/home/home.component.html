@@ -1,10 +1,11 @@
 <div id="div_global">
-    <h1> Disponible ce jour : </h1>
-    <mat-form-field>
+    <h1 fxLayout="column"> Disponible ce jour : </h1>
+    <mat-form-field fxLayout="column">
             <mat-label>Période</mat-label>
             <mat-select>
-              <mat-option option="Matin"></mat-option>
-              <mat-option option="Après-Midi"></mat-option>
+              <mat-option *ngFor="let periode of periodes" [value]="periode.value">
+                {{periode.viewValue}}
+              </mat-option>
             </mat-select>
           </mat-form-field>
 </div>

@@ -16,10 +16,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
   }
-
-}
-
-export class selectPeriode {
   periodes: Periode[] = [
     {value: 'matin-0', viewValue: 'Matin'},
     {value: 'apresmidi-1', viewValue: 'Après-midi'},
