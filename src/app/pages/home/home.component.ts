@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 export interface Periode {
   value: string;
@@ -12,7 +13,7 @@ export interface Periode {
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private bookingCalendarDialog: MatDialog) { }
 
   ngOnInit() {
   }
