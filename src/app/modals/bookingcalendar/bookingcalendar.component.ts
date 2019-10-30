@@ -12,5 +12,9 @@ export class BookingcalendarComponent implements OnInit {
 
   ngOnInit() {
   }
+  //fermeture de la modale avec DialogRef
+  close() {
+    this.bookingCalendarDialogRef.close();
+  }
 
 }
