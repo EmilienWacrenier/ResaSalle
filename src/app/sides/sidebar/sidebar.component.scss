@@ -20,27 +20,16 @@
 }
 
 button {
-  color:rgba(255, 255, 255, 0.712);
+  color:rgba(255, 255, 255, 0.555);
   background: transparent;
   width: 100%;
   border: none;
 }
 
-button:hover{
-  color:rgba(255, 255, 255, 0.774);
-  border-left-style: solid;
-  border-left-color: rgba(255, 255, 255, 0.774);
-} 
 
-button:active{
-  border-left-width:5px ;
-  color:white;
-  border-left-style: solid;
-  border-left-color: white;
-
-}
 
 button:focus, button:active:focus, button.active:focus {
   outline:none;
   outline-style: none;
 }
+
