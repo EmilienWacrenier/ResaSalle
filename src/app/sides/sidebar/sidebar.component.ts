@@ -16,6 +16,7 @@ export class SidebarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.Home();
     this.home= false;
     this.dashboard = true;
     this.search = true;
