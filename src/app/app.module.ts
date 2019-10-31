@@ -17,6 +17,7 @@ import { ResaResultatComponent } from './pages/search/steps/resa-resultat/resa-r
 import { BookingcalendarComponent } from './modals/bookingcalendar/bookingcalendar.component';
 import { BookingdetailsComponent } from './modals/bookingdetails/bookingdetails.component';
 import { ResaCaracteristiqueComponent } from './pages/search/steps/resa-caracteristique/resa-caracteristique.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -27,6 +28,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTableModule } from '@angular/material/table';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -58,9 +63,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatSelectModule,
     MatFormFieldModule,
-    FormsModule, ReactiveFormsModule
+    FormsModule, ReactiveFormsModule,
+    MatGridListModule,
+    MatTableModule,
+    MatSlideToggleModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  
+  entryComponents: [
+    BookingcalendarComponent,
+    BookingdetailsComponent
+  ]
 })
 export class AppModule { }

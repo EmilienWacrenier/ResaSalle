@@ -3,5 +3,60 @@
     border-width: 3px;
     border-color: white;
     margin: 5%;
-    height: 300px;
+    height: auto;
+    width: auto
 }
+
+#select_periode{
+    margin-left: 10px;
+    margin-top: 2px;
+ }
+
+.desc_esquipement_salle {
+    font-size: small;
+    margin-left: 10px;
+}
+
+.icon {
+    opacity: 0.7;
+    margin-right: 2px;
+}
+
+table {
+    width: 100%;
+  }
+
+  tr.example-detail-row {
+    height: 0;
+  }
+
+  tr.example-element-row:not(.example-expanded-row):hover {
+    background: lightgray;
+  }
+
+  tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+  }
+
+  .example-element-row td {
+    border-bottom-width: 0;
+  }
+
+  .example-element-detail {
+    overflow: hidden;
+    display: flex;
+  }
+
+  .example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+  }
+
+  .example-element-description {
+    padding: 5px;
+  }
+
+  .example-element-description-attribution {
+    opacity: 0.5;
+  }

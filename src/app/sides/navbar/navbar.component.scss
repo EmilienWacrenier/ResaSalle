@@ -4,10 +4,14 @@
     padding: 0;
 }
 
-#logo_atos {
+#div_logo_atos {
     background: rgb(28, 71, 151);
-    color: white;
     height: 100%;
     width: 10%;
     display: flex;
+}
+
+#logo {
+    margin: 10%;
+    width: 75%;
 }
