@@ -1,0 +1,71 @@
+.container{
+    height: 100vh;
+    width:100vw;
+    background-color: rgb(115, 154, 224);
+    position: relative;
+}
+
+.auth-container{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 80%;
+    background-color: white;
+    padding:20px;
+}
+
+.auth{
+    margin-left:auto;
+    width: 50%;
+}
+
+.w-100{
+    width: 100%;
+}
+
+.connexion, .enregistrement{
+    margin: 20px 0;
+    padding: 15px;
+}
+
+.d-block{
+    display: block;
+}
+
+.title{
+    color:grey;
+    text-indent: 10px;
+    font-size: 1.5em;
+}
+
+.connexion-button{
+    display: block;
+    height: 50px;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+    background-color: rgb(115, 154, 224);
+    border:none;
+    color:white;
+}
+
+.mdp-oublie{
+    font-size: smaller;
+    text-decoration: none;
+    color:rgb(115, 154, 224);
+}
+
+.grey{
+    color:grey;
+}
+
+.w-50{
+    width:48%;
+}
+
+.f-right{
+    float:right;
+}
