@@ -7,11 +7,6 @@ export interface Periode {
   viewValue: string;
 }
 
-export interface Periode {
-  value: string;
-  viewValue: string;
-}
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
