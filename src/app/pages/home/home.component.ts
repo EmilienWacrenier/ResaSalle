@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit {
     {value: 'matin-0', viewValue: 'Matin'},
     {value: 'apresmidi-1', viewValue: 'Après-midi'},
   ];
-<<<<<<< HEAD
 
   //Méthode pr ouvrir la modale bookingCalendarDialog
   openDialog() {
@@ -36,6 +35,5 @@ export class HomeComponent implements OnInit {
     bookingCalendarDialogConfig.height = "50%";
     this.bookingCalendarDialog.open(BookingcalendarComponent, bookingCalendarDialogConfig);
   }
-=======
->>>>>>> e50eb28c4f77be400502423d4190316f5f4bb3ff
+
 }

@@ -26,10 +26,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-<<<<<<< HEAD
+
 import { MatDialogModule } from '@angular/material/dialog';
-=======
->>>>>>> e50eb28c4f77be400502423d4190316f5f4bb3ff
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -62,10 +61,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatSelectModule,
     MatFormFieldModule,
-<<<<<<< HEAD
     MatDialogModule,
-=======
->>>>>>> e50eb28c4f77be400502423d4190316f5f4bb3ff
     FormsModule, ReactiveFormsModule
   ],
   providers: [],
