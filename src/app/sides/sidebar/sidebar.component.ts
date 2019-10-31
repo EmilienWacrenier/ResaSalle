@@ -49,12 +49,13 @@ export class SidebarComponent implements OnInit {
     square.style.color= "white" ;
     square.style.borderLeftStyle = "solid";
     square.style.borderLeftColor = "rgba(255, 255, 255, 0.774)";
+    square.style.borderWidth ="5px";
 
 
   }
   desactivate(st : string){
     var square =document.getElementById(st);
-    square.style.color= "rgba(255, 255, 255, 0.555)" ;
+    square.style.color= "rgba(255, 255, 255, 0.555)";
     square.style.borderLeftStyle = "none";
     
   }

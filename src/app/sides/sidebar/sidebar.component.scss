@@ -25,7 +25,12 @@ button {
   width: 100%;
   border: none;
 }
-
+ button:focus{
+   color:white;
+   border-color:rgba(255, 255, 255, 0.774);
+   border-left-style: solid;
+   border-left-width: 5px;
+ }
 
 
 button:focus, button:active:focus, button.active:focus {
