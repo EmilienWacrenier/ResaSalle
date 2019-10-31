@@ -71,7 +71,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  
+
   entryComponents: [
     BookingcalendarComponent,
     BookingdetailsComponent

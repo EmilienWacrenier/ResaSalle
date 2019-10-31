@@ -13,16 +13,14 @@ export class BookingcalendarComponent implements OnInit {
 
   ngOnInit() {
   }
-
   //fermeture de la modale avec DialogRef
   next() {
     //fermeture de la 1ere modale
     this.bookingCalendarDialogRef.close();
-    //config et ouverture de la 2eme test_modale
+    //config et ouverture de la 2eme test_modaleconst bookingCalendarDialogConfig = new MatDialogConfig();
     const bookingDetailsDialogConfig = new MatDialogConfig();
     bookingDetailsDialogConfig.width = "30%";
     bookingDetailsDialogConfig.height = "80%";
     this.bookingDetailsDialog.open(BookingdetailsComponent, bookingDetailsDialogConfig);
   }
-
 }
