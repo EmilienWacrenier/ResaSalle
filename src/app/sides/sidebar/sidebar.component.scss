@@ -1,9 +1,10 @@
 .example-container {
-    position: absolute;
+    position: relative;
     background: #eee;
     color: black;
-    height: 100%;
+    height: 93%;
     width: 100%;
+    box-shadow:inset 5px 5px 5px rgba(0, 0, 0, 0.226);
   }
 
 #sidebar {
