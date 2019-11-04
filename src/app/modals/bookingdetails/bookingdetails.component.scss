@@ -1,9 +1,14 @@
 .container{
-    background-color: rgb(115, 154, 224);
-    position: relative;
+  position: relative;
+  padding-right: 20px;
 }
-.booking-container{
-    position: absolute;
-    background-color: white;
-    padding:20px;
+.inputs-container{
+  position: absolute;
+  width: 100%;
+}
+.objet-form{
+  width: 100%;
+}
+.form{
+  width: 100%;
 }

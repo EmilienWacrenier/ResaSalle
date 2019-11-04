@@ -8,6 +8,8 @@ import { MatDialogRef } from "@angular/material/dialog";
 })
 export class BookingdetailsComponent implements OnInit {
 
+  objetReunion: string = "Café dans la salle Maroilles";
+
   constructor( public bookingDetailsDialogRef: MatDialogRef<BookingdetailsComponent> ) { }
 
   ngOnInit() {
