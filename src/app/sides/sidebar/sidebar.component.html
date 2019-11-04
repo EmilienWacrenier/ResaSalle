@@ -1,20 +1,21 @@
+
 <mat-sidenav-container class="example-container">
   <mat-sidenav mode="side" opened id="sidebar">
-    <button id="button_home" (click)="Home()">
+    <button id="button_home" routerLink="/home">
       <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">home</mat-icon>
       <p>Acceuil</p>
     </button>
-    <button id="button_dashboard" (click)="Dashboard()">
+    <button id="button_dashboard" routerLink="/dashboard">
       <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">dashboard</mat-icon>
       <p>Dashboard</p>
     </button>
-    <button id="button_search" (click)="Search()">
+    <button id="button_search" routerLink="/search">
       <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">search</mat-icon>
-      <p>Recherche</p>
+      <p>Rechercher</p>
     </button>
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <!--<mat-sidenav-content>
 
     <div *ngIf="!home">
       <app-home></app-home>
@@ -28,5 +29,6 @@
         <app-search></app-search>
     </div>
 
-  </mat-sidenav-content>
+  </mat-sidenav-content>-->
 </mat-sidenav-container>
+
