@@ -10,12 +10,12 @@
     <mat-dialog-content>
       <p> Recherche de participants </p>
         <mat-selection-list>
-          <mat-list-option *ngFor="let shoe of typesOfShoes">
-            {{shoe}}
+          <mat-list-option *ngFor="let user of users">
+            {{user.firstName|titlecase}}  {{user.lastName|titlecase}}
           </mat-list-option>
         </mat-selection-list>
       <p>
-        Options selected: {{shoes.selectedOptions.selected.length}}
+        Options selected: {{users.selectedOptions.selected.length}}
       </p>
     </mat-dialog-content>
   </div>

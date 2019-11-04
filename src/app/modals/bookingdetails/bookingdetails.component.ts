@@ -10,7 +10,35 @@ export class BookingdetailsComponent implements OnInit {
 
   objetReunion: string = "Café dans la salle Maroilles";
 
-  constructor( public bookingDetailsDialogRef: MatDialogRef<BookingdetailsComponent> ) { }
+  users = [
+    {
+      lastName: 'amri',
+      firstName: 'virginie',
+      miniature: 'a v'
+    },
+    {
+      lastName: 'pascal',
+      firstName: 'marie flore',
+      miniature: 'p m f'
+    },
+    {
+      lastName: 'henry',
+      firstName: 'stephanie',
+      miniature: 'h s'
+    },
+    {
+      lastName: 'villeminot',
+      firstName: 'fabien',
+      miniature: 'v f'
+    },
+    {
+      lastName: 'boulo',
+      firstName: 'lionel',
+      miniature: 'b l'
+    }
+  ];
+
+  constructor( public bookingDetailsDialogRef: MatDialogRef<BookingdetailsComponent> ) {}
 
   ngOnInit() {
   }
