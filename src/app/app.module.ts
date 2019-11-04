@@ -27,7 +27,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
- 
+import { MatListModule } from '@angular/material/list';
+
+
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material';
@@ -65,7 +67,8 @@ import {MatRadioModule} from '@angular/material/radio';
     MatTableModule,
     MatSlideToggleModule,
     MatDialogModule,
-    
+    MatListModule,
+
     ReactiveFormsModule,
     MatTabsModule,
     MatCheckboxModule,

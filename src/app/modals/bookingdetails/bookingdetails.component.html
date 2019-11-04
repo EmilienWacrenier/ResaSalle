@@ -6,12 +6,17 @@
       </mat-form-field>
     </form>
   </div>
-  <div class="search-user-container">
-
-  </div>
-  <div class="content-container">
+  <div class="checklist-container">
     <mat-dialog-content>
       <p> Recherche de participants </p>
+        <mat-selection-list>
+          <mat-list-option *ngFor="let shoe of typesOfShoes">
+            {{shoe}}
+          </mat-list-option>
+        </mat-selection-list>
+      <p>
+        Options selected: {{shoes.selectedOptions.selected.length}}
+      </p>
     </mat-dialog-content>
   </div>
   <div class="actions-container">
