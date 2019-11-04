@@ -6,11 +6,12 @@ import { MatDialogRef } from "@angular/material/dialog";
   templateUrl: './bookingdetails.component.html',
   styleUrls: ['./bookingdetails.component.scss']
 })
+
 export class BookingdetailsComponent implements OnInit {
 
   objetReunion: string = "Café dans la salle Maroilles";
-
-  users = [
+  selectedMiniatures: string[];
+  users: User[] = [
     {
       lastName: 'amri',
       firstName: 'virginie',
@@ -47,4 +48,16 @@ export class BookingdetailsComponent implements OnInit {
     this.bookingDetailsDialogRef.close();
   }
 
+  onSelect(v) {
+    for(let a of v) {
+      this.selectedMiniatures=a.value;
+    }
+  }
+
+}
+
+export interface User {
+  lastName: string;
+  firstName: string;
+  miniature: string;
 }

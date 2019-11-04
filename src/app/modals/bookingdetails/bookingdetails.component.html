@@ -9,17 +9,22 @@
   <div class="checklist-container">
     <mat-dialog-content>
       <p> Recherche de participants </p>
-        <mat-selection-list #participants>
-          <mat-list-option *ngFor="let user of users">
+        <mat-selection-list #participants (selectionChange)="onSelect(participants.selectedOptions.selected)">
+          <mat-list-option *ngFor="let user of users" [value]='user.miniature'>
             {{user.firstName|titlecase}}  {{user.lastName|titlecase}}
           </mat-list-option>
         </mat-selection-list>
     </mat-dialog-content>
   </div>
   <div class="actions-container">
+    <div>
+      Test vignettes : {{selectedMiniatures|titlecase}}
+    </div>
+    <div>
       Test selected items : {{participants.selectedOptions.selected.length}}
-  </div>
+    </div>
     <mat-dialog-actions>
         <button class="mat-raised-button" (click)="close()">Next</button>
     </mat-dialog-actions>
+  </div>
 </div>
