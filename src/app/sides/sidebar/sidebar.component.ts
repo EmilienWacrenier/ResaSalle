@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { element } from 'protractor';
 
 
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -11,8 +12,6 @@ export class SidebarComponent implements OnInit {
   home : boolean;
   dashboard : boolean;
   search : boolean;
-  el : string;
-
   constructor() { }
 
   ngOnInit() {

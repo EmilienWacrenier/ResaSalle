@@ -11,13 +11,8 @@ import { UserlayoutComponent } from './layouts/userlayout/userlayout.component';
 import { HomeComponent } from './pages/home/home.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SearchComponent } from './pages/search/search.component';
-import { ResaDateComponent } from './pages/search/steps/resa-date/resa-date.component';
-import { ResaRecurrenceComponent } from './pages/search/steps/resa-recurrence/resa-recurrence.component';
-import { ResaResultatComponent } from './pages/search/steps/resa-resultat/resa-resultat.component';
 import { BookingcalendarComponent } from './modals/bookingcalendar/bookingcalendar.component';
 import { BookingdetailsComponent } from './modals/bookingdetails/bookingdetails.component';
-import { ResaCaracteristiqueComponent } from './pages/search/steps/resa-caracteristique/resa-caracteristique.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -33,6 +28,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
  
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatInputModule} from '@angular/material';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -44,12 +44,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     HomeComponent,
     DashboardComponent,
     SearchComponent,
-    ResaDateComponent,
-    ResaRecurrenceComponent,
-    ResaResultatComponent,
     BookingcalendarComponent,
     BookingdetailsComponent,
-    ResaCaracteristiqueComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +64,14 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatGridListModule,
     MatTableModule,
     MatSlideToggleModule,
-    MatDialogModule
+    MatDialogModule,
+    
+    ReactiveFormsModule,
+    MatTabsModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatStepperModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent],

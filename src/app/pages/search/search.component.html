@@ -1,1 +1,52 @@
-<p>search works!</p>
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+
+    <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Date</ng-template>
+            <mat-form-field>
+                    <input matInput type="datetime-local" placeholder="start date">
+                  </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Récurrence</ng-template>
+                    <label id="example-radio-group-label">Pick your favorite season</label>
+                    <mat-radio-group
+                      aria-labelledby="example-radio-group-label"
+                      class="example-radio-group"
+                      [(ngModel)]="favoriteSeason">
+                      <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
+                        {{season}}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                    <div>Your favorite season is: {{favoriteSeason}}</div>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+            <ng-template matStepLabel>Salle</ng-template>
+            <mat-form-field>
+                <input matInput placeholder="Address" formControlName="thirdCtrl" required>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="fourthFormGroup">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+    </mat-step>
+</mat-horizontal-stepper>

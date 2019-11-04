@@ -14,6 +14,11 @@ export interface Tile {
   rows: number;
 }
 
+export interface Periode {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
