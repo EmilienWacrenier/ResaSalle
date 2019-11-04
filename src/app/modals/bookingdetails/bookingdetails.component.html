@@ -1,15 +1,20 @@
 <div class="container">
   <div class="inputs-container">
-    <form class="objet-form">
+    <form class="booking-form">
       <mat-form-field class="form">
         <input matInput placeholder="Objet" value="{{objetReunion}}">
       </mat-form-field>
     </form>
+  </div>
+  <div class="search-user-container">
 
+  </div>
+  <div class="content-container">
     <mat-dialog-content>
-      <p> Place content here </p>
+      <p> Recherche de participants </p>
     </mat-dialog-content>
-
+  </div>
+  <div class="actions-container">
     <mat-dialog-actions>
         <button class="mat-raised-button" (click)="close()">Close</button>
     </mat-dialog-actions>
