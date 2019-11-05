@@ -12,10 +12,10 @@
     <mat-dialog-content>
       <!--Recherche des participants -->
       <form class="booking-form">
-
+        <h3 class="titre">Participants</h3>
         <mat-form-field class="search-form">
-          <h3 class="titre">Participants</h3>
           <input matInput>
+          <mat-icon matPrefix>search</mat-icon>
         </mat-form-field>
       </form>
       <mat-selection-list #participants (selectionChange)="onSelect(participants.selectedOptions.selected)">
