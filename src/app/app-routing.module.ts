@@ -9,19 +9,25 @@ import { HomeComponent } from './pages/home/home.component';
 
 
 const routes: Routes = [
-  {path: 'login', component: AuthlayoutComponent},
-
-
-  {path: '',
-   component: UserlayoutComponent,
-  children: [
-    {path: 'accueil', component: AppComponent},
-    {path: '', component: HomeComponent},
-    {path: 'home', component: HomeComponent},
-    {path: 'dashboard', component: DashboardComponent},
-    {path: 'search', component: SearchComponent},
-  ]},
-  { path: '**', redirectTo: '/login', pathMatch: 'full' },
+  { 
+    path: 'login', 
+    component: AuthlayoutComponent 
+  },
+  {
+    path: '',
+    component: UserlayoutComponent,
+    children: [
+      { path: '', component: HomeComponent },
+      { path: 'home', component: HomeComponent },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'search', component: SearchComponent },
+    ]
+  },
+  { 
+    path: '**', 
+    redirectTo: '/login', 
+    pathMatch: 'full' 
+  }
 ];
 
 @NgModule({

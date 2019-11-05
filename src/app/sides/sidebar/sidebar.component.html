@@ -1,6 +1,9 @@
-
-<mat-sidenav-container class="example-container">
+<mat-sidenav-container class="example-container sidenav-container">
   <mat-sidenav mode="side" opened id="sidebar">
+
+    <mat-toolbar class="brand">
+      <img src="assets/Image1.png" id="logo" alt="atos">
+    </mat-toolbar>
     <button id="button_home" routerLink="/home">
       <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">home</mat-icon>
       <p>Acceuil</p>
@@ -15,20 +18,10 @@
     </button>
   </mat-sidenav>
 
-  <!--<mat-sidenav-content>
-
-    <div *ngIf="!home">
-      <app-home></app-home>
+  <mat-sidenav-content>
+    <app-navbar></app-navbar>
+    <div class="grid-container">
+      <router-outlet></router-outlet>
     </div>
-
-    <div *ngIf="!dashboard">
-        <app-dashboard></app-dashboard>
-    </div>
-
-    <div *ngIf="!search">
-        <app-search></app-search>
-    </div>
-
-  </mat-sidenav-content>-->
+  </mat-sidenav-content>
 </mat-sidenav-container>
-
