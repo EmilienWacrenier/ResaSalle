@@ -18,6 +18,7 @@
           <mat-icon matPrefix>search</mat-icon>
         </mat-form-field>
       </form>
+      <!--Liste des participants-->
       <mat-selection-list #participants (selectionChange)="onSelect(participants.selectedOptions.selected)">
         <mat-list-option *ngFor="let user of users" [value]='user.miniature'>
           {{user.firstName|titlecase}}  {{user.lastName|titlecase}}
@@ -25,15 +26,14 @@
       </mat-selection-list>
     </mat-dialog-content>
   </div>
+  <!--Vignettes et bouton next-->
+  <mat-divider></mat-divider>
   <div class="vignettes-container">
-    <div>
-      Test vignettes : {{selectedMiniatures}}
+    <div class="vignette">
+      {{selectedMiniatures}}
+      <mat-dialog-actions>
+          <button class="mat-raised-button" (click)="close()">Next</button>
+      </mat-dialog-actions>
     </div>
-    <div>
-      Test selected items : {{participants.selectedOptions.selected.length}}
-    </div>
-    <mat-dialog-actions>
-        <button class="mat-raised-button" (click)="close()">Next</button>
-    </mat-dialog-actions>
   </div>
 </div>

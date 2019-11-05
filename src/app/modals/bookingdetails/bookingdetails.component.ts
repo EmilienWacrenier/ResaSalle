@@ -9,9 +9,9 @@ import { MatDialogRef } from "@angular/material/dialog";
 
 export class BookingdetailsComponent implements OnInit {
 
-  objetReunion: string = "Café dans la salle Maroilles";
-  selectedMiniatures: string[];
-  users: User[] = [
+  objetReunion: string = "Café dans la salle Maroilles"; // objet de la réunion pour test
+  selectedMiniatures: string[]; //affichage des miniatures cf méthode onSelect()
+  users: User[] = [ //liste d'utilisateurs pour test
     {
       lastName: 'amri',
       firstName: 'virginie',
@@ -47,7 +47,8 @@ export class BookingdetailsComponent implements OnInit {
   close() {
     this.bookingDetailsDialogRef.close();
   }
-
+  //Affichage des vignettes
+  //parcours d'une collection de users selectionnés et insertion de value cf hmtl l.23 [value]="user.miniature"
   onSelect(v) {
     this.selectedMiniatures=[];
     for(let a of v) {
@@ -56,7 +57,7 @@ export class BookingdetailsComponent implements OnInit {
   }
 
 }
-
+//Interface User pour test (liste d'utilisateurs factice)
 export interface User {
   lastName: string;
   firstName: string;
