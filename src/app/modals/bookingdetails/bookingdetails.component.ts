@@ -15,27 +15,27 @@ export class BookingdetailsComponent implements OnInit {
     {
       lastName: 'amri',
       firstName: 'virginie',
-      miniature: 'a v'
+      miniature: 'AV'
     },
     {
       lastName: 'pascal',
       firstName: 'marie flore',
-      miniature: 'p m f'
+      miniature: 'PMF'
     },
     {
       lastName: 'henry',
       firstName: 'stephanie',
-      miniature: 'h s'
+      miniature: 'HS'
     },
     {
       lastName: 'villeminot',
       firstName: 'fabien',
-      miniature: 'v f'
+      miniature: 'VF'
     },
     {
       lastName: 'boulo',
       firstName: 'lionel',
-      miniature: 'b l'
+      miniature: 'BL'
     }
   ];
 
@@ -49,8 +49,9 @@ export class BookingdetailsComponent implements OnInit {
   }
 
   onSelect(v) {
+    this.selectedMiniatures=[];
     for(let a of v) {
-      this.selectedMiniatures=a.value;
+      this.selectedMiniatures.push(a.value);
     }
   }
 
