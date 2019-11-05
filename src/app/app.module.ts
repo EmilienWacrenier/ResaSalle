@@ -36,6 +36,9 @@ import {MatInputModule} from '@angular/material';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatRadioModule} from '@angular/material/radio';
 
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +53,7 @@ import {MatRadioModule} from '@angular/material/radio';
     BookingdetailsComponent,
   ],
   imports: [
+    
     BrowserModule,
     AppRoutingModule,
     CommonModule,
@@ -74,7 +78,11 @@ import {MatRadioModule} from '@angular/material/radio';
     MatCheckboxModule,
     MatInputModule,
     MatStepperModule,
-    MatRadioModule
+    MatRadioModule,
+
+    MatDatepickerModule,
+    MatNativeDateModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent],

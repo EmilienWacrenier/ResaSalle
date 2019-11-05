@@ -1,0 +1,42 @@
+.stepper{
+    background-color: lightgrey;
+}
+
+.d-block{
+    display: block;
+}
+
+.row{
+    width: 100%;
+}
+
+.col{
+    display: inline-block;
+    width: 50%;
+    text-align:center;
+}
+
+.finile{
+    margin: auto 15px auto 0;
+}
+
+.border-right{
+    border-right: 1px solid grey;
+}
+
+
+.calendar-mock{
+    height: 250px;
+    width: 300px;
+    background-color: hotpink;
+    margin: 0 auto;
+}
+
+.clock-mock{
+    display: inline-block;
+    height: 200px;
+    width: 200px;
+    border-radius: 100%;
+    background-color: hotpink;
+    margin: 0 10px;
+}

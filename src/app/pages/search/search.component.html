@@ -1,37 +1,65 @@
-<mat-horizontal-stepper [linear]="isLinear" #stepper>
+<mat-horizontal-stepper class="stepper" [linear]="isLinear" #stepper>
 
+    <!-- Calendrier/Horloge -->
     <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Date</ng-template>
-            <mat-form-field>
-                    <input matInput type="datetime-local" placeholder="start date">
-                  </mat-form-field>
-            <div>
-                <button mat-button matStepperNext>Next</button>
+
+        <div class="row">
+            <div class="col">
+                    <div class="calendar-mock"></div>
             </div>
-        </form>
+
+            <div class="col">
+                    <div class="clock-mock"></div>
+                    <div class="clock-mock"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <mat-slide-toggle>
+                    Activer la récurrence ?
+                </mat-slide-toggle>
+            </div>
+
+            <div class="col">
+                <div>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </div>
+        </div>
     </mat-step>
 
+    <!-- Recurrence -->
     <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Récurrence</ng-template>
-                    <label id="example-radio-group-label">Pick your favorite season</label>
-                    <mat-radio-group
-                      aria-labelledby="example-radio-group-label"
-                      class="example-radio-group"
-                      [(ngModel)]="favoriteSeason">
-                      <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
-                        {{season}}
-                      </mat-radio-button>
-                    </mat-radio-group>
-                    <div>Your favorite season is: {{favoriteSeason}}</div>
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+        <div fxLayout="row">
+            <div fxFlex="20%" class="border-right"> 
+                <mat-checkbox class="d-block">Quotidien</mat-checkbox>
+                <mat-checkbox class="d-block">Hebdomadaire</mat-checkbox>
+                <mat-checkbox class="d-block">Mensuelle</mat-checkbox>
+                <mat-checkbox class="d-block">Annuelle</mat-checkbox>
             </div>
-        </form>
+            <div fxFlex="80%"> 
+                <!-- if mensuelle -->
+                <div class="">
+                    <mat-checkbox class="d-block">Quotidien</mat-checkbox>
+                    <mat-checkbox class="d-block">Hebdomadaire</mat-checkbox>
+                </div>
+            </div>
+        </div> 
+
+        <div fxLayout="row">
+            <span class="finile">Fini le </span>
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+        </div>
     </mat-step>
 
+    <!-- Capacité -->
     <mat-step [stepControl]="thirdFormGroup">
         <form [formGroup]="thirdFormGroup">
             <ng-template matStepLabel>Salle</ng-template>
@@ -45,7 +73,9 @@
         </form>
     </mat-step>
 
+    <!-- Résultats -->
     <mat-step [stepControl]="fourthFormGroup">
+        <ng-template matStepLabel>Résultats</ng-template>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>
     </mat-step>
