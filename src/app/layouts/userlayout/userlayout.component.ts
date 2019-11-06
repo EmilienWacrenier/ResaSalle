@@ -10,6 +10,7 @@ export class UserlayoutComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }

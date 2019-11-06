@@ -14,28 +14,11 @@ import { SearchComponent } from './pages/search/search.component';
 import { BookingcalendarComponent } from './modals/bookingcalendar/bookingcalendar.component';
 import { BookingdetailsComponent } from './modals/bookingdetails/bookingdetails.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatTableModule } from '@angular/material/table';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatDialogModule } from '@angular/material/dialog';
- 
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatInputModule} from '@angular/material';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatRadioModule} from '@angular/material/radio';
 
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -51,35 +34,15 @@ import {MatNativeDateModule} from '@angular/material/';
     BookingdetailsComponent,
   ],
   imports: [
-    
     BrowserModule,
     AppRoutingModule,
     CommonModule,
     BrowserAnimationsModule,
-    MatMenuModule,
-    MatSidenavModule,
     FlexLayoutModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    FormsModule, ReactiveFormsModule,
-    MatGridListModule,
-    MatTableModule,
-    MatSlideToggleModule,
-    MatDialogModule,
-    
+    FormsModule, 
     ReactiveFormsModule,
-    MatTabsModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatStepperModule,
-    MatRadioModule,
-
-    MatDatepickerModule,
-    MatNativeDateModule
-    
+    ReactiveFormsModule,
+    MaterialModule  
   ],
   providers: [],
   bootstrap: [AppComponent],
