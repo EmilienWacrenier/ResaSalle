@@ -1,82 +1,152 @@
 <mat-horizontal-stepper class="stepper" [linear]="isLinear" #stepper>
 
-    <!-- Calendrier/Horloge -->
+    <!-- Stepper phase 1 selection du jour et heure -->
     <mat-step [stepControl]="firstFormGroup">
-            <ng-template matStepLabel>Date</ng-template>
+        <ng-template matStepLabel>Date</ng-template>
 
-        <div class="row">
+        <div class="row my-3">
             <div class="col">
-                    <div class="calendar-mock"></div>
+                <div class="calendrier">
+                    <mat-calendar [selected]="selectedDate" (selectedChange)="selectedDate = $event"></mat-calendar>
+                </div>
             </div>
-
             <div class="col">
-                    <div class="clock-mock"></div>
-                    <div class="clock-mock"></div>
+                <div class="horloge"><input class="timepicker" matInput type="time"></div>
             </div>
         </div>
 
         <div class="row">
             <div class="col">
-                <mat-slide-toggle>
-                    Activer la récurrence ?
-                </mat-slide-toggle>
+                <button class="bouton-back-next" mat-button matStepperNext>Suivant</button>
             </div>
 
             <div class="col">
                 <div>
-                    <button mat-button matStepperNext>Next</button>
+                    <!-- Toggle de la recurrence -->
+                    <mat-slide-toggle>
+                        Activer la récurrence ?
+                    </mat-slide-toggle>
                 </div>
             </div>
         </div>
     </mat-step>
 
-    <!-- Recurrence -->
+    <!-- Stepper phase 2 recurrence -->
     <mat-step [stepControl]="secondFormGroup">
-            <ng-template matStepLabel>Récurrence</ng-template>
-        <div fxLayout="row">
-            <div fxFlex="20%" class="border-right"> 
-                <mat-checkbox class="d-block">Quotidien</mat-checkbox>
-                <mat-checkbox class="d-block">Hebdomadaire</mat-checkbox>
-                <mat-checkbox class="d-block">Mensuelle</mat-checkbox>
-                <mat-checkbox class="d-block">Annuelle</mat-checkbox>
+        <ng-template matStepLabel>Récurrence</ng-template>
+
+        <div fxLayout="row" class="my-3">
+            <div fxFlex="25%" class="border-right">
+
+                <!-- Groupe radio bouton mensualité -->
+                <mat-radio-group [(ngModel)]="selectedRecurrence">
+                    <mat-radio-button class="d-block marg" *ngFor="let recurrence of recurrences" [value]="recurrence">
+                        {{recurrence}}
+                    </mat-radio-button>
+                </mat-radio-group>
+
             </div>
-            <div fxFlex="80%"> 
+
+            <div fxFlex="70%" class="mensuelle">
                 <!-- if mensuelle -->
-                <div class="">
-                    <mat-checkbox class="d-block">Quotidien</mat-checkbox>
-                    <mat-checkbox class="d-block">Hebdomadaire</mat-checkbox>
+                <div *ngIf="selectedRecurrence === 'mensuelle'">
+
+                    <!-- Groupe bouton radio "mensuelle"-->
+                    <mat-radio-group [(ngModel)]="selectedMensualite">
+
+                        <!-- Tous les x du mois -->
+                        <mat-radio-button class="d-block">
+                            Le
+                            <input type="number" min="1" max="31" placeholder="1">
+                            tous les mois
+                        </mat-radio-button>
+
+                        <!-- Tous les "x ème" "jours" du mois -->
+                        <mat-radio-button class="d-block">
+                            Le
+                            <mat-form-field>
+                                <mat-select>
+                                    <mat-option *ngFor="let numSemaine of numSemaines" [value]="numSemaine">
+                                        {{numSemaine}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-select>
+                                    <mat-option *ngFor="let jourSemaine of jourSemaines" [value]="jourSemaine">
+                                        {{jourSemaine}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            de tous les mois
+                        </mat-radio-button>
+
+                    </mat-radio-group>
+
                 </div>
             </div>
-        </div> 
+        </div>
 
-        <div fxLayout="row">
-            <span class="finile">Fini le </span>
+        
+        <div fxLayout="row" class="my-3">
+            <!-- Date de fin de la recurrence -->
+                <span class="finile">Fini le </span>
                 <mat-form-field>
                     <input matInput [matDatepicker]="picker">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
         </div>
+
+        <div fxLayout="row">
+            <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
+            <button class="bouton-back-next" mat-button matStepperNext>Suivant</button>
+        </div>
+
+
     </mat-step>
 
-    <!-- Capacité -->
+    <!-- Stepper phase 1 capacité -->
     <mat-step [stepControl]="thirdFormGroup">
-        <form [formGroup]="thirdFormGroup">
             <ng-template matStepLabel>Salle</ng-template>
-            <mat-form-field>
-                <input matInput placeholder="Address" formControlName="thirdCtrl" required>
-            </mat-form-field>
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+
+            <div class="example-container">
+                <h2>Capacité</h2>
+
+                <div 
+                    cdkDropList
+                    #capaciteList="cdkDropList"
+                    [cdkDropListData]="capacites"
+                    [cdkDropListConnectedTo]="[choixList]"
+                    class="capacite-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="drag-drop-items" *ngFor="let item of capacites" cdkDrag>{{item}} pers</div>
+                </div>
             </div>
-        </form>
+
+            <div class="example-container">
+                <h2>Mes critères</h2>
+
+                <div 
+                    cdkDropList
+                    #choixList="cdkDropList"
+                    [cdkDropListData]="choix"
+                    [cdkDropListConnectedTo]="[capaciteList]"
+                    class="choix-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="drag-drop-items" *ngFor="let item of choix" cdkDrag>{{item}} pers</div>
+                </div>
+            </div>
+            
+            <div fxLayout="row">
+                <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
+                <button class="bouton-back-next" mat-button matStepperNext>Suivant</button>
+            </div>
     </mat-step>
 
     <!-- Résultats -->
     <mat-step [stepControl]="fourthFormGroup">
         <ng-template matStepLabel>Résultats</ng-template>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+        
     </mat-step>
 </mat-horizontal-stepper>

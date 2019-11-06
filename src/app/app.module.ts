@@ -36,6 +36,8 @@ import {MatRadioModule} from '@angular/material/radio';
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -78,7 +80,10 @@ import {MatNativeDateModule} from '@angular/material/';
     MatRadioModule,
 
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    DragDropModule,
+    MatCardModule
+
     
   ],
   providers: [],
