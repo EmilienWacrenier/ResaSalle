@@ -1,10 +1,39 @@
-<h2 mat-dialog-title>This is a Dialog title</h2>
-
-<mat-dialog-content>
-
-<p> Place content here </p>
-</mat-dialog-content>
-
-<mat-dialog-actions>
-    <button class="mat-raised-button" (click)="close()">Close</button>
-</mat-dialog-actions>
+<div class="container">
+  <!--Input objet de la réunion -->
+  <div class="inputs-container">
+    <form class="booking-form">
+      <mat-form-field class="objet-form">
+        <input matInput placeholder="Objet" value="{{objetReunion}}">
+      </mat-form-field>
+    </form>
+  </div>
+  <!--Liste des utilisateurs -->
+  <div class="checklist-container">
+    <mat-dialog-content>
+      <!--Recherche des participants -->
+      <form class="booking-form">
+        <h3 class="titre">Participants</h3>
+        <mat-form-field class="search-form">
+          <input matInput>
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+      </form>
+      <!--Liste des participants-->
+      <mat-selection-list #participants (selectionChange)="onSelect(participants.selectedOptions.selected)">
+        <mat-list-option *ngFor="let user of users" [value]='user.miniature'>
+          {{user.firstName|titlecase}}  {{user.lastName|titlecase}}
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-dialog-content>
+  </div>
+  <!--Vignettes et bouton next-->
+  <mat-divider></mat-divider>
+  <div class="vignettes-container">
+    <div class="vignette">
+      {{selectedMiniatures}}
+      <mat-dialog-actions>
+          <button class="mat-raised-button" (click)="close()">Next</button>
+      </mat-dialog-actions>
+    </div>
+  </div>
+</div>

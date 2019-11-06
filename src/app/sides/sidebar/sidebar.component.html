@@ -1,21 +1,25 @@
-<mat-sidenav-container class="example-container sidenav-container">
+<mat-sidenav-container class="sidenav-container">
   <mat-sidenav mode="side" opened id="sidebar">
 
     <mat-toolbar class="brand">
       <img src="assets/Image1.png" id="logo" alt="atos">
     </mat-toolbar>
-    <button id="button_home" routerLink="/home">
+    
+    <!-- NAV LIST ITEMS -->
+    
+    <button id="button_home" routerLink="/" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
       <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">home</mat-icon>
       <p>Acceuil</p>
     </button>
-    <button id="button_dashboard" routerLink="/dashboard">
+    <button id="button_dashboard" routerLink="/dashboard" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
       <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">dashboard</mat-icon>
       <p>Dashboard</p>
     </button>
-    <button id="button_search" routerLink="/search">
+    <button id="button_search" routerLink="/search" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
       <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">search</mat-icon>
       <p>Rechercher</p>
     </button>
+    
   </mat-sidenav>
 
   <mat-sidenav-content>
