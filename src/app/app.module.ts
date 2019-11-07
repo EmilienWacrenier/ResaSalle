@@ -18,14 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-<<<<<<< HEAD
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {MatCardModule} from '@angular/material/card';
-=======
 import { MaterialModule } from './material.module';
->>>>>>> fc1b029b620c03c3b929d0f321db069308e11698
 
 @NgModule({
   declarations: [
@@ -48,23 +41,8 @@ import { MaterialModule } from './material.module';
     FlexLayoutModule,
     FormsModule, 
     ReactiveFormsModule,
-<<<<<<< HEAD
-    MatTabsModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatStepperModule,
-    MatRadioModule,
-
-    MatDatepickerModule,
-    MatNativeDateModule,
-    DragDropModule,
-    MatCardModule
-
-    
-=======
     ReactiveFormsModule,
     MaterialModule  
->>>>>>> fc1b029b620c03c3b929d0f321db069308e11698
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -60,3 +60,52 @@ table {
   .example-element-description-attribution {
     opacity: 0.5;
   }
+
+
+  /* TEST TIMELINE */
+  .timeline-container-heures,
+  .timeline-container{
+    width: 100%;
+  }
+
+  .timeline-container{
+    width: 99%;
+    position: relative;
+    height: 30px;
+    background-color: lightskyblue;
+    margin: 0 auto;
+  }
+
+  .timeline-tile{
+    position: absolute;
+    top:0;
+    background-color: rgb(28, 71, 151);
+    height: 100%;
+  }
+
+  .timeline-flag{
+    position: relative;
+    display: inline-block;
+    width: calc( 20% - 5px) ;
+    height: 30px;
+    border-right: 5px solid white;
+    z-index: 1;
+  }
+
+  .timeline-flag-heure{
+    display: inline-block;
+    width: calc( 20% - 5px);
+    margin-bottom: 8px;
+
+    font-size: 1rem;
+    font-weight: bold;
+    color: rgb(28, 71, 151);
+  }
+
+  .timeline-flag-heure-last{
+    width: calc(20% + 20px);
+  }
+
+  .f-right{
+    float: right;
+  }
