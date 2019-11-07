@@ -42,7 +42,7 @@ import { MaterialModule } from './material.module';
     FormsModule, 
     ReactiveFormsModule,
     ReactiveFormsModule,
-    MaterialModule  
+    MaterialModule 
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,25 +1,28 @@
 <div id="div_global">
-  <div style="display: flex;">
-    <h2> Disponible ce jour </h2>
-    <mat-form-field id="select_periode">
-      <mat-label>Période</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let periode of periodes" [value]="periode.value">
-          {{periode.viewValue}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+  
 
-  </div>
+  <div style="display: flex;">
+      <h2> Disponible ce jour </h2>
+      <button mat-button id="planning-btn" aria-label="Button to switch periods"
+        (click)="getPlanning()">
+          <mat-icon>
+              signal_cellular_alt
+          </mat-icon>  
+        <span id="planning-btn-period">Matin</span>
+          <mat-icon id="planning-btn-arrow">
+              keyboard_arrow_down
+          </mat-icon>
+      </button>
+    </div>
 
   <div class="timeline-container-heures">
-    <div class="timeline-flag-heure"><span>8</span></div>
-    <div class="timeline-flag-heure"><span>9</span></div>
-    <div class="timeline-flag-heure"><span>10</span></div>
-    <div class="timeline-flag-heure"><span>11</span></div>
+    <div class="timeline-flag-heure"><span>{{ itsMorning ? 8 : 13 }}</span></div>
+    <div class="timeline-flag-heure"><span>{{ itsMorning ? 9 : 14 }}</span></div>
+    <div class="timeline-flag-heure"><span>{{ itsMorning ? 10 : 15 }}</span></div>
+    <div class="timeline-flag-heure"><span>{{ itsMorning ? 11 : 16 }}</span></div>
     <div class="timeline-flag-heure timeline-flag-heure-last">
-      <span>12</span>
-      <span class="f-right">13</span>
+      <span>{{ itsMorning ? 12 : 17 }}</span>
+      <span class="f-right">{{ itsMorning ? 13 : 18 }}</span>
     </div>
   </div>
   <div class="timeline-container">

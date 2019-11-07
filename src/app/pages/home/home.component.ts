@@ -4,6 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BookingcalendarComponent } from '../../modals/bookingcalendar/bookingcalendar.component';
 import { AbsoluteSourceSpan } from '@angular/compiler';
 import { read } from 'fs';
+import * as moment from 'moment';
 
 /* export interface Periode {
   value: string;
@@ -45,8 +46,11 @@ export class HomeComponent implements OnInit {
 
   constructor(private bookingCalendarDialog: MatDialog) { }
 
+  itsMorning: boolean;
+
   ngOnInit() {
     console.log(this.reservations);
+    this.initPlanningBtn();
   }
   /* 
     //Méthode pr ouvrir la modale bookingCalendarDialog
@@ -142,32 +146,63 @@ export class HomeComponent implements OnInit {
   ];
 
   setReservationParameters(reservation) {
-      //demi journee = 5h = 300 minutes
-      let maxMinutes = 300;
-      //début = 8h donc 8h = 480minutes
-      let debutMinutes = 480;
+    //demi journee = 5h = 300 minutes
+    let maxMinutes = 300;
+    //début = 8h donc 8h = 480minutes
+    let debutMinutes = 480;
 
-      //total de l'heure de début en minutes
-      let hoursDebut = reservation.dateDebut.getHours();
-      let minutesDebut = reservation.dateDebut.getMinutes();
-      let totalMinutesDebut = (hoursDebut*60 + minutesDebut) - debutMinutes;
+    //total de l'heure de début en minutes
+    let hoursDebut = reservation.dateDebut.getHours();
+    let minutesDebut = reservation.dateDebut.getMinutes();
+    let totalMinutesDebut = (hoursDebut * 60 + minutesDebut) - debutMinutes;
 
-      //total de l'heure de fin en minutes
-      let hoursFin = reservation.dateFin.getHours();
-      let minutesFin = reservation.dateFin.getMinutes();
-      let totalMinutesFin = (hoursFin*60 + minutesFin) - debutMinutes;
+    //total de l'heure de fin en minutes
+    let hoursFin = reservation.dateFin.getHours();
+    let minutesFin = reservation.dateFin.getMinutes();
+    let totalMinutesFin = (hoursFin * 60 + minutesFin) - debutMinutes;
 
-      //calcul de la marge(décalage) en fonction de l'heure de début
-      let margeGauche = totalMinutesDebut * 100 / maxMinutes;
+    //calcul de la marge(décalage) en fonction de l'heure de début
+    let margeGauche = totalMinutesDebut * 100 / maxMinutes;
 
-      //calcul de la taille de la réservation en fonction de l'heure de fin
-      let dureeResa = (totalMinutesFin - totalMinutesDebut) * 100 / maxMinutes;
+    //calcul de la taille de la réservation en fonction de l'heure de fin
+    let dureeResa = (totalMinutesFin - totalMinutesDebut) * 100 / maxMinutes;
 
-      let styles = {
-        'left.%': margeGauche,
-        'width.%': dureeResa,
-      };
-      return styles;
+    let styles = {
+      'left.%': margeGauche,
+      'width.%': dureeResa,
+    };
+    return styles;
+  }
+
+  
+  getPlanning() {
+    if(this.itsMorning){
+      this.setBtnAfternoon();
     }
+    else{
+      this.setBtnMorning();
+    }
+  }
 
+  initPlanningBtn() {
+    if (moment().format("HH:mm") > "13:00") {
+      this.setBtnAfternoon();
+    }
+    else {
+      this.setBtnMorning();
+    }
+  }
+
+  setBtnMorning() {
+    document.getElementById("planning-btn-period").innerHTML = "Matin";
+    document.getElementById("planning-btn-arrow").innerHTML = "keyboard_arrow_down";
+    this.itsMorning = true;
+  }
+  setBtnAfternoon() {
+    document.getElementById("planning-btn-period").innerHTML = "Après-Midi";
+    document.getElementById("planning-btn-arrow").innerHTML = "keyboard_arrow_up";
+    this.itsMorning = false;
+  }
+
+  
 }
