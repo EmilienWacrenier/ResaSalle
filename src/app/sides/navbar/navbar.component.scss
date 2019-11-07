@@ -1,7 +1,6 @@
 #navbar {
     background: white;
     color: black;
-    padding: 0;
     box-shadow: 2px 7px 17px 0px rgba(0, 0, 0, 0.226);
     position: sticky;
     top: 0;
@@ -13,4 +12,13 @@
     height: 100%;
     width: 10%;
     display: flex;
+}
+.user-name{
+    color: rgb(97, 188, 241);
+}
+.user-img-circle{
+    padding: 0 14px;
+}
+.spacer{
+    flex: 1 1 auto;
 }

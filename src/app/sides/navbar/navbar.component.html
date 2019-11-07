@@ -1,3 +1,22 @@
 <mat-toolbar id="navbar">
-  
+    <mat-toolbar-row>
+        <span class="spacer"></span>
+        <button mat-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <span class="user-name">Justine PORCHEUR</span>
+            <mat-icon class="user-img-circle">
+                account_circle
+            </mat-icon>
+        </button>
+    </mat-toolbar-row>
+
+    <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item disabled>
+            <mat-icon>person</mat-icon>
+            <span>Mon Profil</span>
+        </button>
+        <button mat-menu-item>
+            <mat-icon>power_settings_new</mat-icon>
+            <span>Me déconnecter</span>
+        </button>
+    </mat-menu>
 </mat-toolbar>
