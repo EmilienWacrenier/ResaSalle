@@ -19,45 +19,64 @@ export const ROOMS: Room[] = [
                 id: 3,
                 startDate: new Date("2019-11-06 11:00:00"),
                 endDate: new Date("2019-11-06 13:00:00")
+            },
+            {
+                id: 4,
+                startDate: new Date("2019-11-06 14:00:00"),
+                endDate: new Date("2019-11-06 15:00:13")
             }
         ]
     },
     {
         id: 2,
         name: "Philou",
-        bookings: [{
-            id: 1,
-            startDate: new Date("2019-11-06 8:10:00"),
-            endDate: new Date("2019-11-06 9:00:00")
-        },
-        {
-            id: 2,
-            startDate: new Date("2019-11-06 10:00:00"),
-            endDate: new Date("2019-11-06 11:00:00")
-        },
-        {
-            id: 3,
-            startDate: new Date("2019-11-06 11:30:00"),
-            endDate: new Date("2019-11-06 13:00:00")
-        }]
+        bookings: [
+            {
+                id: 1,
+                startDate: new Date("2019-11-06 8:10:00"),
+                endDate: new Date("2019-11-06 9:00:00")
+            },
+            {
+                id: 2,
+                startDate: new Date("2019-11-06 10:00:00"),
+                endDate: new Date("2019-11-06 11:00:00")
+            },
+            {
+                id: 3,
+                startDate: new Date("2019-11-06 11:30:00"),
+                endDate: new Date("2019-11-06 13:00:00")
+            },
+            {
+                id: 4,
+                startDate: new Date("2019-11-06 15:00:00"),
+                endDate: new Date("2019-11-06 15:10:30")
+            }
+        ]
     },
     {
         id: 3,
         name: "Janot",
-        bookings: [{
-            id: 1,
-            startDate: new Date("2019-11-06 8:20:00"),
-            endDate: new Date("2019-11-06 8:50:00")
-        },
-        {
-            id: 2,
-            startDate: new Date("2019-11-06 9:00:00"),
-            endDate: new Date("2019-11-06 10:00:00")
-        },
-        {
-            id: 3,
-            startDate: new Date("2019-11-06 10:12:00"),
-            endDate: new Date("2019-11-06 11:00:00")
-        }]
+        bookings: [
+            {
+                id: 1,
+                startDate: new Date("2019-11-06 8:20:00"),
+                endDate: new Date("2019-11-06 8:50:00")
+            },
+            {
+                id: 2,
+                startDate: new Date("2019-11-06 9:00:00"),
+                endDate: new Date("2019-11-06 10:00:00")
+            },
+            {
+                id: 3,
+                startDate: new Date("2019-11-06 10:12:00"),
+                endDate: new Date("2019-11-06 11:00:00")
+            },
+            {
+                id: 4,
+                startDate: new Date("2019-11-06 16:50:00"),
+                endDate: new Date("2019-11-06 18:00:00")
+            }
+        ]
     }
 ]

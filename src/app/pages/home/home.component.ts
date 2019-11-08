@@ -7,14 +7,7 @@ import { read } from 'fs';
 import { Room } from '../../classes/room'
 import { HomeService } from '../../services/home.service';
 import * as moment from 'moment';
-import { Booking } from 'src/app/classes/booking';
 
-
-export interface Reservation {
-  id: number;
-  dateDebut: Date;
-  dateFin: Date;
-}
 
 @Component({
   selector: 'app-home',
@@ -34,17 +27,23 @@ export class HomeComponent implements OnInit {
 
   rooms: Room[];
 
-
-  constructor(private bookingCalendarDialog: MatDialog, private homeService : HomeService) { }
-
+  /* 
+    Variable itsMorning
+    Checks the period of half-day to display
+    TRUE => Displays morning planning
+    FALSE => Displays afternoon planning
+  */
   itsMorning: boolean;
+
+  constructor(private bookingCalendarDialog: MatDialog, private homeService: HomeService) { }
+
 
   ngOnInit() {
     this.initPlanningBtn();
     this.getRooms();
   }
 
-  getRooms(): void{
+  getRooms(): void {
     this.homeService.getRooms()
       .subscribe(rooms => this.rooms = rooms);
   }
@@ -59,45 +58,56 @@ export class HomeComponent implements OnInit {
    */
 
   setReservationParameters(reservation) {
-    //demi journee = 5h = 300 minutes
-    let maxMinutes = 300;
-    //début = 8h donc 8h = 480minutes
-    let debutMinutes = 480;
+    let maxMinutes;
+    let startMinutes;
+
+    if (this.itsMorning) {
+      //demi journee = 5h = 300 minutes
+      maxMinutes = 300;
+      //début = 8h donc 8h = 480minutes
+      startMinutes = 480;
+    }
+    else{
+      //demi journee = 5h = 300 minutes
+      maxMinutes = 300;
+      //début = 13h donc 13h = 780minutes
+      startMinutes = 780;
+    }
 
     //total de l'heure de début en minutes
-    let hoursDebut = reservation.startDate.getHours();
-    let minutesDebut = reservation.startDate.getMinutes();
-    let totalMinutesDebut = (hoursDebut * 60 + minutesDebut) - debutMinutes;
+    let startHourBooking = reservation.startDate.getHours();
+    let startMinuteBooking = reservation.startDate.getMinutes();
+    let totalMinutesDebut = (startHourBooking * 60 + startMinuteBooking) - startMinutes;
 
     //total de l'heure de fin en minutes
     let hoursFin = reservation.endDate.getHours();
     let minutesFin = reservation.endDate.getMinutes();
-    let totalMinutesFin = (hoursFin * 60 + minutesFin) - debutMinutes;
+    let totalMinutesFin = (hoursFin * 60 + minutesFin) - startMinutes;
 
     //calcul de la marge(décalage) en fonction de l'heure de début
-    let margeGauche = totalMinutesDebut * 100 / maxMinutes;
+    let leftMargin = totalMinutesDebut * 100 / maxMinutes;
 
     //calcul de la taille de la réservation en fonction de l'heure de fin
-    let dureeResa = (totalMinutesFin - totalMinutesDebut) * 100 / maxMinutes;
+    let bookingDuration = (totalMinutesFin - totalMinutesDebut) * 100 / maxMinutes;
 
     let styles = {
-      'left.%': margeGauche,
-      'width.%': dureeResa,
+      'left.%': leftMargin,
+      'width.%': bookingDuration,
     };
     return styles;
+    
   }
 
-  
   getPlanning() {
-    if(this.itsMorning){
+    if (this.itsMorning) {
       this.setBtnAfternoon();
     }
-    else{
+    else {
       this.setBtnMorning();
     }
   }
 
- initPlanningBtn() {
+  initPlanningBtn() {
     if (moment().format("HH:mm") > "13:00") {
       this.setBtnAfternoon();
     }
@@ -108,10 +118,12 @@ export class HomeComponent implements OnInit {
 
   setBtnMorning() {
     this.itsMorning = true;
+    console.log("C'est le Matin !");
   }
   setBtnAfternoon() {
     this.itsMorning = false;
+    console.log("C'est l'après-midi !")
   }
 
-  
+
 }

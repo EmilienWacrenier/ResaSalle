@@ -15,8 +15,4 @@ export class HomeService {
     return of(ROOMS);
   }
 
-  getBookingsByRoom(id): Observable<Booking[]>{
-    console.log("Room " + ROOMS[id].name + " : " + ROOMS[id].bookings)
-    return of (ROOMS[id].bookings);
-  }
 }
