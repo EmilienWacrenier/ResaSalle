@@ -9,9 +9,6 @@ import { element } from 'protractor';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  home : boolean;
-  dashboard : boolean;
-  search : boolean;
   constructor() { }
 
   ngOnInit() {

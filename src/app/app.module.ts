@@ -20,6 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from './material.module';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +44,8 @@ import { MaterialModule } from './material.module';
     FormsModule, 
     ReactiveFormsModule,
     ReactiveFormsModule,
-    MaterialModule 
+    MaterialModule,
+    NgbModule 
   ],
   providers: [],
   bootstrap: [AppComponent],

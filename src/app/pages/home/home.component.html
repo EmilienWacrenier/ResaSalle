@@ -1,41 +1,45 @@
 <div id="div_global">
-  
+
 
   <div style="display: flex;">
-      <h2> Disponible ce jour </h2>
-      <button mat-button id="planning-btn" aria-label="Button to switch periods"
-        (click)="getPlanning()">
-          <mat-icon>
-              signal_cellular_alt
-          </mat-icon>  
-        <span id="planning-btn-period">Matin</span>
-          <mat-icon id="planning-btn-arrow">
-              keyboard_arrow_down
-          </mat-icon>
-      </button>
-    </div>
+    <h2> Disponible ce jour </h2>
+    <button mat-button id="planning-btn" aria-label="Button to switch periods" (click)="getPlanning()">
+      <mat-icon>
+        signal_cellular_alt
+      </mat-icon>
+      <span id="planning-btn-period">{{ itsMorning ? 'Matin' : 'Après-Midi'}}</span>
+      <mat-icon id="planning-btn-arrow">
+        {{ itsMorning ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
+      </mat-icon>
+    </button>
+  </div>
+  <div style="width:100%" *ngFor="let room of rooms; let i = index">
+    {{room.name}}
 
-  <div class="timeline-container-heures">
-    <div class="timeline-flag-heure"><span>{{ itsMorning ? 8 : 13 }}</span></div>
-    <div class="timeline-flag-heure"><span>{{ itsMorning ? 9 : 14 }}</span></div>
-    <div class="timeline-flag-heure"><span>{{ itsMorning ? 10 : 15 }}</span></div>
-    <div class="timeline-flag-heure"><span>{{ itsMorning ? 11 : 16 }}</span></div>
-    <div class="timeline-flag-heure timeline-flag-heure-last">
-      <span>{{ itsMorning ? 12 : 17 }}</span>
-      <span class="f-right">{{ itsMorning ? 13 : 18 }}</span>
+    <div class="timeline-container-heures">
+      <div class="timeline-flag-heure"><span>{{ itsMorning ? 8 : 13 }}</span></div>
+      <div class="timeline-flag-heure"><span>{{ itsMorning ? 9 : 14 }}</span></div>
+      <div class="timeline-flag-heure"><span>{{ itsMorning ? 10 : 15 }}</span></div>
+      <div class="timeline-flag-heure"><span>{{ itsMorning ? 11 : 16 }}</span></div>
+      <div class="timeline-flag-heure timeline-flag-heure-last">
+        <span>{{ itsMorning ? 12 : 17 }}</span>
+        <span class="f-right">{{ itsMorning ? 13 : 18 }}</span>
+      </div>
+    </div>
+    <div class="timeline-container">
+      <div style="width:100%" *ngFor="let booking of rooms[i].bookings" class="timeline-tile"
+        [ngStyle]="setReservationParameters(booking)">
+      </div>
+
+      <div class="timeline-flag"></div>
+      <div class="timeline-flag"></div>
+      <div class="timeline-flag"></div>
+      <div class="timeline-flag"></div>
+
     </div>
   </div>
-  <div class="timeline-container">
-    <div style="width:100%" *ngFor="let resa of reservations" class="timeline-tile"
-      [ngStyle]="setReservationParameters(resa)">
-    </div>
 
-      <div class="timeline-flag"></div>
-      <div class="timeline-flag"></div>
-      <div class="timeline-flag"></div>
-      <div class="timeline-flag"></div>
 
-  </div>
 
 
 
