@@ -24,7 +24,7 @@ export const ROOMS: Room[] = [
     },
     {
         id: 2,
-        name: "Philou",
+        name: "Pythagore",
         bookings: [{
             id: 1,
             startDate: new Date("2019-11-06 8:10:00"),
@@ -43,7 +43,7 @@ export const ROOMS: Room[] = [
     },
     {
         id: 3,
-        name: "Janot",
+        name: "Pascal",
         bookings: [{
             id: 1,
             startDate: new Date("2019-11-06 8:20:00"),
