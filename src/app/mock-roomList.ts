@@ -19,6 +19,11 @@ export const ROOMS: Room[] = [
                 id: 3,
                 startDate: new Date("2019-11-06 11:00:00"),
                 endDate: new Date("2019-11-06 13:00:00")
+            },
+            {
+                id: 4,
+                startDate: new Date("2019-11-06 14:00:00"),
+                endDate: new Date("2019-11-06 15:00:13")
             }
         ]
     },

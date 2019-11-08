@@ -43,8 +43,20 @@
             </div>
             <!-- blocs des réservations en bleu foncé -->
             <div class="timeline-container">
-                <div *ngFor="let booking of rooms[i].bookings" class="timeline-tile"
+                <div *ngFor="let booking of rooms[i].bookings">
+
+                    <div
+                    *ngIf="!itsMorning && booking.startDate.getHours() >= 13" 
+                    class="timeline-tile"
                     [ngStyle]="setReservationParameters(booking)">
+                    </div>
+
+                    <div
+                    *ngIf="itsMorning && booking.startDate.getHours() < 13" 
+                    class="timeline-tile"
+                    [ngStyle]="setReservationParameters(booking)">
+                    </div>
+
                 </div>
                 <!-- blocs avec des bordures à droite pour flags les heures -->
                 <div class="timeline-flag"></div>
