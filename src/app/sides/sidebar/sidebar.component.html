@@ -4,22 +4,27 @@
     <mat-toolbar class="brand">
       <img src="assets/Image1.png" id="logo" alt="atos">
     </mat-toolbar>
-    
+
     <!-- NAV LIST ITEMS -->
-    
-    <button id="button_home" routerLink="/" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">home</mat-icon>
-      <p>Accueil</p>
-    </button>
-    <button id="button_dashboard" routerLink="/dashboard" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">dashboard</mat-icon>
-      <p>Dashboard</p>
-    </button>
-    <button id="button_search" routerLink="/search" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" class="icon">search</mat-icon>
-      <p>Rechercher</p>
-    </button>
-    
+
+    <div class="list-group mt-3">
+      <a class="tabs" routerLink="/" id="homeNavItem" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
+        <i class="material-icons">home</i>
+        <!-- icone mise entre des divs pour que le lien fonctionne partout dans le bouton-->
+        <div class="tabs-title">Accueil</div>
+      </a>
+      <a class="tabs" routerLink="/dashboard" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
+        [routerLinkActiveOptions]="{exact: true}">
+        <i class="material-icons">dashboard</i>
+        <div class="tabs-title">Dashboard</div>
+      </a>
+      <a class="tabs" routerLink="/search" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
+        [routerLinkActiveOptions]="{exact: true}">
+        <i class="material-icons">search</i>
+        <div class="tabs-title">Rechercher</div>
+      </a>
+    </div>
+
   </mat-sidenav>
 
   <mat-sidenav-content>

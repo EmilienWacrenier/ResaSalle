@@ -19,10 +19,7 @@ const routes: Routes = [
     component: UserlayoutComponent,
     children: [
       { path: '', component: HomeComponent },
-      {
-        path: 'planning/:id',
-        component: RoomPlanningComponent
-      },
+      { path: 'planning/:id', component: RoomPlanningComponent },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'search', component: SearchComponent },
     ]

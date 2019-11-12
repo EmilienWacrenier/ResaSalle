@@ -1,52 +1,65 @@
-  .timeline-container-heures,
-  .timeline-container{
-    width: 100%;
-  }
+.rowRoom:hover{
+  border-left: 5px solid rgb(57, 77, 112);
+  background-color: rgb(220, 230, 247)!important;
+  cursor: pointer;
+}
 
-  .timeline-container{
-    width: 99%;
-    position: relative;
-    height: 30px;
-    background-color: lightskyblue;
-    margin: 0 auto;
-  }
+.rowRoom:hover .timeline-flag{
+  border-right: 5px solid rgb(220, 230, 247);
+}
 
-  .timeline-tile{
-    position: absolute;
-    top:0;
-    background-color: rgb(28, 71, 151);
-    height: 100%;
-  }
+.timeline-container-heures,
+.timeline-container{
+  width: 100%;
+}
 
-  .timeline-flag{
-    position: relative;
-    display: inline-block;
-    width: 20% ;
-    height: 30px;
-    border-right: 5px solid white;
-    z-index: 1;
-  }
+.timeline-container{
+  width: 99%;
+  position: relative;
+  height: 30px;
+  background-color: rgb(115, 154, 224);
+  margin: 0 auto;
+}
 
-  .timeline-flag-heure{
-    display: inline-block;
-    width: calc( 20% - 5px);
-    margin-bottom: 8px;
+.timeline-tile{
+  position: absolute;
+  top:0;
+  background-color: rgb(57, 77, 112);
+  height: 100%;
+}
 
-    font-size: 1rem;
-    font-weight: bold;
-    color: rgb(28, 71, 151);
-  }
+.timeline-flag{
+  position: relative;
+  display: inline-block;
+  width: 20% ;
+  height: 30px;
+  border-right: 5px solid white;
+  z-index: 1;
+}
 
-  .timeline-flag-heure-last{
-    width: calc(20% + 20px);
-  }
-  
-  mat-icon{
-    vertical-align: bottom;
-  }
+.timeline-flag-heure{
+  display: inline-block;
+  width: calc( 20% - 5px);
+  margin-bottom: 8px;
 
-  .periodBtn:hover{
-    color: rgb(28, 71, 151);
-    cursor: pointer;
-    text-decoration: underline;
-  }
+  font-size: 1rem;
+  font-weight: bold;
+  color: rgb(57, 77, 112);;
+}
+
+.timeline-flag-heure-last{
+  width: calc(20% + 20px);
+}
+
+mat-icon{
+  vertical-align: bottom;
+}
+
+.periodBtn:hover{
+  color: rgb(28, 71, 151);
+  cursor: pointer;
+  text-decoration: underline;
+}
+.roomDetails{
+  font-size: smaller;
+}
