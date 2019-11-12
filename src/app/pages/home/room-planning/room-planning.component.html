@@ -1,0 +1,11 @@
+<h1>{{room.id}}</h1>
+<p>{{room.name}}</p>
+
+<div *ngFor="let booking of room.bookings">
+<ul>
+    <li>{{booking.id}}</li>
+    <li>{{booking.startDate}}</li>
+    <li>{{booking.endDate}}</li>
+</ul>
+
+</div>

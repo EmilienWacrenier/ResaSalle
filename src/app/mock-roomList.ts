@@ -29,7 +29,7 @@ export const ROOMS: Room[] = [
     },
     {
         id: 2,
-        name: "Philou",
+        name: "Pythagore",
         bookings: [
             {
                 id: 1,
@@ -48,35 +48,147 @@ export const ROOMS: Room[] = [
             },
             {
                 id: 4,
-                startDate: new Date("2019-11-06 15:00:00"),
-                endDate: new Date("2019-11-06 15:10:30")
+                startDate: new Date("2019-11-06 15:0:00"),
+                endDate: new Date("2019-11-06 18:00:00")
             }
         ]
     },
     {
         id: 3,
-        name: "Janot",
+        name: "Pascal",
+        bookings: [{
+            id: 1,
+            startDate: new Date("2019-11-06 8:20:00"),
+            endDate: new Date("2019-11-06 8:50:00")
+        },
+        {
+            id: 2,
+            startDate: new Date("2019-11-06 9:00:00"),
+            endDate: new Date("2019-11-06 10:00:00")
+        },
+        {
+            id: 3,
+            startDate: new Date("2019-11-06 10:12:00"),
+            endDate: new Date("2019-11-06 11:00:00")
+        }]
+    },
+    {
+        id: 4,
+        name: "Marne",
         bookings: [
             {
                 id: 1,
-                startDate: new Date("2019-11-06 8:20:00"),
-                endDate: new Date("2019-11-06 8:50:00")
+                startDate: new Date("2019-11-06 8:01:00"),
+                endDate: new Date("2019-11-06 8:20:00")
             },
             {
                 id: 2,
-                startDate: new Date("2019-11-06 9:00:00"),
-                endDate: new Date("2019-11-06 10:00:00")
+                startDate: new Date("2019-11-06 9:10:00"),
+                endDate: new Date("2019-11-06 9:30:00")
             },
             {
                 id: 3,
-                startDate: new Date("2019-11-06 10:12:00"),
-                endDate: new Date("2019-11-06 11:00:00")
+                startDate: new Date("2019-11-06 11:00:00"),
+                endDate: new Date("2019-11-06 13:00:00")
             },
             {
                 id: 4,
-                startDate: new Date("2019-11-06 16:50:00"),
-                endDate: new Date("2019-11-06 18:00:00")
+                startDate: new Date("2019-11-06 14:00:00"),
+                endDate: new Date("2019-11-06 15:00:13")
+            },
+            {
+                id: 5,
+                startDate: new Date("2019-11-06 15:10:00"),
+                endDate: new Date("2019-11-06 16:30:00")
             }
         ]
-    }
+    },
+    {
+        id: 5,
+        name: "Pika",
+        bookings: [
+            {
+                id: 1,
+                startDate: new Date("2019-11-06 8:01:00"),
+                endDate: new Date("2019-11-06 9:02:00")
+            },
+            {
+                id: 2,
+                startDate: new Date("2019-11-06 9:10:00"),
+                endDate: new Date("2019-11-06 9:30:00")
+            },
+            {
+                id: 3,
+                startDate: new Date("2019-11-06 11:00:00"),
+                endDate: new Date("2019-11-06 13:00:00")
+            },
+            {
+                id: 4,
+                startDate: new Date("2019-11-06 14:00:00"),
+                endDate: new Date("2019-11-06 15:00:13")
+            },
+            {
+                id: 5,
+                startDate: new Date("2019-11-06 15:20:00"),
+                endDate: new Date("2019-11-06 16:30:00")
+            }
+        ]
+    },
+    {
+        id: 6,
+        name: "Gym",
+        bookings: [
+            {
+                id: 1,
+                startDate: new Date("2019-11-06 8:01:00"),
+                endDate: new Date("2019-11-06 9:02:00")
+            },
+            {
+                id: 2,
+                startDate: new Date("2019-11-06 9:10:00"),
+                endDate: new Date("2019-11-06 9:30:00")
+            },
+            {
+                id: 3,
+                startDate: new Date("2019-11-06 11:00:00"),
+                endDate: new Date("2019-11-06 13:00:00")
+            },
+            {
+                id: 4,
+                startDate: new Date("2019-11-06 14:00:00"),
+                endDate: new Date("2019-11-06 15:00:13")
+            },
+            {
+                id: 5,
+                startDate: new Date("2019-11-06 15:10:00"),
+                endDate: new Date("2019-11-06 17:45:00")
+            }
+        ]
+    },
+    {
+        id: 7,
+        name: "Andromède",
+        bookings: [
+            {
+                id: 1,
+                startDate: new Date("2019-11-06 8:01:00"),
+                endDate: new Date("2019-11-06 9:02:00")
+            },
+            {
+                id: 2,
+                startDate: new Date("2019-11-06 9:10:00"),
+                endDate: new Date("2019-11-06 9:30:00")
+            },
+            {
+                id: 3,
+                startDate: new Date("2019-11-06 11:00:00"),
+                endDate: new Date("2019-11-06 13:00:00")
+            },
+            {
+                id: 4,
+                startDate: new Date("2019-11-06 14:00:00"),
+                endDate: new Date("2019-11-06 15:00:13")
+            }
+        ]
+    },
 ]
