@@ -22,11 +22,16 @@
 
     </div>
 
-    <div class="row bg-white align-items-center px-3" *ngFor="let room of rooms; let i = index">
+    <div class="row align-items-center bg-white px-3 rowRoom" 
+    *ngFor="let room of rooms; let i = index"
+    (click)="toggleRoomDetails()">
 
-        <div class="col-3">
-            <mat-icon class="ml-3 mr-5">keyboard_arrow_down</mat-icon>
-            <span>{{room.name}}</span>
+        <div class="col-4">
+            <mat-icon class="mx-3 mt-2">meeting_room</mat-icon>
+            <span class="my-auto mx-3">{{room.name}} : </span>
+            <span class="roomDetails">Zone A</span>
+            <span class="roomDetails mx-3">-</span>
+            <span class="roomDetails">4 pers.</span>
         </div>
 
         <div class="col py-3">

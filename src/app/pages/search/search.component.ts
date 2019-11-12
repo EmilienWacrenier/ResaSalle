@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
+import {NgbTimepickerConfig} from '@ng-bootstrap/ng-bootstrap';
+import {NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap';
+
 import { RECURRENCE } from "../../constantes/constantes";
 import { NUMERO_SEMAINE } from "../../constantes/constantes";
 import { JOUR_SEMAINE } from "../../constantes/constantes";
@@ -30,7 +33,14 @@ export class SearchComponent implements OnInit {
     capacites: number[] = CAPACITE;
     choix: number[] = [];
 
-    constructor(private _formBuilder: FormBuilder) {}
+
+    time: NgbTimeStruct = {hour: 0, minute: 0, second: 0};
+    minuteStep = 30;
+
+    constructor(private _formBuilder: FormBuilder, config: NgbTimepickerConfig) {
+      config.seconds = false;
+      config.spinners = true;
+    }
   
     ngOnInit() {
       this.firstFormGroup = this._formBuilder.group({

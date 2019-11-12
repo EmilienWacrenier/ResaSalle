@@ -11,7 +11,9 @@
                 </div>
             </div>
             <div class="col">
-                <div class="horloge"><input class="timepicker" matInput type="time"></div>
+                <ngb-timepicker [(ngModel)]="time" [minuteStep]="minuteStep"></ngb-timepicker>
+                <hr>
+                <pre>Selected time: {{time | json}}</pre>
             </div>
         </div>
 
@@ -87,15 +89,15 @@
             </div>
         </div>
 
-        
+
         <div fxLayout="row" class="my-3">
             <!-- Date de fin de la recurrence -->
-                <span class="finile">Fini le </span>
-                <mat-form-field>
-                    <input matInput [matDatepicker]="picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
+            <span class="finile">Fini le </span>
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
         </div>
 
         <div fxLayout="row">
@@ -108,45 +110,35 @@
 
     <!-- Stepper phase 1 capacité -->
     <mat-step [stepControl]="thirdFormGroup">
-            <ng-template matStepLabel>Salle</ng-template>
+        <ng-template matStepLabel>Salle</ng-template>
 
-            <div class="example-container">
-                <h2>Capacité</h2>
+        <div class="example-container">
+            <h2>Capacité</h2>
 
-                <div 
-                    cdkDropList
-                    #capaciteList="cdkDropList"
-                    [cdkDropListData]="capacites"
-                    [cdkDropListConnectedTo]="[choixList]"
-                    class="capacite-list"
-                    (cdkDropListDropped)="drop($event)">
-                    <div class="drag-drop-items" *ngFor="let item of capacites" cdkDrag>{{item}} pers</div>
-                </div>
+            <div cdkDropList #capaciteList="cdkDropList" [cdkDropListData]="capacites"
+                [cdkDropListConnectedTo]="[choixList]" class="capacite-list" (cdkDropListDropped)="drop($event)">
+                <div class="drag-drop-items" *ngFor="let item of capacites" cdkDrag>{{item}} pers</div>
             </div>
+        </div>
 
-            <div class="example-container">
-                <h2>Mes critères</h2>
+        <div class="example-container">
+            <h2>Mes critères</h2>
 
-                <div 
-                    cdkDropList
-                    #choixList="cdkDropList"
-                    [cdkDropListData]="choix"
-                    [cdkDropListConnectedTo]="[capaciteList]"
-                    class="choix-list"
-                    (cdkDropListDropped)="drop($event)">
-                    <div class="drag-drop-items" *ngFor="let item of choix" cdkDrag>{{item}} pers</div>
-                </div>
+            <div cdkDropList #choixList="cdkDropList" [cdkDropListData]="choix"
+                [cdkDropListConnectedTo]="[capaciteList]" class="choix-list" (cdkDropListDropped)="drop($event)">
+                <div class="drag-drop-items" *ngFor="let item of choix" cdkDrag>{{item}} pers</div>
             </div>
-            
-            <div fxLayout="row">
-                <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
-                <button class="bouton-back-next" mat-button matStepperNext>Suivant</button>
-            </div>
+        </div>
+
+        <div fxLayout="row">
+            <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
+            <button class="bouton-back-next" mat-button matStepperNext>Suivant</button>
+        </div>
     </mat-step>
 
     <!-- Résultats -->
     <mat-step [stepControl]="fourthFormGroup">
         <ng-template matStepLabel>Résultats</ng-template>
-        
+
     </mat-step>
 </mat-horizontal-stepper>

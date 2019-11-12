@@ -1,3 +1,4 @@
+/* SIDEBAR : LOGO + BOUTONS */
 #sidebar {
 width: 10%;
 text-align: center;
@@ -5,31 +6,7 @@ background:rgb(115, 154, 224);
 font-size: 20px;
 }
 
-.icon {
-margin: 10px;
-padding-top:15%;
-}
-
-button {
-color:rgba(255, 255, 255, 0.555);
-background: transparent;
-width: 100%;
-border: none;
-cursor: pointer;
-}
-
-button:focus, button:active:focus, button.active:focus {
-outline:none;
-outline-style: none;
-} 
-
-.active-list-item{
-  color: white;
-  border-left-style: solid;
-  border-left-color: rgba(255, 255, 255, 0.774);
-  border-left-width: 5px;
-}
-
+/* LOGO */
 #logo {
   margin: 10%;
   width: 75%;
@@ -38,6 +15,46 @@ outline-style: none;
 .brand{
   background: rgb(28, 71, 151);
 }
+
+/* BOUTONS */
+.mat-drawer-content::-webkit-scrollbar
+{
+  display: none;
+}
+
+.active-list-item {
+  color: rgb(115, 154, 224)!important;
+  background-color: white!important;
+  /*border-left: 5px solid white;*/
+}
+
+a.tabs {
+  color:rgba(255, 255, 255, 0.555);
+  text-decoration: none;
+  padding: .75rem 1.25rem;
+}
+
+.tabs:hover{
+  color: white;
+}
+
+.material-icons{
+  display: block;
+  font-size: 3em;
+}
+
+.tabs-title{
+  display: block;
+  font-size: 1rem;
+}
+
+
+
+/*
+a .active-list-item {
+  color: white;
+  border-left-style: 5px solid rgba(255, 255, 255, 0.774);
+}*/
 
 .grid-container{
   margin: 20px;
