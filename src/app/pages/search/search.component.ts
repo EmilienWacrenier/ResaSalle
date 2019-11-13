@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-
-import {NgbTimepickerConfig} from '@ng-bootstrap/ng-bootstrap';
-import {NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { RECURRENCE } from "../../constantes/constantes";
 import { NUMERO_SEMAINE } from "../../constantes/constantes";
@@ -16,55 +15,69 @@ import { CAPACITE } from "../../constantes/constantes";
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-    isLinear = false;
-    firstFormGroup: FormGroup;
-    secondFormGroup: FormGroup;
-    thirdFormGroup: FormGroup;
-    fourthFormGroup: FormGroup;
+  dateFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
+  fourthFormGroup: FormGroup;
 
-    checked = false;
+  selectedDate: any;
+  year: any;
+  DayAndDate: string;
 
-    selectedRecurrence: string;
-    selectedMensualite: string;
+  time: any;
+  time2: any;
 
-    recurrences: string[] = RECURRENCE;
-    numSemaines: string[] = NUMERO_SEMAINE;
-    jourSemaines: string[] = JOUR_SEMAINE;
-    capacites: number[] = CAPACITE;
-    choix: number[] = [];
+  isChecked = false;
+  checked = false;
+
+  selectedRecurrence: string;
+  selectedMensualite: string;
+
+  recurrences: string[] = RECURRENCE;
+  numSemaines: string[] = NUMERO_SEMAINE;
+  jourSemaines: string[] = JOUR_SEMAINE;
+  capacites: number[] = CAPACITE;
+  choix: number[] = [];
 
 
-    time: NgbTimeStruct = {hour: 0, minute: 0, second: 0};
-    minuteStep = 30;
+  minuteStep = 30;
 
-    constructor(private _formBuilder: FormBuilder, config: NgbTimepickerConfig) {
-      config.seconds = false;
-      config.spinners = true;
-    }
-  
-    ngOnInit() {
-      this.firstFormGroup = this._formBuilder.group({
-        firstCtrl: ['', Validators.required]
-      });
-      this.secondFormGroup = this._formBuilder.group({
-        secondCtrl: ['', Validators.required]
-      });
-      this.thirdFormGroup = this._formBuilder.group({
-        thirdCtrl: ['', Validators.required]
-      });
-      this.fourthFormGroup = this._formBuilder.group({
-        fourthCtrl: ['', Validators.required]
-      });
-    }
-  
-    drop(event: CdkDragDrop<string[]>) {
-      if (event.previousContainer === event.container) {
-        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      } else {
-        transferArrayItem(event.previousContainer.data,
-                          event.container.data,
-                          event.previousIndex,
-                          event.currentIndex);
-      }
+  constructor(private _formBuilder: FormBuilder, config: NgbTimepickerConfig) {
+    config.seconds = false;
+    config.spinners = true;
+    config.size = "small";
+
+    this.onSelect(this.selectedDate);
+  }
+
+  ngOnInit() {
+    this.dateFormGroup = this._formBuilder.group({
+      datePickerCtrl: ['', Validators.required]
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
+    this.thirdFormGroup = this._formBuilder.group({
+      thirdCtrl: ['', Validators.required]
+    });
+    this.fourthFormGroup = this._formBuilder.group({
+      fourthCtrl: ['', Validators.required]
+    });
+  }
+
+  onSelect(event) {
+    console.log(event);
+    this.selectedDate = event;
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
     }
   }
+}

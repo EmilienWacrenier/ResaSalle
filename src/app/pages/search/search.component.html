@@ -1,40 +1,62 @@
-<mat-horizontal-stepper class="stepper" [linear]="isLinear" #stepper>
+<mat-horizontal-stepper class="stepper" [linear]="true" #stepper>
 
     <!-- Stepper phase 1 selection du jour et heure -->
-    <mat-step [stepControl]="firstFormGroup">
-        <ng-template matStepLabel>Date</ng-template>
+    <mat-step [stepControl]="dateFormGroup">
+        <form [formGroup]="dateFormGroup">
+            <ng-template matStepLabel>Date</ng-template>
 
-        <div class="row my-3">
-            <div class="col">
-                <div class="calendrier">
-                    <mat-calendar [selected]="selectedDate" (selectedChange)="selectedDate = $event"></mat-calendar>
+            <div class="row my-3">
+                <div class="col-auto mr-5 p-3">
+                    <div class="calendrier">
+                        <mat-calendar [selected]="selectedDate" (selectedChange)="onSelect($event)"></mat-calendar>
+                    </div>
+                </div>
+                <div class="col p-3">
+                    <div class="container-fluid">
+
+                        <div class="row justify-content-center text-center">
+                            <div class="col-6">
+                                <h5 class="p-2">Debut</h5>
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="time" step="1800" >
+                                    </mat-form-field>
+                            </div>
+                            <div class="col-6">
+                                <h5 class="p-2">Fin</h5>
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="time" step="1800" >
+                                    </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <ngb-timepicker [(ngModel)]="time" [minuteStep]="minuteStep"></ngb-timepicker>
-                <hr>
-                <pre>Selected time: {{time | json}}</pre>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col">
-                <button class="bouton-back-next" mat-button matStepperNext>Suivant</button>
-            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="bouton-back-next" mat-button matStepperNext>Suivant</button>
+                </div>
 
-            <div class="col">
-                <div>
-                    <!-- Toggle de la recurrence -->
-                    <mat-slide-toggle>
-                        Activer la récurrence ?
-                    </mat-slide-toggle>
+                <div class="col">
+                    <div>
+                        <!-- Toggle de la recurrence -->
+                        <mat-slide-toggle (onToggle)="isChecked = !isChecked">
+                            Activer la récurrence ?
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        Vous voulez trouver une salle pour une réunion débutant le {{time}} et finissant le
+                        {{time2}} le {{selectedDate}}
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </mat-step>
 
     <!-- Stepper phase 2 recurrence -->
-    <mat-step [stepControl]="secondFormGroup">
+    <mat-step [stepControl]="secondFormGroup" *ngIf="isChecked">
         <ng-template matStepLabel>Récurrence</ng-template>
 
         <div fxLayout="row" class="my-3">
