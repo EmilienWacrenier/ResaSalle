@@ -7,25 +7,20 @@
         </div>
 
         <div class="col align-self-center">
-            <button mat-button 
-            id="planning-btn" 
-            aria-label="Button to switch periods" 
-            (click)="getPlanning()">
+            <span class="periodBtn" id="planning-btn" aria-label="Button to switch periods" (click)="getPlanning()">
                 <mat-icon>signal_cellular_alt</mat-icon>
-                <span class="mx-3"id="planning-btn-period">{{ itsMorning ? 'Matin' : 'Après-Midi'}}</span>
+                <span class="mx-3" id="planning-btn-period">{{ itsMorning ? 'Matin' : 'Après-Midi'}}</span>
                 <mat-icon id="planning-btn-arrow">
                     {{ itsMorning ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
                 </mat-icon>
-            </button>
+            </span>
 
         </div>
 
     </div>
 
-    <div class="row align-items-center bg-white px-3 rowRoom" 
-    *ngFor="let room of rooms; let i = index"
-    (click)="toggleRoomDetails()">
-
+    <div class="row align-items-center bg-white px-3 rowRoom" *ngFor="let room of rooms; let i = index"
+        routerLink="/planning/{{room.id}}">
         <div class="col-4">
             <mat-icon class="mx-3 mt-2">meeting_room</mat-icon>
             <span class="my-auto mx-3">{{room.name}} : </span>
@@ -50,16 +45,12 @@
             <div class="timeline-container">
                 <div *ngFor="let booking of rooms[i].bookings">
 
-                    <div
-                    *ngIf="!itsMorning && booking.startDate.getHours() >= 13" 
-                    class="timeline-tile"
-                    [ngStyle]="setReservationParameters(booking)">
+                    <div *ngIf="!itsMorning && booking.startDate.getHours() >= 13" class="timeline-tile"
+                        [ngStyle]="setReservationParameters(booking)">
                     </div>
 
-                    <div
-                    *ngIf="itsMorning && booking.startDate.getHours() < 13" 
-                    class="timeline-tile"
-                    [ngStyle]="setReservationParameters(booking)">
+                    <div *ngIf="itsMorning && booking.startDate.getHours() < 13" class="timeline-tile"
+                        [ngStyle]="setReservationParameters(booking)">
                     </div>
 
                 </div>
@@ -72,7 +63,6 @@
             </div>
 
         </div>
-
     </div>
 
 </div>

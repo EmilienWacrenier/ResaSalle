@@ -15,4 +15,7 @@ export class HomeService {
     return of(ROOMS);
   }
 
+  getRoomPlanning(id: number): Observable<Room> {
+    return of(ROOMS.find(room => room.id === id));
+  }
 }

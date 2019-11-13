@@ -125,9 +125,5 @@ export class HomeComponent implements OnInit {
     console.log("C'est l'après-midi !")
   }
 
-  toggleRoomDetails(){
-      document.getElementById("roomDetails").classList.toggle('d-none');
-  }
-
 
 }

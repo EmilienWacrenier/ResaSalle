@@ -8,17 +8,17 @@
     <!-- NAV LIST ITEMS -->
 
     <div class="list-group mt-3">
-      <a class="tabs" routerLink="/" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
+      <a class="tabs" routerLink="/" id="homeNavItem" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
         <i class="material-icons">home</i>
         <!-- icone mise entre des divs pour que le lien fonctionne partout dans le bouton-->
         <div class="tabs-title">Accueil</div>
       </a>
-      <a class="tabs" routerLink="/dashboard" routerLinkActive="active-list-item"
+      <a class="tabs" routerLink="/dashboard" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
         [routerLinkActiveOptions]="{exact: true}">
         <i class="material-icons">dashboard</i>
         <div class="tabs-title">Dashboard</div>
       </a>
-      <a class="tabs" routerLink="/search" routerLinkActive="active-list-item"
+      <a class="tabs" routerLink="/search" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
         [routerLinkActiveOptions]="{exact: true}">
         <i class="material-icons">search</i>
         <div class="tabs-title">Rechercher</div>

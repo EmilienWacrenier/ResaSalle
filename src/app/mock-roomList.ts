@@ -30,21 +30,28 @@ export const ROOMS: Room[] = [
     {
         id: 2,
         name: "Pythagore",
-        bookings: [{
-            id: 1,
-            startDate: new Date("2019-11-06 8:10:00"),
-            endDate: new Date("2019-11-06 9:00:00")
-        },
-        {
-            id: 2,
-            startDate: new Date("2019-11-06 10:00:00"),
-            endDate: new Date("2019-11-06 11:00:00")
-        },
-        {
-            id: 3,
-            startDate: new Date("2019-11-06 11:30:00"),
-            endDate: new Date("2019-11-06 13:00:00")
-        }]
+        bookings: [
+            {
+                id: 1,
+                startDate: new Date("2019-11-06 8:10:00"),
+                endDate: new Date("2019-11-06 9:00:00")
+            },
+            {
+                id: 2,
+                startDate: new Date("2019-11-06 10:00:00"),
+                endDate: new Date("2019-11-06 11:00:00")
+            },
+            {
+                id: 3,
+                startDate: new Date("2019-11-06 11:30:00"),
+                endDate: new Date("2019-11-06 13:00:00")
+            },
+            {
+                id: 4,
+                startDate: new Date("2019-11-06 15:0:00"),
+                endDate: new Date("2019-11-06 18:00:00")
+            }
+        ]
     },
     {
         id: 3,
@@ -72,7 +79,7 @@ export const ROOMS: Room[] = [
             {
                 id: 1,
                 startDate: new Date("2019-11-06 8:01:00"),
-                endDate: new Date("2019-11-06 9:02:00")
+                endDate: new Date("2019-11-06 8:20:00")
             },
             {
                 id: 2,
@@ -88,6 +95,11 @@ export const ROOMS: Room[] = [
                 id: 4,
                 startDate: new Date("2019-11-06 14:00:00"),
                 endDate: new Date("2019-11-06 15:00:13")
+            },
+            {
+                id: 5,
+                startDate: new Date("2019-11-06 15:10:00"),
+                endDate: new Date("2019-11-06 16:30:00")
             }
         ]
     },
@@ -114,6 +126,11 @@ export const ROOMS: Room[] = [
                 id: 4,
                 startDate: new Date("2019-11-06 14:00:00"),
                 endDate: new Date("2019-11-06 15:00:13")
+            },
+            {
+                id: 5,
+                startDate: new Date("2019-11-06 15:20:00"),
+                endDate: new Date("2019-11-06 16:30:00")
             }
         ]
     },
@@ -140,6 +157,11 @@ export const ROOMS: Room[] = [
                 id: 4,
                 startDate: new Date("2019-11-06 14:00:00"),
                 endDate: new Date("2019-11-06 15:00:13")
+            },
+            {
+                id: 5,
+                startDate: new Date("2019-11-06 15:10:00"),
+                endDate: new Date("2019-11-06 17:45:00")
             }
         ]
     },

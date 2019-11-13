@@ -13,8 +13,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SearchComponent } from './pages/search/search.component';
 import { BookingcalendarComponent } from './modals/bookingcalendar/bookingcalendar.component';
 import { BookingdetailsComponent } from './modals/bookingdetails/bookingdetails.component';
+import { RoomPlanningComponent } from './pages/home/room-planning/room-planning.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -34,6 +34,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SearchComponent,
     BookingcalendarComponent,
     BookingdetailsComponent,
+    RoomPlanningComponent,
   ],
   imports: [
     BrowserModule,

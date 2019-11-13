@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { element } from 'protractor';
+import { Router } from '@angular/router';
 
 
 
@@ -9,9 +10,16 @@ import { element } from 'protractor';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  constructor() { }
+
+  currentUrl = this.router.url;
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
+  forceDeactiveHome() {
+    document.getElementById('homeNavItem').classList.remove('active-list-item');
+  }
 }
+
