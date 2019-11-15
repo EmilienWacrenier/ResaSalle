@@ -10,13 +10,19 @@ import { ApiConstants } from '../../constantes/constantes';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private toastr: ToastrService, private router: Router, private cst: ApiConstants) { }
+  protected user;
 
-  ngOnInit() {
+  constructor(private toastr: ToastrService, private router: Router, private cst: ApiConstants) {
+    this.user = JSON.parse(localStorage.getItem('user'));
   }
 
-  logout(){
-    this.toastr.success('Vous êtes déconnecté.', this.cst.toastrTitle +" - Deconnexion", this.cst.toastrOptions);
+  ngOnInit() {
+    console.log('utilisateur connecté : ' + this.user.firstname);
+  }
+
+  logout() {
+    this.toastr.success('Vous êtes déconnecté.', this.cst.toastrTitle + " - Deconnexion", this.cst.toastrOptions);
     this.router.navigate(['/login']);
+    localStorage.clear();
   }
 }
