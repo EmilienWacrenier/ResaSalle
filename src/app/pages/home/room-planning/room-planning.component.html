@@ -1,12 +1,45 @@
+<button mat-raised-button color="primary" (click)="openDialog()"> Créer une réservation </button>
+
 <h1>{{room.id}}</h1>
 <p>{{room.name}}</p>
 
+<!--
 <div *ngFor="let booking of room.bookings">
-<ul>
-    <li>{{booking.id}}</li>
-    <li>{{booking.startDate}}</li>
-    <li>{{booking.endDate}}</li>
-</ul>
+    <ul>
+        <li>{{booking.id}}</li>
+        <li>{{booking.startDate}}</li>
+        <li>{{booking.endDate}}</li>
+    </ul>
+</div>
+-->
+<button (click)="goBack()">Back Home :)</button>
+
+
+<div class="calendrier">
+    <mat-calendar [selected]="selectedDate" (selectedChange)="onSelect($event)">
+    </mat-calendar>
 </div>
 
-<button (click)="goBack()">Back Home :)</button>
+
+<div class="container-fluid">
+
+    <div class="row border" id="week-header">
+        <div class="col-2">
+            <div class="container-fluid">
+                <div class="row">•</div>
+                <div class="row" *ngFor="let hourOfPlanning of hoursOfPlanning">
+                    {{hourOfPlanning}}
+                </div>
+            </div>
+        </div>
+            <div class="col-2" *ngFor="let dayOfPlanning of daysOfPlanning">
+                <div class="container-fluid">
+                    <div class="row">{{dayOfPlanning}}</div>
+                    <div class="row" *ngFor="let hourOfPlanning of hoursOfPlanning, let i = index">
+                        {{i}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
