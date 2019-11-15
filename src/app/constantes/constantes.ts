@@ -35,3 +35,25 @@ export const HOURS_PLANNING: string[] = [
     "17", "17:30",
     "18"
 ]
+
+export class ApiConstants {
+    public readonly apiUrl: string = 'http://localhost:3000/';
+    public readonly toastrTitle: string = 'ResaSalles';
+    public readonly toastrOptions: any = {
+        closeButton: true,
+        debug: false,
+        newestOnTop: false,
+        progressBar: false,
+        positionClass: 'toast-top-right',
+        preventDuplicates: false,
+        onclick: close,
+        showDuration: 300,
+        hideDuration: 1000,
+        timeOut: 2000,
+        extendedTimeOut: 1000,
+        showEasing: 'swing',
+        hideEasing: 'linear',
+        showMethod: 'fadeIn',
+        hideMethod: 'fadeOut'
+      };
+}

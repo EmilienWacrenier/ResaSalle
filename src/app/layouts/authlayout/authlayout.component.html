@@ -6,18 +6,20 @@
             <mat-tab label="SE CONNECTER" class="w-100">
                 <div class="connexion">
                     <h1 class="title">Welcome back !</h1>
-                    <form>
+                    <form [formGroup]="loginForm">
                         <mat-form-field class="d-block">
-                            <input color="white" matInput name="email" placeholder="Email">
+                            <input color="white" matInput formControlName="email" placeholder="Email">
                             <mat-icon matSuffix class="grey">email</mat-icon>
                         </mat-form-field>
 
                         <mat-form-field class="d-block">
-                            <input type="password" matInput name="password" placeholder="Mot de passe">
+                            <input type="password" matInput formControlName="password" placeholder="Mot de passe">
                             <mat-icon matSuffix class="grey">lock_open</mat-icon>
                         </mat-form-field>
 
-                        <button routerLink="/" class="d-block connexion-button" type="submit">SE CONNECTER</button>
+                        <button class="d-block connexion-button" 
+                        (click)="login()"
+                        type="submit">SE CONNECTER</button>
                     </form>
 
                     <a class="mdp-oublie" href="/">J'ai oublié mon mot de passe</a>
@@ -29,31 +31,31 @@
             <mat-tab label="S'ENREGISTRER">
                 <div class="enregistrement">
                     <h1 class="title">Me créer un compte</h1>
-                    <form class="example-form">
+                    <form class="example-form" [formGroup]="registerForm">
                         <mat-form-field class="w-50">
-                            <input matInput placeholder="Nom" required />
+                            <input matInput formControlName="lastName" placeholder="Nom" required  />
                         </mat-form-field>
 
                         <mat-form-field class="w-50 f-right">
-                            <input matInput placeholder="Prenom" required />
+                            <input matInput formControlName="firstName" placeholder="Prenom" required />
                         </mat-form-field>
 
                         <mat-form-field class="d-block">
-                            <input type="email" matInput placeholder="Email" required />
+                            <input type="email" matInput formControlName="email" placeholder="Email" required />
                             <mat-icon matSuffix class="grey">email</mat-icon>
                         </mat-form-field>
 
                         <mat-form-field class="d-block">
-                            <input matInput placeholder="DAS" required />
+                            <input matInput formControlName="DAS" placeholder="DAS"required  />
                             <mat-icon matSuffix class="grey">person</mat-icon>
                         </mat-form-field>
 
                         <mat-form-field class="d-block">
-                            <input type="password" matInput placeholder="Mot de passe" required />
+                            <input type="password" matInput formControlName="password" placeholder="Mot de passe"required  />
                             <mat-icon matSuffix class="grey">lock_open</mat-icon>
                         </mat-form-field>
                         
-                        <button class="connexion-button" type="submit">M'ENREGISTRER</button>
+                        <button class="connexion-button" type="submit" (click)="register()" [disabled]="!registerForm.valid" >M'ENREGISTRER</button>
                     </form>
 
                 </div>
