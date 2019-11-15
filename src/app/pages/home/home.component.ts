@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
   */
   itsMorning: boolean;
 
-  constructor(private bookingCalendarDialog: MatDialog, private homeService: HomeService) { }
+  constructor(private homeService: HomeService) { }
 
 
   ngOnInit() {
@@ -47,15 +47,12 @@ export class HomeComponent implements OnInit {
     this.homeService.getRooms()
       .subscribe(rooms => this.rooms = rooms);
   }
-  /* 
-    //Méthode pr ouvrir la modale bookingCalendarDialog
-    openDialog() {
-      const bookingCalendarDialogConfig = new MatDialogConfig();
-      bookingCalendarDialogConfig.width = "50%";
-      bookingCalendarDialogConfig.height = "50%";
-      this.bookingCalendarDialog.open(BookingcalendarComponent, bookingCalendarDialogConfig);
-    }
-   */
+
+  reservationDuringMorning(dateString){
+    let date = new Date(dateString).getHours();
+    if (date > 13) { return false; }
+    else return true;
+  }
 
   setReservationParameters(reservation) {
     let maxMinutes;
@@ -75,20 +72,23 @@ export class HomeComponent implements OnInit {
     }
 
     //total de l'heure de début en minutes
-    let startHourBooking = reservation.startDate.getHours();
-    let startMinuteBooking = reservation.startDate.getMinutes();
+    let startHourBooking = new Date(reservation.startDate).getHours();
+    let startMinuteBooking = (new Date(reservation.startDate)).getMinutes();
     let totalMinutesDebut = (startHourBooking * 60 + startMinuteBooking) - startMinutes;
+    console.log(totalMinutesDebut);
 
     //total de l'heure de fin en minutes
-    let hoursFin = reservation.endDate.getHours();
-    let minutesFin = reservation.endDate.getMinutes();
+    let hoursFin = (new Date(reservation.endDate)).getHours();
+    let minutesFin = (new Date(reservation.endDate)).getMinutes();
     let totalMinutesFin = (hoursFin * 60 + minutesFin) - startMinutes;
+    console.log(totalMinutesFin);
 
     //calcul de la marge(décalage) en fonction de l'heure de début
     let leftMargin = totalMinutesDebut * 100 / maxMinutes;
-
+    console.log(leftMargin);
     //calcul de la taille de la réservation en fonction de l'heure de fin
     let bookingDuration = (totalMinutesFin - totalMinutesDebut) * 100 / maxMinutes;
+    console.log(bookingDuration);
 
     let styles = {
       'left.%': leftMargin,

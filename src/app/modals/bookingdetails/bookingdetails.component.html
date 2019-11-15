@@ -24,24 +24,42 @@
 
   <div class="row justify-content-between">
     <div class="col-6">
-      <mat-form-field>
-          <mat-label>Debut</mat-label>
-          <mat-select [(ngModel)]="selectedHourStart">
-              <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart">
-                  {{hourStart}}
-              </mat-option>
-          </mat-select>
-      </mat-form-field>
+        <h5 class="p-2">Debut</h5>
+        <mat-form-field class="w-50 px-2">
+            <mat-label>Heure</mat-label>
+            <mat-select [(ngModel)]="selectedHourStart" >
+                <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart">
+                    {{hourStart}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-50 px-2">
+            <mat-label>Minute</mat-label>
+            <mat-select [(ngModel)]="selectedMinuteStart" >
+                <mat-option *ngFor="let minuteStart of bookingMinutes" [value]="minuteStart">
+                    {{minuteStart}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
     <div class="col-6">
-      <mat-form-field>
-          <mat-label>Fin</mat-label>
-          <mat-select [(ngModel)]="selectedHourEnd">
-              <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
-                  {{hourEnd}}
-              </mat-option>
-          </mat-select>
-      </mat-form-field>
+        <h5 class="p-2">Fin</h5>
+        <mat-form-field class="w-50 px-2">
+            <mat-label>Heure</mat-label>
+            <mat-select [(ngModel)]="selectedHourEnd" >
+                <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
+                    {{hourEnd}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-50 px-2">
+            <mat-label>Minute</mat-label>
+            <mat-select [(ngModel)]="selectedMinuteEnd" >
+                <mat-option *ngFor="let minuteEnd of bookingMinutes" [value]="minuteEnd">
+                    {{minuteEnd}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
   </div>
 
@@ -71,7 +89,7 @@
       <div class="vignette">
         {{selectedMiniatures}}
         <mat-dialog-actions>
-            <button class="mat-raised-button" (click)="submit()">Créer</button>
+            <button matButton class="mat-raised-button" (click)="onSubmit()">Créer</button>
         </mat-dialog-actions>
       </div>
     </div>

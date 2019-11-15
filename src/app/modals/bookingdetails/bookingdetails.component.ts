@@ -2,8 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { Inject } from '@angular/core';
 
-import { HOURS_PLANNING } from '../../constantes/constantes'
+import { BOOKING_HOURS, BOOKING_MINUTES } from '../../constantes/constantes'
 import { Room } from 'src/app/classes/room';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+import { ReservationService } from '../../services/reservation.service'
+import { Booking } from '../../classes/booking';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-bookingdetails',
@@ -15,7 +20,6 @@ export class BookingdetailsComponent implements OnInit {
 
   room;
 
-  objetReunion: string = "Reunion Objet"; // objet de la réunion pour test
   selectedMiniatures: string[]; //affichage des miniatures cf méthode onSelect()
   users: User[] = [ //liste d'utilisateurs pour test
     {
@@ -45,14 +49,21 @@ export class BookingdetailsComponent implements OnInit {
     }
   ];
 
-  bookingHours: string[] = HOURS_PLANNING;
+  bookingHours: number[] = BOOKING_HOURS;
+  bookingMinutes: number[] = BOOKING_MINUTES;
 
-  selectedHourStart;
-  selectedHourEnd;
+  selectedDate: Date;
+  selectedHourStart:number;
+  selectedMinuteStart:number;
+  selectedHourEnd:number;
+  selectedMinuteEnd:number;
+  objet: string;
 
   constructor(
+    private reservationService: ReservationService,
     public bookingDetailsDialogRef: MatDialogRef<BookingdetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any ) {}
+    @Inject(MAT_DIALOG_DATA) public data: any ) {
+    }
 
   ngOnInit() {
     this.room = this.data.room;
@@ -70,6 +81,27 @@ export class BookingdetailsComponent implements OnInit {
       this.selectedMiniatures.push(a.value);
     }
   }
+
+  onSubmit(){
+    
+    let startDate = moment(this.selectedDate).hour(this.selectedHourStart).minute(this.selectedMinuteStart).format("YYYY-MM-DD hh:mm:ss");
+    let endDate = moment(this.selectedDate).hour(this.selectedHourEnd).minute(this.selectedMinuteEnd).format("YYYY-MM-DD hh:mm:ss");
+    console.log(
+      "startDate : " + startDate + " . endDate : " + endDate
+    )
+
+    const reservation: Booking = {
+      startDate: startDate,
+      endDate: endDate,
+      objet: this.objet,
+      user_id: 1,
+      salle_id: this.room.id
+    };
+    
+    this.reservationService.createReservation(reservation);
+  }
+  
+
 
 }
 //Interface User pour test (liste d'utilisateurs factice)

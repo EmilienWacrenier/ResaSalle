@@ -45,11 +45,11 @@
             <div class="timeline-container">
                 <div *ngFor="let booking of rooms[i].bookings">
 
-                    <div *ngIf="!itsMorning && booking.startDate.getHours() >= 13" class="timeline-tile"
+                    <div *ngIf="!itsMorning && !reservationDuringMorning(booking.startDate)" class="timeline-tile"
                         [ngStyle]="setReservationParameters(booking)">
                     </div>
 
-                    <div *ngIf="itsMorning && booking.startDate.getHours() < 13" class="timeline-tile"
+                    <div *ngIf="itsMorning && reservationDuringMorning(booking.startDate)" class="timeline-tile"
                         [ngStyle]="setReservationParameters(booking)">
                     </div>
 

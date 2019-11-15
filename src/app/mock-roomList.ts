@@ -1,4 +1,5 @@
 import { Room } from './classes/room';
+import * as moment from 'moment';
 
 export const ROOMS: Room[] = [
     {
@@ -8,24 +9,36 @@ export const ROOMS: Room[] = [
         capacity: 4,
         bookings: [
             {
-                id: 1,
-                startDate: new Date("2019-11-06 8:01:00"),
-                endDate: new Date("2019-11-06 9:02:00")
+                
+                startDate: '2019-11-06T08:01:00',
+                endDate: '2019-11-06T09:02:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 2,
-                startDate: new Date("2019-11-06 9:10:00"),
-                endDate: new Date("2019-11-06 9:30:00")
+                
+                startDate: '2019-11-06T09:10:00',
+                endDate: '2019-11-06T09:30:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 3,
-                startDate: new Date("2019-11-06 11:00:00"),
-                endDate: new Date("2019-11-06 13:00:00")
+                
+                startDate: '2019-11-06T11:00:00',
+                endDate: '2019-11-06T13:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 4,
-                startDate: new Date("2019-11-06 14:00:00"),
-                endDate: new Date("2019-11-06 15:00:13")
+                
+                startDate: '2019-11-06T14:00:00',
+                endDate: '2019-11-06T15:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             }
         ]
     },
@@ -36,24 +49,36 @@ export const ROOMS: Room[] = [
         capacity: 4,
         bookings: [
             {
-                id: 1,
-                startDate: new Date("2019-11-06 8:10:00"),
-                endDate: new Date("2019-11-06 9:00:00")
+               
+                startDate: '2019-11-06T8:10:00',
+                endDate: '2019-11-06T9:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 2,
-                startDate: new Date("2019-11-06 10:00:00"),
-                endDate: new Date("2019-11-06 11:00:00")
+               
+                startDate: '2019-11-06T10:00:00',
+                endDate: '2019-11-06T11:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 3,
-                startDate: new Date("2019-11-06 11:30:00"),
-                endDate: new Date("2019-11-06 13:00:00")
+                
+                startDate: '2019-11-06T11:30:00',
+                endDate: '2019-11-06T13:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 4,
-                startDate: new Date("2019-11-06 15:0:00"),
-                endDate: new Date("2019-11-06 18:00:00")
+                
+                startDate: '2019-11-06T15:0:00',
+                endDate: '2019-11-06T18:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             }
         ]
     },
@@ -63,19 +88,28 @@ export const ROOMS: Room[] = [
         zone: "A",
         capacity: 4,
         bookings: [{
-            id: 1,
-            startDate: new Date("2019-11-06 8:20:00"),
-            endDate: new Date("2019-11-06 8:50:00")
+            
+            startDate: '2019-11-06T8:20:00',
+            endDate: '2019-11-06T8:50:00',
+            objet: "reunion",
+            user_id: 1,
+            salle_id:1
         },
         {
-            id: 2,
-            startDate: new Date("2019-11-06 9:00:00"),
-            endDate: new Date("2019-11-06 10:00:00")
+            
+            startDate: '2019-11-06T9:00:00',
+            endDate: '2019-11-06T10:00:00',
+            objet: "reunion",
+            user_id: 1,
+            salle_id:1
         },
         {
-            id: 3,
-            startDate: new Date("2019-11-06 10:12:00"),
-            endDate: new Date("2019-11-06 11:00:00")
+            
+            startDate: '2019-11-06T10:12:00',
+            endDate: '2019-11-06T11:00:00',
+            objet: "reunion",
+            user_id: 1,
+            salle_id:1
         }]
     },
     {
@@ -85,29 +119,28 @@ export const ROOMS: Room[] = [
         capacity: 4,
         bookings: [
             {
-                id: 1,
-                startDate: new Date("2019-11-06 8:01:00"),
-                endDate: new Date("2019-11-06 8:20:00")
+                
+                startDate: '2019-11-06T8:01:00',
+                endDate: '2019-11-06T8:20:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 2,
-                startDate: new Date("2019-11-06 9:10:00"),
-                endDate: new Date("2019-11-06 9:30:00")
+                
+                startDate: '2019-11-06T9:10:00',
+                endDate: '2019-11-06T9:30:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 3,
-                startDate: new Date("2019-11-06 11:00:00"),
-                endDate: new Date("2019-11-06 13:00:00")
-            },
-            {
-                id: 4,
-                startDate: new Date("2019-11-06 14:00:00"),
-                endDate: new Date("2019-11-06 15:00:13")
-            },
-            {
-                id: 5,
-                startDate: new Date("2019-11-06 15:10:00"),
-                endDate: new Date("2019-11-06 16:30:00")
+                
+                startDate: '2019-11-06T11:00:00',
+                endDate: '2019-11-06T13:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             }
         ]
     },
@@ -118,29 +151,43 @@ export const ROOMS: Room[] = [
         capacity: 4,
         bookings: [
             {
-                id: 1,
-                startDate: new Date("2019-11-06 8:01:00"),
-                endDate: new Date("2019-11-06 9:02:00")
+                
+                startDate: '2019-11-06T8:01:00',
+                endDate: '2019-11-06T9:02:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 2,
-                startDate: new Date("2019-11-06 9:10:00"),
-                endDate: new Date("2019-11-06 9:30:00")
+                
+                startDate: '2019-11-06T9:10:00',
+                endDate: '2019-11-06T9:30:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 3,
-                startDate: new Date("2019-11-06 11:00:00"),
-                endDate: new Date("2019-11-06 13:00:00")
+                
+                startDate: '2019-11-06T11:00:00',
+                endDate: '2019-11-06T13:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 4,
-                startDate: new Date("2019-11-06 14:00:00"),
-                endDate: new Date("2019-11-06 15:00:13")
+                startDate: '2019-11-06T14:00:00',
+                endDate: '2019-11-06T15:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 5,
-                startDate: new Date("2019-11-06 15:20:00"),
-                endDate: new Date("2019-11-06 16:30:00")
+                
+                startDate: '2019-11-06T15:20:00',
+                endDate: '2019-11-06T16:30:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             }
         ]
     },
@@ -151,29 +198,44 @@ export const ROOMS: Room[] = [
         capacity: 4,
         bookings: [
             {
-                id: 1,
-                startDate: new Date("2019-11-06 8:01:00"),
-                endDate: new Date("2019-11-06 9:02:00")
+                
+                startDate: '2019-11-06T8:01:00',
+                endDate: '2019-11-06T9:02:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 2,
-                startDate: new Date("2019-11-06 9:10:00"),
-                endDate: new Date("2019-11-06 9:30:00")
+                
+                startDate: '2019-11-06T9:10:00',
+                endDate: '2019-11-06T9:30:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 3,
-                startDate: new Date("2019-11-06 11:00:00"),
-                endDate: new Date("2019-11-06 13:00:00")
+                
+                startDate: '2019-11-06T11:00:00',
+                endDate: '2019-11-06T13:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 4,
-                startDate: new Date("2019-11-06 14:00:00"),
-                endDate: new Date("2019-11-06 15:00:13")
+                
+                startDate: '2019-11-06T14:00:00',
+                endDate: '2019-11-06T15:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 5,
-                startDate: new Date("2019-11-06 15:10:00"),
-                endDate: new Date("2019-11-06 17:45:00")
+                
+                startDate: '2019-11-06T15:10:00',
+                endDate: '2019-11-06T17:45:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             }
         ]
     },
@@ -184,24 +246,36 @@ export const ROOMS: Room[] = [
         capacity: 4,
         bookings: [
             {
-                id: 1,
-                startDate: new Date("2019-11-06 8:01:00"),
-                endDate: new Date("2019-11-06 9:02:00")
+                
+                startDate: '2019-11-06T8:01:00',
+                endDate: '2019-11-06T9:02:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 2,
-                startDate: new Date("2019-11-06 9:10:00"),
-                endDate: new Date("2019-11-06 9:30:00")
+                
+                startDate: '2019-11-06T9:10:00',
+                endDate: '2019-11-06T9:30:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 3,
-                startDate: new Date("2019-11-06 11:00:00"),
-                endDate: new Date("2019-11-06 13:00:00")
+               
+                startDate: '2019-11-06T11:00:00',
+                endDate: '2019-11-06T13:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             },
             {
-                id: 4,
-                startDate: new Date("2019-11-06 14:00:00"),
-                endDate: new Date("2019-11-06 15:00:13")
+                
+                startDate: '2019-11-06T14:00:00',
+                endDate: '2019-11-06T15:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
             }
         ]
     }
