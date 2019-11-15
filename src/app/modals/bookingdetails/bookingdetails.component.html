@@ -5,11 +5,9 @@
     </div>
     <!--Input objet de la réunion -->
   <div class="col">
-      <form class="booking-form">
         <mat-form-field>
-          <input matInput placeholder="Objet" value="{{objetReunion}}">
+          <input matInput placeholder="Objet" [(ngModel)]="objet">
         </mat-form-field>
-      </form>
     </div>
   </div>
 
