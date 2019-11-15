@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReservationService } from 'src/app/services/reservation.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private reservationService: ReservationService) { }
 
   ngOnInit() {
+    this.getReservationbyUser();
+  }
+
+  getReservationbyUser(){
+    return this.reservationService.getReservationFromUserConnected();
   }
 
 }

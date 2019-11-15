@@ -33,6 +33,8 @@ export class RoomPlanningComponent implements OnInit {
     document.getElementById('homeNavItem').classList.add('active-list-item');
     this.getRoomPlanning();
     /*console.log(this.room);*/
+
+    this.weekDays= this.displayDaysOfThisWeek(this.selectedDate);
   }
 
   //variable pour la date et les heures
@@ -40,6 +42,7 @@ export class RoomPlanningComponent implements OnInit {
   debutSemaine;
   finSemaine;
   bookingOfThisDay;
+  weekDays;
 
   onSelect(event) {
     this.selectedDate = event;
@@ -57,6 +60,17 @@ export class RoomPlanningComponent implements OnInit {
   findEndOfWeek(date) {
     this.finSemaine = moment(moment(date).isoWeekday(7)).format();
     console.log("fin semaine : " + this.finSemaine);
+  }
+
+  //retourne un tableau avec la date des jours de la semaine selectionnée
+  displayDaysOfThisWeek(date){
+    let weekDays: any;
+    
+    for(var i=1; i<6; i++){
+      let daate = moment(date).isoWeekday(i).format('dddd DD MMMM');
+      weekDays[i].push(daate);
+    }
+    return weekDays;
   }
 
   //créer des listes en fonction des jours du tableau daysOfPlanning (qui est un tableau de jour de la semaine)

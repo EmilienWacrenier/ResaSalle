@@ -24,5 +24,19 @@ export class ReservationService {
         );
 }
 
+getReservationFromUserConnected() {
+  this.httpClient
+      .get<any[]>('http://localhost:3000/reservation/??')
+      .subscribe(
+          (response) => {
+              var a = response['result'];
+              console.log(a);
+          },
+          (error) => {
+              console.log('Erreur ! : ' + error.error['result']);
+          }
+      );
+}
+
   
 }
