@@ -4,8 +4,8 @@
 <div *ngFor="let booking of room.bookings">
 <ul>
     <li>{{booking.id}}</li>
-    <li>{{booking.startDate}}</li>
-    <li>{{booking.endDate}}</li>
+    <li>{{booking.startDate | date:'dd/MM/yyyy h:mm'}}</li>
+    <li>{{booking.endDate | date:'dd/MM/yyyy h:mm'}}</li>
 </ul>
 </div>
 

@@ -13,3 +13,8 @@ export const JOUR_SEMAINE: string[] = [
 export const CAPACITE: number[] = [
     4, 6, 8
 ]
+
+export class Constants {
+    public readonly apiUrl: string = 'localhost:3000/';
+    public readonly toastrTitle: string = 'ResaSalles';
+}

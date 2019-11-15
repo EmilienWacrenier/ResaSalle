@@ -4,6 +4,8 @@ export const ROOMS: Room[] = [
     {
         id: 1,
         name: "Carnot",
+        zone: "A",
+        capacity: 4,
         bookings: [
             {
                 id: 1,
@@ -30,6 +32,8 @@ export const ROOMS: Room[] = [
     {
         id: 2,
         name: "Pythagore",
+        zone: "A",
+        capacity: 4,
         bookings: [
             {
                 id: 1,
@@ -56,6 +60,8 @@ export const ROOMS: Room[] = [
     {
         id: 3,
         name: "Pascal",
+        zone: "A",
+        capacity: 4,
         bookings: [{
             id: 1,
             startDate: new Date("2019-11-06 8:20:00"),
@@ -75,6 +81,8 @@ export const ROOMS: Room[] = [
     {
         id: 4,
         name: "Marne",
+        zone: "A",
+        capacity: 4,
         bookings: [
             {
                 id: 1,
@@ -106,6 +114,8 @@ export const ROOMS: Room[] = [
     {
         id: 5,
         name: "Pika",
+        zone: "A",
+        capacity: 4,
         bookings: [
             {
                 id: 1,
@@ -137,6 +147,8 @@ export const ROOMS: Room[] = [
     {
         id: 6,
         name: "Gym",
+        zone: "A",
+        capacity: 4,
         bookings: [
             {
                 id: 1,
@@ -168,6 +180,8 @@ export const ROOMS: Room[] = [
     {
         id: 7,
         name: "Andromède",
+        zone: "A",
+        capacity: 4,
         bookings: [
             {
                 id: 1,
@@ -190,5 +204,5 @@ export const ROOMS: Room[] = [
                 endDate: new Date("2019-11-06 15:00:13")
             }
         ]
-    },
+    }
 ]
