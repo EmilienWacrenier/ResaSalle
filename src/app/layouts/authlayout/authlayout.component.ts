@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService, ToastRef } from 'ngx-toastr';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-//import { Constants } from '../../constantes/constantes';
+import { ApiConstants } from '../../constantes/constantes';
 import { Router } from '@angular/router';
 
 @Component({
@@ -23,26 +23,9 @@ export class AuthlayoutComponent implements OnInit {
   loginForm: FormGroup;
   registerForm: FormGroup;
 
-  toastrOptions = {
-    closeButton: true,
-    debug: false,
-    newestOnTop: false,
-    progressBar: false,
-    positionClass: 'toast-top-center',
-    preventDuplicates: false,
-    onclick: null,
-    showDuration: 300,
-    hideDuration: 1000,
-    timeOut: 2000,
-    extendedTimeOut: 1000,
-    showEasing: 'swing',
-    hideEasing: 'linear',
-    showMethod: 'fadeIn',
-    hideMethod: 'fadeOut'
-  }
   constructor(
     /*private loginService: LoginService, private router: Router, private fb: FormBuilder, private RegisterService: RegisterService*/
-    //private cst: Constants,
+    private cst: ApiConstants,
     private router: Router,
     private toastr: ToastrService,
     private http: HttpClient
@@ -71,11 +54,11 @@ export class AuthlayoutComponent implements OnInit {
       email: this.registerForm.controls.email.value,
       mdp: this.registerForm.controls.password.value
     };
-    this.http.post('http://localhost:3000/' + 'user/register', body).subscribe(
+    this.http.post(this.cst.apiUrl + 'user/register', body).subscribe(
       () => {
         
           //localStorage.setItem('token', login);
-          this.toastr.success('Utilisateur créé !', 'ResaSalles');
+          this.toastr.success('Utilisateur créé !', this.cst.toastrTitle);
           //this.router.navigate(['']);
         
       },
@@ -86,7 +69,7 @@ export class AuthlayoutComponent implements OnInit {
   }
   seConnecter() {
 
-    this.toastr.success('Connexion réussie', 'Authentification', this.toastrOptions);
+    this.toastr.success('Connexion réussie', 'Authentification', this.cst.toastrOptions);
   }
   login() {
     // console.log('user', this.user);
@@ -97,17 +80,17 @@ export class AuthlayoutComponent implements OnInit {
         email: this.loginForm.controls.email.value,
         mdp: this.loginForm.controls.password.value
     };
-    this.http.post('http://localhost:3000/' + 'user/login', loginBody ).subscribe(
+    this.http.post(this.cst.apiUrl + 'user/login', loginBody ).subscribe(
       () => {
         
           //localStorage.setItem('token', login);
-          this.toastr.success('Vous êtes connecté !', 'ResaSalles');
+          this.toastr.success('Vous êtes connecté !', this.cst.toastrTitle, this.cst.toastrOptions);
           console.log('Connexion réussie');
           this.router.navigate(['']);
         
       },
       (err) => {
-        this.toastr.error('Identifiants incorrects', 'ResaSalles');
+        this.toastr.error('Identifiants incorrects', this.cst.toastrTitle, this.cst.toastrOptions);
         console.log('Connexion échouée');
       }
     ); 

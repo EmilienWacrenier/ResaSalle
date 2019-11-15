@@ -3,11 +3,16 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment'
 
-import { RECURRENCE } from "../../constantes/constantes";
-import { NUMERO_SEMAINE } from "../../constantes/constantes";
-import { JOUR_SEMAINE } from "../../constantes/constantes";
-import { CAPACITE } from "../../constantes/constantes";
+import { 
+  RECURRENCE, 
+  NUMERO_SEMAINE, 
+  JOUR_SEMAINE, 
+  CAPACITE, 
+  BOOKING_HOURS, 
+  BOOKING_MINUTES } from "../../constantes/constantes";
+
 
 @Component({
   selector: 'app-search',
@@ -15,21 +20,37 @@ import { CAPACITE } from "../../constantes/constantes";
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  dateFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  thirdFormGroup: FormGroup;
-  fourthFormGroup: FormGroup;
 
-  selectedDate: any;
-  year: any;
-  DayAndDate: string;
+  //**********************DATE*************************
 
-  time: any;
-  time2: any;
+  //variable pour la date et les heures
+  startDate = new Date();
+  selectedDateDisplay: string;
 
-  isChecked = false;
-  checked = false;
+  //heures et minutes dans le select
+  bookingHours: number[] = BOOKING_HOURS;
+  bookingMinutes: number[] = BOOKING_MINUTES;
 
+  //variable des heures selectionnées
+  selectedMinuteStart: number;
+  selectedHourStart: number;
+  selectedMinuteEnd: number;
+  selectedHourEnd: number;
+
+  //variable de controle
+  dateIsWrongControl: any;
+  hoursAreNotSetControl: any;
+  hoursAreWrongControl: any;
+
+  //today
+  today = new Date().setHours(0,0,0,0);
+
+  //variable pour le slide toggle pour activer la récurrence ou non
+  checked = false;  
+
+
+  //**********************RECURRENCE*************************
+  endDate;
   selectedRecurrence: string;
   selectedMensualite: string;
 
@@ -39,36 +60,51 @@ export class SearchComponent implements OnInit {
   capacites: number[] = CAPACITE;
   choix: number[] = [];
 
-
-  minuteStep = 30;
-
-  constructor(private _formBuilder: FormBuilder, config: NgbTimepickerConfig) {
-    config.seconds = false;
-    config.spinners = true;
-    config.size = "small";
-
-    this.onSelect(this.selectedDate);
+  constructor(private _formBuilder: FormBuilder) {
+      this.onSelect(this.startDate);
   }
 
   ngOnInit() {
-    this.dateFormGroup = this._formBuilder.group({
-      datePickerCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
-    this.thirdFormGroup = this._formBuilder.group({
-      thirdCtrl: ['', Validators.required]
-    });
-    this.fourthFormGroup = this._formBuilder.group({
-      fourthCtrl: ['', Validators.required]
-    });
+    this.onSelect(event);
+    this.hoursAreNotSetControl = this.hoursAreNotSet();
+    console.log(this.hoursAreNotSetControl);
+    this.hoursAreWrongControl = this.hoursAreWrong();
+    console.log(this.hoursAreWrongControl);
   }
 
+  /*STEP1*/
+
   onSelect(event) {
-    console.log(event);
-    this.selectedDate = event;
+    this.startDate = event;
+    this.selectedDateDisplay = moment(this.startDate).format("DD MMMM YYYY");
+    this.dateIsWrongControl = this.dateIsWrong(event);
   }
+
+  dateIsWrong(date){
+    if (date < this.today) { return true}
+    else return false;
+  }
+
+  hoursAreNotSet(){
+    if (this.selectedHourStart == null
+      || this.selectedMinuteStart == null
+      || this.selectedHourEnd == null
+      || this.selectedMinuteEnd == null) { return this.hoursAreNotSetControl = true; }
+    else return this.hoursAreNotSetControl = false;
+  }
+
+  hoursAreWrong(){
+    let startingHour = this.selectedHourStart * 60 + this.selectedMinuteStart;
+    let endingHour = this.selectedHourEnd * 60 + this.selectedMinuteEnd;
+    if (startingHour >= endingHour) { return this.hoursAreWrongControl = true;}
+    else return this.hoursAreWrongControl = false;
+  }
+  isReccurent(){
+    if (this.checked) { return true;}
+    else return false;
+  }
+
+  /* Reccurence */
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {

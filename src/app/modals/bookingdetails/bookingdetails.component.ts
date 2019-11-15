@@ -39,7 +39,7 @@ export class BookingdetailsComponent implements OnInit {
     }
   ];
 
-  constructor( public bookingDetailsDialogRef: MatDialogRef<BookingdetailsComponent> ) {}
+  constructor(public bookingDetailsDialogRef: MatDialogRef<BookingdetailsComponent>) { }
 
   ngOnInit() {
   }
@@ -50,8 +50,8 @@ export class BookingdetailsComponent implements OnInit {
   //Affichage des vignettes
   //parcours d'une collection de users selectionnés et insertion de value cf hmtl l.23 [value]="user.miniature"
   onSelect(v) {
-    this.selectedMiniatures=[];
-    for(let a of v) {
+    this.selectedMiniatures = [];
+    for (let a of v) {
       this.selectedMiniatures.push(a.value);
     }
   }
