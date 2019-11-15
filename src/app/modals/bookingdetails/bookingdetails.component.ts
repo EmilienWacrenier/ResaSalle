@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { Inject } from '@angular/core';
+
+import { HOURS_PLANNING } from '../../constantes/constantes'
+import { Room } from 'src/app/classes/room';
 
 @Component({
   selector: 'app-bookingdetails',
@@ -9,7 +13,9 @@ import { MatDialogRef } from "@angular/material/dialog";
 
 export class BookingdetailsComponent implements OnInit {
 
-  objetReunion: string = "Café dans la salle Maroilles"; // objet de la réunion pour test
+  room;
+
+  objetReunion: string = "Reunion Objet"; // objet de la réunion pour test
   selectedMiniatures: string[]; //affichage des miniatures cf méthode onSelect()
   users: User[] = [ //liste d'utilisateurs pour test
     {
@@ -39,9 +45,18 @@ export class BookingdetailsComponent implements OnInit {
     }
   ];
 
-  constructor(public bookingDetailsDialogRef: MatDialogRef<BookingdetailsComponent>) { }
+  bookingHours: string[] = HOURS_PLANNING;
+
+  selectedHourStart;
+  selectedHourEnd;
+
+  constructor(
+    public bookingDetailsDialogRef: MatDialogRef<BookingdetailsComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any ) {}
 
   ngOnInit() {
+    this.room = this.data.room;
+    console.log(this.room.name);
   }
 
   close() {

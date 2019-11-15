@@ -1,39 +1,80 @@
-<div class="container">
-  <!--Input objet de la réunion -->
-  <div class="inputs-container">
-    <form class="booking-form">
-      <mat-form-field class="objet-form">
-        <input matInput placeholder="Objet" value="{{objetReunion}}">
-      </mat-form-field>
-    </form>
-  </div>
-  <!--Liste des utilisateurs -->
-  <div class="checklist-container">
-    <mat-dialog-content>
-      <!--Recherche des participants -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      Salle {{room.name}}
+    </div>
+    <!--Input objet de la réunion -->
+  <div class="col">
       <form class="booking-form">
-        <h3 class="titre">Participants</h3>
-        <mat-form-field class="search-form">
-          <input matInput>
-          <mat-icon matPrefix>search</mat-icon>
+        <mat-form-field>
+          <input matInput placeholder="Objet" value="{{objetReunion}}">
         </mat-form-field>
       </form>
-      <!--Liste des participants-->
-      <mat-selection-list #participants (selectionChange)="onSelect(participants.selectedOptions.selected)">
-        <mat-list-option *ngFor="let user of users" [value]='user.miniature'>
-          {{user.firstName|titlecase}}  {{user.lastName|titlecase}}
-        </mat-list-option>
-      </mat-selection-list>
-    </mat-dialog-content>
-  </div>
-  <!--Vignettes et bouton next-->
-  <mat-divider></mat-divider>
-  <div class="vignettes-container">
-    <div class="vignette">
-      {{selectedMiniatures}}
-      <mat-dialog-actions>
-          <button class="mat-raised-button" (click)="close()">Next</button>
-      </mat-dialog-actions>
     </div>
   </div>
+
+  <div class="row">
+      <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+  </div>
+
+
+  <div class="row justify-content-between">
+    <div class="col-6">
+      <mat-form-field>
+          <mat-label>Debut</mat-label>
+          <mat-select [(ngModel)]="selectedHourStart">
+              <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart">
+                  {{hourStart}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field>
+          <mat-label>Fin</mat-label>
+          <mat-select [(ngModel)]="selectedHourEnd">
+              <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
+                  {{hourEnd}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  
+    <!--Liste des utilisateurs -->
+    <div class="row">
+      <mat-dialog-content>
+        <!--Recherche des participants -->
+        <form class="w-100">
+          <h3 class="titre">Participants</h3>
+          <mat-form-field class="search-form">
+            <input matInput>
+            <mat-icon matPrefix>search</mat-icon>
+          </mat-form-field>
+        </form>
+        <!--Liste des participants-->
+        <mat-selection-list #participants (selectionChange)="onSelect(participants.selectedOptions.selected)">
+          <mat-list-option *ngFor="let user of users" [value]='user.miniature'>
+            {{user.firstName|titlecase}}  {{user.lastName|titlecase}}
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-dialog-content>
+    </div>
+    <!--Vignettes et bouton next-->
+    <mat-divider></mat-divider>
+    <div class="row">
+      <div class="vignette">
+        {{selectedMiniatures}}
+        <mat-dialog-actions>
+            <button class="mat-raised-button" (click)="submit()">Créer</button>
+        </mat-dialog-actions>
+      </div>
+    </div>
+
+
 </div>

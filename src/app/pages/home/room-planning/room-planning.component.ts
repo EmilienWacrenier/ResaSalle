@@ -96,8 +96,9 @@ export class RoomPlanningComponent implements OnInit {
   openDialog() {
     //config et ouverture de la 2eme test_modaleconst bookingCalendarDialogConfig = new MatDialogConfig();
     const bookingDetailsDialogConfig = new MatDialogConfig();
-    bookingDetailsDialogConfig.width = "30%";
+    bookingDetailsDialogConfig.width = "50%";
     bookingDetailsDialogConfig.height = "80%";
+    bookingDetailsDialogConfig.data = { room: this.room };
     this.dialog.open(BookingdetailsComponent, bookingDetailsDialogConfig);
   }
 
