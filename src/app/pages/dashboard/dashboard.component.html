@@ -1,1 +1,34 @@
-<p>dashboard works!</p>
+<div class="container-fluid border">
+    <div class="row">
+        <div class="col-2">
+            Salle
+        </div>
+        <div class="col-2">
+            Objet
+        </div>
+        <div class="col-2">
+            Date Début
+        </div>
+        <div class="col-2">
+            Date Fin
+        </div>
+        <div class="col-2">
+            Participants
+        </div>
+    </div>
+    <div class="row" *ngFor="let reservation of (reservations$ | async)">
+            
+            <div class="col-2">
+                {{reservation.objet}}
+            </div>
+            <div class="col-2">
+                {{reservation.startDate}}
+            </div>
+            <div class="col-2">
+                {{reservation.endDate}}
+            </div>
+            <div class="col-2">
+                Participants
+            </div>
+        </div>
+</div>

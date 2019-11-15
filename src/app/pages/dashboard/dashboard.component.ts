@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ReservationService } from 'src/app/services/reservation.service';
+import { Booking } from 'src/app/classes/booking';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private reservationService: ReservationService) { }
+  reservations$: Observable<Booking[]>;
   ngOnInit() {
+    this.reservations$ = this.reservationService.getReservationsFromUserConnected();
   }
+
+  /*getReservationsbyUser(): Observable<Booking[]> {
+    this.reservationService.getReservationsFromUserConnected();
+  }*/
 
 }
