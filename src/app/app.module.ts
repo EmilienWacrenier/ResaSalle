@@ -21,9 +21,16 @@ import { ApiConstants } from '../app/constantes/constantes';
 import { MaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
 
+import { JwtModule } from '@auth0/angular-jwt';
+
 import { ToastrModule } from 'ngx-toastr';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -51,6 +58,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MaterialModule,
     NgbModule,
     ToastrModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['http://localhost:3000']
+        //blacklistedRoutes: ['api.salombo.eu:41780/api/login']
+      }
+    }),
     HttpClientModule
   ],
   providers: [ApiConstants],

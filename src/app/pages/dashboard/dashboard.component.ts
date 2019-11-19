@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReservationService } from 'src/app/services/reservation.service';
+import { Booking } from 'src/app/classes/booking';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,13 +11,13 @@ import { ReservationService } from 'src/app/services/reservation.service';
 export class DashboardComponent implements OnInit {
 
   constructor(private reservationService: ReservationService) { }
-
+  reservations$: Observable<Booking[]>;
   ngOnInit() {
-    this.getReservationbyUser();
+    this.reservations$ = this.reservationService.getReservationsFromUserConnected();
   }
 
-  getReservationbyUser(){
-    return this.reservationService.getReservationFromUserConnected();
-  }
+  /*getReservationsbyUser(): Observable<Booking[]> {
+    this.reservationService.getReservationsFromUserConnected();
+  }*/
 
 }

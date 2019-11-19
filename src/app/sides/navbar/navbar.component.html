@@ -2,7 +2,7 @@
     <mat-toolbar-row>
         <span class="spacer"></span>
         <button mat-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <span class="user-name">Justine PORCHEUR</span>
+            <span class="user-name">{{user.firstname}} {{user.lastname | uppercase}} </span>
             <mat-icon class="user-img-circle">
                 account_circle
             </mat-icon>

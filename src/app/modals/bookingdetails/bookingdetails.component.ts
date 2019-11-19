@@ -20,6 +20,8 @@ export class BookingdetailsComponent implements OnInit {
 
   room;
 
+  currentUser;
+
   selectedMiniatures: string[]; //affichage des miniatures cf méthode onSelect()
   users: User[] = [ //liste d'utilisateurs pour test
     {
@@ -63,11 +65,13 @@ export class BookingdetailsComponent implements OnInit {
     private reservationService: ReservationService,
     public bookingDetailsDialogRef: MatDialogRef<BookingdetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any ) {
+      this.currentUser = JSON.parse(localStorage.getItem('user'));
     }
 
   ngOnInit() {
     this.room = this.data.room;
     console.log(this.room.name);
+    console.log(this.currentUser);
   }
 
   close() {
@@ -90,14 +94,18 @@ export class BookingdetailsComponent implements OnInit {
       "startDate : " + startDate + " . endDate : " + endDate
     )
 
-    const reservation: Booking = {
+    const reservation = {
       startDate: startDate,
       endDate: endDate,
       objet: this.objet,
-      user_id: 1,
-      salle_id: this.room.id
+      user_id: this.currentUser.idUser,
+      salle_id: 1
     };
-    
+    console.log('La réservation : ' + reservation.startDate);
+    console.log('La réservation : ' + reservation.endDate);
+    console.log('La réservation : ' + reservation.objet);
+    console.log('La réservation : ' + reservation.user_id);
+    console.log('La réservation : ' + reservation.salle_id);
     this.reservationService.createReservation(reservation);
   }
   

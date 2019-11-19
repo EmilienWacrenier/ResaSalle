@@ -16,10 +16,8 @@
             Participants
         </div>
     </div>
-    <div class="row" *ngFor="let reservations of reservations">
-            <div class="col-2">
-                {{reservation.name}}
-            </div>
+    <div class="row" *ngFor="let reservation of (reservations$ | async)">
+            
             <div class="col-2">
                 {{reservation.objet}}
             </div>
