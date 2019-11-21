@@ -1,25 +1,37 @@
-<button mat-raised-button color="primary" (click)="openDialog()"> Créer une réservation </button>
+<div class="container-fluid">
 
-<h1>{{room.id}}</h1>
-<p>{{room.name}}</p>
+    <div class="row">
+        <div class="col-auto">
+            <button matButton (click)="goBack()">
+                < Retour </button> </div> <div class="col-auto">
+                    <h1>{{room.id}} Salle {{room.name}}</h1>
+        </div>
 
-<!--
-<div *ngFor="let booking of room.bookings">
-    <ul>
-        <li>{{booking.id}}</li>
-        <li>{{booking.startDate}}</li>
-        <li>{{booking.endDate}}</li>
-    </ul>
+
+
+        <div class="col-auto">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="date" 
+                (dateChange)="onSelect($event)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="col-auto">
+            <button mat-raised-button color="primary" (click)="openDialog()"> Réserver </button>
+        </div>
+
+
+    </div>
+
 </div>
--->
-<button (click)="goBack()">Back Home :)</button>
-
-
+<!--
 <div class="calendrier">
     <mat-calendar [selected]="selectedDate" (selectedChange)="onSelect($event)">
     </mat-calendar>
 </div>
-
+-->
 
 <div class="container-fluid">
 
@@ -32,14 +44,14 @@
                 </div>
             </div>
         </div>
-            <div class="col-2" *ngFor="let dayOfPlanning of weekDays">
-                <div class="container-fluid">
-                    <div class="row">{{dayOfPlanning}}</div>
-                    <div class="row" *ngFor="let hourOfPlanning of hoursOfPlanning, let i = index">
-                        {{i}}
-                    </div>
+        <div class="col-2" *ngFor="let resaOfThisDay of bookingOfTheWeek, let i = index">
+            <div class="container-fluid">
+                <div class="row">{{dayOfPlanning[i]}}</div>
+                <div class="row" *ngFor="let bookingOfThisDay of resaOfThisDay">
+                    {{bookingOfThisDay.objet}}
                 </div>
             </div>
         </div>
-
     </div>
+
+</div>

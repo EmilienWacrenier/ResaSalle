@@ -51,5 +51,24 @@ export class ReservationService {
       return bookings;
   }
 
+  getReservationsOfThisWeek(reservation){
+    this.httpClient
+      .get<any[]>(this.cst.apiUrl + 'reservation/reservationsBySalleId', reservation)
+      .subscribe(
+        (response) => {
+          var a = response['result'];
+          console.log(a);
+
+          this.toastr.success('success', this.cst.toastrTitle, this.cst.toastrOptions);
+        },
+        (error) => {
+          console.log('Erreur ! : ' + error.error['result']);
+          this.toastr.error(error.error['result'], this.cst.toastrTitle, this.cst.toastrOptions);
+        }
+      );
+    
+    
+  }
+
 
 }
