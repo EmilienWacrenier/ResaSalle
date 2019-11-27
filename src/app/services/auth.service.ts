@@ -33,8 +33,8 @@ export class AuthService {
     );
   }
 
-  loginUser(body){
-    this.httpClient.post(this.cst.apiUrl + 'user/login', body).subscribe(
+  loginUser(params){
+    this.httpClient.get(this.cst.apiUrl + 'user/login', {params : params}).subscribe(
       (response) => {
 
         console.log(response['result']);

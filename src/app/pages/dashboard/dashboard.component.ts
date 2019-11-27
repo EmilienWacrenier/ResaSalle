@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
   reservations$: Observable<Booking[]>;
   displayedColumns: string[] = ['date', 'start', 'end', 'room', 'subject', 'participants', 'actions'];
   dataSource = ELEMENT_DATA;
+  
   ngOnInit() {
     this.reservations$ = this.reservationService.getReservationsFromUserConnected();
   }

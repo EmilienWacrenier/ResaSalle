@@ -6,41 +6,41 @@
             <h2> Mes Réservations </h2>
         </div>
     </div>
-    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <mat-table [dataSource]="reservations$ | async" class="mat-elevation-z8">
         <!-- Date Column -->
         <ng-container matColumnDef="date">
             <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="dateTableCell"> {{element.date}} </mat-cell>
+            <mat-cell *matCellDef="let element" class="dateTableCell"> {{element.startDate}} </mat-cell>
         </ng-container>
 
         <!-- Start Column -->
         <ng-container matColumnDef="start">
             <mat-header-cell *matHeaderCellDef> Début </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.start}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.startDate}} </mat-cell>
         </ng-container>
 
         <!-- End Column -->
         <ng-container matColumnDef="end">
             <mat-header-cell *matHeaderCellDef> Fin </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.end}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.endDate}} </mat-cell>
         </ng-container>
 
         <!-- Room Column -->
         <ng-container matColumnDef="room">
             <mat-header-cell *matHeaderCellDef> Salle </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="roomTableCell"> {{element.room}} </mat-cell>
+            <mat-cell *matCellDef="let element" class="roomTableCell"> {{element.room_id}} </mat-cell>
         </ng-container>
 
         <!-- Subject Column -->
         <ng-container matColumnDef="subject">
             <mat-header-cell *matHeaderCellDef> Sujet </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.subject}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.object}} </mat-cell>
         </ng-container>
 
         <!-- Participants Column -->
         <ng-container matColumnDef="participants">
             <mat-header-cell *matHeaderCellDef> Participants </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.participants}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.user_id}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">

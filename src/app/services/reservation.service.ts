@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { ToastrService, ToastRef } from 'ngx-toastr';
 import { ApiConstants } from '../constantes/constantes';
@@ -36,8 +36,9 @@ export class ReservationService {
 
   getReservationsFromUserConnected(): Observable<Booking[]> {
     let bookings;
+    const params = new HttpParams().set('userId', this.user.userId);
     this.httpClient
-      .post<any[]>(this.cst.apiUrl + 'reservation/reservationsByUserId', {user_id: this.user.idUser})
+      .get<Booking[]>(this.cst.apiUrl + 'reservation/reservationsByUserId', {params: params})
       .subscribe(
         (response) => {
           var a = response['result'];

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-authlayout',
@@ -38,24 +39,22 @@ export class AuthlayoutComponent implements OnInit {
         lastName: this.registerForm.controls.lastName.value,
         das: this.registerForm.controls.DAS.value,
         email: this.registerForm.controls.email.value,
-        mdp: this.registerForm.controls.password.value
+        pwd: this.registerForm.controls.password.value
       };
       console.log(body);
       this.authService.createNewUser(body);
     }
-    else{
-      console.log('Mots de passes non valides !' );
+    else {
+      console.log('Mots de passes non valides !');
     }
 
   }
 
   login() {
-    const body = {
-      email: this.loginForm.controls.email.value,
-      mdp: this.loginForm.controls.password.value
-    };
-    console.log(body);
-    this.authService.loginUser(body);
+    const params = new HttpParams()
+      .set('email', this.loginForm.controls.email.value)
+      .set('pwd', this.loginForm.controls.password.value);
+    this.authService.loginUser(params);
   }
 
 }
