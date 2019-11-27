@@ -34,10 +34,11 @@ export class DashboardComponent implements OnInit {
   constructor(private reservationService: ReservationService, public dialog: MatDialog) { }
   reservations$: Observable<Booking[]>;
   displayedColumns: string[] = ['date', 'start', 'end', 'room', 'subject', 'participants', 'actions'];
-  dataSource = ELEMENT_DATA;
-  
+  dataSource = [];
+
   ngOnInit() {
-    this.reservations$ = this.reservationService.getReservationsFromUserConnected();
+    this.reservationService.getReservationsFromUserConnected()
+      .subscribe((response) => { this.dataSource = response['result']; console.log(this.dataSource) });
   }
 
   /*getReservationsbyUser(): Observable<Booking[]> {

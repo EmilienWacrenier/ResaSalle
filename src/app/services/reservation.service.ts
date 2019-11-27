@@ -37,9 +37,9 @@ export class ReservationService {
   getReservationsFromUserConnected(): Observable<Booking[]> {
     let bookings;
     const params = new HttpParams().set('userId', this.user.userId);
-    this.httpClient
-      .get<Booking[]>(this.cst.apiUrl + 'reservation/reservationsByUserId', {params: params})
-      .subscribe(
+    return this.httpClient
+      .get<Booking[]>(this.cst.apiUrl + 'reservation/reservationsByUserId', {params: params});
+      /*.subscribe(
         (response) => {
           var a = response['result'];
           console.log(a);
@@ -48,7 +48,7 @@ export class ReservationService {
         (error) => {
           console.log('Erreur ! : ' + error.error['result']);
         }
-      );
+      );*/
       return bookings;
   }
 
