@@ -7,6 +7,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SearchComponent } from './pages/search/search.component';
 import { HomeComponent } from './pages/home/home.component';
 import { RoomPlanningComponent } from './pages/home/room-planning/room-planning.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
       { path: 'planning/:id', component: RoomPlanningComponent },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'search', component: SearchComponent },
+      { path: 'admin', component: AdminComponent }
     ]
   },
   {

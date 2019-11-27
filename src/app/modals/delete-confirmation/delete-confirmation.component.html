@@ -1,0 +1,23 @@
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="onNoClick()">&times;</button>
+<div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="icon-box">
+                <i class="material-icons deleteIcon" focusable="false">
+                    &#xE5CD;
+                </i>
+            </div>
+            <h4 class="modal-title">
+                {{title}}
+            </h4>
+
+        </div>
+        <div class="modal-body">
+            {{message}}
+        </div>
+        <div class="modal-footer" mat-dialog-actions>
+            <button type="button" class="btn btn-info" (click)="onNoClick()">Annuler</button>
+            <button type="button" class="btn btn-danger" [mat-dialog-close]="true" cdkFocusInitial>Supprimer</button>
+        </div>
+    </div>
+</div>

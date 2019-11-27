@@ -1,0 +1,46 @@
+<div class="container-fluid p-5">
+
+    <div class="row mb-5">
+
+        <div class="col-auto">
+            <h2> Admnistration des salles </h2>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+
+        <div class="col-md-4 col-xs-12" style="border: solid; width: 100%;">
+            <h4 class="lightblue-txt-color">Ajout Rapide</h4>
+            <mat-card class="example-card">
+                <mat-card-content>
+                    <form class="example-form" [formGroup]="createRoomForm">
+                        <mat-form-field class="w-50" appearance="outline">
+                            <mat-label> Nom </mat-label>
+                            <input matInput formControlName="roomName" placeholder="Nom" required />
+                        </mat-form-field>
+
+                        <mat-form-field class="w-50 f-right">
+                            <mat-label>Zone</mat-label>
+                            <mat-select matInput formControlName="roomArea" placeholder="Zone" required>
+                                <mat-option *ngFor="let area of areas" [value]="area">
+                                    {{area}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+
+                        <button class="btn lightblue-bg-color" type="submit" (click)="createRoom()"
+                            [disabled]="!createRoomForm.valid">Ajouter</button>
+                    </form>
+                </mat-card-content>
+                <mat-card-actions>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+        <div class="col-md-8 col-xs-12" style="border: solid;">
+
+        </div>
+    </div>
+
+</div>

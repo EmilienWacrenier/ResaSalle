@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./authlayout.component.scss']
 })
 export class AuthlayoutComponent implements OnInit {
-   loginForm: FormGroup;
+  loginForm: FormGroup;
   registerForm: FormGroup;
 
   constructor(
@@ -23,7 +23,8 @@ export class AuthlayoutComponent implements OnInit {
       firstName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required]),
       DAS: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required])
+      password: new FormControl('', [Validators.required]),
+      passwordConfirm: new FormControl('', [Validators.required])
     });
   }
 
@@ -31,15 +32,21 @@ export class AuthlayoutComponent implements OnInit {
   }
 
   register() {
-    const body = {
-      firstName: this.registerForm.controls.firstName.value,
-      lastName: this.registerForm.controls.lastName.value,
-      das: this.registerForm.controls.DAS.value,
-      email: this.registerForm.controls.email.value,
-      mdp: this.registerForm.controls.password.value
-    };
-    console.log(body);
-    this.authService.createNewUser(body);
+    if (this.registerForm.controls.password.value === this.registerForm.controls.passwordConfirm.value) {
+      const body = {
+        firstName: this.registerForm.controls.firstName.value,
+        lastName: this.registerForm.controls.lastName.value,
+        das: this.registerForm.controls.DAS.value,
+        email: this.registerForm.controls.email.value,
+        mdp: this.registerForm.controls.password.value
+      };
+      console.log(body);
+      this.authService.createNewUser(body);
+    }
+    else{
+      console.log('Mots de passes non valides !' );
+    }
+
   }
 
   login() {
