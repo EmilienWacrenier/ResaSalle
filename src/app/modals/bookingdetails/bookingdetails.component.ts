@@ -87,9 +87,9 @@ export class BookingdetailsComponent implements OnInit {
   }
 
   onSubmit(){
-    
-    let startDate = moment(this.selectedDate).hour(this.selectedHourStart).minute(this.selectedMinuteStart).format("YYYY-MM-DD hh:mm:ss");
-    let endDate = moment(this.selectedDate).hour(this.selectedHourEnd).minute(this.selectedMinuteEnd).format("YYYY-MM-DD hh:mm:ss");
+
+    let startDate = moment(this.selectedDate).hour(this.selectedHourStart).minute(this.selectedMinuteStart).format("YYYY-MM-DD HH:mm:ss");
+    let endDate = moment(this.selectedDate).hour(this.selectedHourEnd).minute(this.selectedMinuteEnd).format("YYYY-MM-DD HH:mm:ss");
     console.log(
       "startDate : " + startDate + " . endDate : " + endDate
     )
@@ -108,7 +108,7 @@ export class BookingdetailsComponent implements OnInit {
     console.log('La réservation : ' + reservation.salle_id);
     this.reservationService.createReservation(reservation);
   }
-  
+
 
 
 }
