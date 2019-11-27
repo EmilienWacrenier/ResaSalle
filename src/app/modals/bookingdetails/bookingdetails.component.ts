@@ -88,8 +88,8 @@ export class BookingdetailsComponent implements OnInit {
 
   onSubmit(){
     
-    let startDate = moment(this.selectedDate).hour(this.selectedHourStart).minute(this.selectedMinuteStart).format("YYYY-MM-DD hh:mm:ss");
-    let endDate = moment(this.selectedDate).hour(this.selectedHourEnd).minute(this.selectedMinuteEnd).format("YYYY-MM-DD hh:mm:ss");
+    let startDate = moment(this.selectedDate).hour(this.selectedHourStart).minute(this.selectedMinuteStart).second(0).format("YYYY-MM-DD hh:mm:ss");
+    let endDate = moment(this.selectedDate).hour(this.selectedHourEnd).minute(this.selectedMinuteEnd).second(0).format("YYYY-MM-DD hh:mm:ss");
     console.log(
       "startDate : " + startDate + " . endDate : " + endDate
     )

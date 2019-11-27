@@ -26,6 +26,8 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { ToastrModule } from 'ngx-toastr';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DeleteConfirmationComponent } from './modals/delete-confirmation/delete-confirmation.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 
 export function tokenGetter() {
@@ -45,6 +47,8 @@ export function tokenGetter() {
     BookingcalendarComponent,
     BookingdetailsComponent,
     RoomPlanningComponent,
+    DeleteConfirmationComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,7 +76,8 @@ export function tokenGetter() {
 
   entryComponents: [
     BookingcalendarComponent,
-    BookingdetailsComponent
+    BookingdetailsComponent,
+    DeleteConfirmationComponent
   ]
 })
 export class AppModule { }

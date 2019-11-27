@@ -1,34 +1,62 @@
-<div class="container-fluid border">
-    <div class="row">
-        <div class="col-2">
-            Salle
-        </div>
-        <div class="col-2">
-            Objet
-        </div>
-        <div class="col-2">
-            Date Début
-        </div>
-        <div class="col-2">
-            Date Fin
-        </div>
-        <div class="col-2">
-            Participants
+<div class="container-fluid p-5">
+
+    <div class="row mb-5">
+
+        <div class="col-auto">
+            <h2> Mes Réservations </h2>
         </div>
     </div>
-    <div class="row" *ngFor="let reservation of (reservations$ | async)">
-            
-            <div class="col-2">
-                {{reservation.objet}}
-            </div>
-            <div class="col-2">
-                {{reservation.startDate}}
-            </div>
-            <div class="col-2">
-                {{reservation.endDate}}
-            </div>
-            <div class="col-2">
-                Participants
-            </div>
-        </div>
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Date Column -->
+        <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="dateTableCell"> {{element.date}} </mat-cell>
+        </ng-container>
+
+        <!-- Start Column -->
+        <ng-container matColumnDef="start">
+            <mat-header-cell *matHeaderCellDef> Début </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.start}} </mat-cell>
+        </ng-container>
+
+        <!-- End Column -->
+        <ng-container matColumnDef="end">
+            <mat-header-cell *matHeaderCellDef> Fin </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.end}} </mat-cell>
+        </ng-container>
+
+        <!-- Room Column -->
+        <ng-container matColumnDef="room">
+            <mat-header-cell *matHeaderCellDef> Salle </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="roomTableCell"> {{element.room}} </mat-cell>
+        </ng-container>
+
+        <!-- Subject Column -->
+        <ng-container matColumnDef="subject">
+            <mat-header-cell *matHeaderCellDef> Sujet </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.subject}} </mat-cell>
+        </ng-container>
+
+        <!-- Participants Column -->
+        <ng-container matColumnDef="participants">
+            <mat-header-cell *matHeaderCellDef> Participants </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.participants}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let element;  let j = index;">
+                <i class="material-icons editBtn" focusable="false" (click)="editBooking(j)">
+                    create
+                </i>
+                <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(j)">
+                    clear
+                </i>
+            </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row class="tableHeader" *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
 </div>
