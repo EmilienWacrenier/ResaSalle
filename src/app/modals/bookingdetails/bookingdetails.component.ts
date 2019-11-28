@@ -97,15 +97,15 @@ export class BookingdetailsComponent implements OnInit {
     const reservation = {
       startDate: startDate,
       endDate: endDate,
-      objet: this.objet,
-      user_id: this.currentUser.idUser,
-      salle_id: 1
+      object: this.objet,
+      userId: this.currentUser.userId,
+      roomId: 1
     };
     console.log('La réservation : ' + reservation.startDate);
     console.log('La réservation : ' + reservation.endDate);
-    console.log('La réservation : ' + reservation.objet);
-    console.log('La réservation : ' + reservation.user_id);
-    console.log('La réservation : ' + reservation.salle_id);
+    console.log('La réservation : ' + reservation.object);
+    console.log('La réservation : ' + reservation.userId);
+    console.log('La réservation : ' + reservation.roomId);
     this.reservationService.createReservation(reservation);
   }
   

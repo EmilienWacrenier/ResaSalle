@@ -23,6 +23,11 @@
         <i class="material-icons">search</i>
         <div class="tabs-title">Rechercher</div>
       </a>
+      <a class="tabs" routerLink="/admin" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
+        [routerLinkActiveOptions]="{exact: true}">
+        <i class="material-icons">build</i>
+        <div class="tabs-title">Admin</div>
+      </a>
     </div>
 
   </mat-sidenav>
