@@ -7,7 +7,7 @@ import { HomeService } from '../../../services/home.service';
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { BookingdetailsComponent } from 'src/app/modals/bookingdetails/bookingdetails.component';
 
-import { JOUR_SEMAINE, HOURS_PLANNING } from '../../../constantes/constantes'
+import { JOUR_SEMAINE, HOURS_PLANNING, HOURS_PLANNING2 } from '../../../constantes/constantes'
 import * as moment from 'moment'
 import { ReservationService } from 'src/app/services/reservation.service';
 
@@ -23,6 +23,7 @@ export class RoomPlanningComponent implements OnInit {
 
   daysOfPlanning: string[] = JOUR_SEMAINE;
   hoursOfPlanning: string[] = HOURS_PLANNING;
+  hoursOfPlanning2: string[] = HOURS_PLANNING2;
 
   room: Room;
   salle: Room;
