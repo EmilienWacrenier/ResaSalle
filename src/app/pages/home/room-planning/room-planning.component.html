@@ -29,17 +29,17 @@
         <div class="col-2 text-center" *ngFor="let day of weekDays">{{day}}</div>
     </div>
 
-    <div class="row border border-white light-blue-bg" id="week-header" *ngIf="arrayIsReady === true">
+    <div class="row border border-white light-blue-bg" id="week-header">
         <div class="col-2 m-0 p-0 border border-white">
             <div class="container-fluid">
-                <div class="row" *ngFor="let hourOfPlanning of hoursOfPlanning">
+                <div class="row border border-white" *ngFor="let hourOfPlanning of hoursOfPlanning">
                     {{hourOfPlanning}}
                 </div>
             </div>
         </div>
         <div class="col-2 m-0 p-0" *ngFor="let resa of bookingsOfTheWeek">
             <div class="container">
-                <div class="row border border-white" *ngFor="let item of resa">
+                <div class="row border border-white" *ngFor="let item of resa; let i = index">
 
                     <div class="item-is-true" *ngIf="item" matTooltip='
                     Réservé par : {{item.user_id}},

@@ -40,8 +40,6 @@ export class RoomPlanningComponent implements OnInit {
 
   bookingsOfTheWeek = [];
 
-  arrayIsReady = false;
-
   constructor(
     private reservationService: ReservationService,
     private route: ActivatedRoute,
@@ -65,6 +63,7 @@ export class RoomPlanningComponent implements OnInit {
   //selectionne une date dans le calendrier puis qui appelle des fonctions
   onSelect(event) {
     this.selectedDate = event.value;
+    console.log(this.selectedDate);
 
     //recupère les jours de la semaine pour le header
     this.weekDays = this.getDaysOfThisWeek(this.selectedDate);
@@ -89,30 +88,31 @@ export class RoomPlanningComponent implements OnInit {
     //reccurrence_id, 
     //salle_id, 
     //id_salle, nom, zone, capacite
+    console.log(this.room.id + this.startDay + this.endDay);
     this.getReservationsOfThisWeek(this.room.id, this.startDay, this.endDay);
   }
 
   //Appel à l'api
   getReservationsOfThisWeek(salleId, startDate, endDate) {
-    this.arrayIsReady = false;
     this.reservationService
       .getReservationsOfThisWeek(salleId, startDate, endDate)
       .subscribe(data => {
         this.listeReservation = data['result'];
+        console.log(this.listeReservation);
         //traitement des données
         this.createBookingListsbyDay(this.listeReservation);
-        this.arrayIsReady = true;
+        console.log(this.bookingsOfTheWeek);
       })
   }
 
   //retourne la date du lundi de la semaine du jour selectionné
   findStartOfWeek(date) {
-    return moment(date).isoWeekday(1).format();
+    return moment(date).set({hour:0,minute:0,second:0,millisecond:0}).isoWeekday(1).format();
   }
 
   //retourne la date du dimanche de la semaine du jour selectionné
   findEndOfWeek(date) {
-    return moment(date).isoWeekday(7).format();
+    return moment(date).set({hour:0,minute:0,second:0,millisecond:0}).isoWeekday(7).format();
   }
 
   //retourne un tableau avec la date des jours de la semaine selectionnée
@@ -142,7 +142,7 @@ export class RoomPlanningComponent implements OnInit {
 
     for (const element of liste) {
       let day = 0;;
-      switch (moment(element.date_debut).locale('fr').format('dddd')) {
+      switch (moment(element.startDate).locale('fr').format('dddd')) {
         case 'lundi':
           day = 0;
           this.sortReservationOfTheDayByHours(day, element);
@@ -174,12 +174,17 @@ export class RoomPlanningComponent implements OnInit {
   }
 
   sortReservationOfTheDayByHours(day, element) {
-    let dateAtMidnight = new Date(element.date_debut).setHours(0);
-    let hDebut = (((new Date(element.date_debut).getTime()) - dateAtMidnight) / 60000) - 60;
-    let hFin = (((new Date(element.date_fin).getTime()) - dateAtMidnight) / 60000) - 60;
+    let dateAtMidnight = new Date(element.startDate).setHours(0);
+    let hDebut = new Date(element.startDate).getUTCHours()*60 + new Date(element.startDate).getUTCMinutes();
+    let hFin = new Date(element.endDate).getUTCHours()*60 + new Date(element.endDate).getUTCMinutes();
     let dureeResa = (hFin - hDebut);
+    
     let compteurMinute = 480;
     let compteurIteration = 0;
+
+    console.log('hdeb : ' + element.startDate + ' = ' + hDebut);
+    console.log('hfin : ' + element.endDate + ' = ' + hFin);
+    console.log('dureeResa : ' + dureeResa);
 
     //iteration pour savoir quand remplir le tableau
     while (hDebut != compteurMinute) {
