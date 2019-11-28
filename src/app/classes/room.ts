@@ -1,17 +1,17 @@
 import { Booking } from './booking';
 
 export class Room {
-    id: number;
+    roomId: number;
     name: string;
-    zone: string;
+    area: string;
     capacity: number;
-    bookings: Booking[];
+    reservations?: Booking[];
 
-    constructor(_id, _name, _zone, _capacity,_bookings){
-        this.id = _id;
-        this.name = _name;
+    /*constructor(_id, _name, _zone, _capacity,_bookings){
+        this.roomId = _id;
+        this.nanameme = _name;
         this.zone = _zone;
         this.capacity = _capacity;
         this.bookings = _bookings;
-    }
+    }*/
 }

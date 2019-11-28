@@ -7,6 +7,7 @@ import { read } from 'fs';
 import { Room } from '../../classes/room'
 import { HomeService } from '../../services/home.service';
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -26,6 +27,7 @@ import * as moment from 'moment';
 export class HomeComponent implements OnInit {
 
   rooms: Room[];
+  rooms$: Observable<Room[]>;
 
   /* 
     Variable itsMorning
@@ -40,7 +42,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.initPlanningBtn();
-    this.getRooms();
+    this.rooms$ = this.homeService.getRooms();
   }
 
   getRooms(): void {
@@ -75,20 +77,20 @@ export class HomeComponent implements OnInit {
     let startHourBooking = new Date(reservation.startDate).getHours();
     let startMinuteBooking = (new Date(reservation.startDate)).getMinutes();
     let totalMinutesDebut = (startHourBooking * 60 + startMinuteBooking) - startMinutes;
-    console.log(totalMinutesDebut);
+    //console.log(totalMinutesDebut);
 
     //total de l'heure de fin en minutes
     let hoursFin = (new Date(reservation.endDate)).getHours();
     let minutesFin = (new Date(reservation.endDate)).getMinutes();
     let totalMinutesFin = (hoursFin * 60 + minutesFin) - startMinutes;
-    console.log(totalMinutesFin);
+    //console.log(totalMinutesFin);
 
     //calcul de la marge(décalage) en fonction de l'heure de début
     let leftMargin = totalMinutesDebut * 100 / maxMinutes;
-    console.log(leftMargin);
+    //console.log(leftMargin);
     //calcul de la taille de la réservation en fonction de l'heure de fin
     let bookingDuration = (totalMinutesFin - totalMinutesDebut) * 100 / maxMinutes;
-    console.log(bookingDuration);
+    //console.log(bookingDuration);
 
     let styles = {
       'left.%': leftMargin,

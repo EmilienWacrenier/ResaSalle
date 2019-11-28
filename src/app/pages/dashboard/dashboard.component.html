@@ -6,7 +6,7 @@
             <h2> Mes Réservations </h2>
         </div>
     </div>
-    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <mat-table [dataSource]="dsBooking" class="mat-elevation-z8">
         <!-- Date Column -->
         <ng-container matColumnDef="date">
             <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
@@ -28,7 +28,7 @@
         <!-- Room Column -->
         <ng-container matColumnDef="room">
             <mat-header-cell *matHeaderCellDef> Salle </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="roomTableCell"> {{element.room_id}} </mat-cell>
+            <mat-cell *matCellDef="let element" class="roomTableCell"> {{element.room.name}} </mat-cell>
         </ng-container>
 
         <!-- Subject Column -->
@@ -40,16 +40,16 @@
         <!-- Participants Column -->
         <ng-container matColumnDef="participants">
             <mat-header-cell *matHeaderCellDef> Participants </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.user_id}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.participants.length > 0 ? element.participants.count : 'N/A'}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
             <mat-cell *matCellDef="let element;  let j = index;">
-                <i class="material-icons editBtn" focusable="false" (click)="editBooking(j)">
-                    create
+                <i class="material-icons editBtn" focusable="false" (click)="editBooking(element.reservationId)">
+                    edit
                 </i>
-                <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(j)">
+                <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(element.reservationId)">
                     clear
                 </i>
             </mat-cell>

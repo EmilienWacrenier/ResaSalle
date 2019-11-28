@@ -15,6 +15,7 @@ import { catchError, map } from 'rxjs/operators';
 
 export class ReservationService {
 
+  dashboardDataSource = [];
   protected user;
 
   constructor(private httpClient: HttpClient, private cst: ApiConstants, private toastr: ToastrService) {
@@ -39,22 +40,32 @@ export class ReservationService {
   }
 
 
-  getReservationsFromUserConnected(): Observable<Booking[]> {
+  getReservationsFromUserConnected(): Observable<Booking[]>{
     let bookings;
+    this.dashboardDataSource.splice(0);
     const params = new HttpParams().set('userId', this.user.userId);
     return this.httpClient
-      .get<Booking[]>(this.cst.apiUrl + 'reservation/reservationsByUserId', {params: params});
-      /*.subscribe(
+      .get<Booking[]>(this.cst.apiUrl + 'reservation/reservationsByUserId', { params: params });
+  }
+
+  removeReservation(reservationId): Observable<any> {
+    const param = new HttpParams().set('reservationId', reservationId);
+    /*this.httpClient.delete(this.cst.apiUrl + 'reservation/deleteReservation', { params: param })
+      .subscribe(
         (response) => {
           var a = response['result'];
+          console.log('Result de remove :');
           console.log(a);
-          bookings = a;
+          this.toastr.success('Réservation supprimée !', this.cst.toastrTitle, this.cst.toastrOptions);
+          
         },
         (error) => {
-          console.log('Erreur ! : ' + error.error['result']);
+          console.log('Erreur Suppression ! : ' + error.error['result']);
+          this.toastr.error(error.error['result'], this.cst.toastrTitle, this.cst.toastrOptions);
         }
       );*/
-      return bookings;
+      return this.httpClient.delete(this.cst.apiUrl + 'reservation/deleteReservation', { params: param });
+      
   }
 
   getReservationsOfThisWeek(room_id: number, startDate, endDate) {

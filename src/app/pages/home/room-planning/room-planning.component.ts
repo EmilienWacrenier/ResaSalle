@@ -89,8 +89,8 @@ export class RoomPlanningComponent implements OnInit {
     //reccurrence_id, 
     //salle_id, 
     //id_salle, nom, zone, capacite
-    console.log(this.room.id + this.startDay + this.endDay);
-    this.getReservationsOfThisWeek(this.room.id, this.startDay, this.endDay);
+    console.log(this.room.roomId + this.startDay + this.endDay);
+    this.getReservationsOfThisWeek(this.room.roomId, this.startDay, this.endDay);
   }
 
   //Appel à l'api

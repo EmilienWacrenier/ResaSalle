@@ -3,11 +3,11 @@ import * as moment from 'moment';
 
 export const ROOMS: Room[] = [
     {
-        id: 1,
+        roomId: 1,
         name: "Carnot",
-        zone: "A",
+        area: "A",
         capacity: 4,
-        bookings: [
+        reservations: [
             /*{
                 
                 startDate: '2019-11-06T08:01:00',
@@ -75,11 +75,11 @@ export const ROOMS: Room[] = [
         ]
     },
     {
-        id: 2,
+        roomId: 2,
         name: "Pythagore",
-        zone: "A",
+        area: "A",
         capacity: 4,
-        bookings: [
+        reservations: [
             {
                
                 startDate: '2019-11-06T8:10:00',
@@ -115,11 +115,11 @@ export const ROOMS: Room[] = [
         ]
     },
     {
-        id: 3,
+        roomId: 3,
         name: "Pascal",
-        zone: "A",
+        area: "A",
         capacity: 4,
-        bookings: [{
+        reservations: [{
             
             startDate: '2019-11-06T8:20:00',
             endDate: '2019-11-06T8:50:00',
@@ -145,11 +145,11 @@ export const ROOMS: Room[] = [
         }]
     },
     {
-        id: 4,
+        roomId: 4,
         name: "Marne",
-        zone: "A",
+        area: "A",
         capacity: 4,
-        bookings: [
+        reservations: [
             {
                 
                 startDate: '2019-11-06T8:01:00',
@@ -177,11 +177,11 @@ export const ROOMS: Room[] = [
         ]
     },
     {
-        id: 5,
+        roomId: 5,
         name: "Pika",
-        zone: "A",
+        area: "A",
         capacity: 4,
-        bookings: [
+        reservations: [
             {
                 
                 startDate: '2019-11-06T8:01:00',
@@ -224,11 +224,11 @@ export const ROOMS: Room[] = [
         ]
     },
     {
-        id: 6,
+        roomId: 6,
         name: "Gym",
-        zone: "A",
+        area: "A",
         capacity: 4,
-        bookings: [
+        reservations: [
             {
                 
                 startDate: '2019-11-06T8:01:00',
@@ -272,11 +272,11 @@ export const ROOMS: Room[] = [
         ]
     },
     {
-        id: 7,
+        roomId: 7,
         name: "Andromède",
-        zone: "A",
+        area: "A",
         capacity: 4,
-        bookings: [
+        reservations: [
             {
                 
                 startDate: '2019-11-06T8:01:00',
