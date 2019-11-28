@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Room } from '../classes/room';
 
@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { ToastrService, ToastRef } from 'ngx-toastr';
 import { ApiConstants } from '../constantes/constantes';
 import { catchError, map } from 'rxjs/operators';
+import { ROOMS } from '../mock-roomList';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,38 @@ export class HomeService {
     //return this.http.get<Room[]>(this.apiURL + 'salles/sallesReserveesEntre')
   }
 
-  /*getRoomPlanning(id: number): Observable<Room> {
-    return of(ROOMS.find(room => room.id === id));
-  }*/
+  getRoomPlanning(id: number): Observable<Room> {
+    return of(ROOMS.find(room => room.roomId === id));
+  }
+
+  getSallebyId(salleId): Observable<Room> {
+    const params = new HttpParams()
+      .set("salleId", salleId)
+      console.log(params);
+
+    let res = this.httpClient
+    .get<Room>(this.cst.apiUrl + 'salle/salleById', {params:params})
+    .pipe(
+      catchError(this.errorMgmt));
+
+    console.log(res);
+
+    return res;
+
+  }
+
+  // Error handling 
+  errorMgmt(error: HttpErrorResponse) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
+  }   
+
 }
