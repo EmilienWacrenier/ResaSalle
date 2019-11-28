@@ -1,6 +1,6 @@
 import { Room } from './classes/room';
 import * as moment from 'moment';
-
+/*
 export const ROOMS: Room[] = [
     {
         id: 1,
@@ -280,3 +280,4 @@ export const ROOMS: Room[] = [
         ]
     }
 ]
+*/

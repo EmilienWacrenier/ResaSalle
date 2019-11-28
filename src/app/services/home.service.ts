@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Room } from '../classes/room';
-import { ROOMS } from '../mock-roomList';
+
 import { Booking } from '../classes/booking';
+import * as moment from 'moment';
+import { ToastrService, ToastRef } from 'ngx-toastr';
+import { ApiConstants } from '../constantes/constantes';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +15,21 @@ import { Booking } from '../classes/booking';
 export class HomeService {
 
   apiURL = 'localhost:3000/'
-  constructor() { }
+  constructor(private httpClient: HttpClient, private cst: ApiConstants, private toastr: ToastrService) { }
 
   getRooms(): Observable<Room[]> {
-    return of(ROOMS);
+    
+    const param = new HttpParams().set('startDate', moment().format('YYYY-MM-DD'));
+    return this.httpClient
+      .get<Room[]>(this.cst.apiUrl + 'reservation/reservationsByDay', { params: param }).pipe(
+        map(
+          (response)=> response['result']
+          )
+      );
     //return this.http.get<Room[]>(this.apiURL + 'salles/sallesReserveesEntre')
   }
 
-  getRoomPlanning(id: number): Observable<Room> {
+  /*getRoomPlanning(id: number): Observable<Room> {
     return of(ROOMS.find(room => room.id === id));
-  }
+  }*/
 }

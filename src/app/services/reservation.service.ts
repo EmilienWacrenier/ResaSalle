@@ -12,6 +12,8 @@ import { Observable } from 'rxjs';
 
 export class ReservationService {
 
+  dashboardDataSource = [];
+
   constructor(private httpClient: HttpClient, private cst: ApiConstants, private toastr: ToastrService) {
     this.user = JSON.parse(localStorage.getItem('user'));
   }
@@ -34,25 +36,45 @@ export class ReservationService {
   }
 
 
-  getReservationsFromUserConnected(): Observable<Booking[]> {
+  getReservationsFromUserConnected(): Observable<Booking[]>{
     let bookings;
+    this.dashboardDataSource.splice(0);
     const params = new HttpParams().set('userId', this.user.userId);
     return this.httpClient
-      .get<Booking[]>(this.cst.apiUrl + 'reservation/reservationsByUserId', {params: params});
-      /*.subscribe(
-        (response) => {
-          var a = response['result'];
-          console.log(a);
-          bookings = a;
-        },
-        (error) => {
-          console.log('Erreur ! : ' + error.error['result']);
-        }
-      );*/
-      return bookings;
+      .get<Booking[]>(this.cst.apiUrl + 'reservation/reservationsByUserId', { params: params });
   }
 
-  getReservationsOfThisWeek(reservation){
+  removeReservation(reservationId): Observable<any> {
+    const param = new HttpParams().set('reservationId', reservationId);
+    /*this.httpClient.delete(this.cst.apiUrl + 'reservation/deleteReservation', { params: param })
+      .subscribe(
+        (response) => {
+          var a = response['result'];
+          console.log('Result de remove :');
+          console.log(a);
+          this.toastr.success('Réservation supprimée !', this.cst.toastrTitle, this.cst.toastrOptions);
+          
+        },
+        (error) => {
+          console.log('Erreur Suppression ! : ' + error.error['result']);
+          this.toastr.error(error.error['result'], this.cst.toastrTitle, this.cst.toastrOptions);
+        }
+      );*/
+      return this.httpClient.delete(this.cst.apiUrl + 'reservation/deleteReservation', { params: param });
+      
+  }
+
+ /* getDashboardDataSource() {
+    this.dashboardDataSource.splice(0);
+    this.getReservationsFromUserConnected()
+      .subscribe(
+        (response) => {
+          this.dashboardDataSource.push(response['result']);
+        }
+      );
+  }*/
+
+  getReservationsOfThisWeek(reservation) {
     this.httpClient
       .get<any[]>(this.cst.apiUrl + 'reservation/reservationsBySalleId', reservation)
       .subscribe(
@@ -67,8 +89,8 @@ export class ReservationService {
           this.toastr.error(error.error['result'], this.cst.toastrTitle, this.cst.toastrOptions);
         }
       );
-    
-    
+
+
   }
 
 

@@ -34,7 +34,7 @@ export class RoomPlanningComponent implements OnInit {
 
   ngOnInit() {
     document.getElementById('homeNavItem').classList.add('active-list-item');
-    this.getRoomPlanning();
+    /*this.getRoomPlanning();*/
     /*console.log(this.room);*/
 
     this.weekDays = this.getDaysOfThisWeek(this.selectedDate);
@@ -147,7 +147,7 @@ export class RoomPlanningComponent implements OnInit {
     this.bookingOfTheWeek = [];
     let startDate = this.findStartOfWeek(selectedDate)
     let endDate = this.findEndOfWeek(selectedDate)
-    let salleId = this.room.id;
+    let salleId = this.room.roomId;
     let reservationOfTheWeek = this.getReservationsOfThisWeek(startDate, endDate, salleId);
     return this.createBookingListsbyDay(reservationOfTheWeek);
   }
@@ -166,10 +166,10 @@ export class RoomPlanningComponent implements OnInit {
     document.getElementById('homeNavItem').classList.remove('active-list-item');
     this.router.navigate(['']);
   }
-
+/*
   getRoomPlanning(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.homeService.getRoomPlanning(id)
       .subscribe(room => this.room = room);
-  }
+  }*/
 }
