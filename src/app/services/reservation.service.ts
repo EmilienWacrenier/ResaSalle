@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 
 import { ToastrService, ToastRef } from 'ngx-toastr';
 import { ApiConstants } from '../constantes/constantes';
 import { Booking } from '../classes/booking';
-import { Observable } from 'rxjs';
+import { Room } from '../classes/room';
+
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +15,12 @@ import { Observable } from 'rxjs';
 
 export class ReservationService {
 
+  protected user;
+
   constructor(private httpClient: HttpClient, private cst: ApiConstants, private toastr: ToastrService) {
     this.user = JSON.parse(localStorage.getItem('user'));
   }
-  protected user;
+
   createReservation(reservation) {
     this.httpClient
       .post<any[]>(this.cst.apiUrl + 'reservation/createReservation', reservation)
@@ -37,7 +42,7 @@ export class ReservationService {
   getReservationsFromUserConnected(): Observable<Booking[]> {
     let bookings;
     this.httpClient
-      .post<any[]>(this.cst.apiUrl + 'reservation/reservationsByUserId', {user_id: this.user.idUser})
+      .post<any[]>(this.cst.apiUrl + 'reservation/reservationsByUserId', { user_id: this.user.idUser })
       .subscribe(
         (response) => {
           var a = response['result'];
@@ -48,27 +53,36 @@ export class ReservationService {
           console.log('Erreur ! : ' + error.error['result']);
         }
       );
-      return bookings;
+    return bookings;
   }
 
-  getReservationsOfThisWeek(reservation){
-    this.httpClient
-      .get<any[]>(this.cst.apiUrl + 'reservation/reservationsBySalleId', reservation)
-      .subscribe(
-        (response) => {
-          var a = response['result'];
-          console.log(a);
+  getReservationsOfThisWeek(room_id: number, startDate, endDate) {
 
-          this.toastr.success('success', this.cst.toastrTitle, this.cst.toastrOptions);
-        },
-        (error) => {
-          console.log('Erreur ! : ' + error.error['result']);
-          this.toastr.error(error.error['result'], this.cst.toastrTitle, this.cst.toastrOptions);
-        }
-      );
-    
-    
+    let roomId: string = room_id.toString();
+
+    const params = new HttpParams()
+      .set('roomId', roomId)
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+
+    return this.httpClient
+      .get<Booking[]>(
+        this.cst.apiUrl + 'reservation/reservationsByRoomId/',
+        { params: params });
   }
 
+  // Error handling 
+  errorMgmt(error: HttpErrorResponse) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
+  }
 
 }

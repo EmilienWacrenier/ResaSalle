@@ -8,7 +8,7 @@ export const ROOMS: Room[] = [
         zone: "A",
         capacity: 4,
         bookings: [
-            {
+            /*{
                 
                 startDate: '2019-11-06T08:01:00',
                 endDate: '2019-11-06T09:02:00',
@@ -36,6 +36,38 @@ export const ROOMS: Room[] = [
                 
                 startDate: '2019-11-06T14:00:00',
                 endDate: '2019-11-06T15:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
+            },*/
+            {
+                
+                startDate: '2019-11-25T14:00:00',
+                endDate: '2019-11-25T15:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
+            },
+            {
+                
+                startDate: '2019-11-26T14:00:00',
+                endDate: '2019-11-25T16:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
+            },
+            {
+                
+                startDate: '2019-11-27T10:00:00',
+                endDate: '2019-11-27T11:00:00',
+                objet: "reunion",
+                user_id: 1,
+                salle_id:1
+            },
+            {
+                
+                startDate: '2019-11-28T08:00:00',
+                endDate: '2019-11-28T09:00:00',
                 objet: "reunion",
                 user_id: 1,
                 salle_id:1
