@@ -6,3 +6,61 @@
 .lightblue-txt-color{
     color: #739ae0;
 }
+
+.value-button {
+    display: inline-block;
+    border: 1px solid #ddd;
+    margin: 0px;
+    width: 40px;
+    height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 11px 0;
+    background: #eee;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .value-button:hover {
+    cursor: pointer;
+  }
+  .deleteBtn{
+    color: red;
+    cursor: pointer;
+    margin-right: 5px;
+}
+  
+.editBtn{
+    color: royalblue;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.tableHeader{
+    background-color: #1c4797;
+}
+
+mat-header-cell{
+    color: white;
+    font-size: 15px;
+    text-align: center !important;
+    justify-content: center;
+}
+
+mat-cell {
+    justify-content: center;
+}
+
+.dateTableCell{
+    font-weight: bold;
+    color: #1c4797;
+}
+
+.roomTableCell{
+    font-weight: bold;
+    color:#739ae0;
+}

@@ -9,25 +9,6 @@ import { MatTableDataSource } from '@angular/material';
 import { ToastrService, ToastRef } from 'ngx-toastr';
 import { ApiConstants } from '../../constantes/constantes';
 
-export interface Reservation {
-  date: string;
-  start: string;
-  end: string;
-  room: string;
-  subject: string;
-  participants: number;
-}
-
-const ELEMENT_DATA: Reservation[] = [
-  { date: '10 juin', start: '10:00', end: '10:30', room: 'H', subject: 'Réunion', participants: 4 },
-  { date: '11 juin', start: '10:00', end: '10:30', room: 'H', subject: 'Réunion', participants: 4 },
-  { date: '12 juin', start: '10:00', end: '10:30', room: 'H', subject: 'Réunion', participants: 4 },
-  { date: '13 juin', start: '10:00', end: '10:30', room: 'H', subject: 'Réunion', participants: 4 },
-  { date: '14 juin', start: '10:00', end: '10:30', room: 'H', subject: 'Réunion', participants: 4 },
-  { date: '15 juin', start: '10:00', end: '10:30', room: 'H', subject: 'Réunion', participants: 4 },
-  { date: '16 juin', start: '10:00', end: '10:30', room: 'H', subject: 'Réunion', participants: 4 },
-];
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
