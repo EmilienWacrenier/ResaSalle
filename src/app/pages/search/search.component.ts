@@ -97,6 +97,7 @@ export class SearchComponent implements OnInit {
     if (startingHour >= endingHour) { return this.hoursAreWrongControl = true;}
     else return this.hoursAreWrongControl = false;
   }
+  
   isReccurent(){
     if (this.checked) { return true;}
     else return false;
