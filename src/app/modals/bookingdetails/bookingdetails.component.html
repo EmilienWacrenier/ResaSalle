@@ -1,95 +1,106 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-3">
-      Salle {{room.name}}
-    </div>
-    <!--Input objet de la réunion -->
-  <div class="col">
-        <mat-form-field>
+
+  <div class="row justify-content-around align-items-center">
+    <div class="col-6">
+      <div class="row justify-content-center p-2 mb-2">
+        <h1 class="titre">Salle {{room.name}}</h1>
+      </div>
+      <div class="row justify-content-center border rounded p-2 my-2">
+        <mat-form-field class="w-75">
           <input matInput placeholder="Objet" [(ngModel)]="objet">
         </mat-form-field>
-    </div>
-  </div>
-
-  <div class="row">
-    <mat-form-field>
-      <input matInput [(ngModel)]="selectedDate" [matDatepicker]="picker" placeholder="Choose a date">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-  </div>
-
-
-  <div class="row justify-content-between">
-    <div class="col-6">
-      <h5 class="p-2">Debut</h5>
-      <mat-form-field class="w-50 px-2">
-        <mat-label>Heure</mat-label>
-        <mat-select [(ngModel)]="selectedHourStart">
-          <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart">
-            {{hourStart}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="w-50 px-2">
-        <mat-label>Minute</mat-label>
-        <mat-select [(ngModel)]="selectedMinuteStart">
-          <mat-option *ngFor="let minuteStart of bookingMinutes" [value]="minuteStart">
-            {{minuteStart}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="col-6">
-      <h5 class="p-2">Fin</h5>
-      <mat-form-field class="w-50 px-2">
-        <mat-label>Heure</mat-label>
-        <mat-select [(ngModel)]="selectedHourEnd">
-          <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
-            {{hourEnd}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="w-50 px-2">
-        <mat-label>Minute</mat-label>
-        <mat-select [(ngModel)]="selectedMinuteEnd">
-          <mat-option *ngFor="let minuteEnd of bookingMinutes" [value]="minuteEnd">
-            {{minuteEnd}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </div>
-
-
-  <!--Liste des utilisateurs -->
-  <div class="row">
-    <mat-dialog-content>
-      <!--Recherche des participants -->
-      <form class="w-100">
-        <h3 class="titre">Participants</h3>
-        <mat-form-field class="search-form">
-          <input matInput>
-          <mat-icon matPrefix>search</mat-icon>
+        <span class="d-block text-danger small p-1" *ngIf="errorObjet">{{errorObjet}}</span>
+      </div>
+      <div class="row justify-content-center border rounded p-2 my-2">
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedDate" [matDatepicker]="picker" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-      </form>
-      <!--Liste des participants-->
-      <mat-selection-list #participants (selectionChange)="onSelect(participants.selectedOptions.selected)">
-        <mat-list-option *ngFor="let user of users" [value]='user.miniature'>
-          {{user.firstName|titlecase}} {{user.lastName|titlecase}}
-        </mat-list-option>
-      </mat-selection-list>
-    </mat-dialog-content>
-  </div>
-  <!--Vignettes et bouton next-->
-  <mat-divider></mat-divider>
-  <div class="row">
-    <div class="vignette">
-      {{selectedMiniatures}}
-      <mat-dialog-actions>
-        <button matButton class="mat-raised-button" (click)="onSubmit()">Créer</button>
-      </mat-dialog-actions>
+        <span class="d-block text-danger small p-1" *ngIf="errorDate">{{errorDate}}</span>
+      </div>
+      <div class="row justify-content-center border rounded p-2 my-2">
+        <h5 class="w-100 text-center">Debut</h5>
+        <mat-form-field class="w-50 px-2">
+          <mat-label>Heure</mat-label>
+          <mat-select [(ngModel)]="selectedHourStart">
+            <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart">
+              {{hourStart}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-50 px-2">
+          <mat-label>Minute</mat-label>
+          <mat-select [(ngModel)]="selectedMinuteStart">
+            <mat-option *ngFor="let minuteStart of bookingMinutes" [value]="minuteStart">
+              {{minuteStart}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span class="d-block text-danger small p-1"
+          *ngIf="errorHourStart">{{errorHourStart}}</span>
+      </div>
+      <div class="row justify-content-center border rounded p-2 my-2">
+        <h5 class="w-100 text-center">Fin</h5>
+        <mat-form-field class="w-50 px-2">
+          <mat-label>Heure</mat-label>
+          <mat-select [(ngModel)]="selectedHourEnd">
+            <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
+              {{hourEnd}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-50 px-2">
+          <mat-label>Minute</mat-label>
+          <mat-select [(ngModel)]="selectedMinuteEnd">
+            <mat-option *ngFor="let minuteEnd of bookingMinutes" [value]="minuteEnd">
+              {{minuteEnd}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span class="d-block text-danger small p-1" *ngIf="errorHourEnd">{{errorHourEnd}}</span>
+      </div>
     </div>
+
+    <div class="col-4">
+      <!--Liste des utilisateurs -->
+      <div class="row justify-content-center">
+        <mat-dialog-content>
+          <!--Recherche des participants -->
+          <form class="w-100">
+            <h2 class="titre">Participants</h2>
+            <mat-form-field class="search-form">
+              <input matInput>
+              <mat-icon matPrefix>search</mat-icon>
+            </mat-form-field>
+          </form>
+          <!--Liste des participants-->
+          <mat-selection-list #participants
+            (selectionChange)="onSelectParticipant(participants.selectedOptions.selected)">
+            <mat-list-option *ngFor="let user of users" [value]='user.miniature'>
+              {{user.firstName|titlecase}} {{user.lastName|titlecase}}
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-dialog-content>
+      </div>
+      <!--Vignettes et bouton next-->
+      <mat-divider></mat-divider>
+      <div class="row">
+        <div class="vignette">
+          {{selectedMiniatures}}
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="row justify-content-center my-2">
+    <mat-dialog-actions>
+      <button matButton class="mat-raised-button" (click)="onSubmit()">Créer la réservation</button>
+      <span class="d-block text-danger small p-1" *ngIf="errorBase">{{errorBase}}</span>
+    </mat-dialog-actions>
   </div>
 
 

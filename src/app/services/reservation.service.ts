@@ -22,9 +22,10 @@ export class ReservationService {
     this.user = JSON.parse(localStorage.getItem('user'));
   }
 
-  createReservation(reservation) {
+  createReservation(reservation){
+    let error: string;
     this.httpClient
-      .post<any[]>(this.cst.apiUrl + 'reservation/createReservation', reservation)
+      .post<string>(this.cst.apiUrl + 'reservation/createReservation', reservation)
       .subscribe(
         (response) => {
           var a = response['result'];

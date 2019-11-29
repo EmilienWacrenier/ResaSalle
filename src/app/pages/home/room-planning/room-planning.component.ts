@@ -108,7 +108,7 @@ export class RoomPlanningComponent implements OnInit {
 
   //retourne la date du dimanche de la semaine du jour selectionné
   findEndOfWeek(date) {
-    return moment(date).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).isoWeekday(7).format();
+    return moment(date).set({hour:23,minute:59,second:59,millisecond:0}).isoWeekday(7).format();
   }
 
   //retourne un tableau avec la date des jours de la semaine selectionnée
@@ -138,41 +138,23 @@ export class RoomPlanningComponent implements OnInit {
 
     for (const element of liste) {
       let day = 0;;
+      
       switch (moment(element.startDate).locale('fr').format('dddd')) {
-        case 'lundi':
-          day = 0;
-          this.sortReservationOfTheDayByHours(day, element);
-          ;
-          break;
-        case 'mardi':
-          day = 1;
-          this.sortReservationOfTheDayByHours(day, element);
-          ;
-          break;
-        case 'mercredi':
-          day = 2;
-          this.sortReservationOfTheDayByHours(day, element);
-          ;
-          break;
-        case 'jeudi':
-          day = 3;
-          this.sortReservationOfTheDayByHours(day, element);
-          ;
-          break;
-        case 'vendredi':
-          day = 4;
-          this.sortReservationOfTheDayByHours(day, element);
-          ;
-          break;
+        case 'lundi': day = 0; break;
+        case 'mardi': day = 1; break;
+        case 'mercredi': day = 2; break;
+        case 'jeudi': day = 3; break;
+        case 'vendredi': day = 4; break;
       }
+
+      this.sortReservationOfTheDayByHours(day, element);
     }
     return this.bookingsOfTheWeek;
   }
 
   sortReservationOfTheDayByHours(day, element) {
-    let dateAtMidnight = new Date(element.startDate).setHours(0);
-    let hDebut = new Date(element.startDate).getUTCHours() * 60 + new Date(element.startDate).getUTCMinutes();
-    let hFin = new Date(element.endDate).getUTCHours() * 60 + new Date(element.endDate).getUTCMinutes();
+    let hDebut = new Date(element.startDate).getUTCHours()*60 + new Date(element.startDate).getUTCMinutes();
+    let hFin = new Date(element.endDate).getUTCHours()*60 + new Date(element.endDate).getUTCMinutes();
     let dureeResa = (hFin - hDebut);
 
     let compteurMinute = 480;
