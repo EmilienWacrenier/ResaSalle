@@ -51,12 +51,7 @@ export class RoomPlanningComponent implements OnInit {
 
   ngOnInit() {
     document.getElementById('homeNavItem').classList.add('active-list-item');
-    this.getRoomPlanning();
-
-
-    let today = new Date();
-    this.onSelect(today);
-    console.log(today);
+    this.getRoomById();
   }
 
   //fonction qui va changer la valeur de la date selectionnée quand on
@@ -107,7 +102,7 @@ export class RoomPlanningComponent implements OnInit {
 
   //retourne la date du lundi de la semaine du jour selectionné
   findStartOfWeek(date) {
-    return moment(date).set({hour:0,minute:0,second:0,millisecond:0}).isoWeekday(1).format();
+    return moment(date).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).isoWeekday(1).format();
   }
 
   //retourne la date du dimanche de la semaine du jour selectionné
@@ -130,13 +125,13 @@ export class RoomPlanningComponent implements OnInit {
   createBookingListsbyDay(liste) {
     var objet = null;
 
-    for(var i=0; i < 5; i++){
+    for (var i = 0; i < 5; i++) {
       this.bookingsOfTheWeek[i] = [];
     }
 
-    for(var i=0; i < 5; i++){
-      for(var j=0; j<20; j++){
-      this.bookingsOfTheWeek[i].push(objet);
+    for (var i = 0; i < 5; i++) {
+      for (var j = 0; j < 20; j++) {
+        this.bookingsOfTheWeek[i].push(objet);
       }
     }
 
@@ -160,7 +155,7 @@ export class RoomPlanningComponent implements OnInit {
     let hDebut = new Date(element.startDate).getUTCHours()*60 + new Date(element.startDate).getUTCMinutes();
     let hFin = new Date(element.endDate).getUTCHours()*60 + new Date(element.endDate).getUTCMinutes();
     let dureeResa = (hFin - hDebut);
-    
+
     let compteurMinute = 480;
     let compteurIteration = 0;
 
@@ -197,9 +192,14 @@ export class RoomPlanningComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  getRoomPlanning(): void {
+  getRoomById(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.homeService.getRoomPlanning(id)
-      .subscribe(room => this.room = room);
+    this.homeService.getRoomById(id)
+      .subscribe(room => {
+      this.room = room;
+        let today = new Date();
+        this.onSelect(today);
+        console.log(today);
+      });
   }
 }

@@ -30,8 +30,13 @@ export class HomeService {
     //return this.http.get<Room[]>(this.apiURL + 'salles/sallesReserveesEntre')
   }
 
-  getRoomPlanning(id: number): Observable<Room> {
-    return of(ROOMS.find(room => room.roomId === id));
+  getRoomById(id: number): Observable<Room> {
+    const param = new HttpParams().set('roomId', id.toString());
+    return this.httpClient.get<Room>(this.cst.apiUrl + 'salle/roomById', {params: param}).pipe(
+      map(
+        (response)=> response['result']
+        )
+    );
   }
 
   getSallebyId(salleId): Observable<Room> {
