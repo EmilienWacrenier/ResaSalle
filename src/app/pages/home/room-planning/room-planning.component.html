@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
 
     <div class="row align-items-center">
         <div class="col-1">
@@ -11,7 +11,7 @@
             <h1 class="title">Salle {{room.name}} - Zone {{room.area}}</h1>
         </div>
 
-        <div class="col">
+        <div class="col pr-5">
             <mat-form-field class="float-right">
                 <input matInput [matDatepicker]="picker" placeholder="Selectionner une date"
                     (dateChange)="onSelect($event)">
@@ -21,42 +21,56 @@
         </div>
     </div>
 </div>
-<div class="container-fluid shadow-lg mt-5">
-    <div class="row light-blue-bg">
-        <div class="col-2">&nbsp;</div>
-        <div class="col-2 border border-white text-center p-3" *ngFor="let day of weekDays">{{day}}</div>
-    </div>
 
-    <div class="row light-blue-bg border rounded" id="week-header">
-        <div class="col-2 m-0 p-0">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="row border border-right-0 border-white pb-3" *ngFor="let hourOfPlanning of hoursOfPlanning">
-                            <span class="ml-2">{{hourOfPlanning}}</span>
-                        </div>
-                    </div>
-                    <!--<div class="col-6">
-                        <div class="row border border-left-0 border-white pt-3" *ngFor="let hourOfPlanning of hoursOfPlanning2">
-                            <span class="mr-2 ml-auto">{{hourOfPlanning}}</span>
-                        </div>
-                    </div>-->
+<div class="container shadow mt-2 border">
+    <div class="row bg-white">
+        <div class="col-auto">
+            <div class="row">
+                <div class="w-100 text-right">
+                    &nbsp;
                 </div>
             </div>
         </div>
-        <div class="col-2 m-0 p-0" *ngFor="let resa of bookingsOfTheWeek">
+        <div class="col border border-white text-center p-3 text-capitalize" *ngFor="let day of weekDays">{{day}}</div>
+    </div>
+
+    <div class="row light-blue-bg" id="week-header">
+        <div class="col-auto">
+            <div class="row bg-white" *ngFor="let hourOfPlanning of hoursOfPlanning; let i = index">
+                <div class="w-100 border border-white border-bottom-0 text-right" *ngIf="i%2 == 0">
+                    {{hourOfPlanning}}
+                </div>
+                <div class="w-100 border border-top-0" *ngIf="i%2 !== 0">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="col p-0" *ngFor="let resa of bookingsOfTheWeek">
             <div class="container">
-                <div class="row border border-white" *ngFor="let item of resa; let i = index">
+                <div class="row" *ngFor="let item of resa; let i = index">
+                    <div class=" w-100 border border-bottom-0 text-right" *ngIf="i%2 == 0">
+                        <div class="item-is-true" *ngIf="item" matTooltip='
+                                Réservé par : {{item.firstName}} {{item.lastName}},
+                                Objet : {{item.object}},
+                                Capacité : {{item.capacity}} pers.'>
+                            &nbsp;
+                        </div>
 
-                    <div class="item-is-true p-2" *ngIf="item" matTooltip='
-                    Réservé par : {{item.firstName}} {{item.lastName}},
-                    Objet : {{item.object}},
-                    Capacité : {{item.capacity}} pers.'>
-                        &nbsp;
+                        <div class="item-is-false" *ngIf="!item" (click)="openDialog()">
+                            &nbsp;
+                        </div>
                     </div>
+                    <div class="w-100 border border-top-0" *ngIf="i%2 !== 0">
+                        <div class="item-is-true" *ngIf="item" matTooltip='
+                            Réservé par : {{item.firstName}} {{item.lastName}},
+                            Objet : {{item.object}},
+                            Capacité : {{item.capacity}} pers.'>
+                            &nbsp;
+                        </div>
 
-                    <div class="item-is-false p-2" *ngIf="!item" (click)="openDialog()">
-                        &nbsp;
+                        <div class="item-is-false" *ngIf="!item" (click)="openDialog()">
+                            &nbsp;
+                        </div>
                     </div>
                 </div>
             </div>
