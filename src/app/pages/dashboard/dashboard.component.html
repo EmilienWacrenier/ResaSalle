@@ -6,50 +6,50 @@
             <h2> Mes Réservations </h2>
         </div>
     </div>
-    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <mat-table [dataSource]="dsBooking" class="mat-elevation-z8">
         <!-- Date Column -->
         <ng-container matColumnDef="date">
             <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="dateTableCell"> {{element.date}} </mat-cell>
+            <mat-cell *matCellDef="let element" class="dateTableCell"> {{element.startDate | date: 'dd MMM.'}} </mat-cell>
         </ng-container>
 
         <!-- Start Column -->
         <ng-container matColumnDef="start">
             <mat-header-cell *matHeaderCellDef> Début </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.start}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.startDate | date: 'HH:mm'}} </mat-cell>
         </ng-container>
 
         <!-- End Column -->
         <ng-container matColumnDef="end">
             <mat-header-cell *matHeaderCellDef> Fin </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.end}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.endDate | date: 'HH:mm'}} </mat-cell>
         </ng-container>
 
         <!-- Room Column -->
         <ng-container matColumnDef="room">
             <mat-header-cell *matHeaderCellDef> Salle </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="roomTableCell"> {{element.room}} </mat-cell>
+            <mat-cell *matCellDef="let element" class="roomTableCell"> {{element.room.name}} </mat-cell>
         </ng-container>
 
         <!-- Subject Column -->
         <ng-container matColumnDef="subject">
             <mat-header-cell *matHeaderCellDef> Sujet </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.subject}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.object}} </mat-cell>
         </ng-container>
 
         <!-- Participants Column -->
         <ng-container matColumnDef="participants">
             <mat-header-cell *matHeaderCellDef> Participants </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.participants}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.participants.length > 0 ? element.participants.count : 'N/A'}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
             <mat-cell *matCellDef="let element;  let j = index;">
-                <i class="material-icons editBtn" focusable="false" (click)="editBooking(j)">
-                    create
+                <i class="material-icons editBtn" focusable="false" (click)="editBooking(element.reservationId)">
+                    edit
                 </i>
-                <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(j)">
+                <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(element.reservationId)">
                     clear
                 </i>
             </mat-cell>

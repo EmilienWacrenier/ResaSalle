@@ -2,81 +2,77 @@
     <div class="auth-container">
         <div class="row">
 
-                <div class="col-md-6 col-xs-12">
-                        <img src="../../../assets/illustration_ekla.jpg" class="img-fluid" alt="illustration_ekla"/>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-            
-                        <mat-tab-group mat-align-tabs="center" class="auth">
-            
-                            <!-- TAB SE CONNECTER -->
-                            <mat-tab label="SE CONNECTER" class="w-100">
-                                <div class="connexion">
-                                    <h1 class="title">Welcome back !</h1>
-                                    <form [formGroup]="loginForm">
-                                        <mat-form-field class="d-block">
-                                            <input color="white" matInput formControlName="email" placeholder="Email">
-                                            <mat-icon matSuffix class="grey">email</mat-icon>
-                                        </mat-form-field>
-            
-                                        <mat-form-field class="d-block">
-                                            <input type="password" matInput formControlName="password" placeholder="Mot de passe">
-                                            <mat-icon matSuffix class="grey">lock_open</mat-icon>
-                                        </mat-form-field>
-            
-                                        <button class="d-block connexion-button" (click)="login()" type="submit">SE
-                                            CONNECTER</button>
-                                    </form>
-            
-                                    <a class="mdp-oublie" href="/">J'ai oublié mon mot de passe</a>
-                                </div>
-                            </mat-tab>
-            
-            
-                            <!-- TAB S'ENREGISTRER -->
-                            <mat-tab label="S'ENREGISTRER">
-                                <div class="enregistrement">
-                                    <h1 class="title">Me créer un compte</h1>
-                                    <form class="example-form" [formGroup]="registerForm">
-                                        <mat-form-field class="w-50">
-                                            <input matInput formControlName="lastName" placeholder="Nom" required />
-                                        </mat-form-field>
-            
-                                        <mat-form-field class="w-50 f-right">
-                                            <input matInput formControlName="firstName" placeholder="Prenom" required />
-                                        </mat-form-field>
-            
-                                        <mat-form-field class="d-block">
-                                            <input type="email" matInput formControlName="email" placeholder="Email" required />
-                                            <mat-icon matSuffix class="grey">email</mat-icon>
-                                        </mat-form-field>
-            
-                                        <mat-form-field class="d-block">
-                                            <input matInput formControlName="DAS" placeholder="DAS" required />
-                                            <mat-icon matSuffix class="grey">person</mat-icon>
-                                        </mat-form-field>
-            
-                                        <mat-form-field class="d-block">
-                                            <input type="password" matInput formControlName="password" placeholder="Mot de passe"
-                                                required />
-                                            <mat-icon matSuffix class="grey">lock_open</mat-icon>
-                                        </mat-form-field>
-            
-                                        <mat-form-field class="d-block">
-                                                <input type="password" matInput formControlName="passwordConfirm" placeholder="Confirmer Mot de passe"
-                                                    required />
-                                                <mat-icon matSuffix class="grey">lock</mat-icon>
-                                            </mat-form-field>
+            <div class="col-md-6 col-xs-12 p-5">
+                <img src="../../../assets/illustration_ekla.jpg" class="img-fluid" alt="illustration_ekla" />
+            </div>
+            <div class="col-md-6 col-xs-12 pl-3 pr-5">
 
-                                        <button class="connexion-button" type="submit" (click)="register()"
-                                            [disabled]="!registerForm.valid">M'ENREGISTRER</button>
-                                    </form>
-            
-                                </div>
-                            </mat-tab>
-            
-                        </mat-tab-group>
-                    </div>
+                <mat-tab-group mat-align-tabs="center" class="auth">
+
+                    <!-- TAB SE CONNECTER -->
+                    <mat-tab label="SE CONNECTER" class="w-100">
+                            <h1 class="title mt-3">Welcome back !</h1>
+                            <form [formGroup]="loginForm">
+                                <mat-form-field class="d-block">
+                                    <input color="white" matInput formControlName="email" placeholder="Email">
+                                    <mat-icon matSuffix class="grey">email</mat-icon>
+                                </mat-form-field>
+
+                                <mat-form-field class="d-block">
+                                    <input type="password" matInput formControlName="password"
+                                        placeholder="Mot de passe">
+                                    <mat-icon matSuffix class="grey">lock_open</mat-icon>
+                                </mat-form-field>
+
+                                <button class="d-block connexion-button" (click)="login()" type="submit">SE
+                                    CONNECTER</button>
+                            </form>
+
+                            <a class="mdp-oublie" href="/">J'ai oublié mon mot de passe</a>
+                    </mat-tab>
+
+
+                    <!-- TAB S'ENREGISTRER -->
+                    <mat-tab label="S'ENREGISTRER">
+                            <h1 class="title mt-3">Me créer un compte</h1>
+                            <form class="example-form" [formGroup]="registerForm">
+                                <mat-form-field class="w-50">
+                                    <input matInput formControlName="lastName" placeholder="Nom" required />
+                                </mat-form-field>
+
+                                <mat-form-field class="w-50 f-right">
+                                    <input matInput formControlName="firstName" placeholder="Prenom" required />
+                                </mat-form-field>
+
+                                <mat-form-field class="d-block">
+                                    <input type="email" matInput formControlName="email" placeholder="Email" required />
+                                    <mat-icon matSuffix class="grey">email</mat-icon>
+                                </mat-form-field>
+
+                                <mat-form-field class="d-block">
+                                    <input matInput formControlName="DAS" placeholder="DAS" required />
+                                    <mat-icon matSuffix class="grey">person</mat-icon>
+                                </mat-form-field>
+
+                                <mat-form-field class="d-block">
+                                    <input type="password" matInput formControlName="password"
+                                        placeholder="Mot de passe" required />
+                                    <mat-icon matSuffix class="grey">lock_open</mat-icon>
+                                </mat-form-field>
+
+                                <mat-form-field class="d-block">
+                                    <input type="password" matInput formControlName="passwordConfirm"
+                                        placeholder="Confirmer Mot de passe" required />
+                                    <mat-icon matSuffix class="grey">lock</mat-icon>
+                                </mat-form-field>
+
+                                <button class="connexion-button" type="submit" (click)="register()"
+                                    [disabled]="!registerForm.valid">M'ENREGISTRER</button>
+                            </form>
+                    </mat-tab>
+
+                </mat-tab-group>
+            </div>
         </div>
     </div>
 </div>

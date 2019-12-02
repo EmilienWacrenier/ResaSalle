@@ -2,15 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Room } from '../../../classes/room'
+import { Booking } from '../../../classes/booking'
 import { HomeService } from '../../../services/home.service';
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { BookingdetailsComponent } from 'src/app/modals/bookingdetails/bookingdetails.component';
 
-import { JOUR_SEMAINE, HOURS_PLANNING } from '../../../constantes/constantes'
+import { JOUR_SEMAINE, HOURS_PLANNING} from '../../../constantes/constantes'
 import * as moment from 'moment'
 import { ReservationService } from 'src/app/services/reservation.service';
 
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-room-planning',
@@ -19,9 +21,24 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 })
 export class RoomPlanningComponent implements OnInit {
 
-  room: Room;
   daysOfPlanning: string[] = JOUR_SEMAINE;
   hoursOfPlanning: string[] = HOURS_PLANNING;
+
+  room: Room;
+  salle: Room;
+
+  //variable pour la date et les heures
+  selectedDate: Date;
+  startDay: string;
+  endDay: string;
+
+  //tableau qui récupère les 5 jours de la semaine
+  //en fonction de la date selectionnée
+  weekDays: string[] = [];
+
+  listeReservation: Booking[];
+
+  bookingsOfTheWeek = [];
 
   constructor(
     private reservationService: ReservationService,
@@ -34,40 +51,63 @@ export class RoomPlanningComponent implements OnInit {
 
   ngOnInit() {
     document.getElementById('homeNavItem').classList.add('active-list-item');
-    this.getRoomPlanning();
-    /*console.log(this.room);*/
-
-    this.weekDays = this.getDaysOfThisWeek(this.selectedDate);
+    this.getRoomById();
   }
-
-  //variable pour la date et les heures
-  selectedDate: Date;
-  debutSemaine: string;
-  finSemaine: string;
-  bookingOfTheWeek;
-  weekDays: string[] = [];
-  reservationOfTheWeek: any;
 
   //fonction qui va changer la valeur de la date selectionnée quand on
   //selectionne une date dans le calendrier puis qui appelle des fonctions
-  onSelect(event: MatDatepickerInputEvent<Date>) {
+  onSelect(event) {
     this.selectedDate = event.value;
     console.log(this.selectedDate);
+
     //recupère les jours de la semaine pour le header
     this.weekDays = this.getDaysOfThisWeek(this.selectedDate);
-    this.reservationOfTheWeek = this.setReservationOfThisWeek(this.selectedDate);
+
+    //récupère le lundi de la semaine du jour sélectionné
+    this.startDay = this.findStartOfWeek(this.selectedDate);
+
+    //récupère le vendredi de la semaine du jour sélectionné
+    this.endDay = this.findEndOfWeek(this.selectedDate);
+
+    //récupère les jours du lundi au vendredi de la semaine
+    //du jour selectionné pour l'affichage
+    this.getDaysOfThisWeek(this.selectedDate);
+
+    //appel à l'API pour récupèrer les reservations en base
+    //id_reservation
+    //date_debut
+    //date_fin
+    //objet
+    //etat, 
+    //user_id, 
+    //reccurrence_id, 
+    //salle_id, 
+    //id_salle, nom, zone, capacite
+    console.log(this.room.roomId + this.startDay + this.endDay);
+    this.getReservationsOfThisWeek(this.room.roomId, this.startDay, this.endDay);
   }
 
-  //ca trouve la date du lundi de la semaine du jour selectionné
+  //Appel à l'api
+  getReservationsOfThisWeek(salleId, startDate, endDate) {
+    this.reservationService
+      .getReservationsOfThisWeek(salleId, startDate, endDate)
+      .subscribe(data => {
+        this.listeReservation = data['result'];
+        console.log(this.listeReservation);
+        //traitement des données
+        this.createBookingListsbyDay(this.listeReservation);
+        console.log(this.bookingsOfTheWeek);
+      })
+  }
+
+  //retourne la date du lundi de la semaine du jour selectionné
   findStartOfWeek(date) {
-    this.debutSemaine = moment(date).isoWeekday(1).format();
-    console.log("debut semaine : " + this.debutSemaine);
+    return moment(date).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).isoWeekday(1).format();
   }
 
-  //ca trouve la date du dimanche de la semaine du jour selectionné
+  //retourne la date du dimanche de la semaine du jour selectionné
   findEndOfWeek(date) {
-    this.finSemaine = moment(date).isoWeekday(7).format();
-    console.log("fin semaine : " + this.finSemaine);
+    return moment(date).set({hour:23,minute:59,second:59,millisecond:0}).isoWeekday(7).format();
   }
 
   //retourne un tableau avec la date des jours de la semaine selectionnée
@@ -76,80 +116,64 @@ export class RoomPlanningComponent implements OnInit {
     for (var i = 1; i < 6; i++) {
       this.weekDays.push(moment(date).locale('fr').isoWeekday(i).format('dddd DD MMM'));
     }
-    console.log(this.weekDays);
     return this.weekDays;
   }
 
-  getReservationsOfThisWeek(startDate, endDate, salleId) {
-    let param = {
-      startDate : startDate,
-      endDate : endDate,
-      salleId : salleId
-    }
-    return this.reservationService.getReservationsOfThisWeek(param);
-  }
   //créer des listes en fonction des jours du tableau daysOfPlanning (qui est un tableau de jour de la semaine)
   //ca met les reservations dans une liste en fonction du jour de la semaine
   //en gros ca trie la liste des réservations en fonction du jour de la semaine
   createBookingListsbyDay(liste) {
-    for (const element of liste) {
-      let day = 0;
-      switch (moment(element.startDate).format('dddd')) {
-        case 'lundi':
-            day = 1;
-            this.sortReservationOfTheDayByHours(day, element);
-          ;
-          break;
-        case 'mardi':
-            day = 2;
-            this.sortReservationOfTheDayByHours(day, element);
-          ;
-          break;
-        case 'mercredi':
-            day = 3;
-            this.sortReservationOfTheDayByHours(day, element);
-          ;
-          break;
-        case 'jeudi':
-            day = 4;
-            this.sortReservationOfTheDayByHours(day, element);
-          ;
-          break;
-        case 'vendredi':
-            day = 5;
-            this.sortReservationOfTheDayByHours(day, element);
-          ;
-          break;
+    var objet = null;
+
+    for (var i = 0; i < 5; i++) {
+      this.bookingsOfTheWeek[i] = [];
+    }
+
+    for (var i = 0; i < 5; i++) {
+      for (var j = 0; j < 20; j++) {
+        this.bookingsOfTheWeek[i].push(objet);
       }
     }
+
+    for (const element of liste) {
+      let day = 0;;
+      
+      switch (moment(element.startDate).locale('fr').format('dddd')) {
+        case 'lundi': day = 0; break;
+        case 'mardi': day = 1; break;
+        case 'mercredi': day = 2; break;
+        case 'jeudi': day = 3; break;
+        case 'vendredi': day = 4; break;
+      }
+
+      this.sortReservationOfTheDayByHours(day, element);
+    }
+    return this.bookingsOfTheWeek;
   }
 
   sortReservationOfTheDayByHours(day, element) {
-    let hDebut = new Date(element.starDate).getTime() * 60000;
-    let hFin = new Date(element.endDate).getTime() * 60000;
-    let dureeResa = (hFin - hDebut) % 1800;
-    let compteurMinute = 0;
+    let hDebut = new Date(element.startDate).getUTCHours()*60 + new Date(element.startDate).getUTCMinutes();
+    let hFin = new Date(element.endDate).getUTCHours()*60 + new Date(element.endDate).getUTCMinutes();
+    let dureeResa = (hFin - hDebut);
+
+    let compteurMinute = 480;
     let compteurIteration = 0;
+
+    console.log('hdeb : ' + element.startDate + ' = ' + hDebut);
+    console.log('hfin : ' + element.endDate + ' = ' + hFin);
+    console.log('dureeResa : ' + dureeResa);
 
     //iteration pour savoir quand remplir le tableau
     while (hDebut != compteurMinute) {
-      compteurMinute += 1800;
-      compteurIteration += 1;
+      compteurMinute = compteurMinute + 30;
+      compteurIteration = compteurIteration + 1;
     }
 
     //savoir combien de fois remplir le tableau par rapport à la longueur de la resa
-    for (let k = 0; k < dureeResa; k++) {
-      this.bookingOfTheWeek[day][compteurIteration].push(element);
+    for (let k = 0; k < dureeResa; k = k + 30) {
+      this.bookingsOfTheWeek[day][compteurIteration] = element;
+      compteurIteration = compteurIteration + 1;
     }
-  }
-
-  setReservationOfThisWeek(selectedDate) {
-    this.bookingOfTheWeek = [];
-    let startDate = this.findStartOfWeek(selectedDate)
-    let endDate = this.findEndOfWeek(selectedDate)
-    let salleId = this.room.id;
-    let reservationOfTheWeek = this.getReservationsOfThisWeek(startDate, endDate, salleId);
-    return this.createBookingListsbyDay(reservationOfTheWeek);
   }
 
   //fermeture de la modale avec DialogRef
@@ -162,14 +186,20 @@ export class RoomPlanningComponent implements OnInit {
     this.dialog.open(BookingdetailsComponent, bookingDetailsDialogConfig);
   }
 
+  //BOUTON BACK
   goBack() {
     document.getElementById('homeNavItem').classList.remove('active-list-item');
     this.router.navigate(['']);
   }
 
-  getRoomPlanning(): void {
+  getRoomById(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.homeService.getRoomPlanning(id)
-      .subscribe(room => this.room = room);
+    this.homeService.getRoomById(id)
+      .subscribe(room => {
+      this.room = room;
+        let today = new Date();
+        this.onSelect(today);
+        console.log(today);
+      });
   }
 }

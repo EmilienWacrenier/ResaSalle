@@ -32,8 +32,7 @@ export const HOURS_PLANNING: string[] = [
     "14", "14:30",
     "15", "15:30",
     "16", "16:30",
-    "17", "17:30",
-    "18"
+    "17", "17:30"
 ]
 
 export class ApiConstants {

@@ -1,5 +1,22 @@
-.calendrier{
-    background-color: white;
-    max-width: 300px;
-    border-radius: 10px;
-  }
+.title{
+  color: grey;
+  font-size:1.5em;
+}
+
+.item-is-true{
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(115, 154, 224) ;
+}
+
+.item-is-false{
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(220, 230, 247) ;
+}
+
+.light-blue-bg{
+  background-color: rgb(220, 230, 247);
+}
