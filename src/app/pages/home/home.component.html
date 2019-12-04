@@ -7,7 +7,7 @@
         </div>
 
         <div class="col align-self-center">
-            <span class="periodBtn" id="planning-btn" aria-label="Button to switch periods" (click)="getPlanning()">
+            <span class="periodBtn" id="planning-btn" aria-label="Button to switch periods" (click)="getBtnMorning()">
                 <mat-icon>signal_cellular_alt</mat-icon>
                 <span class="mx-3" id="planning-btn-period">{{ itsMorning ? 'Matin' : 'Après-Midi'}}</span>
                 <mat-icon id="planning-btn-arrow">
@@ -19,7 +19,7 @@
 
     </div>
 
-    <div class="row align-items-center bg-white px-3 rowRoom" *ngFor="let room of (rooms$ | async); let i = index"
+    <div class="row align-items-center bg-white px-3 rowRoom" *ngFor="let room of rooms; let i = index"
         routerLink="/planning/{{room.roomId}}" matTooltip="Cliquez pour aller réserver cette salle">
         <div class="col-4">
             <mat-icon class="mx-3 mt-2">meeting_room</mat-icon>
@@ -44,15 +44,7 @@
             <!-- blocs des réservations en bleu foncé -->
             <div class="timeline-container">
                 <div *ngFor="let booking of (room.reservations)">
-
-                    <div *ngIf="!itsMorning && !reservationDuringMorning(booking.startDate)" class="timeline-tile"
-                        [ngStyle]="setReservationParameters(booking)">
-                    </div>
-
-                    <div *ngIf="itsMorning && reservationDuringMorning(booking.startDate)" class="timeline-tile"
-                        [ngStyle]="setReservationParameters(booking)">
-                    </div>
-
+                    <div class="timeline-tile" [ngStyle]="setReservationParameters(booking)"></div>
                 </div>
                 <!-- blocs avec des bordures à droite pour flags les heures -->
                 <div class="timeline-flag"></div>

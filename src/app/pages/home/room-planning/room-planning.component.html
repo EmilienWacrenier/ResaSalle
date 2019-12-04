@@ -36,11 +36,11 @@
 
     <div class="row light-blue-bg" id="week-header">
         <div class="col-auto">
-            <div class="row bg-white" *ngFor="let hourOfPlanning of hoursOfPlanning; let i = index">
+            <div class="row bg-white px-2" *ngFor="let hourOfPlanning of hoursOfPlanning; let i = index">
                 <div class="w-100 border border-white border-bottom-0 text-right" *ngIf="i%2 == 0">
                     {{hourOfPlanning}}
                 </div>
-                <div class="w-100 border border-top-0" *ngIf="i%2 !== 0">
+                <div class="w-100 border border-white border-bottom-0" *ngIf="i%2 !== 0">
                     &nbsp;
                 </div>
             </div>

@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "df2b50b0-9b54-4cdb-9096-dcf3edb58bb3",
+		"name": "user",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "firstName",
+							"value": "Emilien",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "Wacrenier",
+							"type": "text"
+						},
+						{
+							"key": "das",
+							"value": "a111111",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "emilien@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "pwd",
+							"value": "emilienmdp",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/user/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "emilien@gmail.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "mdp",
+							"value": "emilienmdp",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/user/login?email=emilien@gmail.com&pwd=emilienmdp",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "emilien@gmail.com"
+						},
+						{
+							"key": "pwd",
+							"value": "emilienmdp"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOjIsInJvbGUiOjEsImlhdCI6MTU3MzY0ODQ1NiwiZXhwIjoxNTczNjUwODU2fQ.CyshYTshR_wb8z2BcIgnIrbTAUqEvA3iW076NMRuoYg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/user/users",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "userById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/user/userById?userId=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"userById"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

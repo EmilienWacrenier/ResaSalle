@@ -1,0 +1,276 @@
+{
+	"info": {
+		"_postman_id": "df5fd833-ad9c-440e-8d41-a268e28c755f",
+		"name": "book",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createReservation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOjIsInJvbGUiOjEsImlhdCI6MTU3MzY1NTU1NiwiZXhwIjoxNTczNjU3OTU2fQ.19Cbhf3LM79pO-U8wWnynd2XTX66oQ3J8RTF4YalIhU",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n\t\t\"startDate\": \"2019-12-12 08:30:00\",\n\t\t\"endDate\": \"2019-12-12 09:00:00\",\n\t\t\"object\": \"uneResaTestEnSalle3\",\n\t\t\"userId\": 2,\n\t\t\"roomId\": 1,\n\t\t\"users\": [\n\t\t\t2,3\n\t\t\t],\n\t\t\"labelRecurrence\": \"quotidien\",\n\t\t\"startDateRecurrence\": \"2019-12-12 08:30:00\",\n\t\t\"endDateRecurrence\": \"2020-01-12 08:30:00\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/reservation/createReservation",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reservation",
+						"createReservation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reservations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/reservation/reservations",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reservation",
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reservationById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/reservation/reservationById?reservationId=158",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reservation",
+						"reservationById"
+					],
+					"query": [
+						{
+							"key": "reservationId",
+							"value": "158"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reservationByDate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/reservation/reservationsByDate?startDate=2019-12-12 07:20:00&endDate=2019-12-12 09:00:00",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reservation",
+						"reservationsByDate"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2019-12-12 07:20:00"
+						},
+						{
+							"key": "endDate",
+							"value": "2019-12-12 09:00:00"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reservationByDay",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/reservation/reservationsByDay?startDate=2019-12-12 07:30:00",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reservation",
+						"reservationsByDay"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2019-12-12 07:30:00"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reservationByRoomId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/reservation/reservationsByRoomId?roomId=1&startDate=2019-12-12 07:30:00&endDate=2019-12-12 09:30:00",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reservation",
+						"reservationsByRoomId"
+					],
+					"query": [
+						{
+							"key": "roomId",
+							"value": "1"
+						},
+						{
+							"key": "startDate",
+							"value": "2019-12-12 07:30:00"
+						},
+						{
+							"key": "endDate",
+							"value": "2019-12-12 09:30:00"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reservationByUserId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/reservation/reservationsByUserId?userId=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reservation",
+						"reservationsByUserId"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "participants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/reservation/participants?reservationId=158",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reservation",
+						"participants"
+					],
+					"query": [
+						{
+							"key": "reservationId",
+							"value": "158"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteReservation",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "reservationId",
+							"value": "206",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/reservation/deleteReservation?reservationId=226",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reservation",
+						"deleteReservation"
+					],
+					"query": [
+						{
+							"key": "reservationId",
+							"value": "226"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

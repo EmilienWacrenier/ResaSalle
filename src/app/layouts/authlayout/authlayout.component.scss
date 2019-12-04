@@ -2,31 +2,6 @@
     height: 100vh;
     width:100vw;
     background-color: rgb(115, 154, 224);
-    position: relative;
-}
-
-.auth-container{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 60%;
-    height: 80%;
-    background-color: white;
-    padding:20px;
-}
-/*
-.auth{
-    margin-left:auto;
-    width: 50%;
-}*/
-
-.w-100{
-    width: 100%;
-}
-
-.d-block{
-    display: block;
 }
 
 .title{
@@ -50,6 +25,7 @@
 .connexion-button:not([disabled]):hover{
     background-color: rgb(74, 121, 207);
 }
+
 .mdp-oublie{
     font-size: smaller;
     text-decoration: none;
@@ -64,6 +40,3 @@
     width:48%;
 }
 
-.f-right{
-    float:right;
-}
