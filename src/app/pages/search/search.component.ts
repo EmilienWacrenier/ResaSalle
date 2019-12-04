@@ -28,74 +28,109 @@ export class SearchComponent implements OnInit {
   //heures et minutes dans le select
   bookingHours: number[] = BOOKING_HOURS;
   bookingMinutes: number[] = BOOKING_MINUTES;
-
-  //variable des heures selectionnées
-  selectedMinuteStart: number;
-  selectedHourStart: number;
-  selectedMinuteEnd: number;
-  selectedHourEnd: number;
-
-  //variable de controle
-  dateIsWrongControl: any;
-  hoursAreNotSetControl: any;
-  hoursAreWrongControl: any;
-
-  //today
-  today = new Date().setHours(0,0,0,0);
-
-  //variable pour le slide toggle pour activer la récurrence ou non
-  checked = false;  
-
-
-  //**********************RECURRENCE*************************
-  endDate;
-  selectedRecurrence: string;
-  selectedMensualite: string;
-
   recurrences: string[] = RECURRENCE;
   numSemaines: string[] = NUMERO_SEMAINE;
   jourSemaines: string[] = JOUR_SEMAINE;
   capacites: number[] = CAPACITE;
   choix: number[] = [];
 
+  selectedStartDate: Date;
+  selectedHourStart: number;
+  selectedMinuteStart: number;
+  selectedHourEnd: number;
+  selectedMinuteEnd: number;
+  //**********************RECURRENCE*************************
+  selectedEndDate;
+  selectedRecurrence: string;
+  selectedMensualite: string;
+  
+  //controle
+  errorHourStart: string;
+  errorHourEnd: string;
+  errorDate: string;
+  datasAreGood = false;
+
+  //variable pour le slide toggle pour activer la récurrence ou non
+  checked = false;  
+
   constructor(private _formBuilder: FormBuilder) {
       this.onSelect(this.startDate);
   }
 
   ngOnInit() {
-    this.onSelect(event);
-    this.hoursAreNotSetControl = this.hoursAreNotSet();
-    console.log(this.hoursAreNotSetControl);
-    this.hoursAreWrongControl = this.hoursAreWrong();
-    console.log(this.hoursAreWrongControl);
   }
 
   /*STEP1*/
 
   onSelect(event) {
-    this.startDate = event;
-    this.selectedDateDisplay = moment(this.startDate).format("DD MMMM YYYY");
-    this.dateIsWrongControl = this.dateIsWrong(event);
+    console.log(event);
+    this.selectedStartDate = event;
+    this.selectedDateDisplay = moment(this.selectedStartDate).format("DD MMMM YYYY");
   }
 
-  dateIsWrong(date){
-    if (date < this.today) { return true}
+  checkInput() {
+    this.errorHourStart = null;
+    this.errorHourEnd = null;
+    this.errorDate = null;
+
+    if ( !this.selectedStartDate
+      || this.selectedHourStart == null
+      || this.selectedMinuteStart == null
+      || this.selectedHourEnd == null
+      || this.selectedMinuteEnd == null
+      || this.dateIsWrong(this.selectedStartDate)
+      || this.hoursAreWrong()) {
+      this.errorCheck();
+      console.log(this.selectedStartDate);
+      console.log(this.selectedHourStart);
+      console.log(this.selectedMinuteStart);
+      console.log(this.selectedHourEnd);
+      console.log(this.selectedMinuteEnd);
+      this.datasAreGood = false;
+      console.log(this.datasAreGood);
+    }
+    else {
+      this.datasAreGood = true;
+      console.log(this.datasAreGood);
+    }
+  }
+  
+  errorCheck() {
+    //check si la date est selectionnée
+    if (!this.selectedStartDate) { this.errorDate = "Veuillez renseigner une date" };
+
+    //check si la date selectionnée n'est pas passée
+    if (this.dateIsWrong(this.selectedStartDate)) {
+      this.errorDate = "Selectionner une date non passée"
+    }
+
+    //check si l'heure de début est entrée
+    if (!this.selectedHourStart || !this.selectedMinuteStart) { this.errorHourStart = "Veuillez entrer une heure" };
+
+    //check si l'heure de fin est entrée
+    if (!this.selectedHourEnd || !this.selectedMinuteEnd) { this.errorHourEnd = "Veuillez entrer une heure" };
+
+    //check si une des heures ne dépasse pas 18h
+    if (this.selectedHourStart == 18 && this.selectedMinuteStart == 30) { this.errorHourStart = "L'heure est incorrecte" }
+    if (this.selectedHourEnd == 18 && this.selectedMinuteEnd == 30) { this.errorHourEnd = "L'heure est incorrecte" }
+
+    //check si l'heure de fin n'est pas avant l'heure de début
+    if (this.hoursAreWrong()) {
+      this.errorHourEnd = "L'heure de fin doit être après l'heure de début"
+    }
+  }
+
+  dateIsWrong(date) {
+    let today = new Date().setHours(0, 0, 0, 0);
+    if (date < today) { return true; }
     else return false;
   }
 
-  hoursAreNotSet(){
-    if (this.selectedHourStart == null
-      || this.selectedMinuteStart == null
-      || this.selectedHourEnd == null
-      || this.selectedMinuteEnd == null) { return this.hoursAreNotSetControl = true; }
-    else return this.hoursAreNotSetControl = false;
-  }
-
-  hoursAreWrong(){
+  hoursAreWrong() {
     let startingHour = this.selectedHourStart * 60 + this.selectedMinuteStart;
     let endingHour = this.selectedHourEnd * 60 + this.selectedMinuteEnd;
-    if (startingHour >= endingHour) { return this.hoursAreWrongControl = true;}
-    else return this.hoursAreWrongControl = false;
+    if (startingHour >= endingHour) { return true; }
+    else return false;
   }
   
   isReccurent(){

@@ -1,72 +1,92 @@
 <mat-horizontal-stepper class="stepper" [linear]="true" #stepper>
     <!-- Stepper phase 1 selection du jour et heure -->
-    <mat-step [completed]="!dateIsWrongControl && !hoursAreNotSetControl && !hoursAreWrongControl">
+    <mat-step [completed]="datasAreGood">
 
         <ng-template matStepLabel>Date</ng-template>
 
-        <div class="row my-3">
-            <div class="col-auto mr-5 p-3 bg-blue">
+        <div class="row mb-3">
+            <div class="col-auto p-2 border rounded">
                 <div class="calendrier">
-                    <mat-calendar min="today" [selected]="startDate" (selectedChange)="onSelect($event)">
+                    <mat-calendar min="today" [selected]="selectedStartDate"
+                        (selectedChange)="onSelect($event); checkInput()">
                     </mat-calendar>
+                    <div class="d-block text-danger small" *ngIf="errorDate">{{errorDate}}</div>
                 </div>
             </div>
-            <div class="col p-3">
-                <div class="container-fluid">
 
-                    <div class="row justify-content-center text-center">
-                        <div class="col-6 bg-blue">
-                            <h5 class="p-2">Debut</h5>
-                            <mat-form-field class="w-50 px-2">
-                                <mat-label>Heure</mat-label>
-                                <mat-select [(ngModel)]="selectedHourStart" (selectionChange)="hoursAreNotSet(); hoursAreWrong();">
-                                    <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart">
-                                        {{hourStart}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field class="w-50 px-2">
-                                <mat-label>Minute</mat-label>
-                                <mat-select [(ngModel)]="selectedMinuteStart" (selectionChange)="hoursAreNotSet(); hoursAreWrong();">
-                                    <mat-option *ngFor="let minuteStart of bookingMinutes" [value]="minuteStart">
-                                        {{minuteStart}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-6 bg-blue">
-                            <h5 class="p-2">Fin</h5>
-                            <mat-form-field class="w-50 px-2">
-                                <mat-label>Heure</mat-label>
-                                <mat-select [(ngModel)]="selectedHourEnd" (selectionChange)="hoursAreNotSet(); hoursAreWrong();">
-                                    <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
-                                        {{hourEnd}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field class="w-50 px-2">
-                                <mat-label>Minute</mat-label>
-                                <mat-select [(ngModel)]="selectedMinuteEnd" (selectionChange)="hoursAreNotSet(); hoursAreWrong();">
-                                    <mat-option *ngFor="let minuteEnd of bookingMinutes" [value]="minuteEnd">
-                                        {{minuteEnd}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row mt-5">
-                        Réunion : le {{selectedDateDisplay}} de {{selectedHourStart}}:{{selectedMinuteStart}} jusqu'à {{selectedHourEnd}}:{{selectedMinuteEnd}}.
-                    </div>
+            <div class="col-5 mx-2 p-2 bg-blue border rounded">
+                <div class="row h-50">
+                    <h5 class="w-100 text-center m-auto">Debut</h5>
+                    <mat-form-field class="w-50 pl-4 pr-2">
+                        <mat-label>Heure</mat-label>
+                        <mat-select [(ngModel)]="selectedHourStart" (openedChange)="checkInput()">
+                            <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart">
+                                {{hourStart}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="w-50 pl-2 pr-4">
+                        <mat-label>Minute</mat-label>
+                        <mat-select [(ngModel)]="selectedMinuteStart" (openedChange)="checkInput()">
+                            <mat-option *ngFor="let minuteStart of bookingMinutes" [value]="minuteStart">
+                                {{minuteStart}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="w-100 text-danger small text-center" *ngIf="errorHourStart">{{errorHourStart}}</div>
+
                 </div>
+
+                <div class="row h-50">
+                    <h5 class="w-100 text-center m-auto">Fin</h5>
+                    <mat-form-field class="w-50 pl-4 pr-2">
+                        <mat-label>Heure</mat-label>
+                        <mat-select [(ngModel)]="selectedHourEnd" (openedChange)="checkInput()">
+                            <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
+                                {{hourEnd}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="w-50 pl-2 pr-4">
+                        <mat-label>Minute</mat-label>
+                        <mat-select [(ngModel)]="selectedMinuteEnd" (openedChange)="checkInput()">
+                            <mat-option *ngFor="let minuteEnd of bookingMinutes" [value]="minuteEnd">
+                                {{minuteEnd}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="w-100 text-center text-danger small" *ngIf="errorHourEnd">{{errorHourEnd}}</div>
+                </div>
+
+            </div>
+
+            <div class="col p-2 border rounded">
+                <div class="row">
+                    <h5 class="w-100 text-center m-0">Récap</h5>
+                </div>
+
+                <div class="row h-100">
+                        <div class="text-center">
+                            Réunion le 
+                        </div>
+                        <div class="w-100" *ngIf="selectedStartDate">
+                            {{selectedDateDisplay}}
+                        </div>
+                        <div class="w-100" *ngIf="selectedMinuteStart != null">
+                            de {{selectedHourStart}}:{{selectedMinuteStart}}
+                        </div>
+                        <div class="w-100" *ngIf="selectedMinuteEnd != null">
+                            jusqu'à {{selectedHourEnd}}:{{selectedMinuteEnd}}.
+                        </div>
+                </div>
+                
+                
             </div>
         </div>
 
         <div class="row">
             <div class="col">
-                <button 
-                    class="bouton-back-next" 
-                    mat-button matStepperNext 
-                    [disabled]="dateIsWrongControl || hoursAreNotSetControl || hoursAreWrongControl">Suivant</button>
+                <button class="bouton-back-next" mat-button matStepperNext [disabled]="!datasAreGood">Suivant</button>
             </div>
 
             <div class="col">

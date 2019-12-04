@@ -16,13 +16,13 @@
         <!-- Start Column -->
         <ng-container matColumnDef="start">
             <mat-header-cell *matHeaderCellDef> Début </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.startDate | date: 'HH:mm'}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.startDate | date: 'HH:mm' : 'GMT+0'}} </mat-cell>
         </ng-container>
 
         <!-- End Column -->
         <ng-container matColumnDef="end">
             <mat-header-cell *matHeaderCellDef> Fin </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.endDate | date: 'HH:mm'}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.endDate | date: 'HH:mm' : 'GMT+0'}} </mat-cell>
         </ng-container>
 
         <!-- Room Column -->
@@ -40,7 +40,7 @@
         <!-- Participants Column -->
         <ng-container matColumnDef="participants">
             <mat-header-cell *matHeaderCellDef> Participants </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.participants.length > 0 ? element.participants.count : 'N/A'}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.participants.length > 0 ? element.participants.length : 'N/A'}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">

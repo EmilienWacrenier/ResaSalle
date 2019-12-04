@@ -42,75 +42,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.initPlanningBtn();
-    this.rooms$ = this.homeService.getRooms();
-  }
-
-  getRooms(): void {
-    this.homeService.getRooms()
-      .subscribe(rooms => this.rooms = rooms);
-  }
-
-  reservationDuringMorning(dateString){
-    let date = new Date(dateString).getHours();
-    if (date > 13) { return false; }
-    else return true;
-  }
-
-  setReservationParameters(reservation) {
-    let maxMinutes;
-    let startMinutes;
-
-    if (this.itsMorning) {
-      //demi journee = 5h = 300 minutes
-      maxMinutes = 300;
-      //début = 8h donc 8h = 480minutes
-      startMinutes = 480;
-    }
-    else{
-      //demi journee = 5h = 300 minutes
-      maxMinutes = 300;
-      //début = 13h donc 13h = 780minutes
-      startMinutes = 780;
-    }
-
-    //total de l'heure de début en minutes
-    let startHourBooking = new Date(reservation.startDate).getHours();
-    let startMinuteBooking = (new Date(reservation.startDate)).getMinutes();
-    let totalMinutesDebut = (startHourBooking * 60 + startMinuteBooking) - startMinutes;
-    //console.log(totalMinutesDebut);
-
-    //total de l'heure de fin en minutes
-    let hoursFin = (new Date(reservation.endDate)).getHours();
-    let minutesFin = (new Date(reservation.endDate)).getMinutes();
-    let totalMinutesFin = (hoursFin * 60 + minutesFin) - startMinutes;
-    //console.log(totalMinutesFin);
-
-    //calcul de la marge(décalage) en fonction de l'heure de début
-    let leftMargin = totalMinutesDebut * 100 / maxMinutes;
-    //console.log(leftMargin);
-    //calcul de la taille de la réservation en fonction de l'heure de fin
-    let bookingDuration = (totalMinutesFin - totalMinutesDebut) * 100 / maxMinutes;
-    //console.log(bookingDuration);
-
-    let styles = {
-      'left.%': leftMargin,
-      'width.%': bookingDuration,
-    };
-    return styles;
-    
-  }
-
-  getPlanning() {
-    if (this.itsMorning) {
-      this.setBtnAfternoon();
-    }
-    else {
-      this.setBtnMorning();
-    }
+    this.getRoomsAndTheirReservationOfToday();
   }
 
   initPlanningBtn() {
-    if (moment().format("HH:mm") > "13:00") {
+    if (new Date().getUTCHours() >= 13) {
       this.setBtnAfternoon();
     }
     else {
@@ -120,12 +56,80 @@ export class HomeComponent implements OnInit {
 
   setBtnMorning() {
     this.itsMorning = true;
-    console.log("C'est le Matin !");
   }
   setBtnAfternoon() {
     this.itsMorning = false;
-    console.log("C'est l'après-midi !")
   }
 
+  getBtnMorning() {
+    if (this.itsMorning) {
+      this.setBtnAfternoon();
+      this.getRoomsAndTheirReservationOfToday();
+    }
+    else {
+      this.setBtnMorning();
+      this.getRoomsAndTheirReservationOfToday();
+    }
+  }
 
+  getRoomsAndTheirReservationOfToday() {
+    this.homeService.getRooms()
+      .subscribe(rooms => {
+        this.rooms = rooms;
+        console.log(rooms)
+      });
+  }
+
+  reservationDuringMorning(date){
+    let now = new Date(date).getHours();
+    if (now > 13) { return false; }
+    else return true;
+  }
+
+  setReservationParameters(reservation) {
+    let maxMinutes = 300; //5h (demi journée)
+    let startMinutes;
+
+    //total de l'heure de début en minutes
+    let hoursDebut = new Date(reservation.startDate).getUTCHours();
+    let minutesDebut = (new Date(reservation.startDate)).getUTCMinutes();
+    let totalHoursDebut = hoursDebut*60 + minutesDebut;
+
+    //total de l'heure de fin en minutes
+    let hoursFin = (new Date(reservation.endDate)).getUTCHours();
+    let minutesFin = (new Date(reservation.endDate)).getUTCMinutes();
+    let totalHoursFin = hoursFin*60 + minutesFin;
+
+    //début et fin le matin
+    if(hoursDebut < 13 && this.itsMorning) {
+      //début = 8h donc 8h = 480minutes
+      startMinutes = 480;
+      if(hoursFin > 13){ totalHoursFin = 780; }
+    }
+    //début l'aprem et fin l'aprem
+    else if (hoursDebut >= 13 && !this.itsMorning) {
+      //début = 13h donc 13h = 780minutes
+      startMinutes = 780;
+    }
+    else if(hoursDebut < 13 && hoursFin > 13 && !this.itsMorning ){
+      //début = 13h donc 13h = 780minutes
+      startMinutes = 780;
+      totalHoursDebut = 780;
+    }
+
+    totalHoursDebut = totalHoursDebut - startMinutes;
+    totalHoursFin = totalHoursFin - startMinutes;
+
+    //calcul de la marge(décalage) en fonction de l'heure de début
+    let leftMargin = totalHoursDebut * 100 / maxMinutes;
+
+    //calcul de la taille de la réservation en fonction de l'heure de fin
+    let bookingDuration = (totalHoursFin - totalHoursDebut) * 100 / maxMinutes;
+    let styles = {
+      'left.%': leftMargin,
+      'width.%': bookingDuration,
+    };
+    return styles;
+    
+  }
 }

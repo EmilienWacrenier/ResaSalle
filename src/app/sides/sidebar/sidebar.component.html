@@ -7,26 +7,41 @@
 
     <!-- NAV LIST ITEMS -->
 
-    <div class="list-group mt-3">
-      <a class="tabs" routerLink="/" id="homeNavItem" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
-        <i class="material-icons">home</i>
-        <!-- icone mise entre des divs pour que le lien fonctionne partout dans le bouton-->
-        <div class="tabs-title">Accueil</div>
+    <div class="container-fluid mt-3">
+      <a class="row tabs px-0 py-2 align-items-center" routerLink="/" id="homeNavItem" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
+        <div class="col-3">
+          <i class="material-icons align-middle pb-1">home</i>
+        </div>
+        <div class="col-9">
+          <div class="tabs-title">Accueil</div>
+        </div>
       </a>
-      <a class="tabs" routerLink="/dashboard" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
+      <a class="row tabs px-0 py-2 align-items-center" routerLink="/dashboard" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
         [routerLinkActiveOptions]="{exact: true}">
-        <i class="material-icons">dashboard</i>
-        <div class="tabs-title">Dashboard</div>
+        <div class="col-3">
+          <i class="material-icons align-middle pb-1">dashboard</i>
+        </div>
+        <div class="col-9">
+          <div class="tabs-title">Dashboard</div>
+        </div>
       </a>
-      <a class="tabs" routerLink="/search" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
+      <a class="row tabs px-0 py-2 align-items-center" routerLink="/search" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
         [routerLinkActiveOptions]="{exact: true}">
-        <i class="material-icons">search</i>
-        <div class="tabs-title">Rechercher</div>
+        <div class="col-3">
+          <i class="material-icons align-middle pb-1">search</i>
+        </div>
+        <div class="col-9">
+          <div class="tabs-title">Rechercher</div>
+        </div>
       </a>
-      <a class="tabs" routerLink="/admin" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
+      <a class="row tabs px-0 py-2 align-items-center" routerLink="/admin" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
         [routerLinkActiveOptions]="{exact: true}">
-        <i class="material-icons">build</i>
-        <div class="tabs-title">Admin</div>
+        <div class="col-3">
+          <i class="material-icons align-middle pb-1">build</i>
+        </div>
+        <div class="col-9">
+          <div class="tabs-title">Admin</div>
+        </div>
       </a>
     </div>
 

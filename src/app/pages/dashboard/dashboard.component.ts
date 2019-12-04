@@ -9,6 +9,8 @@ import { MatTableDataSource } from '@angular/material';
 import { ToastrService, ToastRef } from 'ngx-toastr';
 import { ApiConstants } from '../../constantes/constantes';
 
+import * as moment from 'moment'
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -79,6 +81,11 @@ export class DashboardComponent implements OnInit {
     this.reservationService.getReservationsFromUserConnected().subscribe(
       (response) => {
         this.dsBooking.data = (response['result']);
+        
+        //for(const resa of this.dsBooking.data){
+        //  resa.startDate = moment(resa.startDate).locale('fr').format('HH mm');
+        //}
+        
         console.log(this.dsBooking.data)
       }
     );

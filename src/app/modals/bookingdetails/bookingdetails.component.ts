@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { Inject } from '@angular/core';
 
-import { BOOKING_HOURS, BOOKING_MINUTES } from '../../constantes/constantes'
-import { Room } from 'src/app/classes/room';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-
-import { ReservationService } from '../../services/reservation.service'
-import { Booking } from '../../classes/booking';
 import * as moment from 'moment';
+
+import { BOOKING_HOURS, BOOKING_MINUTES } from '../../constantes/constantes'
+import { User } from '../../classes/user';
+
+import { UserService } from 'src/app/services/user.service';
+import { ReservationService } from '../../services/reservation.service'
+
 
 @Component({
   selector: 'app-bookingdetails',
@@ -23,33 +24,6 @@ export class BookingdetailsComponent implements OnInit {
   currentUser;
 
   selectedMiniatures: string[]; //affichage des miniatures cf méthode onSelect()
-  users: User[] = [ //liste d'utilisateurs pour test
-    {
-      lastName: 'amri',
-      firstName: 'virginie',
-      miniature: 'AV'
-    },
-    {
-      lastName: 'pascal',
-      firstName: 'marie flore',
-      miniature: 'PMF'
-    },
-    {
-      lastName: 'henry',
-      firstName: 'stephanie',
-      miniature: 'HS'
-    },
-    {
-      lastName: 'villeminot',
-      firstName: 'fabien',
-      miniature: 'VF'
-    },
-    {
-      lastName: 'boulo',
-      firstName: 'lionel',
-      miniature: 'BL'
-    }
-  ];
 
   bookingHours: number[] = BOOKING_HOURS;
   bookingMinutes: number[] = BOOKING_MINUTES;
@@ -66,8 +40,13 @@ export class BookingdetailsComponent implements OnInit {
   errorDate: string;
   errorBase: string;
 
+  users: User[]
+  usersList;
+  selectedParticipants = [];
+
 
   constructor(
+    private userService: UserService,
     private reservationService: ReservationService,
     public bookingDetailsDialogRef: MatDialogRef<BookingdetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -76,45 +55,52 @@ export class BookingdetailsComponent implements OnInit {
 
   ngOnInit() {
     this.room = this.data.room;
+    this.getUsers();
   }
 
   close() {
     this.bookingDetailsDialogRef.close();
   }
-  //Affichage des vignettes
-  //parcours d'une collection de users selectionnés et insertion de value cf hmtl l.23 [value]="user.miniature"
-  onSelectParticipant(v) {
-    this.selectedMiniatures = [];
-    for (let a of v) {
-      this.selectedMiniatures.push(a.value);
-    }
+
+  //Appel à l'api
+  getUsers() {
+    this.userService
+      .getUsers()
+      .subscribe(data => {
+        this.users = data['result'];
+        this.users.sort(
+          (a, b) => a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase())
+        );
+        console.log(this.users);
+        this.usersList = this.users;
+      })
   }
 
-  // onSubmit(){
-  //
-  //   let startDate = moment(this.selectedDate).hour(this.selectedHourStart).minute(this.selectedMinuteStart).second(0).format("YYYY-MM-DD hh:mm:ss");
-  //   let endDate = moment(this.selectedDate).hour(this.selectedHourEnd).minute(this.selectedMinuteEnd).second(0).format("YYYY-MM-DD hh:mm:ss");
-  //   console.log(
-  //     "startDate : " + startDate + " . endDate : " + endDate
-  //   )
-  //
-  //   const reservation = {
-  //     startDate: startDate,
-  //     endDate: endDate,
-  //     objet: this.objet,
-  //     user_id: this.currentUser.idUser,
-  //     salle_id: 1
-  //   };
-  //   console.log('La réservation : ' + reservation.startDate);
-  //   console.log('La réservation : ' + reservation.endDate);
-  //   console.log('La réservation : ' + reservation.objet);
-  //   console.log('La réservation : ' + reservation.user_id);
-  //   console.log('La réservation : ' + reservation.salle_id);
-  //   this.reservationService.createReservation(reservation);
-  // }
+  onKey(event){
+    let valueSearch = event.target.value.toLowerCase();
+    console.log(valueSearch);
+    this.usersList = this.users.filter(user =>
+      user.firstName.toLowerCase().includes(valueSearch)
+      || user.lastName.toLowerCase().includes(valueSearch)
+      );
+  }
 
-  onSelectDate(event) {
-    this.selectedDate = event;
+  //Affichage des vignettes
+  //parcours d'une collection de users selectionnés et insertion de value cf hmtl l.23 [value]="user.miniature"
+  onSelectParticipant(users) {
+    this.selectedParticipants = [];
+    for (let user of users) {
+      this.selectedParticipants.push(user.value.userId);
+      console.log(this.selectedParticipants);
+    }
+
+    this.selectedMiniatures = [];
+    for (let user of users) {
+      this.selectedMiniatures.push(
+        user.value.firstName.charAt(0) +
+        user.value.lastName.charAt(0)
+      );
+    }
   }
 
   onSubmit() {
@@ -128,9 +114,9 @@ export class BookingdetailsComponent implements OnInit {
     if (!this.objet
       || !this.selectedDate
       || this.selectedHourStart == null
-      || !this.selectedMinuteStart == null
-      || !this.selectedHourEnd == null
-      || !this.selectedMinuteEnd == null
+      || this.selectedMinuteStart == null
+      || this.selectedHourEnd == null
+      || this.selectedMinuteEnd == null
       || this.dateIsWrong(this.selectedDate)
       || this.hoursAreWrong()) {
       this.errorCheck();
@@ -154,7 +140,8 @@ export class BookingdetailsComponent implements OnInit {
         endDate: endDate,
         object: this.objet,
         userId: this.currentUser.userId,
-        roomId: 1
+        roomId: 1,
+        users: this.selectedParticipants
       };
 
       console.log('La réservation : ' + reservation.startDate);
@@ -162,8 +149,9 @@ export class BookingdetailsComponent implements OnInit {
       console.log('La réservation : ' + reservation.object);
       console.log('La réservation : ' + reservation.userId);
       console.log('La réservation : ' + reservation.roomId);
+      console.log('La réservation : ' + reservation.users);
       this.reservationService.createReservation(reservation);
-
+      this.close();
     }
   }
 
@@ -175,9 +163,7 @@ export class BookingdetailsComponent implements OnInit {
     if (!this.selectedDate) { this.errorDate = "Veuillez renseigner une date" };
 
     //check si la date selectionnée n'est pas passée
-    if (this.dateIsWrong(this.selectedDate)) {
-      this.errorDate = "Selectionner une date non passée"
-    }
+    if (this.dateIsWrong(this.selectedDate)) { this.errorDate = "Selectionner une date non passée" }
 
     //check si l'heure de début est entrée
     if (!this.selectedHourStart || !this.selectedMinuteStart) { this.errorHourStart = "Veuillez entrer une heure" };
@@ -190,9 +176,7 @@ export class BookingdetailsComponent implements OnInit {
     if (this.selectedHourEnd == 18 && this.selectedMinuteEnd == 30) { this.errorHourEnd = "L'heure est incorrecte" }
 
     //check si l'heure de fin n'est pas avant l'heure de début
-    if (this.hoursAreWrong()) {
-      this.errorHourEnd = "L'heure de fin doit être après l'heure de début"
-    }
+    if (this.hoursAreWrong()) { this.errorHourEnd = "L'heure de fin doit être après l'heure de début" }
   }
 
   dateIsWrong(date) {
