@@ -90,31 +90,29 @@ export class BookingdetailsComponent implements OnInit {
     }
   }
 
-<<<<<<< HEAD
-  onSubmit(){
+  // onSubmit(){
+  //
+  //   let startDate = moment(this.selectedDate).hour(this.selectedHourStart).minute(this.selectedMinuteStart).second(0).format("YYYY-MM-DD hh:mm:ss");
+  //   let endDate = moment(this.selectedDate).hour(this.selectedHourEnd).minute(this.selectedMinuteEnd).second(0).format("YYYY-MM-DD hh:mm:ss");
+  //   console.log(
+  //     "startDate : " + startDate + " . endDate : " + endDate
+  //   )
+  //
+  //   const reservation = {
+  //     startDate: startDate,
+  //     endDate: endDate,
+  //     objet: this.objet,
+  //     user_id: this.currentUser.idUser,
+  //     salle_id: 1
+  //   };
+  //   console.log('La réservation : ' + reservation.startDate);
+  //   console.log('La réservation : ' + reservation.endDate);
+  //   console.log('La réservation : ' + reservation.objet);
+  //   console.log('La réservation : ' + reservation.user_id);
+  //   console.log('La réservation : ' + reservation.salle_id);
+  //   this.reservationService.createReservation(reservation);
+  // }
 
-    let startDate = moment(this.selectedDate).hour(this.selectedHourStart).minute(this.selectedMinuteStart).second(0).format("YYYY-MM-DD hh:mm:ss");
-    let endDate = moment(this.selectedDate).hour(this.selectedHourEnd).minute(this.selectedMinuteEnd).second(0).format("YYYY-MM-DD hh:mm:ss");
-    console.log(
-      "startDate : " + startDate + " . endDate : " + endDate
-    )
-
-    const reservation = {
-      startDate: startDate,
-      endDate: endDate,
-      objet: this.objet,
-      user_id: this.currentUser.idUser,
-      salle_id: 1
-    };
-    console.log('La réservation : ' + reservation.startDate);
-    console.log('La réservation : ' + reservation.endDate);
-    console.log('La réservation : ' + reservation.objet);
-    console.log('La réservation : ' + reservation.user_id);
-    console.log('La réservation : ' + reservation.salle_id);
-    this.reservationService.createReservation(reservation);
-  }
-
-=======
   onSelectDate(event) {
     this.selectedDate = event;
   }
@@ -219,7 +217,6 @@ export class BookingdetailsComponent implements OnInit {
       })
   }
 
->>>>>>> a97e112386501f0cea38997aefc4ad7ba5bb20c4
 
 
 }
