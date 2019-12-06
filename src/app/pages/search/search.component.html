@@ -65,19 +65,25 @@
                     <h5 class="w-100 text-center m-0">Récap</h5>
                 </div>
 
-                <div class="row h-100">
-                        <div class="text-center">
+                <div class="row">
+                    <div class="col p-3 text-center">
+                        <div *ngIf="selectedStartDate">
                             Réunion le 
                         </div>
-                        <div class="w-100" *ngIf="selectedStartDate">
+                        <div *ngIf="selectedStartDate">
                             {{selectedDateDisplay}}
                         </div>
-                        <div class="w-100" *ngIf="selectedMinuteStart != null">
-                            de {{selectedHourStart}}:{{selectedMinuteStart}}
+                        <div *ngIf="selectedMinuteStart != null">
+                            de {{selectedHourStart}}:
+                            <span *ngIf="selectedMinuteStart == 0">00</span>
+                            <span *ngIf="selectedMinuteStart == 30">30</span>
                         </div>
-                        <div class="w-100" *ngIf="selectedMinuteEnd != null">
-                            jusqu'à {{selectedHourEnd}}:{{selectedMinuteEnd}}.
+                        <div *ngIf="selectedMinuteEnd != null">
+                            jusqu'à {{selectedHourEnd}}:
+                            <span *ngIf="selectedMinuteEnd == 0">00</span>
+                            <span *ngIf="selectedMinuteEnd == 30">30</span>.
                         </div>
+                    </div>
                 </div>
                 
                 
@@ -92,7 +98,7 @@
             <div class="col">
                 <div>
                     <!-- Toggle de la recurrence -->
-                    <mat-slide-toggle (change)="checked = !checked">
+                    <mat-slide-toggle (change)="recurrenceIsChecked = !recurrenceIsChecked">
                         Activer la récurrence ?
                     </mat-slide-toggle>
                 </div>
@@ -101,21 +107,22 @@
     </mat-step>
 
     <!-- Stepper phase 2 recurrence -->
-    <mat-step *ngIf="checked">
+    <mat-step *ngIf="recurrenceIsChecked" [completed]="datasRecurrenceAreGood">
         <ng-template matStepLabel>Récurrence</ng-template>
 
         <div class="row my-3">
             <div class="col-4 border-right">
 
                 <!-- Groupe radio bouton mensualité -->
-                <mat-radio-group [(ngModel)]="selectedRecurrence">
+                <mat-radio-group [(ngModel)]="selectedRecurrence" (change)="checkInputRecurrence()">
                     <mat-radio-button class="d-block marg" *ngFor="let recurrence of recurrences" [value]="recurrence">
                         {{recurrence}}
                     </mat-radio-button>
                 </mat-radio-group>
+                <div class="w-100 text-center text-danger small" *ngIf="errorMensualite">{{errorMensualite}}</div>
 
             </div>
-
+ 
             <div class="col-auto mensuelle">
                 <!-- if mensuelle -->
                 <div *ngIf="selectedRecurrence === 'mensuelle'">
@@ -161,15 +168,16 @@
             <!-- Date de fin de la recurrence -->
             <span class="finile">Fini le </span>
             <mat-form-field>
-                <input matInput [matDatepicker]="picker">
+                <input matInput [(ngModel)]="selectedEndDate" [matDatepicker]="picker" (dateChange)="checkInputRecurrence()" >
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
+            <div class="w-100 text-center text-danger small" *ngIf="errorEndDate">{{errorEndDate}}</div>
         </div>
 
         <div class="row">
             <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
-            <button class="bouton-back-next" mat-button matStepperNext>Suivant</button>
+            <button class="bouton-back-next" mat-button matStepperNext [disabled]="!datasRecurrenceAreGood">Suivant</button>
         </div>
 
 
@@ -204,7 +212,7 @@
 
         <div class="row">
             <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
-            <button class="bouton-back-next" mat-button matStepperNext>Suivant</button>
+            <button class="bouton-back-next" mat-button (click)="getRoomsAvailable()" matStepperNext>Chercher les salles disponibles</button>
         </div>
     </mat-step>
 
@@ -212,16 +220,16 @@
     <mat-step>
         <ng-template matStepLabel>Résultats</ng-template>
 
-        <div class="row my-3">
-            <div class="col-4 p-0 border">
+        <div class="row my-3 justify-content-around">
+            <div *ngFor="let room of roomList" class="col-3 mx-2 p-0 border">
                 <div class="img-salle">
 
                 </div>
                 <div class="title p-3">
-                    Salle Pythagore<br>
-                    <span class="small">Zone A</span>
+                    {{room.name}}<br>
+                    <span class="small">{{room.area}}</span>
                     <span class="small mx-2">-</span>
-                    <span class="small ">4 pers.</span>
+                    <span class="small ">{{room.capacity}} pers.</span>
 
                 </div>
                 <a class="d-block px-3 pb-3 text-right">

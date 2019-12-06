@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import * as moment from 'moment'
 
@@ -10,6 +9,7 @@ import {
   CAPACITE, 
   BOOKING_HOURS, 
   BOOKING_MINUTES } from "../../constantes/constantes";
+import { RoomService } from 'src/app/services/room.service';
 
 
 @Component({
@@ -21,8 +21,7 @@ export class SearchComponent implements OnInit {
 
   //**********************DATE*************************
 
-  //variable pour la date et les heures
-  startDate = new Date();
+  //variable pour afficher la date selectionnée
   selectedDateDisplay: string;
 
   //heures et minutes dans le select
@@ -42,19 +41,26 @@ export class SearchComponent implements OnInit {
   //**********************RECURRENCE*************************
   selectedEndDate;
   selectedRecurrence: string;
-  selectedMensualite: string;
   
   //controle
   errorHourStart: string;
   errorHourEnd: string;
   errorDate: string;
+  errorEndDate: string;
+  errorMensualite: string;
   datasAreGood = false;
+  datasRecurrenceAreGood = false
 
   //variable pour le slide toggle pour activer la récurrence ou non
-  checked = false;  
+  recurrenceIsChecked = false;  
 
-  constructor(private _formBuilder: FormBuilder) {
-      this.onSelect(this.startDate);
+  //liste des salles (reponse)
+  roomList = []
+
+  constructor(
+    private roomService: RoomService,
+  ) {
+      //this.onSelect(this.startDate);
   }
 
   ngOnInit() {
@@ -134,11 +140,50 @@ export class SearchComponent implements OnInit {
   }
   
   isReccurent(){
-    if (this.checked) { return true;}
+    if (this.recurrenceIsChecked) { return true;}
+    else return false;
+  }
+  
+  checkInputRecurrence() {
+    this.errorEndDate = null;
+    this.errorMensualite = null;
+
+    if ( !this.selectedEndDate
+      || !this.selectedRecurrence
+      || this.endDateIsWrong(this.selectedStartDate, this.selectedEndDate)) {
+      this.errorCheckRecurrence();
+      console.log(this.selectedEndDate);
+      console.log(this.selectedRecurrence);
+      this.datasRecurrenceAreGood = false;
+      console.log(this.datasRecurrenceAreGood);
+    }
+    else {
+      this.datasRecurrenceAreGood = true;
+      console.log(this.datasRecurrenceAreGood);
+    }
+  }
+
+  errorCheckRecurrence(){
+    //check si la date est selectionnée
+    if (!this.selectedEndDate) { this.errorEndDate = "Veuillez renseigner une date" };
+
+    //check si la date selectionnée n'est pas passée
+    if (this.endDateIsWrong(this.selectedStartDate, this.selectedEndDate)) {
+      this.errorEndDate = "Selectionner une date de fin de récurrence qui soit après la date de début"
+    }
+
+    if (!this.selectedRecurrence) { this.errorMensualite = "Veuillez selectionner une mensualité" };
+  }
+
+  endDateIsWrong(startDate, endDate){
+    console.log(startDate.getTime());
+    console.log(endDate.getTime());
+
+    if (endDate.getTime() < startDate.getTime()) { return true; }
     else return false;
   }
 
-  /* Reccurence */
+  
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -150,4 +195,41 @@ export class SearchComponent implements OnInit {
         event.currentIndex);
     }
   }
+
+  getRoomsAvailable(){
+    let startDate = moment(this.selectedStartDate)
+    .set({hour:this.selectedHourStart,minute:this.selectedMinuteStart,second:0,millisecond:0})
+    .format();
+
+    let endDate = moment(this.selectedEndDate)
+    .set({hour:this.selectedHourEnd,minute:this.selectedMinuteEnd,second:0,millisecond:0})
+    .format();
+
+    let capacity = this.choix[0];
+
+    for(const element of this.choix){
+      if(element < capacity){
+        capacity = element;
+      }
+    }
+
+    console.log(this.choix);
+    console.log(capacity);
+    console.log(startDate);
+    console.log(endDate);
+
+    if(this.recurrenceIsChecked){
+      console.log(this.selectedRecurrence);
+      console.log(this.selectedEndDate);
+    }
+
+    this.roomService
+    .getAvailableRooms(capacity, startDate, endDate)
+    .subscribe(data => {
+      this.roomList = data['result'];
+      console.log(this.roomList)
+    })
+  }
+
+
 }

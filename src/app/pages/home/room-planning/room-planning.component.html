@@ -7,7 +7,7 @@
         <div class="col-1">
             <button mat-raised-button (click)="goBack()">Retour</button>
         </div>
-        <div class="col-3 text-center">
+        <div class="col-3 text-center" *ngIf="room">
             <h1 class="title">Salle {{room.name}} - Zone {{room.area}}</h1>
         </div>
 

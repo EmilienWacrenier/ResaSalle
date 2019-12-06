@@ -23,7 +23,7 @@ export class BookingdetailsComponent implements OnInit {
 
   currentUser;
 
-  selectedMiniatures: string[]; //affichage des miniatures cf méthode onSelect()
+  selectedMiniatures: string[] = []; //affichage des miniatures cf méthode onSelect()
 
   bookingHours: number[] = BOOKING_HOURS;
   bookingMinutes: number[] = BOOKING_MINUTES;
@@ -43,6 +43,9 @@ export class BookingdetailsComponent implements OnInit {
   users: User[]
   usersList;
   selectedParticipants = [];
+  emailList = [];
+
+  selectedDateFromPlanning;
 
 
   constructor(
@@ -55,11 +58,8 @@ export class BookingdetailsComponent implements OnInit {
 
   ngOnInit() {
     this.room = this.data.room;
+    this.selectedDateFromPlanning = this.data.selectedDate;
     this.getUsers();
-  }
-
-  close() {
-    this.bookingDetailsDialogRef.close();
   }
 
   //Appel à l'api
@@ -76,31 +76,45 @@ export class BookingdetailsComponent implements OnInit {
       })
   }
 
-  onKey(event){
+  onKey(event) {
     let valueSearch = event.target.value.toLowerCase();
     console.log(valueSearch);
-    this.usersList = this.users.filter(user => 
+    this.usersList = this.users.filter(user =>
       user.firstName.toLowerCase().includes(valueSearch)
       || user.lastName.toLowerCase().includes(valueSearch)
-      );
+    );
+  }
+
+  onKeyEnter(event){
+    let valueEmail = event.target.value;
+    this.emailList.push(valueEmail);
+  }
+
+  removeEmail(email){
+    this.emailList.splice(this.selectedParticipants.indexOf(email), 1);
   }
 
   //Affichage des vignettes
   //parcours d'une collection de users selectionnés et insertion de value cf hmtl l.23 [value]="user.miniature"
-  onSelectParticipant(users) {
-    this.selectedParticipants = [];
-    for (let user of users) {
-      this.selectedParticipants.push(user.value.userId);
+  onSelectParticipant(user) {
+    console.log(user);
+    if (this.selectedParticipants.includes(user)) {
+      //supprime le participant
+      this.selectedParticipants.splice(this.selectedParticipants.indexOf(user), 1);
+    }
+    else {
+      //ajoute le participant
+      this.selectedParticipants.push(user);
       console.log(this.selectedParticipants);
     }
+  }
 
-    this.selectedMiniatures = [];
-    for (let user of users) {
-      this.selectedMiniatures.push(
-        user.value.firstName.charAt(0) + 
-        user.value.lastName.charAt(0)
-      );
-    }
+  removeParticipant(user){
+    this.selectedParticipants.splice(this.selectedParticipants.indexOf(user), 1);
+  }
+
+  resetParticipants(){
+    this.selectedParticipants = [];
   }
 
   onSubmit() {
@@ -135,13 +149,20 @@ export class BookingdetailsComponent implements OnInit {
         "startDate : " + startDate + " . endDate : " + endDate
       )
 
+      let participantIdList = [];
+      for( const participant of this.selectedParticipants ){
+        participantIdList.push(participant.userId);
+      }
+
+      console.log(participantIdList);
+
       const reservation = {
         startDate: startDate,
         endDate: endDate,
         object: this.objet,
         userId: this.currentUser.userId,
-        roomId: 1,
-        users: this.selectedParticipants
+        roomId: this.room.roomId,
+        users: participantIdList
       };
 
       console.log('La réservation : ' + reservation.startDate);
@@ -151,7 +172,7 @@ export class BookingdetailsComponent implements OnInit {
       console.log('La réservation : ' + reservation.roomId);
       console.log('La réservation : ' + reservation.users);
       this.reservationService.createReservation(reservation);
-      this.close();
+      this.bookingDetailsDialogRef.close(this.selectedDate);
     }
   }
 
@@ -191,22 +212,4 @@ export class BookingdetailsComponent implements OnInit {
     if (startingHour >= endingHour) { return true; }
     else return false;
   }
-
-  getReservationsOfThisWeek(salleId, startDate, endDate) {
-    this.reservationService
-      .getReservationsOfThisWeek(salleId, startDate, endDate)
-      .subscribe(data => {
-        this.errorBase = data['result'];
-        console.log(this.errorBase);
-      })
-  }
-
-
-
-}
-//Interface User pour test (liste d'utilisateurs factice)
-export interface User {
-  lastName: string;
-  firstName: string;
-  miniature: string;
 }

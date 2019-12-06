@@ -8,6 +8,7 @@ import { Room } from '../classes/room';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { ObserveOnMessage } from 'rxjs/internal/operators/observeOn';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,17 @@ export class RoomService {
 
   getRooms(): Observable<Room[]>{
     return this.httpClient.get<Room[]>(this.cst.apiUrl + 'salle/rooms');
+  }
+
+  getAvailableRooms(capacity, startDate, endDate): Observable<Room[]>{
+
+    const params = new HttpParams()
+      .set('capacity', capacity)
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+
+    return this.httpClient.get<Room[]>(this.cst.apiUrl + 'salle/availableRooms',
+    { params: params });
   }
 
   createRoom(body): Observable<any>{

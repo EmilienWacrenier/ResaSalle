@@ -1,18 +1,18 @@
 <div class="container-login p-5">
-        <div class="row h-100 w-75 bg-white m-auto">
-            <div class="col-6 p-3">
-                <!--<img src="../../../assets/illustration_ekla.jpg" class="img-fluid" alt="illustration_ekla" />-->
+        <div class="row h-100 w-75 bg-white m-auto p-4">
+            <div class="col-6 p-3 align-self-center">
+                <img src="../../../assets/illustration_ekla.jpg" class="img-fluid" alt="illustration_ekla" />
             </div>
 
             <div class="col-6 p-3">
                 <mat-tab-group mat-align-tabs="center">
                     <!-- TAB SE CONNECTER -->
                     <mat-tab label="SE CONNECTER">
-                        <form [formGroup]="loginForm">
+                        <form [formGroup]="loginForm" autocomplete="off">
                             <h1 class="title mt-3">Welcome back !</h1>
 
                             <mat-form-field class="d-block">
-                                <input color="white" matInput formControlName="email" placeholder="Email">
+                                <input type="email" color="white" matInput formControlName="email" placeholder="Email">
                                 <mat-icon matSuffix class="grey">email</mat-icon>
                             </mat-form-field>
 
@@ -31,7 +31,7 @@
 
                     <!-- TAB S'ENREGISTRER -->
                     <mat-tab label="S'ENREGISTRER">
-                        <form class="" [formGroup]="registerForm">
+                        <form class="" [formGroup]="registerForm" autocomplete="off">
                             <h1 class="title mt-3">Me créer un compte</h1>
 
                             <mat-form-field class="w-50">
