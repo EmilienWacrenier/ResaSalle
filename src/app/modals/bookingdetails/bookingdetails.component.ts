@@ -109,22 +109,12 @@ export class BookingdetailsComponent implements OnInit {
     }
   }
 
-<<<<<<< HEAD
   removeParticipant(user){
     this.selectedParticipants.splice(this.selectedParticipants.indexOf(user), 1);
   }
 
   resetParticipants(){
     this.selectedParticipants = [];
-=======
-    this.selectedMiniatures = [];
-    for (let user of users) {
-      this.selectedMiniatures.push(
-        user.value.firstName.charAt(0) +
-        user.value.lastName.charAt(0)
-      );
-    }
->>>>>>> 940b4f0956c3a66ea8267509d92c8b64a968bf82
   }
 
   onSubmit() {
