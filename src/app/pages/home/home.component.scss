@@ -4,13 +4,17 @@
 }
 
 .rowRoom:hover{
-  border-left: 5px solid rgb(57, 77, 112);
-  background-color: rgb(220, 230, 247)!important;
+  border-left: 5px solid rgb(0, 102, 161);
+  background-color: rgb(223, 236, 243)!important;
+  //border-left: 5px solid rgb(57, 77, 112);
+  //background-color: rgb(220, 230, 247)!important;
   cursor: pointer;
 }
 
 .rowRoom:hover .timeline-flag{
-  border-right: 2px solid rgb(220, 230, 247);
+  border-right: 2px solid rgb(223, 236, 243);
+  //border-right: 2px solid rgb(220, 230, 247);
+  
 }
 
 .timeline-container-heures,
@@ -22,14 +26,16 @@
   width: 99%;
   position: relative;
   height: 30px;
-  background-color: rgb(115, 154, 224);
+  background-color: rgb(128, 179, 208);
+  //background-color: rgb(115, 154, 224);
   margin: 0 auto;
 }
 
 .timeline-tile{
   position: absolute;
   top:0;
-  background-color: rgb(57, 77, 112);
+  background-color: rgb(0, 102, 161);
+  //background-color: rgb(57, 77, 112);
   height: 100%;
 }
 
@@ -49,7 +55,7 @@
 
   font-size: 1rem;
   font-weight: bold;
-  color: rgb(57, 77, 112);;
+  color: rgb(57, 77, 112);
 }
 
 .timeline-flag-heure-last{
@@ -65,6 +71,11 @@ mat-icon{
   cursor: pointer;
   text-decoration: underline;
 }
+
 .roomDetails{
   font-size: smaller;
+}
+
+.box-shadow{
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
 }

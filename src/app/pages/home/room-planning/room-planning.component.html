@@ -1,13 +1,15 @@
 <div class="container">
 
     <div class="row align-items-center">
+        <!--
         <div class="col-1">
             <button mat-raised-button color="primary" (click)="openDialog()">Réserver</button>
         </div>
-        <div class="col-1">
+        -->
+        <div class="col-auto p-0">
             <button mat-raised-button (click)="goBack()">Retour</button>
         </div>
-        <div class="col-3 text-center" *ngIf="room">
+        <div class="col-auto text-center" *ngIf="room">
             <h1 class="title">Salle {{room.name}} - Zone {{room.area}}</h1>
         </div>
 
@@ -45,10 +47,10 @@
                 </div>
             </div>
         </div>
-        <div class="col p-0" *ngFor="let resa of bookingsOfTheWeek">
+        <div class="col p-0" *ngFor="let resa of bookingsOfTheWeek; let i = index">
             <div class="container">
-                <div class="row" *ngFor="let item of resa; let i = index">
-                    <div class=" w-100 border border-bottom-0 text-right" *ngIf="i%2 == 0">
+                <div class="row" *ngFor="let item of resa; let j = index">
+                    <div class=" w-100 border border-bottom-0 border-white text-right" *ngIf="j%2 == 0">
                         <div class="item-is-true" *ngIf="item" matTooltip='
                                 Réservé par : {{item.firstName}} {{item.lastName}},
                                 Objet : {{item.object}},
@@ -56,11 +58,11 @@
                             &nbsp;
                         </div>
 
-                        <div class="item-is-false" *ngIf="!item" (click)="openDialog()">
+                        <div class="item-is-false" *ngIf="!item" (click)="openDialog(i, j)">
                             &nbsp;
                         </div>
                     </div>
-                    <div class="w-100 border border-top-0" *ngIf="i%2 !== 0">
+                    <div class="w-100 border border-top-0 border-white" *ngIf="j%2 !== 0">
                         <div class="item-is-true" *ngIf="item" matTooltip='
                             Réservé par : {{item.firstName}} {{item.lastName}},
                             Objet : {{item.object}},
@@ -68,7 +70,7 @@
                             &nbsp;
                         </div>
 
-                        <div class="item-is-false" *ngIf="!item" (click)="openDialog()">
+                        <div class="item-is-false" *ngIf="!item" (click)="openDialog(i, j)">
                             &nbsp;
                         </div>
                     </div>

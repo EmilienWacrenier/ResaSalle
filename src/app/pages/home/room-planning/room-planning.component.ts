@@ -55,12 +55,12 @@ export class RoomPlanningComponent implements OnInit {
     //recuperation de l'ID de la salle avec l'URL
     const id = +this.route.snapshot.paramMap.get('id');
     //date d'aujourd'hui
-    let today = new Date();
+    this.selectedDate = new Date();
     //recuperation de les infos de la salle
     this.homeService.getRoomById(id)
       .subscribe(room => {
         this.room = room;
-        this.getPlanning(today);
+        this.getPlanning(this.selectedDate);
       });
   }
 
@@ -186,14 +186,16 @@ export class RoomPlanningComponent implements OnInit {
   }
 
   //fermeture de la modale avec DialogRef
-  openDialog() {
+  openDialog(jour, heure) {
     //config et ouverture de la 2eme test_modaleconst bookingCalendarDialogConfig = new MatDialogConfig();
     const bookingDetailsDialogConfig = new MatDialogConfig();
     bookingDetailsDialogConfig.width = "60vw";
     bookingDetailsDialogConfig.height = "80vh";
     bookingDetailsDialogConfig.data = { 
       room: this.room,
-      selectedDate : this.selectedDate
+      selectedDate : this.selectedDate,
+      jour: jour,
+      heure: heure,
      };
 
     this.dialog.open(BookingdetailsComponent, bookingDetailsDialogConfig)

@@ -16,7 +16,7 @@
           </div>
           <div class="col-6">
             <mat-form-field class="w-100">
-              <input matInput autocomplete="off" [(ngModel)]="selectedDate" [matDatepicker]="picker" placeholder="Date">
+              <input matInput autocomplete="off" [(value)]="selectedDate" [matDatepicker]="picker" placeholder="Date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -27,7 +27,7 @@
           <h6 class="w-100 text-center">Debut</h6>
           <mat-form-field class="w-50 px-2">
             <mat-label>Heure</mat-label>
-            <mat-select [(ngModel)]="selectedHourStart">
+            <mat-select [(value)]="selectedHourStart">
               <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart">
                 {{hourStart}}
               </mat-option>
@@ -35,7 +35,7 @@
           </mat-form-field>
           <mat-form-field class="w-50 px-2">
             <mat-label mat-body>Minute</mat-label>
-            <mat-select [(ngModel)]="selectedMinuteStart">
+            <mat-select [(value)]="selectedMinuteStart">
               <mat-option *ngFor="let minuteStart of bookingMinutes" [value]="minuteStart">
                 {{minuteStart}}
               </mat-option>
@@ -47,7 +47,7 @@
           <h6 class="w-100 text-center">Fin</h6>
           <mat-form-field class="w-50 px-2">
             <mat-label>Heure</mat-label>
-            <mat-select [(ngModel)]="selectedHourEnd">
+            <mat-select [(value)]="selectedHourEnd">
               <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
                 {{hourEnd}}
               </mat-option>
@@ -55,7 +55,7 @@
           </mat-form-field>
           <mat-form-field class="w-50 px-2">
             <mat-label>Minute</mat-label>
-            <mat-select [(ngModel)]="selectedMinuteEnd">
+            <mat-select [(value)]="selectedMinuteEnd">
               <mat-option *ngFor="let minuteEnd of bookingMinutes" [value]="minuteEnd">
                 {{minuteEnd}}
               </mat-option>
