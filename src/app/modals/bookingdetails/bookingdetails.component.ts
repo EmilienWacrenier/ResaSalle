@@ -60,6 +60,25 @@ export class BookingdetailsComponent implements OnInit {
     this.room = this.data.room;
     this.selectedDateFromPlanning = this.data.selectedDate;
     this.getUsers();
+    this.setParamsOnInit(this.data.day, this.data.hour);
+  }
+
+  setParamsOnInit(day, hour) {
+    this.selectedDate = new Date(moment().isoWeekday(day+1).format());
+    console.log(this.selectedDate);
+
+    if (hour % 2 == 0) {
+      this.selectedHourStart = this.bookingHours[hour / 2];
+      this.selectedMinuteStart = this.bookingMinutes[0];
+    }
+    else if (hour % 2 == 1) {
+      this.selectedHourStart = this.bookingHours[(hour - 1) / 2];
+      this.selectedMinuteStart = this.bookingMinutes[1];
+    }
+    else console.log("erreur au parametrage");
+
+    this.selectedHourEnd = this.selectedHourStart+1;
+    this.selectedMinuteEnd = this.selectedMinuteStart;
   }
 
   //Appel à l'api
@@ -85,12 +104,12 @@ export class BookingdetailsComponent implements OnInit {
     );
   }
 
-  onKeyEnter(event){
+  onKeyEnter(event) {
     let valueEmail = event.target.value;
     this.emailList.push(valueEmail);
   }
 
-  removeEmail(email){
+  removeEmail(email) {
     this.emailList.splice(this.selectedParticipants.indexOf(email), 1);
   }
 
@@ -109,11 +128,11 @@ export class BookingdetailsComponent implements OnInit {
     }
   }
 
-  removeParticipant(user){
+  removeParticipant(user) {
     this.selectedParticipants.splice(this.selectedParticipants.indexOf(user), 1);
   }
 
-  resetParticipants(){
+  resetParticipants() {
     this.selectedParticipants = [];
   }
 
@@ -150,7 +169,7 @@ export class BookingdetailsComponent implements OnInit {
       )
 
       let participantIdList = [];
-      for( const participant of this.selectedParticipants ){
+      for (const participant of this.selectedParticipants) {
         participantIdList.push(participant.userId);
       }
 

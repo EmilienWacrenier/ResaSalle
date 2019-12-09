@@ -186,14 +186,16 @@ export class RoomPlanningComponent implements OnInit {
   }
 
   //fermeture de la modale avec DialogRef
-  openDialog() {
+  openDialog(day, hour) {
     //config et ouverture de la 2eme test_modaleconst bookingCalendarDialogConfig = new MatDialogConfig();
     const bookingDetailsDialogConfig = new MatDialogConfig();
     bookingDetailsDialogConfig.width = "60vw";
     bookingDetailsDialogConfig.height = "80vh";
     bookingDetailsDialogConfig.data = { 
       room: this.room,
-      selectedDate : this.selectedDate
+      selectedDate : this.selectedDate,
+      day : day,
+      hour: hour,
      };
 
     this.dialog.open(BookingdetailsComponent, bookingDetailsDialogConfig)
