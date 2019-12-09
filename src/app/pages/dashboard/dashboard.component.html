@@ -6,11 +6,12 @@
             <h2> Mes Réservations </h2>
         </div>
     </div>
-    <mat-table [dataSource]="dsBooking" class="mat-elevation-z8">
+    <mat-table [dataSource]="dsBooking" class="mat-elevation-z8" *ngIf="dsBooking.data.length > 0; else noDsData">
         <!-- Date Column -->
         <ng-container matColumnDef="date">
             <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="dateTableCell"> {{element.startDate | date: 'dd MMM.'}} </mat-cell>
+            <mat-cell *matCellDef="let element" class="dateTableCell"> {{element.startDate | date: 'dd MMM.'}}
+            </mat-cell>
         </ng-container>
 
         <!-- Start Column -->
@@ -40,7 +41,8 @@
         <!-- Participants Column -->
         <ng-container matColumnDef="participants">
             <mat-header-cell *matHeaderCellDef> Participants </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.participants.length > 0 ? element.participants.length : 'N/A'}} </mat-cell>
+            <mat-cell *matCellDef="let element">
+                {{element.participants.length > 0 ? element.participants.length : 'N/A'}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">
@@ -59,4 +61,15 @@
         <mat-header-row class="tableHeader" *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+    <ng-template #noDsData>
+        <div class="row">
+            <mat-card class="col-12">
+                <mat-card-content>
+                    <div class="d-flex justify-content-center">
+                        <h5>Aucune réservation programmée</h5>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </ng-template>
 </div>

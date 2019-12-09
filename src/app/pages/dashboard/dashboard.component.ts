@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(private reservationService: ReservationService, public dialog: MatDialog, private cst: ApiConstants, private toastr: ToastrService) {
     this.dsBooking = new MatTableDataSource<Booking>();
+    this.dsBooking.data = [];
   }
 
 
@@ -77,7 +78,7 @@ export class DashboardComponent implements OnInit {
   }
 
   updateReservations() {
-    this.dsBooking.data = null;
+    this.dsBooking.data = [];
     this.reservationService.getReservationsFromUserConnected().subscribe(
       (response) => {
         this.dsBooking.data = (response['result']);

@@ -28,6 +28,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteConfirmationComponent } from './modals/delete-confirmation/delete-confirmation.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { EditRoomComponent } from './modals/edit-room/edit-room.component';
 
 
 export function tokenGetter() {
@@ -49,6 +50,7 @@ export function tokenGetter() {
     RoomPlanningComponent,
     DeleteConfirmationComponent,
     AdminComponent,
+    EditRoomComponent,
   ],
   imports: [
     BrowserModule,
