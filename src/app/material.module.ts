@@ -1,4 +1,4 @@
-import {MatCheckboxModule, MatDateFormats, MAT_DATE_LOCALE, MAT_DATE_FORMATS} from '@angular/material';
+import {MatCheckboxModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material';
 import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -32,18 +32,6 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import {NgModule} from '@angular/core';
-
-export const MY_FORMAT: MatDateFormats = {
-  parse: {
-  dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-  dateInput: 'DD/MM/YYYY',
-  monthYearLabel: 'MMM YYYY',
-  dateA11yLabel: 'DD/MM/YYYY',
-  monthYearA11yLabel: 'MMMM YYYY',
-  },
-  };
 
 @NgModule({
   imports: [
@@ -116,10 +104,6 @@ export const MY_FORMAT: MatDateFormats = {
     MatPaginatorModule,
     DragDropModule
   ],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMAT },
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
 })
 
 export class MaterialModule {

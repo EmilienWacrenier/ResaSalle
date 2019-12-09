@@ -57,39 +57,9 @@ export class BookingdetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data);
     this.room = this.data.room;
+    this.selectedDateFromPlanning = this.data.selectedDate;
     this.getUsers();
-    this.preSetOnInit(this.data.jour, this.data.selectedDate, this.data.heure);
-  }
-
-  preSetOnInit(day, date, hour) {
-
-    let preSelectedDay = moment(date).isoWeekday(day).format();
-    this.selectedDate = new Date(preSelectedDay);
-    console.log(preSelectedDay);
-    console.log(this.selectedDate);
-
-    for (var i = 0; i < 20; i++) {
-      if (i == hour && hour % 2 == 0) {
-        this.selectedHourStart = this.bookingHours[i/2];
-        this.selectedMinuteStart = this.bookingMinutes[0];
-
-        this.selectedHourEnd = this.bookingHours[i/2+1];
-        this.selectedMinuteEnd = this.bookingMinutes[0];
-      }
-      if (i == hour && hour % 2 == 1) {
-        this.selectedHourStart = this.bookingHours[(i-1)/2];
-        this.selectedMinuteStart = this.bookingMinutes[1];
-
-        this.selectedHourEnd = this.bookingHours[(i-1)/2+1];
-        this.selectedMinuteEnd = this.bookingMinutes[1];
-      }
-    }
-
-    console.log(this.selectedHourStart);
-    console.log(this.selectedMinuteStart);
-
   }
 
   //Appel à l'api
@@ -115,12 +85,12 @@ export class BookingdetailsComponent implements OnInit {
     );
   }
 
-  onKeyEnter(event) {
+  onKeyEnter(event){
     let valueEmail = event.target.value;
     this.emailList.push(valueEmail);
   }
 
-  removeEmail(email) {
+  removeEmail(email){
     this.emailList.splice(this.selectedParticipants.indexOf(email), 1);
   }
 
@@ -139,11 +109,11 @@ export class BookingdetailsComponent implements OnInit {
     }
   }
 
-  removeParticipant(user) {
+  removeParticipant(user){
     this.selectedParticipants.splice(this.selectedParticipants.indexOf(user), 1);
   }
 
-  resetParticipants() {
+  resetParticipants(){
     this.selectedParticipants = [];
   }
 
@@ -180,7 +150,7 @@ export class BookingdetailsComponent implements OnInit {
       )
 
       let participantIdList = [];
-      for (const participant of this.selectedParticipants) {
+      for( const participant of this.selectedParticipants ){
         participantIdList.push(participant.userId);
       }
 
@@ -217,10 +187,10 @@ export class BookingdetailsComponent implements OnInit {
     if (this.dateIsWrong(this.selectedDate)) { this.errorDate = "Selectionner une date non passée" }
 
     //check si l'heure de début est entrée
-    if (this.selectedHourStart == null || this.selectedMinuteStart == null) { this.errorHourStart = "Veuillez entrer une heure" };
+    if (!this.selectedHourStart || !this.selectedMinuteStart) { this.errorHourStart = "Veuillez entrer une heure" };
 
     //check si l'heure de fin est entrée
-    if (this.selectedHourEnd == null || !this.selectedMinuteEnd == null) { this.errorHourEnd = "Veuillez entrer une heure" };
+    if (!this.selectedHourEnd || !this.selectedMinuteEnd) { this.errorHourEnd = "Veuillez entrer une heure" };
 
     //check si une des heures ne dépasse pas 18h
     if (this.selectedHourStart == 18 && this.selectedMinuteStart == 30) { this.errorHourStart = "L'heure est incorrecte" }
