@@ -200,6 +200,16 @@ export class RoomPlanningComponent implements OnInit {
     }
   }
 
+  previousWeek(){
+    this.selectedDate = new Date( moment(this.selectedDate).subtract(7, 'days').format() );
+    this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+  }
+
+  nextWeek(){
+    this.selectedDate = new Date( moment(this.selectedDate).add(7, 'days').format() );
+    this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+  }
+
   //fermeture de la modale avec DialogRef
   openDialog(day, hour) {
     //config et ouverture de la 2eme test_modaleconst bookingCalendarDialogConfig = new MatDialogConfig();
