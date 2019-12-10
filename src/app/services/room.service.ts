@@ -17,11 +17,11 @@ export class RoomService {
 
   constructor(private httpClient: HttpClient, private cst: ApiConstants, private toastr: ToastrService) { }
 
-  getRooms(): Observable<Room[]>{
+  getRooms(): Observable<Room[]> {
     return this.httpClient.get<Room[]>(this.cst.apiUrl + 'salle/rooms');
   }
 
-  getAvailableRooms(capacity, startDate, endDate): Observable<Room[]>{
+  getAvailableRooms(capacity, startDate, endDate): Observable<Room[]> {
 
     const params = new HttpParams()
       .set('capacity', capacity)
@@ -29,15 +29,19 @@ export class RoomService {
       .set('endDate', endDate);
 
     return this.httpClient.get<Room[]>(this.cst.apiUrl + 'salle/availableRooms',
-    { params: params });
+      { params: params });
   }
 
-  createRoom(body): Observable<any>{
+  createRoom(body): Observable<any> {
     return this.httpClient.post(this.cst.apiUrl + 'salle/createRoom', body);
   }
 
-  deleteRoom(id): Observable<any>{
+  deleteRoom(id): Observable<any> {
     const param = new HttpParams().set('roomId', id);
-    return this.httpClient.delete(this.cst.apiUrl + 'salle/deleteRoom', {params : param});
+    return this.httpClient.delete(this.cst.apiUrl + 'salle/deleteRoom', { params: param });
+  }
+
+  updateRoom(body): Observable<any>{
+    return this.httpClient.put(this.cst.apiUrl + 'salle/modifyRoom', body);
   }
 }
