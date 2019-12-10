@@ -48,7 +48,7 @@
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
             <mat-cell *matCellDef="let element;  let j = index;">
-                <i class="material-icons editBtn" focusable="false" (click)="editBooking(element.reservationId)">
+                <i class="material-icons editBtn" focusable="false" (click)="editBooking(element)">
                     edit
                 </i>
                 <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(element.reservationId)">

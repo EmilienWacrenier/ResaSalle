@@ -29,6 +29,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteConfirmationComponent } from './modals/delete-confirmation/delete-confirmation.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { EditRoomComponent } from './modals/edit-room/edit-room.component';
+import { EditBookingComponent } from './modals/edit-booking/edit-booking.component';
 
 
 export function tokenGetter() {
@@ -51,6 +52,7 @@ export function tokenGetter() {
     DeleteConfirmationComponent,
     AdminComponent,
     EditRoomComponent,
+    EditBookingComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +81,8 @@ export function tokenGetter() {
     BookingcalendarComponent,
     BookingdetailsComponent,
     DeleteConfirmationComponent,
-    EditRoomComponent
+    EditRoomComponent,
+    EditBookingComponent
   ]
 })
 export class AppModule { }
