@@ -9,14 +9,21 @@
         <div class="col-auto p-0">
             <button mat-raised-button (click)="goBack()">Retour</button>
         </div>
-        <div class="col-auto text-center" *ngIf="room">
-            <h1 class="title">Salle {{room.name}} - Zone {{room.area}}</h1>
+        <div class="col-auto text-center" *ngIf="rooms">
+            <mat-form-field>
+                <mat-select [(value)]="selectedRoom" (selectionChange)="onSelectRoom()">
+                    <mat-option *ngFor="let room of rooms" [value]="room">
+                        Salle {{room.name}} - Zone {{room.area}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
         </div>
 
         <div class="col pr-5">
             <mat-form-field class="float-right">
                 <input matInput [matDatepicker]="picker" placeholder="Selectionner une date"
-                    (dateChange)="onSelect($event)">
+                    (dateChange)="onSelectDate($event)" [value]="selectedDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker startAt="today"></mat-datepicker>
             </mat-form-field>
@@ -50,7 +57,7 @@
         <div class="col p-0" *ngFor="let resa of bookingsOfTheWeek; let i = index">
             <div class="container">
                 <div class="row" *ngFor="let item of resa; let j = index">
-                    <div class=" w-100 border border-bottom-0 text-right" *ngIf="j%2 == 0">
+                    <div class=" w-100 border border-bottom-0 border-white text-right" *ngIf="j%2 == 0">
                         <div class="item-is-true" *ngIf="item" matTooltip='
                                 Réservé par : {{item.firstName}} {{item.lastName}},
                                 Objet : {{item.object}},
@@ -62,7 +69,7 @@
                             &nbsp;
                         </div>
                     </div>
-                    <div class="w-100 border border-top-0" *ngIf="j%2 !== 0">
+                    <div class="w-100 border border-top-0 border-white" *ngIf="j%2 !== 0">
                         <div class="item-is-true" *ngIf="item" matTooltip='
                             Réservé par : {{item.firstName}} {{item.lastName}},
                             Objet : {{item.object}},

@@ -26,7 +26,11 @@ export class RoomPlanningComponent implements OnInit {
 
   room: Room;
   salle: Room;
+  rooms: Room[];
 
+  idRoomOnInit: number;
+
+  selectedRoom : Room;
   //variable pour la date et les heures
   selectedDate: Date;
   startDay: string;
@@ -52,26 +56,37 @@ export class RoomPlanningComponent implements OnInit {
   ngOnInit() {
     document.getElementById('homeNavItem').classList.add('active-list-item');
 
-    //recuperation de l'ID de la salle avec l'URL
-    const id = +this.route.snapshot.paramMap.get('id');
-    //date d'aujourd'hui
-    let today = new Date();
-    //recuperation de les infos de la salle
-    this.homeService.getRoomById(id)
-      .subscribe(room => {
-        this.room = room;
-        this.getPlanning(today);
-      });
+    //récupération des salles en base
+    this.homeService.getRooms().subscribe( res => {
+      this.rooms = res;
+      console.log(this.rooms);
+
+      for(const room of this.rooms){
+        //recuperation des infos de la salle cliqué pour l'initiation
+        if( room.roomId == +this.route.snapshot.paramMap.get('id')) {
+          this.selectedRoom = room;
+          console.log(room);
+        }
+      }
+      //date d'aujourd'hui
+      this.selectedDate = new Date();
+
+      this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+    });
   }
 
-  //fonction qui va changer la valeur de la date selectionnée quand on
-  //selectionne une date dans le calendrier puis qui appelle des fonctions
-  onSelect(event) {
+  onSelectRoom(){
+    console.log(this.selectedRoom);
+    this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+  }
+
+  //à la selection de la date
+  onSelectDate(event) {
     this.selectedDate = event.value;
-    this.getPlanning(this.selectedDate);
+    this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
   }
 
-  getPlanning(selectedDate){
+  getPlanning(roomId, selectedDate){
     console.log('selected day : ');
     console.log(selectedDate);
 
@@ -98,7 +113,7 @@ export class RoomPlanningComponent implements OnInit {
     //reccurrence_id, 
     //salle_id, 
     //id_salle, nom, zone, capacite
-    this.getReservationsOfThisWeek(this.room.roomId, this.startDay, this.endDay);
+    this.getReservationsOfThisWeek(roomId, this.startDay, this.endDay);
   }
 
   //Appel à l'api
@@ -192,7 +207,7 @@ export class RoomPlanningComponent implements OnInit {
     bookingDetailsDialogConfig.width = "60vw";
     bookingDetailsDialogConfig.height = "80vh";
     bookingDetailsDialogConfig.data = { 
-      room: this.room,
+      room: this.selectedRoom,
       selectedDate : this.selectedDate,
       day : day,
       hour: hour,
@@ -201,7 +216,7 @@ export class RoomPlanningComponent implements OnInit {
     this.dialog.open(BookingdetailsComponent, bookingDetailsDialogConfig)
       .afterClosed().subscribe((data) => {
         console.log(data);
-        this.getPlanning(data);
+        this.getPlanning(this.room.roomId, data);
       });
   }
 
