@@ -8,7 +8,6 @@ import * as moment from 'moment';
 import { ToastrService, ToastRef } from 'ngx-toastr';
 import { ApiConstants } from '../constantes/constantes';
 import { catchError, map } from 'rxjs/operators';
-import { ROOMS } from '../mock-roomList';
 
 @Injectable({
   providedIn: 'root'

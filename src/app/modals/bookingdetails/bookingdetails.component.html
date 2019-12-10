@@ -16,7 +16,11 @@
           </div>
           <div class="col-6">
             <mat-form-field class="w-100">
-              <input matInput autocomplete="off" [value]="selectedDate" [matDatepicker]="picker" placeholder="Date">
+              <input matInput autocomplete="off" 
+              (dateChange)="onSelectDate($event)" 
+              [value]="selectedDate" 
+              [matDatepicker]="picker" 
+              placeholder="Date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>

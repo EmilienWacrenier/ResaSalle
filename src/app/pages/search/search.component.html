@@ -19,7 +19,7 @@
                     <h5 class="w-100 text-center m-auto">Debut</h5>
                     <mat-form-field class="w-50 pl-4 pr-2">
                         <mat-label>Heure</mat-label>
-                        <mat-select [(ngModel)]="selectedHourStart" (openedChange)="checkInput()">
+                        <mat-select [(value)]="selectedHourStart" (openedChange)="checkInput()">
                             <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart">
                                 {{hourStart}}
                             </mat-option>
@@ -27,7 +27,7 @@
                     </mat-form-field>
                     <mat-form-field class="w-50 pl-2 pr-4">
                         <mat-label>Minute</mat-label>
-                        <mat-select [(ngModel)]="selectedMinuteStart" (openedChange)="checkInput()">
+                        <mat-select [(value)]="selectedMinuteStart" (openedChange)="checkInput()">
                             <mat-option *ngFor="let minuteStart of bookingMinutes" [value]="minuteStart">
                                 {{minuteStart}}
                             </mat-option>
@@ -41,7 +41,7 @@
                     <h5 class="w-100 text-center m-auto">Fin</h5>
                     <mat-form-field class="w-50 pl-4 pr-2">
                         <mat-label>Heure</mat-label>
-                        <mat-select [(ngModel)]="selectedHourEnd" (openedChange)="checkInput()">
+                        <mat-select [(value)]="selectedHourEnd" (openedChange)="checkInput()">
                             <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
                                 {{hourEnd}}
                             </mat-option>
@@ -49,7 +49,7 @@
                     </mat-form-field>
                     <mat-form-field class="w-50 pl-2 pr-4">
                         <mat-label>Minute</mat-label>
-                        <mat-select [(ngModel)]="selectedMinuteEnd" (openedChange)="checkInput()">
+                        <mat-select [(value)]="selectedMinuteEnd" (openedChange)="checkInput()">
                             <mat-option *ngFor="let minuteEnd of bookingMinutes" [value]="minuteEnd">
                                 {{minuteEnd}}
                             </mat-option>
@@ -221,7 +221,7 @@
         <ng-template matStepLabel>Résultats</ng-template>
 
         <div class="row my-3 justify-content-around">
-            <div *ngFor="let room of roomList" class="col-3 mx-2 p-0 border">
+            <div *ngFor="let room of roomList" class="col-3 mx-2 p-0 border" (click)="onSelectRoom()">
                 <div class="img-salle">
 
                 </div>

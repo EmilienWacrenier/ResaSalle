@@ -1,5 +1,4 @@
-import { Room } from './classes/room';
-import * as moment from 'moment';
+/*import { Room } from './classes/room';
 
 export const ROOMS: Room[] = [
     {
@@ -8,7 +7,7 @@ export const ROOMS: Room[] = [
         area: "A",
         capacity: 4,
         reservations: [
-            /*{
+            {
                 
                 startDate: '2019-11-06T08:01:00',
                 endDate: '2019-11-06T09:02:00',
@@ -39,7 +38,7 @@ export const ROOMS: Room[] = [
                 object: "reunion",
                 user_id: 1,
                 room_id:1
-            },*/
+            },
             {
                 
                 startDate: '2019-11-25T14:00:00',
@@ -312,3 +311,4 @@ export const ROOMS: Room[] = [
         ]
     }
 ]
+*/

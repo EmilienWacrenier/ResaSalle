@@ -1,4 +1,5 @@
 import { ExecFileOptionsWithStringEncoding } from 'child_process';
+import { User } from './user';
 
 export class Booking {
     reservationId?: number;
@@ -6,7 +7,8 @@ export class Booking {
     endDate: string;
     object: string;
     state?: boolean;
-    user_id?: number;
+    userId: number;
     recurence_id?: number;
-    room_id?: number;
+    roomId: number;
+    users: User[];
 }

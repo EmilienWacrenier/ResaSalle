@@ -64,6 +64,13 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.onSelect(new Date());
+    this.selectedHourStart = moment().hour()+1;
+    this.selectedMinuteStart = 0;
+    this.selectedHourEnd = this.selectedHourStart +1;
+    this.selectedMinuteEnd = 0;
+    this.checkInput();
+    this.capacites = CAPACITE;
   }
 
   /*STEP1*/
@@ -111,10 +118,10 @@ export class SearchComponent implements OnInit {
     }
 
     //check si l'heure de début est entrée
-    if (!this.selectedHourStart || !this.selectedMinuteStart) { this.errorHourStart = "Veuillez entrer une heure" };
+    if (this.selectedHourStart==null || this.selectedMinuteStart==null) { this.errorHourStart = "Veuillez entrer une heure" };
 
     //check si l'heure de fin est entrée
-    if (!this.selectedHourEnd || !this.selectedMinuteEnd) { this.errorHourEnd = "Veuillez entrer une heure" };
+    if (this.selectedHourEnd==null || this.selectedMinuteEnd==null) { this.errorHourEnd = "Veuillez entrer une heure" };
 
     //check si une des heures ne dépasse pas 18h
     if (this.selectedHourStart == 18 && this.selectedMinuteStart == 30) { this.errorHourStart = "L'heure est incorrecte" }
@@ -205,7 +212,7 @@ export class SearchComponent implements OnInit {
     .set({hour:this.selectedHourEnd,minute:this.selectedMinuteEnd,second:0,millisecond:0})
     .format();
 
-    let capacity = this.choix[0];
+    let capacity = this.capacites[0];
 
     for(const element of this.choix){
       if(element < capacity){

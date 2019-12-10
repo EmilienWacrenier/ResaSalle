@@ -6,6 +6,7 @@ import * as moment from 'moment';
 
 import { BOOKING_HOURS, BOOKING_MINUTES } from '../../constantes/constantes'
 import { User } from '../../classes/user';
+import { Booking } from '../../classes/booking';
 
 import { UserService } from 'src/app/services/user.service';
 import { ReservationService } from '../../services/reservation.service'
@@ -34,6 +35,8 @@ export class BookingdetailsComponent implements OnInit {
   selectedHourEnd: number;
   selectedMinuteEnd: number;
   objet: string;
+
+
   errorObjet: string;
   errorHourStart: string;
   errorHourEnd: string;
@@ -57,14 +60,19 @@ export class BookingdetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    //récupération des infos de la salle selectionnée par rapport au component parent
     this.room = this.data.room;
+    //
     this.selectedDateFromPlanning = this.data.selectedDate;
+    //récupération des users en base
     this.getUsers();
+    //set les paramètres en fonction de la case cliquée sur le planning
     this.setParamsOnInit(this.data.day, this.data.hour);
   }
 
+  //set les paramètres en fonction de la case cliquée sur le planning
   setParamsOnInit(day, hour) {
-    this.selectedDate = new Date(moment().isoWeekday(day+1).format());
+    this.selectedDate = new Date(moment().isoWeekday(day + 1).format());
     console.log(this.selectedDate);
 
     if (hour % 2 == 0) {
@@ -77,11 +85,17 @@ export class BookingdetailsComponent implements OnInit {
     }
     else console.log("erreur au parametrage");
 
-    this.selectedHourEnd = this.selectedHourStart+1;
+    this.selectedHourEnd = this.selectedHourStart + 1;
     this.selectedMinuteEnd = this.selectedMinuteStart;
   }
 
-  //Appel à l'api
+  //quand on change la date
+  onSelectDate(event) {
+    this.selectedDate = event.value;
+    console.log(this.selectedDate);
+  }
+
+  //Appel à l'api pour avoir la liste des participants
   getUsers() {
     this.userService
       .getUsers()
@@ -95,6 +109,7 @@ export class BookingdetailsComponent implements OnInit {
       })
   }
 
+  //recherche de participants
   onKey(event) {
     let valueSearch = event.target.value.toLowerCase();
     console.log(valueSearch);
@@ -102,15 +117,6 @@ export class BookingdetailsComponent implements OnInit {
       user.firstName.toLowerCase().includes(valueSearch)
       || user.lastName.toLowerCase().includes(valueSearch)
     );
-  }
-
-  onKeyEnter(event) {
-    let valueEmail = event.target.value;
-    this.emailList.push(valueEmail);
-  }
-
-  removeEmail(email) {
-    this.emailList.splice(this.selectedParticipants.indexOf(email), 1);
   }
 
   //Affichage des vignettes
@@ -128,14 +134,29 @@ export class BookingdetailsComponent implements OnInit {
     }
   }
 
+  //ajout d'un email
+  onKeyEnter(event) {
+    let valueEmail = event.target.value;
+    this.emailList.push(valueEmail);
+  }
+
+  //supprimer un participant selectionné
   removeParticipant(user) {
     this.selectedParticipants.splice(this.selectedParticipants.indexOf(user), 1);
   }
 
-  resetParticipants() {
-    this.selectedParticipants = [];
+  //supprime un email ajouté
+  removeEmail(email) {
+    this.emailList.splice(this.selectedParticipants.indexOf(email), 1);
   }
 
+  //reset la liste des participants
+  resetParticipants() {
+    this.selectedParticipants = [];
+    this.emailList = [];
+  }
+
+  //au clic de la création de la réservation
   onSubmit() {
 
     this.errorObjet = null;
@@ -175,7 +196,7 @@ export class BookingdetailsComponent implements OnInit {
 
       console.log(participantIdList);
 
-      const reservation = {
+      let reservation = {
         startDate: startDate,
         endDate: endDate,
         object: this.objet,
@@ -190,9 +211,20 @@ export class BookingdetailsComponent implements OnInit {
       console.log('La réservation : ' + reservation.userId);
       console.log('La réservation : ' + reservation.roomId);
       console.log('La réservation : ' + reservation.users);
-      this.reservationService.createReservation(reservation);
-      this.bookingDetailsDialogRef.close(this.selectedDate);
+      this.createReservation(reservation);
     }
+  }
+
+  createReservation(reservation) {
+    this.reservationService.createReservation(reservation)
+      .subscribe(
+        (res) => {
+          console.log(res);
+        }, (error) => {
+          console.log('Erreur ! : ' + error.error['result']);
+          this.errorBase = error.error['result'];
+        }
+      );
   }
 
   errorCheck() {

@@ -22,22 +22,17 @@ export class ReservationService {
     this.user = JSON.parse(localStorage.getItem('user'));
   }
 
-  createReservation(reservation){
-    let error: string;
-    this.httpClient
+  createReservation(reservation):Observable<string>{
+    return this.httpClient
       .post<string>(this.cst.apiUrl + 'reservation/createReservation', reservation)
-      .subscribe(
-        (response) => {
-          var a = response['result'];
-          console.log(a);
-
-          this.toastr.success('Réservation créée !', this.cst.toastrTitle, this.cst.toastrOptions);
-        },
-        (error) => {
-          console.log('Erreur ! : ' + error.error['result']);
-          this.toastr.error(error.error['result'], this.cst.toastrTitle, this.cst.toastrOptions);
-        }
-      );
+      .pipe(
+        map((data: any) => {
+          console.log(data);
+          return data;
+        }), catchError( error => {
+          return error;
+        })
+      )
   }
 
 
