@@ -10,6 +10,7 @@ import { ToastrService, ToastRef } from 'ngx-toastr';
 import { ApiConstants } from '../../constantes/constantes';
 
 import * as moment from 'moment'
+import { EditBookingModel, EditBookingComponent } from 'src/app/modals/edit-booking/edit-booking.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -73,8 +74,18 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  editBooking(j) {
-    console.log(this.dataSource$[j]);
+  editBooking(booking) {
+    console.log(booking);
+    const dialogData = new EditBookingModel(booking);
+
+    const dialogRef = this.dialog.open(EditBookingComponent, {
+      width: '60vw',
+      height:'80vh',
+      data: dialogData
+    });
+    dialogRef.afterClosed().subscribe(
+      ()=> this.updateReservations() 
+    );
   }
 
   updateReservations() {
