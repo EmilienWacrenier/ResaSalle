@@ -134,23 +134,23 @@ export class BookingdetailsComponent implements OnInit {
     }
   }
 
-  //ajout d'un email
+  //ajout d'un email quand on presse entrée
   onKeyEnter(event) {
     let valueEmail = event.target.value;
     this.emailList.push(valueEmail);
   }
 
-  //supprimer un participant selectionné
+  //supprimer un participant selectionné au clic
   removeParticipant(user) {
     this.selectedParticipants.splice(this.selectedParticipants.indexOf(user), 1);
   }
 
-  //supprime un email ajouté
+  //supprime un email ajouté au clic
   removeEmail(email) {
     this.emailList.splice(this.selectedParticipants.indexOf(email), 1);
   }
 
-  //reset la liste des participants
+  //reset la liste des participants quand on clique sur le bouton reset
   resetParticipants() {
     this.selectedParticipants = [];
     this.emailList = [];
