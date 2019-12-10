@@ -68,7 +68,6 @@ export function tokenGetter() {
       config: {
         tokenGetter: tokenGetter,
         whitelistedDomains: ['http://localhost:3000']
-        //blacklistedRoutes: ['api.salombo.eu:41780/api/login']
       }
     }),
     HttpClientModule
@@ -79,7 +78,8 @@ export function tokenGetter() {
   entryComponents: [
     BookingcalendarComponent,
     BookingdetailsComponent,
-    DeleteConfirmationComponent
+    DeleteConfirmationComponent,
+    EditRoomComponent
   ]
 })
 export class AppModule { }

@@ -1,0 +1,52 @@
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="onNoClick()">&times;</button>
+<div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="icon-box">
+                <i class="material-icons deleteIcon" focusable="false">
+
+                    edit
+                </i>
+            </div>
+            <h4 class="modal-title">
+                Modifier une Salle
+            </h4>
+
+        </div>
+        <div class="modal-body">
+            <form class="example-form" [formGroup]="updateRoomForm">
+                <div class="row">
+                        <mat-form-field class="col-6" appearance="outline">
+                            <mat-label> Nom </mat-label>
+                            <input matInput formControlName="roomName" placeholder="Nom" required />
+                        </mat-form-field>
+
+                        <mat-form-field class=" col-6 f-right">
+                            <mat-label>Zone</mat-label>
+                            <mat-select matInput formControlName="roomArea" placeholder="Zone" required>
+                                <mat-option *ngFor="let area of areas" [value]="area">
+                                    {{area}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                </div>
+
+
+            </form>
+            <table class="example-full-width" cellspacing="0">
+                <tr>
+                    <td><span class="btn btn-capacity" (click)="decrementCapacity()">-</span></td>
+                    <td>
+                        <input matInput maxlength=2 numbersOnly class="form-control" (keyup)="checkRoomCapacityValue()"
+                            [(ngModel)]="updatedRoomCapacity" />
+                    </td>
+                    <td><span class="btn btn-capacity" (click)="incrementCapacity()">+</span></td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer" mat-dialog-actions>
+            <button type="button" class="btn btn-info" (click)="onNoClick()">Annuler</button>
+            <button type="button" class="btn btn-primary" (click)="editRoom()" cdkFocusInitial>Modifier</button>
+        </div>
+    </div>
+</div>

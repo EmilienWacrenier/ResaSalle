@@ -8,6 +8,7 @@ import { DeleteConfirmationComponent, ConfirmDeleteModel } from '../../modals/de
 import { RoomService } from 'src/app/services/room.service';
 import { ToastrService } from 'ngx-toastr';
 import { ApiConstants } from 'src/app/constantes/constantes';
+import { EditRoomModel, EditRoomComponent } from 'src/app/modals/edit-room/edit-room.component';
 
 @Component({
   selector: 'app-admin',
@@ -17,7 +18,6 @@ import { ApiConstants } from 'src/app/constantes/constantes';
 export class AdminComponent implements OnInit {
 
   createRoomForm: FormGroup;
-  //roomArea: FormControl;
   selectedArea: string;
   areas: string[] = ['A', 'B', 'C', 'D'];
 
@@ -40,7 +40,8 @@ export class AdminComponent implements OnInit {
   createRoom() {
     if (this.newRoomCapacity < 2 || this.newRoomCapacity > 10 || isNaN(this.newRoomCapacity)) {
       console.log('Capacité incorrecte')
-    } else {
+    }
+    else {
 
       const body = {
         name: this.createRoomForm.controls.roomName.value,
@@ -54,14 +55,13 @@ export class AdminComponent implements OnInit {
           this.updateRooms();
         },
         (error) => {
-          console.log('Erreur ! : ' + error.error['result']);
           this.toastr.error(error.error['result'], this.cst.toastrTitle, this.cst.toastrOptions);
         }
       );
     }
   }
 
-  deleteRoom(room){
+  deleteRoom(room) {
     const message = `Souhaitez-vous vraiment supprimer la salle ${room.name} ? \n La suppression entraînera l\'annulation de toutes les réservations associées`;
 
     const dialogData = new ConfirmDeleteModel(`Supprimer la salle ${room.name}`, message);
@@ -72,22 +72,13 @@ export class AdminComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Yes clicked');
-        console.log(room.roomId);
-        // DO SOMETHING
         this.roomService.deleteRoom(room.roomId).subscribe(
           (response) => {
-            var a = response['result'];
-            console.log('Result de remove :');
-            console.log(a);
             this.toastr.success(`Salle ${room.name} supprimée !`, this.cst.toastrTitle, this.cst.toastrOptions);
-
             this.updateRooms();
           },
           (error) => {
-            console.log('Erreur Suppression ! : ' + error.error['result']);
             this.toastr.error(error.error['result'], this.cst.toastrTitle, this.cst.toastrOptions);
-
             this.updateRooms();
           }
         );
@@ -100,10 +91,19 @@ export class AdminComponent implements OnInit {
     this.roomService.getRooms().subscribe(
       (response) => {
         this.dsRoom.data = (response['result']);
-        console.log(this.dsRoom.data)
       })
   }
-  editRoom(roomId) { }
+  editRoom(room) {
+    const dialogData = new EditRoomModel(room);
+
+    const dialogRef = this.dialog.open(EditRoomComponent, {
+      width: '400px',
+      data: dialogData
+    });
+    dialogRef.afterClosed().subscribe(
+      ()=> this.updateRooms() 
+    );
+  }
 
   incrementCapacity() {
     if (this.newRoomCapacity < 10)
