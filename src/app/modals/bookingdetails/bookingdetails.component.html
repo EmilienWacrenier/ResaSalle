@@ -71,7 +71,7 @@
         <div class="row justify-content-center my-2">
           <mat-dialog-actions>
             <button matButton class="mat-raised-button" (click)="onSubmit()">Créer la réservation</button>
-            <span class="d-block text-danger small p-1" *ngIf="errorBase">{{errorBase}}</span>
+            <span class="d-block text-danger small p-1" *ngIf="baseMessage">{{baseMessage}}</span>
           </mat-dialog-actions>
         </div>
       </div>
