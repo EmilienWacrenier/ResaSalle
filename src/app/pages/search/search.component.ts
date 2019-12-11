@@ -38,6 +38,9 @@ export class SearchComponent implements OnInit {
   selectedMinuteStart: number;
   selectedHourEnd: number;
   selectedMinuteEnd: number;
+  startDate: string;
+  endDate: string;
+  capacity: number;
   //**********************RECURRENCE*************************
   selectedEndDate;
   selectedRecurrence: string;
@@ -151,6 +154,7 @@ export class SearchComponent implements OnInit {
     else return false;
   }
   
+  /* STEP RECURRENCE */
   checkInputRecurrence() {
     this.errorEndDate = null;
     this.errorMensualite = null;
@@ -190,7 +194,7 @@ export class SearchComponent implements OnInit {
     else return false;
   }
 
-  
+  /* STEP CAPACITE */
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -203,33 +207,37 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  getRoomsAvailable(){
-    let startDate = moment(this.selectedStartDate)
+  setParameters(){
+    this.startDate = moment(this.selectedStartDate)
     .set({hour:this.selectedHourStart,minute:this.selectedMinuteStart,second:0,millisecond:0})
     .format();
 
-    let endDate = moment(this.selectedEndDate)
+    this.endDate = moment(this.selectedEndDate)
     .set({hour:this.selectedHourEnd,minute:this.selectedMinuteEnd,second:0,millisecond:0})
     .format();
 
-    let capacity = this.capacites[0];
+    this.capacity = this.capacites[0];
 
     for(const element of this.choix){
-      if(element < capacity){
-        capacity = element;
+      if(element < this.capacity){
+        this.capacity = element;
       }
     }
 
     console.log(this.choix);
-    console.log(capacity);
-    console.log(startDate);
-    console.log(endDate);
+    console.log(this.capacity);
+    console.log(this.startDate);
+    console.log(this.endDate);
 
     if(this.recurrenceIsChecked){
       console.log(this.selectedRecurrence);
       console.log(this.selectedEndDate);
     }
 
+    this.getRoomsAvailable(this.capacity, this.startDate, this.endDate);
+  }
+
+  getRoomsAvailable(capacity, startDate, endDate){
     this.roomService
     .getAvailableRooms(capacity, startDate, endDate)
     .subscribe(data => {
@@ -237,6 +245,14 @@ export class SearchComponent implements OnInit {
       console.log(this.roomList)
     })
   }
+
+  onSelectRoom(){
+
+    /*if( resa true) { on va vers le componenent de reglage }
+    if(pas resa) { ouvre modale de participant }*/
+    
+  }
+
 
 
 }
