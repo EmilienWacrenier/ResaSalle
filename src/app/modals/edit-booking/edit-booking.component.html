@@ -1,7 +1,7 @@
 <div class="container-fluid" id="createReservation">
 
         <div class="row justify-content-center mb-2 p-2 rounded align-items-center">
-          <h4 class="titre m-0" style="color:#0066a1">Création d'une réservation | Salle {{room.name}}</h4>
+          <h4 class="titre m-0" style="color:#0066a1">Modification d'une réservation | Salle {{room.name}}</h4>
         </div>
       
         <div class="row justify-content-center align-items-start">
@@ -70,7 +70,7 @@
       
               <div class="row justify-content-center my-2">
                 <mat-dialog-actions>
-                  <button matButton class="mat-raised-button" (click)="onSubmit()">Créer la réservation</button>
+                  <button matButton class="mat-raised-button" (click)="onSubmit()">Modifier la réservation</button>
                   <span class="d-block text-danger small p-1" *ngIf="errorBase">{{errorBase}}</span>
                 </mat-dialog-actions>
               </div>

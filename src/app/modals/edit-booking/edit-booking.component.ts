@@ -10,6 +10,8 @@ import { Booking } from '../../classes/booking';
 
 import { UserService } from 'src/app/services/user.service';
 import { ReservationService } from '../../services/reservation.service'
+import { Room } from 'src/app/classes/room';
+import { format } from 'url';
 
 @Component({
   selector: 'app-edit-booking',
@@ -52,38 +54,28 @@ export class EditBookingComponent implements OnInit {
     private userService: UserService,
     private reservationService: ReservationService,
     public bookingDetailsDialogRef: MatDialogRef<EditBookingComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: EditBookingModel) {
     this.currentUser = JSON.parse(localStorage.getItem('user'));
   }
 
   ngOnInit() {
     //récupération des infos de la salle selectionnée par rapport au component parent
-    this.room = this.data.room;
-    //
-    this.selectedDateFromPlanning = this.data.selectedDate;
+    this.room = this.data.bookingToEdit.room.name;
+    ////this.selectedDateFromPlanning = this.data.selectedDate;
     //récupération des users en base
     this.getUsers();
     //set les paramètres en fonction de la case cliquée sur le planning
-    this.setParamsOnInit(this.data.day, this.data.hour);
+    this.setParamsOnInit();
   }
 
   //set les paramètres en fonction de la case cliquée sur le planning
-  setParamsOnInit(day, hour) {
-    this.selectedDate = new Date(moment().isoWeekday(day + 1).format());
-    console.log(this.selectedDate);
-
-    if (hour % 2 == 0) {
-      this.selectedHourStart = this.bookingHours[hour / 2];
-      this.selectedMinuteStart = this.bookingMinutes[0];
-    }
-    else if (hour % 2 == 1) {
-      this.selectedHourStart = this.bookingHours[(hour - 1) / 2];
-      this.selectedMinuteStart = this.bookingMinutes[1];
-    }
-    else console.log("erreur au parametrage");
-
-    this.selectedHourEnd = this.selectedHourStart + 1;
-    this.selectedMinuteEnd = this.selectedMinuteStart;
+  setParamsOnInit() {
+    this.objet = this.data.bookingToEdit.object;
+    this.selectedDate = new Date(moment(this.data.bookingToEdit.startDate).format('dddd DD MM'));
+    this.selectedHourStart = moment(this.data.bookingToEdit.startDate).get('hour');
+    this.selectedMinuteStart = moment(this.data.bookingToEdit.startDate).get('minute');
+    this.selectedHourEnd = moment(this.data.bookingToEdit.endDate).get('hour');
+    this.selectedMinuteEnd = moment(this.data.bookingToEdit.endDate).get('minute');
   }
 
   //quand on change la date
