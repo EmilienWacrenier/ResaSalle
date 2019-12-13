@@ -1,4 +1,4 @@
-<mat-horizontal-stepper class="stepper" [linear]="true" #stepper>
+<mat-horizontal-stepper class="stepper" [linear]="true" #stepper >
     <!-- Stepper phase 1 selection du jour et heure -->
     <mat-step [completed]="datasAreGood">
 
@@ -95,14 +95,15 @@
                 <button class="bouton-back-next" mat-button matStepperNext [disabled]="!datasAreGood">Suivant</button>
             </div>
 
+            <!-- Toggle de la recurrence
             <div class="col">
                 <div>
-                    <!-- Toggle de la recurrence -->
+                    
                     <mat-slide-toggle (change)="recurrenceIsChecked = !recurrenceIsChecked">
                         Activer la récurrence ?
                     </mat-slide-toggle>
                 </div>
-            </div>
+            </div> -->
         </div>
     </mat-step>
 

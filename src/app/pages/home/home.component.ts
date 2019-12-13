@@ -104,14 +104,14 @@ export class HomeComponent implements OnInit {
     if(hoursDebut < 13 && this.itsMorning) {
       //début = 8h donc 8h = 480minutes
       startMinutes = 480;
-      if(hoursFin > 13){ totalHoursFin = 780; }
+      if(hoursFin >= 13){ totalHoursFin = 780; }
     }
     //début l'aprem et fin l'aprem
     else if (hoursDebut >= 13 && !this.itsMorning) {
       //début = 13h donc 13h = 780minutes
       startMinutes = 780;
     }
-    else if(hoursDebut < 13 && hoursFin > 13 && !this.itsMorning ){
+    else if(hoursDebut < 13 && hoursFin >= 13 && !this.itsMorning ){
       //début = 13h donc 13h = 780minutes
       startMinutes = 780;
       totalHoursDebut = 780;

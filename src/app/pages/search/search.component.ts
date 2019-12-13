@@ -33,11 +33,16 @@ export class SearchComponent implements OnInit {
   capacites: number[] = CAPACITE;
   choix: number[] = [];
 
+  capacites2:number[] = CAPACITE;
+
   selectedStartDate: Date;
   selectedHourStart: number;
   selectedMinuteStart: number;
   selectedHourEnd: number;
   selectedMinuteEnd: number;
+  startDate: string;
+  endDate: string;
+  capacity: number;
   //**********************RECURRENCE*************************
   selectedEndDate;
   selectedRecurrence: string;
@@ -69,13 +74,12 @@ export class SearchComponent implements OnInit {
     this.selectedHourEnd = this.selectedHourStart +1;
     this.selectedMinuteEnd = 0;
     this.checkInput();
-    this.capacites = CAPACITE;
+    console.log(this.capacites);
   }
 
   /*STEP1*/
 
   onSelect(event) {
-    console.log(event);
     this.selectedStartDate = event;
     this.selectedDateDisplay = moment(this.selectedStartDate).format("DD MMMM YYYY");
   }
@@ -150,6 +154,7 @@ export class SearchComponent implements OnInit {
     else return false;
   }
   
+  /* STEP RECURRENCE */
   checkInputRecurrence() {
     this.errorEndDate = null;
     this.errorMensualite = null;
@@ -189,7 +194,7 @@ export class SearchComponent implements OnInit {
     else return false;
   }
 
-  
+  /* STEP CAPACITE */
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -202,40 +207,59 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  getRoomsAvailable(){
-    let startDate = moment(this.selectedStartDate)
+  setParameters(){
+    this.startDate = "";
+    this.endDate = "";
+    this.capacity = null;
+
+    this.startDate = moment(this.selectedStartDate)
     .set({hour:this.selectedHourStart,minute:this.selectedMinuteStart,second:0,millisecond:0})
     .format();
 
-    let endDate = moment(this.selectedEndDate)
+    this.endDate = moment(this.selectedEndDate)
     .set({hour:this.selectedHourEnd,minute:this.selectedMinuteEnd,second:0,millisecond:0})
     .format();
 
-    let capacity = this.capacites[0];
+    if(this.choix.length != 0) {
+      console.log(this.capacity);
+      this.capacity = this.capacites[this.capacites.length-1];
+      console.log(this.capacity);
 
-    for(const element of this.choix){
-      if(element < capacity){
-        capacity = element;
+      for(const element of this.choix){
+        if(element < this.capacity) { 
+          this.capacity = element;
+        }
       }
     }
-
-    console.log(this.choix);
-    console.log(capacity);
-    console.log(startDate);
-    console.log(endDate);
+    else if(this.choix.length == 0){
+      this.capacity = this.capacites[0];
+    }
+    console.log("choix = " + this.choix);
+    console.log("capacity = " + this.capacity);
 
     if(this.recurrenceIsChecked){
       console.log(this.selectedRecurrence);
       console.log(this.selectedEndDate);
     }
+  }
+
+  getRoomsAvailable(){
+    this.setParameters();
+    console.log()
 
     this.roomService
-    .getAvailableRooms(capacity, startDate, endDate)
+    .getAvailableRooms(this.capacity, this.startDate, this.endDate)
     .subscribe(data => {
       this.roomList = data['result'];
       console.log(this.roomList)
     })
   }
 
+  onSelectRoom(){
+
+    /*if( resa true) { on va vers le componenent de reglage }
+    if(pas resa) { ouvre modale de participant }*/
+    
+  }
 
 }

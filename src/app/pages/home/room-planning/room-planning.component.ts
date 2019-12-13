@@ -59,13 +59,11 @@ export class RoomPlanningComponent implements OnInit {
     //récupération des salles en base
     this.homeService.getRooms().subscribe( res => {
       this.rooms = res;
-      console.log(this.rooms);
 
       for(const room of this.rooms){
         //recuperation des infos de la salle cliqué pour l'initiation
         if( room.roomId == +this.route.snapshot.paramMap.get('id')) {
           this.selectedRoom = room;
-          console.log(room);
         }
       }
       //date d'aujourd'hui
@@ -76,7 +74,6 @@ export class RoomPlanningComponent implements OnInit {
   }
 
   onSelectRoom(){
-    console.log(this.selectedRoom);
     this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
   }
 
@@ -87,9 +84,6 @@ export class RoomPlanningComponent implements OnInit {
   }
 
   getPlanning(roomId, selectedDate){
-    console.log('selected day : ');
-    console.log(selectedDate);
-
     //recupère les jours de la semaine pour le header
     this.weekDays = this.getDaysOfThisWeek(selectedDate);
 
@@ -226,7 +220,7 @@ export class RoomPlanningComponent implements OnInit {
     this.dialog.open(BookingdetailsComponent, bookingDetailsDialogConfig)
       .afterClosed().subscribe((data) => {
         console.log(data);
-        this.getPlanning(this.room.roomId, data);
+        this.getPlanning(data.roomId, data.selectedDate);
       });
   }
 

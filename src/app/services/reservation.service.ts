@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 
-import { ToastrService, ToastRef } from 'ngx-toastr';
-import { ApiConstants } from '../constantes/constantes';
 import { Booking } from '../classes/booking';
-import { Room } from '../classes/room';
-
+import { ApiConstants } from '../constantes/constantes';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -18,7 +15,7 @@ export class ReservationService {
   dashboardDataSource = [];
   protected user;
 
-  constructor(private httpClient: HttpClient, private cst: ApiConstants, private toastr: ToastrService) {
+  constructor(private httpClient: HttpClient, private cst: ApiConstants) {
     this.user = JSON.parse(localStorage.getItem('user'));
   }
 
@@ -26,13 +23,8 @@ export class ReservationService {
     return this.httpClient
       .post<string>(this.cst.apiUrl + 'reservation/createReservation', reservation)
       .pipe(
-        map((data: any) => {
-          console.log(data);
-          return data;
-        }), catchError( error => {
-          return error;
-        })
-      )
+        catchError(this.handleError)
+      );
   }
 
 
@@ -80,17 +72,8 @@ export class ReservationService {
   }
 
   // Error handling 
-  errorMgmt(error: HttpErrorResponse) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.log(errorMessage);
-    return throwError(errorMessage);
+  handleError(error: HttpErrorResponse) {
+    return throwError(error.error["result"]);
   }
 
 }

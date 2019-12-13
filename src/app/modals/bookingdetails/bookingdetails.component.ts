@@ -41,7 +41,7 @@ export class BookingdetailsComponent implements OnInit {
   errorHourStart: string;
   errorHourEnd: string;
   errorDate: string;
-  errorBase: string;
+  baseMessage: string;
 
   users: User[]
   usersList;
@@ -62,8 +62,6 @@ export class BookingdetailsComponent implements OnInit {
   ngOnInit() {
     //récupération des infos de la salle selectionnée par rapport au component parent
     this.room = this.data.room;
-    //
-    this.selectedDateFromPlanning = this.data.selectedDate;
     //récupération des users en base
     this.getUsers();
     //set les paramètres en fonction de la case cliquée sur le planning
@@ -166,7 +164,6 @@ export class BookingdetailsComponent implements OnInit {
     this.errorHourStart = null;
     this.errorHourEnd = null;
     this.errorDate = null;
-    this.errorBase = null;
 
     if (!this.objet
       || !this.selectedDate
@@ -214,6 +211,8 @@ export class BookingdetailsComponent implements OnInit {
       console.log('La réservation : ' + reservation.userId);
       console.log('La réservation : ' + reservation.roomId);
       console.log('La réservation : ' + reservation.users);
+      //this.createReservation(reservation);
+
       this.createReservation(reservation);
     }
   }
@@ -221,11 +220,19 @@ export class BookingdetailsComponent implements OnInit {
   createReservation(reservation) {
     this.reservationService.createReservation(reservation)
       .subscribe(
-        (res) => {
-          console.log(res);
+        () => {
+          this.baseMessage = "Réservation créée";
+          //data à renvoyer dans le component parent (planning)
+          let data = { 
+            roomId: this.data.room.roomId,
+            selectedDate: this.selectedDate
+          }
+          
+          setTimeout( () => this.bookingDetailsDialogRef.close(data), 2000 );
         }, (error) => {
-          console.log('Erreur ! : ' + error.error['result']);
-          this.errorBase = error.error['result'];
+          console.log(error);
+          this.baseMessage = error;
+          console.log(this.baseMessage);
         }
       );
   }
