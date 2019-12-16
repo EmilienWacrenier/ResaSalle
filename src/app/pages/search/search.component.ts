@@ -48,12 +48,8 @@ export class SearchComponent implements OnInit {
   //**********************RECURRENCE*************************
   selectedEndDate;
   selectedRecurrence: string;
-<<<<<<< HEAD
-  
   roomParameters: any;
 
-=======
->>>>>>> 041e1a1b9e91fe63c33fd391982c2263ec23226c
   //controle
   errorHourStart: string;
   errorHourEnd: string;
@@ -227,7 +223,6 @@ export class SearchComponent implements OnInit {
     .set({hour:this.selectedHourEnd,minute:this.selectedMinuteEnd,second:0,millisecond:0})
     .format();
 
-<<<<<<< HEAD
     if(this.choix.length != 0) {
       console.log(this.capacity);
       this.capacity = this.capacites[this.capacites.length-1];
@@ -237,12 +232,6 @@ export class SearchComponent implements OnInit {
         if(element < this.capacity) {
           this.capacity = element;
         }
-=======
-    for(const element of this.choix){
-      this.capacity = this.choix[0];
-      if(element < this.capacity){
-        this.capacity = element;
->>>>>>> c3f634e1ccd4291f8dfb683ecefd9a88eac62fb4
       }
     }
 
