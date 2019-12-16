@@ -17,3 +17,17 @@
   max-height: 30vh;
   overflow-y: scroll;
 }
+
+.close_button {
+  float: right;
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  appearance: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+}

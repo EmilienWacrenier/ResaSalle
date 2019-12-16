@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   constructor(
-    private httpClient: HttpClient, 
-    private cst: ApiConstants, 
+    private httpClient: HttpClient,
+    private cst: ApiConstants,
     private toastr: ToastrService,
     private router: Router,
     ) { }
@@ -52,6 +52,4 @@ export class AuthService {
       }
     );
   }
-
-
 }

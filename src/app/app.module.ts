@@ -30,6 +30,7 @@ import { DeleteConfirmationComponent } from './modals/delete-confirmation/delete
 import { AdminComponent } from './pages/admin/admin.component';
 import { EditRoomComponent } from './modals/edit-room/edit-room.component';
 import { EditBookingComponent } from './modals/edit-booking/edit-booking.component';
+import { ConfirmComponent } from './pages/confirm/confirm.component';
 
 
 export function tokenGetter() {
@@ -52,7 +53,8 @@ export function tokenGetter() {
     DeleteConfirmationComponent,
     AdminComponent,
     EditRoomComponent,
-    EditBookingComponent
+    EditBookingComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,

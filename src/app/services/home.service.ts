@@ -18,7 +18,7 @@ export class HomeService {
   constructor(private httpClient: HttpClient, private cst: ApiConstants, private toastr: ToastrService) { }
 
   getRooms(): Observable<Room[]> {
-    
+
     const param = new HttpParams().set('startDate', moment().format('YYYY-MM-DD'));
     return this.httpClient
       .get<Room[]>(this.cst.apiUrl + 'reservation/reservationsByDay', { params: param }).pipe(

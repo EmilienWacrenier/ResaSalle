@@ -85,25 +85,21 @@
                         </div>
                     </div>
                 </div>
-                
-                
             </div>
         </div>
 
+        <!-- Toggle de la recurrence -->
+        <div class="col">
+            <div>
+                <mat-slide-toggle (change)="recurrenceIsChecked = !recurrenceIsChecked">
+                    Activer la récurrence ?
+                </mat-slide-toggle>
+            </div>
+        </div>
         <div class="row">
-            <div class="col">
+            <div class="col-12">
                 <button class="bouton-back-next" mat-button matStepperNext [disabled]="!datasAreGood">Suivant</button>
             </div>
-
-            <!-- Toggle de la recurrence
-            <div class="col">
-                <div>
-                    
-                    <mat-slide-toggle (change)="recurrenceIsChecked = !recurrenceIsChecked">
-                        Activer la récurrence ?
-                    </mat-slide-toggle>
-                </div>
-            </div> -->
         </div>
     </mat-step>
 
@@ -213,8 +209,8 @@
 
         <div class="row">
             <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
-            <button class="bouton-back-next" mat-button (click)="getRoomsAvailable()" matStepperNext>Chercher les salles disponibles</button>
         </div>
+        <button class="bouton-back-next" style="float: right;" mat-button (click)="getRoomsAvailable()" matStepperNext>Chercher les salles disponibles</button>
     </mat-step>
 
     <!-- Résultats -->

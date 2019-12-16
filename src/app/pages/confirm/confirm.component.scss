@@ -1,0 +1,28 @@
+  .content_center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
+  }
+
+  .content_center mat-card {
+    width: 45em;
+    padding: 1.1em 0 1.1em 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.5em;
+    border: 1px solid rgb(28, 71, 151);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .content_center mat-card button {
+    margin-top: 3em;
+    text-align: center;
+    background: rgb(28, 71, 151);
+  }
+
+#bouton_retour {
+    color: white;;
+}

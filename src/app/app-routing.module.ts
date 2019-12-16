@@ -8,13 +8,12 @@ import { SearchComponent } from './pages/search/search.component';
 import { HomeComponent } from './pages/home/home.component';
 import { RoomPlanningComponent } from './pages/home/room-planning/room-planning.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { ConfirmComponent } from './pages/confirm/confirm.component';
 
 
 const routes: Routes = [
-  {
-    path: 'login',
-    component: AuthlayoutComponent
-  },
+  { path: 'login',component: AuthlayoutComponent },
+  { path: 'confirm', component: ConfirmComponent },
  {
     path: '',
     component: UserlayoutComponent,

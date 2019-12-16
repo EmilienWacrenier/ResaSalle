@@ -1,16 +1,17 @@
+<button type="button" class="close_button" data-dismiss="modal" aria-hidden="true" (click)="onNoClick()">&times;</button>
 <div class="container-fluid" id="createReservation">
 
         <div class="row justify-content-center mb-2 p-2 rounded align-items-center">
           <h4 class="titre m-0" style="color:#0066a1">Modification d'une réservation | Salle {{room.name}}</h4>
         </div>
-      
+
         <div class="row justify-content-center align-items-start">
           <div class="col-6 pl-0">
             <div class="container-fluid">
               <div class="row justify-content-center border rounded p-2">
                 <div class="col-6">
                   <mat-form-field class="w-100">
-                    <input matInput autocomplete="off" placeholder="Objet" [(ngModel)]="objet">
+                    <input matInput autocomplete="off" placeholder="Objet" [(ngModel)]="objet" autofocus>
                   </mat-form-field>
                   <span class="d-block text-danger small" *ngIf="errorObjet">{{errorObjet}}</span>
                 </div>

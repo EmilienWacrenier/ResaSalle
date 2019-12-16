@@ -39,8 +39,8 @@
                         <tr>
                             <td><span class="btn btn-primary" (click)="decrementCapacity()">-</span></td>
                             <td>
-                                <input matInput maxlength=2 numbersOnly class="form-control"
-                                    (keyup)="checkRoomCapacityValue()" [(ngModel)]="newRoomCapacity" />
+                                <input maxlength=2 numbersOnly class="form-control centralCapacity"
+                                    (keyup)="checkRoomCapacityValue()" [(ngModel)]="newRoomCapacity"/>
                             </td>
                             <td><span class="btn btn-primary" (click)="incrementCapacity()">+</span></td>
                         </tr>

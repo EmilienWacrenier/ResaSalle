@@ -15,10 +15,6 @@ h5{
     margin: 20px 0;
 }
 
-.bg-blue{
-  /*background-color: rgb(115, 154, 224);*/
-}
-
 .calendrier{
   background-color: white;
   max-width: 300px;
@@ -35,6 +31,7 @@ h5{
 
 .bouton-back-next{
     margin-right: 10px ;
+    float: right;
     color: rgb(115, 154, 224);
     border: 1px solid rgb(115, 154, 224);
 }

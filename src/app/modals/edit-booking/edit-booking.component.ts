@@ -68,6 +68,9 @@ export class EditBookingComponent implements OnInit {
     this.setParamsOnInit();
   }
 
+  onNoClick(): void {
+    this.bookingDetailsDialogRef.close();
+  }
   //set les paramètres en fonction de la case cliquée sur le planning
   setParamsOnInit() {
     this.objet = this.data.bookingToEdit.object;

@@ -45,7 +45,7 @@ export class ReservationService {
           console.log('Result de remove :');
           console.log(a);
           this.toastr.success('Réservation supprimée !', this.cst.toastrTitle, this.cst.toastrOptions);
-          
+
         },
         (error) => {
           console.log('Erreur Suppression ! : ' + error.error['result']);
@@ -53,7 +53,7 @@ export class ReservationService {
         }
       );*/
       return this.httpClient.delete(this.cst.apiUrl + 'reservation/deleteReservation', { params: param });
-      
+
   }
 
   getReservationsOfThisWeek(room_id: number, startDate, endDate) {
@@ -71,7 +71,7 @@ export class ReservationService {
         { params: params });
   }
 
-  // Error handling 
+  // Error handling
   handleError(error: HttpErrorResponse) {
     return throwError(error.error["result"]);
   }

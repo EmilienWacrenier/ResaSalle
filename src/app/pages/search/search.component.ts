@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import * as moment from 'moment'
 
-import { 
-  RECURRENCE, 
-  NUMERO_SEMAINE, 
-  JOUR_SEMAINE, 
-  CAPACITE, 
-  BOOKING_HOURS, 
+import {
+  RECURRENCE,
+  NUMERO_SEMAINE,
+  JOUR_SEMAINE,
+  CAPACITE,
+  BOOKING_HOURS,
   BOOKING_MINUTES } from "../../constantes/constantes";
 import { RoomService } from 'src/app/services/room.service';
 
@@ -110,7 +110,7 @@ export class SearchComponent implements OnInit {
       console.log(this.datasAreGood);
     }
   }
-  
+
   errorCheck() {
     //check si la date est selectionnée
     if (!this.selectedStartDate) { this.errorDate = "Veuillez renseigner une date" };
@@ -148,12 +148,12 @@ export class SearchComponent implements OnInit {
     if (startingHour >= endingHour) { return true; }
     else return false;
   }
-  
+
   isReccurent(){
     if (this.recurrenceIsChecked) { return true;}
     else return false;
   }
-  
+
   /* STEP RECURRENCE */
   checkInputRecurrence() {
     this.errorEndDate = null;
@@ -226,7 +226,7 @@ export class SearchComponent implements OnInit {
       console.log(this.capacity);
 
       for(const element of this.choix){
-        if(element < this.capacity) { 
+        if(element < this.capacity) {
           this.capacity = element;
         }
       }
@@ -259,7 +259,7 @@ export class SearchComponent implements OnInit {
 
     /*if( resa true) { on va vers le componenent de reglage }
     if(pas resa) { ouvre modale de participant }*/
-    
+
   }
 
 }
