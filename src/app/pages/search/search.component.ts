@@ -10,6 +10,10 @@ import {
   BOOKING_HOURS,
   BOOKING_MINUTES } from "../../constantes/constantes";
 import { RoomService } from 'src/app/services/room.service';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { BookingsearchComponent } from 'src/app/modals/bookingsearch/bookingsearch.component';
+import { Booking } from 'src/app/classes/booking';
+import { Room } from 'src/app/classes/room';
 
 
 @Component({
@@ -33,8 +37,6 @@ export class SearchComponent implements OnInit {
   capacites: number[] = CAPACITE;
   choix: number[] = [];
 
-  capacites2:number[] = CAPACITE;
-
   selectedStartDate: Date;
   selectedHourStart: number;
   selectedMinuteStart: number;
@@ -46,6 +48,12 @@ export class SearchComponent implements OnInit {
   //**********************RECURRENCE*************************
   selectedEndDate;
   selectedRecurrence: string;
+<<<<<<< HEAD
+  
+  roomParameters: any;
+
+=======
+>>>>>>> 041e1a1b9e91fe63c33fd391982c2263ec23226c
   //controle
   errorHourStart: string;
   errorHourEnd: string;
@@ -63,9 +71,7 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private roomService: RoomService,
-  ) {
-      //this.onSelect(this.startDate);
-  }
+    public dialog: MatDialog){}
 
   ngOnInit() {
     this.onSelect(new Date());
@@ -75,6 +81,7 @@ export class SearchComponent implements OnInit {
     this.selectedMinuteEnd = 0;
     this.checkInput();
     console.log(this.capacites);
+    this.capacites = CAPACITE;
   }
 
   /*STEP1*/
@@ -220,6 +227,7 @@ export class SearchComponent implements OnInit {
     .set({hour:this.selectedHourEnd,minute:this.selectedMinuteEnd,second:0,millisecond:0})
     .format();
 
+<<<<<<< HEAD
     if(this.choix.length != 0) {
       console.log(this.capacity);
       this.capacity = this.capacites[this.capacites.length-1];
@@ -229,18 +237,30 @@ export class SearchComponent implements OnInit {
         if(element < this.capacity) {
           this.capacity = element;
         }
+=======
+    for(const element of this.choix){
+      this.capacity = this.choix[0];
+      if(element < this.capacity){
+        this.capacity = element;
+>>>>>>> c3f634e1ccd4291f8dfb683ecefd9a88eac62fb4
       }
     }
-    else if(this.choix.length == 0){
+
+    if(this.choix.length == 0){
       this.capacity = this.capacites[0];
     }
-    console.log("choix = " + this.choix);
-    console.log("capacity = " + this.capacity);
 
     if(this.recurrenceIsChecked){
       console.log(this.selectedRecurrence);
       console.log(this.selectedEndDate);
     }
+
+    this.roomParameters = {
+      startDate: this.startDate,
+      endDate: this.endDate,
+      capacity: this.capacity
+    }
+    console.log(this.roomParameters);
   }
 
   getRoomsAvailable(){
@@ -260,6 +280,24 @@ export class SearchComponent implements OnInit {
     /*if( resa true) { on va vers le componenent de reglage }
     if(pas resa) { ouvre modale de participant }*/
 
+  }
+
+  //fermeture de la modale avec DialogRef
+  openDialog(room) {
+    //config et ouverture de la 2eme test_modaleconst bookingCalendarDialogConfig = new MatDialogConfig();
+    const bookingsearchDialogConfig = new MatDialogConfig();
+    bookingsearchDialogConfig.width = "60vw";
+    bookingsearchDialogConfig.height = "80vh";
+    bookingsearchDialogConfig.data = { 
+      room: room,
+      startDate: this.startDate,
+      endDate: this.endDate
+    };
+
+    this.dialog.open(BookingsearchComponent, bookingsearchDialogConfig)
+      .afterClosed().subscribe((data) => {
+        console.log(data);
+      });
   }
 
 }
