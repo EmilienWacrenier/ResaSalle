@@ -221,8 +221,8 @@
     <mat-step>
         <ng-template matStepLabel>Résultats</ng-template>
 
-        <div class="row my-3 justify-content-around">
-            <div *ngFor="let room of roomList" class="col-3 mx-2 p-0 border" (click)="onSelectRoom()">
+        <div class="row my-3">
+            <div *ngFor="let room of roomList" class="col w-25 m-2 p-0 border" (click)="openDialog(room)">
                 <div class="img-salle">
 
                 </div>

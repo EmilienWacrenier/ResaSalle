@@ -60,6 +60,7 @@ export class BookingdetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.currentUser);
     //récupération des infos de la salle selectionnée par rapport au component parent
     this.room = this.data.room;
     //récupération des users en base

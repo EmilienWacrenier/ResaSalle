@@ -71,11 +71,12 @@ export class EditBookingComponent implements OnInit {
   //set les paramètres en fonction de la case cliquée sur le planning
   setParamsOnInit() {
     this.objet = this.data.bookingToEdit.object;
-    this.selectedDate = new Date(moment(this.data.bookingToEdit.startDate).format('dddd DD MM'));
+    this.selectedDate = new Date(moment(this.data.bookingToEdit.startDate).format());
     this.selectedHourStart = moment(this.data.bookingToEdit.startDate).get('hour');
     this.selectedMinuteStart = moment(this.data.bookingToEdit.startDate).get('minute');
     this.selectedHourEnd = moment(this.data.bookingToEdit.endDate).get('hour');
     this.selectedMinuteEnd = moment(this.data.bookingToEdit.endDate).get('minute');
+    this.selectedParticipants = this.data.bookingToEdit.participants;
   }
 
   //quand on change la date
@@ -256,5 +257,5 @@ export class EditBookingComponent implements OnInit {
 
 
 export class EditBookingModel {
-  constructor(public bookingToEdit: Booking) { }
+  constructor(public bookingToEdit: any) { }
 }

@@ -30,6 +30,7 @@ import { DeleteConfirmationComponent } from './modals/delete-confirmation/delete
 import { AdminComponent } from './pages/admin/admin.component';
 import { EditRoomComponent } from './modals/edit-room/edit-room.component';
 import { EditBookingComponent } from './modals/edit-booking/edit-booking.component';
+import { BookingsearchComponent } from './modals/bookingsearch/bookingsearch.component';
 
 
 export function tokenGetter() {
@@ -52,7 +53,8 @@ export function tokenGetter() {
     DeleteConfirmationComponent,
     AdminComponent,
     EditRoomComponent,
-    EditBookingComponent
+    EditBookingComponent,
+    BookingsearchComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +84,8 @@ export function tokenGetter() {
     BookingdetailsComponent,
     DeleteConfirmationComponent,
     EditRoomComponent,
-    EditBookingComponent
+    EditBookingComponent,
+    BookingsearchComponent
   ]
 })
 export class AppModule { }
