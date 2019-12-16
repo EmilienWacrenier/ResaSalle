@@ -48,9 +48,12 @@ export class SearchComponent implements OnInit {
   //**********************RECURRENCE*************************
   selectedEndDate;
   selectedRecurrence: string;
+<<<<<<< HEAD
   
   roomParameters: any;
 
+=======
+>>>>>>> 041e1a1b9e91fe63c33fd391982c2263ec23226c
   //controle
   errorHourStart: string;
   errorHourEnd: string;
@@ -61,7 +64,7 @@ export class SearchComponent implements OnInit {
   datasRecurrenceAreGood = false
 
   //variable pour le slide toggle pour activer la récurrence ou non
-  recurrenceIsChecked = false;  
+  recurrenceIsChecked = false;
 
   //liste des salles (reponse)
   roomList = []

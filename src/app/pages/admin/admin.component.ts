@@ -38,7 +38,7 @@ export class AdminComponent implements OnInit {
   }
 
   createRoom() {
-    if (this.newRoomCapacity < 2 || this.newRoomCapacity > 10 || isNaN(this.newRoomCapacity)) {
+    if (this.newRoomCapacity < 4 || this.newRoomCapacity > 10 || isNaN(this.newRoomCapacity)) {
       console.log('Capacité incorrecte')
     }
     else {

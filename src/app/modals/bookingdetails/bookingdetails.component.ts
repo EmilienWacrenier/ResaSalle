@@ -69,6 +69,9 @@ export class BookingdetailsComponent implements OnInit {
     this.setParamsOnInit(this.data.day, this.data.hour);
   }
 
+  onNoClick(): void {
+    this.bookingDetailsDialogRef.close();
+  }
   //set les paramètres en fonction de la case cliquée sur le planning
   setParamsOnInit(day, hour) {
     this.selectedDate = new Date(moment().isoWeekday(day + 1).format());
