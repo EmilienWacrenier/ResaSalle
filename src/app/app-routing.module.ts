@@ -11,6 +11,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { ConfirmComponent } from './pages/confirm/confirm.component';
 
 
+
 const routes: Routes = [
   { path: 'login',component: AuthlayoutComponent },
   { path: 'confirm', component: ConfirmComponent },

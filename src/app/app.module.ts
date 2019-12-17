@@ -31,6 +31,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { EditRoomComponent } from './modals/edit-room/edit-room.component';
 import { EditBookingComponent } from './modals/edit-booking/edit-booking.component';
 import { ConfirmComponent } from './pages/confirm/confirm.component';
+import { BookingsearchComponent } from './modals/bookingsearch/bookingsearch.component';
 
 
 export function tokenGetter() {
@@ -54,7 +55,8 @@ export function tokenGetter() {
     AdminComponent,
     EditRoomComponent,
     EditBookingComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    BookingsearchComponent
   ],
   imports: [
     BrowserModule,
