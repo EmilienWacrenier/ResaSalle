@@ -78,13 +78,12 @@
       </div>
     </div>
 
-    <div class="col-6 border rounded p-2">
+    
+    <!-- <div class="col-6 border rounded p-2">
       <div class="container-fluid">
-        <!--Liste des utilisateurs -->
         <div class="row justify-content-center text-center align-items-center">
 
           <div class="col-auto">
-            <!--Recherche des participants -->
             <mat-form-field class="search-form">
               <mat-label>Participants</mat-label>
               <input matInput autocomplete="off" (keyup)="onKey($event)" (keyup.enter)="onKeyEnter($event)">
@@ -97,7 +96,6 @@
           </div>
         </div>
 
-        <!--Liste des participants-->
         <div class="row liste">
           <mat-list>
             <mat-list-item *ngFor="let user of usersList" (click)="onSelectParticipant(user)">
@@ -105,7 +103,6 @@
             </mat-list-item>
           </mat-list>
         </div>
-        <!--Vignettes et bouton next-->
         <mat-divider></mat-divider>
         <div class="row p-2 justify-content-around">
           <div class="col-3 m-1 p-1 border rounded text-center" *ngFor="let participant of selectedParticipants" (click)="removeParticipant(participant)">
@@ -118,6 +115,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
