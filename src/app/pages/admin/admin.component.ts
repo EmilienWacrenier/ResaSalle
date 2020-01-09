@@ -19,7 +19,13 @@ export class AdminComponent implements OnInit {
 
   createRoomForm: FormGroup;
   selectedArea: string;
+  selectedName: string;
   areas: string[] = ['A', 'B', 'C', 'D'];
+  names: string[] = ['Grande Ourse', 'Céphée', 'Bouvier', 'Hercule', 'Lyre', 'Cygne', 'Cassiopée', 'Andromède',
+                      'Pégase','Bélier', 'Taureau', 'Gémeaux', 'Cancer', 'Lion', 'Vierge', 'Balance', 'Scorpion',
+                      'Sagittaire','Capricorne', 'Verseau', 'Poissons', 'Baleine', 'Eridan', 'Orion', 'Grand Chien',
+                      'Poisson austral', 'Carène','Croix du Sud'
+                    ];
 
   dsRoom: MatTableDataSource<Room>;
   displayedColumns: string[] = ['room', 'area', 'capacity', 'actions'];
