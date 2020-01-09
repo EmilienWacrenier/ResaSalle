@@ -211,8 +211,7 @@ export class RoomPlanningComponent implements OnInit {
     //dans la partie data : room et selectedDate sont explicites, day et hour correspondent aux valeurs récupérés en paramètre
     //venues du front. Ce sont des index de boucles ngFor.
     const bookingDetailsDialogConfig = new MatDialogConfig();
-    bookingDetailsDialogConfig.width = "60vw";
-    bookingDetailsDialogConfig.height = "80vh";
+    bookingDetailsDialogConfig.width = "400px";
     bookingDetailsDialogConfig.data = { 
       room: this.selectedRoom,
       selectedDate : this.selectedDate,
