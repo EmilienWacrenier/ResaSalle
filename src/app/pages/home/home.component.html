@@ -21,12 +21,14 @@
 
     <div class="row align-items-center bg-white px-3 rowRoom" *ngFor="let room of rooms; let i = index"
         routerLink="/planning/{{room.roomId}}" matTooltip="Cliquez pour aller réserver cette salle">
-        <div class="col-4">
-            <mat-icon class="mx-3 mt-2">meeting_room</mat-icon>
-            <span class="my-auto mx-3">{{room.name}} : </span>
-            <span class="roomDetails">Zone {{room.area}}</span>
-            <span class="roomDetails mx-3">-</span>
-            <span class="roomDetails">Capacité : {{room.capacity}} pers.</span>
+        <mat-icon class="mx-3 mt-2">meeting_room</mat-icon>
+        <div class="col-md-3 col-xs-6">
+            <span class="my-auto mx-3">{{room.name}} </span>
+            <div class="col-auto">
+                <span class="roomDetails">Zone {{room.area}}</span>
+                <span class="roomDetails mx-3">-</span>
+                <span class="roomDetails">Capacité : {{room.capacity}} pers.</span>
+            </div>
         </div>
 
         <div class="col py-3">

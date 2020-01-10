@@ -206,39 +206,38 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
+        <div class="container-fluid">
+            <div class="row">
+                <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
+                <div class="col-8">
+                    <button class="bouton-back-next" style="float: right;" mat-button (click)="getRoomsAvailable()"
+                    matStepperNext>Chercher les salles disponibles</button>
+                </div>
+            </div>
         </div>
-        <button class="bouton-back-next" style="float: right;" mat-button (click)="getRoomsAvailable()"
-            matStepperNext>Chercher les salles disponibles</button>
     </mat-step>
 
     <!-- Résultats -->
     <mat-step>
+        <div class="container-fluid">
         <ng-template matStepLabel>Résultats</ng-template>
-
-        <div class="row my-3">
-            <div *ngFor="let room of roomList" class="col w-25 m-2 p-0 border" (click)="openDialog(room)">
-                <div class="img-salle">
-
-                </div>
-                <div class="title p-3">
-                    {{room.name}}<br>
-                    <span class="small">{{room.area}}</span>
-                    <span class="small mx-2">-</span>
-                    <span class="small ">{{room.capacity}} pers.</span>
-
-                </div>
-                <a class="d-block px-3 pb-3 text-right">
-                    <mat-icon>check_circle_outline</mat-icon>
-                </a>
+        <div class="row">
+            <div *ngFor="let room of roomList" class="col-md-4" (click)="openDialog(room)">
+                        <div class="thumbnails">
+                                <img src="../../../assets/salleDeReunion.jpg" class="img-fluid" alt="salleDeReunion">
+                                <div class="caption">
+                                    {{room.name}}<br>
+                                    <span class="small">{{room.area}}</span>
+                                    <span class="small mx-2">-</span>
+                                    <span class="small ">{{room.capacity}} pers.</span>
+                                    <a class="d-block px-3 pb-3 text-right">
+                                        <mat-icon>check_circle_outline</mat-icon>
+                                    </a>
+                                </div>
+                        </div>
             </div>
-
+        </div>
         </div>
 
-
-
     </mat-step>
-
 </mat-horizontal-stepper>
