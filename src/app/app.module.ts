@@ -87,6 +87,7 @@ export function tokenGetter() {
     DeleteConfirmationComponent,
     EditRoomComponent,
     EditBookingComponent,
+    BookingsearchComponent
   ]
 })
 export class AppModule { }
