@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { Room } from '../../../classes/room'
 import { Booking } from '../../../classes/booking'
-import { HomeService } from '../../../services/home.service';
+
+import { RoomService } from '../../../services/room.service';
+import { ReservationService } from 'src/app/services/reservation.service';
+
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { BookingdetailsComponent } from 'src/app/modals/bookingdetails/bookingdetails.component';
 
 import { JOUR_SEMAINE, HOURS_PLANNING } from '../../../constantes/constantes'
+
 import * as moment from 'moment'
-import { ReservationService } from 'src/app/services/reservation.service';
+
 
 @Component({
   selector: 'app-room-planning',
@@ -44,8 +49,7 @@ export class RoomPlanningComponent implements OnInit {
   constructor(
     private reservationService: ReservationService,
     private route: ActivatedRoute,
-    private homeService: HomeService,
-    private router: Router,
+    private roomService: RoomService,
     public dialog: MatDialog
   ) { }
 
@@ -53,8 +57,9 @@ export class RoomPlanningComponent implements OnInit {
     document.getElementById('homeNavItem').classList.add('active-list-item');
 
     //récupération des salles en base
-    this.homeService.getRooms().subscribe( res => {
-      this.rooms = res;
+    this.roomService.getRooms().subscribe( res => {
+      this.rooms = res['result'];
+      console.log(this.rooms);
 
       //pour instancier le planning avec la salle sélectionnée dans le component précédent (home),
       //on fait passer l'ID de la salle dans l'URL
