@@ -19,7 +19,7 @@
 
     </div>
 
-    <div class="row align-items-center bg-white px-3 rowRoom" *ngFor="let room of rooms; let i = index"
+    <div class="row align-items-center rounded border bg-white my-2 px-3 rowRoom" *ngFor="let room of rooms; let i = index"
         routerLink="/planning/{{room.roomId}}" matTooltip="Cliquez pour aller réserver cette salle">
         <mat-icon class="mx-3 mt-2">meeting_room</mat-icon>
         <div class="col-md-3 col-xs-6">

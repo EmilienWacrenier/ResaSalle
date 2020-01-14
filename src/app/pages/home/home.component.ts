@@ -5,7 +5,6 @@ import { BookingcalendarComponent } from '../../modals/bookingcalendar/bookingca
 import { AbsoluteSourceSpan } from '@angular/compiler';
 import { read } from 'fs';
 import { Room } from '../../classes/room'
-import { HomeService } from '../../services/home.service';
 import { RoomService } from '../../services/room.service';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
