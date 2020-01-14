@@ -15,19 +15,19 @@
         <div class="modal-body">
             <form class="example-form" [formGroup]="updateRoomForm">
                 <div class="row">
-                        <mat-form-field class="col-6" appearance="outline">
-                            <mat-label> Nom </mat-label>
-                            <input matInput formControlName="roomName" placeholder="Nom" required />
-                        </mat-form-field>
+                    <mat-form-field class="col-6" appearance="outline">
+                        <mat-label> Nom </mat-label>
+                        <input matInput formControlName="roomName" placeholder="Nom" required />
+                    </mat-form-field>
 
-                        <mat-form-field class=" col-6 f-right">
-                            <mat-label>Zone</mat-label>
-                            <mat-select matInput formControlName="roomArea" placeholder="Zone" required>
-                                <mat-option *ngFor="let area of areas" [value]="area">
-                                    {{area}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                    <mat-form-field class=" col-6 f-right">
+                        <mat-label>Zone</mat-label>
+                        <mat-select matInput formControlName="roomArea" placeholder="Zone" required>
+                            <mat-option *ngFor="let area of areas" [value]="area">
+                                {{area}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
 
 
