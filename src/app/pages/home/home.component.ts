@@ -5,7 +5,7 @@ import { BookingcalendarComponent } from '../../modals/bookingcalendar/bookingca
 import { AbsoluteSourceSpan } from '@angular/compiler';
 import { read } from 'fs';
 import { Room } from '../../classes/room'
-import { HomeService } from '../../services/home.service';
+import { RoomService } from '../../services/room.service';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 
@@ -37,12 +37,12 @@ export class HomeComponent implements OnInit {
   */
   itsMorning: boolean;
 
-  constructor(private homeService: HomeService) { }
+  constructor(private roomService: RoomService) { }
 
 
   ngOnInit() {
     this.initPlanningBtn();
-    this.getRoomsAndTheirReservationOfToday();
+    this.getRoomsAndTheirReservationsOfToday();
   }
 
   initPlanningBtn() {
@@ -64,16 +64,16 @@ export class HomeComponent implements OnInit {
   getBtnMorning() {
     if (this.itsMorning) {
       this.setBtnAfternoon();
-      this.getRoomsAndTheirReservationOfToday();
+      this.getRoomsAndTheirReservationsOfToday();
     }
     else {
       this.setBtnMorning();
-      this.getRoomsAndTheirReservationOfToday();
+      this.getRoomsAndTheirReservationsOfToday();
     }
   }
 
-  getRoomsAndTheirReservationOfToday() {
-    this.homeService.getRooms()
+  getRoomsAndTheirReservationsOfToday() {
+    this.roomService.getRoomsAndTheirReservationsOfToday()
       .subscribe(rooms => {
         this.rooms = rooms;
         console.log(rooms)

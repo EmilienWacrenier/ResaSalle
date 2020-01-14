@@ -20,6 +20,11 @@ export class EditRoomComponent implements OnInit {
   updateRoomForm: FormGroup;
   selectedArea: string;
   areas: string[] = ['A', 'B', 'C', 'D'];
+  names: string[] = ['Grande Ourse', 'Céphée', 'Bouvier', 'Hercule', 'Lyre', 'Cygne', 'Cassiopée', 'Andromède',
+  'Pégase','Bélier', 'Taureau', 'Gémeaux', 'Cancer', 'Lion', 'Vierge', 'Balance', 'Scorpion',
+  'Sagittaire','Capricorne', 'Verseau', 'Poissons', 'Baleine', 'Eridan', 'Orion', 'Grand Chien',
+  'Poisson austral', 'Carène','Croix du Sud'
+];
 
   public updatedRoomCapacity: number = 2;
 

@@ -266,8 +266,7 @@ export class SearchComponent implements OnInit {
 
   onSelectRoom(){
 
-    /*if( resa true) { on va vers le componenent de reglage }
-    if(pas resa) { ouvre modale de participant }*/
+    /*je sais plus ce que je voulais faire dans cette fonction sorry*/
 
   }
 
@@ -275,7 +274,6 @@ export class SearchComponent implements OnInit {
   openDialog(room) {
     //config et ouverture de la 2eme test_modaleconst bookingCalendarDialogConfig = new MatDialogConfig();
     const bookingsearchDialogConfig = new MatDialogConfig();
-    bookingsearchDialogConfig.width = "60vw";
     bookingsearchDialogConfig.height = "80vh";
     bookingsearchDialogConfig.data = { 
       room: room,
