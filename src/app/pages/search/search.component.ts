@@ -37,6 +37,7 @@ export class SearchComponent implements OnInit {
   capacites: number[] = CAPACITE;
   choix: number[] = [];
 
+  selectedObjet: string;
   selectedStartDate: Date;
   selectedHourStart: number;
   selectedMinuteStart: number;
@@ -56,6 +57,7 @@ export class SearchComponent implements OnInit {
   errorDate: string;
   errorEndDate: string;
   errorMensualite: string;
+  errorObjet: string;
   datasAreGood = false;
   datasRecurrenceAreGood = false
 
@@ -72,6 +74,7 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     this.onSelect(new Date());
     this.selectedHourStart = moment().hour()+1;
+    this.selectedObjet = "Réunion";
     this.selectedMinuteStart = 0;
     this.selectedHourEnd = this.selectedHourStart +1;
     this.selectedMinuteEnd = 0;
@@ -84,15 +87,19 @@ export class SearchComponent implements OnInit {
 
   onSelect(event) {
     this.selectedStartDate = event;
-    this.selectedDateDisplay = moment(this.selectedStartDate).format("DD MMMM YYYY");
+    this.selectedDateDisplay = moment(this.selectedStartDate).locale("fr").format("DD MMMM YYYY");
   }
 
   checkInput() {
     this.errorHourStart = null;
     this.errorHourEnd = null;
     this.errorDate = null;
+    this.errorObjet = null;
 
+    // .replace(/\s/g, "") supprime tous les espaces d'une string
     if ( !this.selectedStartDate
+      || this.selectedObjet == null
+      || this.selectedObjet.replace(/\s/g, "") == ""
       || this.selectedHourStart == null
       || this.selectedMinuteStart == null
       || this.selectedHourEnd == null
@@ -115,6 +122,9 @@ export class SearchComponent implements OnInit {
   }
 
   errorCheck() {
+    //check si un objet est renseigné
+    if(!this.selectedObjet || this.selectedObjet.replace(/\s/g, "") == "" || this.selectedObjet == null) { this.errorObjet = "Veuillez renseigner un objet" };
+
     //check si la date est selectionnée
     if (!this.selectedStartDate) { this.errorDate = "Veuillez renseigner une date" };
 
@@ -254,7 +264,6 @@ export class SearchComponent implements OnInit {
 
   getRoomsAvailable(){
     this.setParameters();
-    console.log()
 
     this.roomService
     .getAvailableRooms(this.capacity, this.startDate, this.endDate)

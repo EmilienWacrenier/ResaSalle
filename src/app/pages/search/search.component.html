@@ -9,7 +9,7 @@
                 <p class="m-0">
                     <mat-icon class="mr-2 blue-color">info</mat-icon>
                     <span *ngIf="selectedStartDate">
-                        Réunion le
+                        {{selectedObjet}}
                     </span>
                     <span *ngIf="selectedStartDate">
                         {{selectedDateDisplay}}
@@ -38,7 +38,16 @@
                 </div>
 
                 <div class="col-7 p-3 border rounded bg-white">
-                    <div class="row h-50">
+                    <div class="row mb-3">
+                        <h5 class="w-100 text-center m-auto">Objet</h5>
+                        <mat-form-field class="w-100 pl-4 pr-4">
+                            <input matInput autocomplete="off" placeholder="Objet" [(ngModel)]="selectedObjet" (input)="checkInput()">
+                        </mat-form-field>
+                        <div class="w-100 text-danger small pl-4" *ngIf="errorObjet">{{errorObjet}}</div>
+
+                    </div>
+
+                    <div class="row mb-3">
                         <h5 class="w-100 text-center m-auto">Debut</h5>
                         <mat-form-field class="w-50 pl-4 pr-2">
                             <mat-label>Heure</mat-label>
@@ -60,7 +69,7 @@
 
                     </div>
 
-                    <div class="row h-50">
+                    <div class="row">
                         <h5 class="w-100 text-center m-auto">Fin</h5>
                         <mat-form-field class="w-50 pl-4 pr-2">
                             <mat-label>Heure</mat-label>
@@ -82,23 +91,24 @@
                     </div>
                 </div>
             </div>
-        
 
-        <!-- Toggle de la recurrence -->
-        <div class="col">
-            <div>
-                <mat-slide-toggle (change)="recurrenceIsChecked = !recurrenceIsChecked">
-                    Activer la récurrence ?
-                </mat-slide-toggle>
+
+            <!-- Toggle de la recurrence -->
+            <div class="col">
+                <div>
+                    <mat-slide-toggle (change)="recurrenceIsChecked = !recurrenceIsChecked">
+                        Activer la récurrence ?
+                    </mat-slide-toggle>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <button class="bouton-back-next" mat-button matStepperNext [disabled]="!datasAreGood">Suivant</button>
+            <div class="row">
+                <div class="col-12">
+                    <button class="bouton-back-next" mat-button matStepperNext
+                        [disabled]="!datasAreGood">Suivant</button>
+                </div>
             </div>
+
         </div>
-    
-    </div>
     </mat-step>
 
     <!-- Stepper phase 2 recurrence -->
@@ -211,7 +221,7 @@
                 <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
                 <div class="col-8">
                     <button class="bouton-back-next" style="float: right;" mat-button (click)="getRoomsAvailable()"
-                    matStepperNext>Chercher les salles disponibles</button>
+                        matStepperNext>Chercher les salles disponibles</button>
                 </div>
             </div>
         </div>
@@ -220,23 +230,23 @@
     <!-- Résultats -->
     <mat-step>
         <div class="container-fluid">
-        <ng-template matStepLabel>Résultats</ng-template>
-        <div class="row">
-            <div *ngFor="let room of roomList" class="col-md-4" (click)="openDialog(room)">
-                        <div class="thumbnails">
-                                <img src="../../../assets/salleDeReunion.jpg" class="img-fluid" alt="salleDeReunion">
-                                <div class="caption">
-                                    {{room.name}}<br>
-                                    <span class="small">{{room.area}}</span>
-                                    <span class="small mx-2">-</span>
-                                    <span class="small ">{{room.capacity}} pers.</span>
-                                    <a class="d-block px-3 pb-3 text-right">
-                                        <mat-icon>check_circle_outline</mat-icon>
-                                    </a>
-                                </div>
+            <ng-template matStepLabel>Résultats</ng-template>
+            <div class="row">
+                <div *ngFor="let room of roomList" class="col-md-4" (click)="openDialog(room)">
+                    <div class="thumbnails">
+                        <img src="../../../assets/salleDeReunion.jpg" class="img-fluid" alt="salleDeReunion">
+                        <div class="caption">
+                            {{room.name}}<br>
+                            <span class="small">{{room.area}}</span>
+                            <span class="small mx-2">-</span>
+                            <span class="small ">{{room.capacity}} pers.</span>
+                            <a class="d-block px-3 pb-3 text-right">
+                                <mat-icon>check_circle_outline</mat-icon>
+                            </a>
                         </div>
+                    </div>
+                </div>
             </div>
-        </div>
         </div>
 
     </mat-step>
