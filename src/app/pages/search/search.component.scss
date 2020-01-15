@@ -46,7 +46,7 @@ h5{
 
 /* drag & drop */
 .example-container {
-    width: 400px;
+    width: 100%;
     max-width: 100%;
     margin: 0 25px 25px 0;
     display: inline-block;
@@ -117,4 +117,9 @@ h5{
 
   mat-icon{
     vertical-align: bottom;
+  }
+
+  .mat-slider-horizontal {
+    max-width: 500px;
+    width: 100%;
   }

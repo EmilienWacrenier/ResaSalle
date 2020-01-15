@@ -46,6 +46,7 @@ export class SearchComponent implements OnInit {
   startDate: string;
   endDate: string;
   capacity: number;
+  roomRequiredCapacity: number = 6;
   //**********************RECURRENCE*************************
   selectedEndDate;
   selectedRecurrence: string;
@@ -81,6 +82,7 @@ export class SearchComponent implements OnInit {
     this.checkInput();
     console.log(this.capacites);
     this.capacites = CAPACITE;
+    this.setRoomlist();
   }
 
   /*STEP1*/
@@ -262,6 +264,12 @@ export class SearchComponent implements OnInit {
     console.log(this.roomParameters);
   }
 
+  setRoomlist(){
+    this.roomService.getRooms().subscribe(data => {
+      this.roomList = data['result'];
+    })
+
+  }
   getRoomsAvailable(){
     this.setParameters();
 

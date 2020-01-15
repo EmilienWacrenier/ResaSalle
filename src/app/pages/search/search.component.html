@@ -41,7 +41,8 @@
                     <div class="row mb-3">
                         <h5 class="w-100 text-center m-auto">Objet</h5>
                         <mat-form-field class="w-100 pl-4 pr-4">
-                            <input matInput autocomplete="off" placeholder="Objet" [(ngModel)]="selectedObjet" (input)="checkInput()">
+                            <input matInput autocomplete="off" placeholder="Objet" [(ngModel)]="selectedObjet"
+                                (input)="checkInput()">
                         </mat-form-field>
                         <div class="w-100 text-danger small pl-4" *ngIf="errorObjet">{{errorObjet}}</div>
 
@@ -199,22 +200,36 @@
             <div class="example-container">
                 <h2>Capacité</h2>
 
+                <mat-slider [(ngModel)]="roomRequiredCapacity" thumbLabel="true" tickInterval="1" min="2" max="10">
+                </mat-slider>
+                <!--
                 <div cdkDropList #capaciteList="cdkDropList" [cdkDropListData]="capacites"
                     [cdkDropListConnectedTo]="[choixList]" class="capacite-list" (cdkDropListDropped)="drop($event)">
                     <div class="drag-drop-items" *ngFor="let item of capacites" cdkDrag>{{item}} pers
                     </div>
-                </div>
+                </div>-->
             </div>
+        </div>
+        <div class=" my-3">
+                <div>
+                    <h2>Salles ({{roomRequiredCapacity}} personnes)</h2>
+                </div>
+                <div class="card-deck">
 
-            <div class="example-container">
-                <h2>Mes critères</h2>
+                    <div *ngFor="let room of roomList" (click)="openDialog(room)">
+                        <div *ngIf="room.capacity >= roomRequiredCapacity" class="card mb-3">
+                            <img src="../../../assets/salleDeReunion.jpg" class="card-img-top" alt="salleDeReunion">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ room.name }}</h5>
+                                <p class="card-text">
+                                    <small class="text-muted">{{ room.area }} - {{room.capacity}} pers.
+                                    </small>
+                                </p>
 
-                <div cdkDropList #choixList="cdkDropList" [cdkDropListData]="choix"
-                    [cdkDropListConnectedTo]="[capaciteList]" class="choix-list" (cdkDropListDropped)="drop($event)">
-                    <div class="drag-drop-items" *ngFor="let item of choix" cdkDrag>{{item}} pers
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
         </div>
         <div class="container-fluid">
             <div class="row">
