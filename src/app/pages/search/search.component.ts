@@ -8,7 +8,8 @@ import {
   JOUR_SEMAINE,
   CAPACITE,
   BOOKING_HOURS,
-  BOOKING_MINUTES } from "../../constantes/constantes";
+  BOOKING_MINUTES
+} from "../../constantes/constantes";
 import { RoomService } from 'src/app/services/room.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { BookingsearchComponent } from 'src/app/modals/bookingsearch/bookingsearch.component';
@@ -37,14 +38,17 @@ export class SearchComponent implements OnInit {
   capacites: number[] = CAPACITE;
   choix: number[] = [];
 
+  selectedObjet: string;
   selectedStartDate: Date;
   selectedHourStart: number;
   selectedMinuteStart: number;
   selectedHourEnd: number;
   selectedMinuteEnd: number;
+  selectedRoom: Room;
   startDate: string;
   endDate: string;
   capacity: number;
+  roomRequiredCapacity: number = 6;
   //**********************RECURRENCE*************************
   selectedEndDate;
   selectedRecurrence: string;
@@ -56,6 +60,7 @@ export class SearchComponent implements OnInit {
   errorDate: string;
   errorEndDate: string;
   errorMensualite: string;
+  errorObjet: string;
   datasAreGood = false;
   datasRecurrenceAreGood = false
 
@@ -67,32 +72,39 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private roomService: RoomService,
-    public dialog: MatDialog){}
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.onSelect(new Date());
-    this.selectedHourStart = moment().hour()+1;
+    this.selectedHourStart = moment().hour() + 1;
+    this.selectedObjet = "Réunion";
     this.selectedMinuteStart = 0;
-    this.selectedHourEnd = this.selectedHourStart +1;
+    this.selectedHourEnd = this.selectedHourStart + 1;
     this.selectedMinuteEnd = 0;
+    this.selectedRoom = null;
     this.checkInput();
     console.log(this.capacites);
     this.capacites = CAPACITE;
+    this.setRoomlist();
   }
 
   /*STEP1*/
 
   onSelect(event) {
     this.selectedStartDate = event;
-    this.selectedDateDisplay = moment(this.selectedStartDate).format("DD MMMM YYYY");
+    this.selectedDateDisplay = moment(this.selectedStartDate).locale("fr").format("DD MMMM YYYY");
   }
 
   checkInput() {
     this.errorHourStart = null;
     this.errorHourEnd = null;
     this.errorDate = null;
+    this.errorObjet = null;
 
-    if ( !this.selectedStartDate
+    // .replace(/\s/g, "") supprime tous les espaces d'une string
+    if (!this.selectedStartDate
+      || this.selectedObjet == null
+      || this.selectedObjet.replace(/\s/g, "") == ""
       || this.selectedHourStart == null
       || this.selectedMinuteStart == null
       || this.selectedHourEnd == null
@@ -115,6 +127,9 @@ export class SearchComponent implements OnInit {
   }
 
   errorCheck() {
+    //check si un objet est renseigné
+    if (!this.selectedObjet || this.selectedObjet.replace(/\s/g, "") == "" || this.selectedObjet == null) { this.errorObjet = "Veuillez renseigner un objet" };
+
     //check si la date est selectionnée
     if (!this.selectedStartDate) { this.errorDate = "Veuillez renseigner une date" };
 
@@ -124,10 +139,10 @@ export class SearchComponent implements OnInit {
     }
 
     //check si l'heure de début est entrée
-    if (this.selectedHourStart==null || this.selectedMinuteStart==null) { this.errorHourStart = "Veuillez entrer une heure" };
+    if (this.selectedHourStart == null || this.selectedMinuteStart == null) { this.errorHourStart = "Veuillez entrer une heure" };
 
     //check si l'heure de fin est entrée
-    if (this.selectedHourEnd==null || this.selectedMinuteEnd==null) { this.errorHourEnd = "Veuillez entrer une heure" };
+    if (this.selectedHourEnd == null || this.selectedMinuteEnd == null) { this.errorHourEnd = "Veuillez entrer une heure" };
 
     //check si une des heures ne dépasse pas 18h
     if (this.selectedHourStart == 18 && this.selectedMinuteStart == 30) { this.errorHourStart = "L'heure est incorrecte" }
@@ -152,8 +167,8 @@ export class SearchComponent implements OnInit {
     else return false;
   }
 
-  isReccurent(){
-    if (this.recurrenceIsChecked) { return true;}
+  isReccurent() {
+    if (this.recurrenceIsChecked) { return true; }
     else return false;
   }
 
@@ -162,7 +177,7 @@ export class SearchComponent implements OnInit {
     this.errorEndDate = null;
     this.errorMensualite = null;
 
-    if ( !this.selectedEndDate
+    if (!this.selectedEndDate
       || !this.selectedRecurrence
       || this.endDateIsWrong(this.selectedStartDate, this.selectedEndDate)) {
       this.errorCheckRecurrence();
@@ -177,7 +192,7 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  errorCheckRecurrence(){
+  errorCheckRecurrence() {
     //check si la date est selectionnée
     if (!this.selectedEndDate) { this.errorEndDate = "Veuillez renseigner une date" };
 
@@ -189,7 +204,7 @@ export class SearchComponent implements OnInit {
     if (!this.selectedRecurrence) { this.errorMensualite = "Veuillez selectionner une mensualité" };
   }
 
-  endDateIsWrong(startDate, endDate){
+  endDateIsWrong(startDate, endDate) {
     console.log(startDate.getTime());
     console.log(endDate.getTime());
 
@@ -210,36 +225,36 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  setParameters(){
+  setParameters() {
     this.startDate = "";
     this.endDate = "";
     this.capacity = null;
 
     this.startDate = moment(this.selectedStartDate)
-    .set({hour:this.selectedHourStart,minute:this.selectedMinuteStart,second:0,millisecond:0})
-    .format();
+      .set({ hour: this.selectedHourStart, minute: this.selectedMinuteStart, second: 0, millisecond: 0 })
+      .format();
 
     this.endDate = moment(this.selectedEndDate)
-    .set({hour:this.selectedHourEnd,minute:this.selectedMinuteEnd,second:0,millisecond:0})
-    .format();
+      .set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
+      .format();
 
-    if(this.choix.length != 0) {
+    if (this.choix.length != 0) {
       console.log(this.capacity);
-      this.capacity = this.capacites[this.capacites.length-1];
+      this.capacity = this.capacites[this.capacites.length - 1];
       console.log(this.capacity);
 
-      for(const element of this.choix){
-        if(element < this.capacity) {
+      for (const element of this.choix) {
+        if (element < this.capacity) {
           this.capacity = element;
         }
       }
     }
 
-    if(this.choix.length == 0){
+    if (this.choix.length == 0) {
       this.capacity = this.capacites[0];
     }
 
-    if(this.recurrenceIsChecked){
+    if (this.recurrenceIsChecked) {
       console.log(this.selectedRecurrence);
       console.log(this.selectedEndDate);
     }
@@ -252,22 +267,35 @@ export class SearchComponent implements OnInit {
     console.log(this.roomParameters);
   }
 
-  getRoomsAvailable(){
+  setRoomlist() {
+    this.roomService.getRooms().subscribe(data => {
+      this.roomList = data['result'];
+    })
+
+  }
+  getRoomsAvailable() {
     this.setParameters();
-    console.log()
 
     this.roomService
-    .getAvailableRooms(this.capacity, this.startDate, this.endDate)
-    .subscribe(data => {
-      this.roomList = data['result'];
-      console.log(this.roomList)
-    })
+      .getAvailableRooms(this.capacity, this.startDate, this.endDate)
+      .subscribe(data => {
+        this.roomList = data['result'];
+        console.log(this.roomList)
+      })
   }
 
-  onSelectRoom(){
+  // Sélectionne une salle pour l'étape suivante, modifie les styles css sur la bonne card
+  onSelectRoom(room) {
+    if (room !== this.selectedRoom) {
+      this.selectedRoom = room;
 
-    /*je sais plus ce que je voulais faire dans cette fonction sorry*/
+      console.log(this.selectedRoom);
+    }
+  }
 
+  onChangeCapacity(){
+    this.selectedRoom = null;
+    console.log("No more selected room")
   }
 
   //fermeture de la modale avec DialogRef
@@ -275,7 +303,7 @@ export class SearchComponent implements OnInit {
     //config et ouverture de la 2eme test_modaleconst bookingCalendarDialogConfig = new MatDialogConfig();
     const bookingsearchDialogConfig = new MatDialogConfig();
     bookingsearchDialogConfig.height = "80vh";
-    bookingsearchDialogConfig.data = { 
+    bookingsearchDialogConfig.data = {
       room: room,
       startDate: this.startDate,
       endDate: this.endDate

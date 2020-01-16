@@ -46,7 +46,7 @@ h5{
 
 /* drag & drop */
 .example-container {
-    width: 400px;
+    width: 100%;
     max-width: 100%;
     margin: 0 25px 25px 0;
     display: inline-block;
@@ -117,4 +117,45 @@ h5{
 
   mat-icon{
     vertical-align: bottom;
+  }
+
+  .mat-slider-horizontal {
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .card-deck{
+    justify-content: center;
+  }
+
+  .card{
+    cursor: pointer;
+    transition: 0.20s ease;
+  }
+
+  .badge-selected-room{
+    position: absolute;
+    color: limegreen;
+    right: 20px;
+    font-size: 25px;
+  }
+
+  .badge-unselected-room{
+    position: absolute;
+    color: rgba(0,0,0,.38);
+    right: 20px;
+    font-size: 25px;
+  }
+
+
+  .card:hover .badge-unselected-room {
+    position: absolute;
+    color: limegreen;
+    font-size: 25px;
+  }
+  .card:hover {
+    -webkit-box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.34);
+    -moz-box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.34);
+    box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.34);
+    transform: scale(1.05);
   }
