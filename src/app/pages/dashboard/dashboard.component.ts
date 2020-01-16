@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ReservationService } from 'src/app/services/reservation.service';
+import { RoomService } from 'src/app/services/room.service';
 import { Booking } from 'src/app/classes/booking';
 import { Observable } from 'rxjs';
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
@@ -11,6 +12,7 @@ import { ApiConstants } from '../../constantes/constantes';
 
 import * as moment from 'moment'
 import { EditBookingModel, EditBookingComponent } from 'src/app/modals/edit-booking/edit-booking.component';
+import { Room } from 'src/app/classes/room';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,16 +27,80 @@ export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['date', 'start', 'end', 'room', 'subject', 'participants', 'actions'];
   dataSource$: Observable<Booking[]>;
 
-  constructor(private reservationService: ReservationService, public dialog: MatDialog, private cst: ApiConstants, private toastr: ToastrService) {
+  rooms : Room[];
+  selectedRoomId : number = 1;
+  resaPonctuelles : boolean = true;
+  resaRecurrence : boolean = false;
+  resaParSalles : boolean = false;
+  resaOfToday : boolean = false;
+  reservationsOfUser: Booking[];
+  resaToday: Booking[];
+
+
+  constructor(
+    private reservationService: ReservationService,
+    private roomService: RoomService, 
+    public dialog: MatDialog, 
+    private cst: ApiConstants, 
+    private toastr: ToastrService) 
+    {
     this.dsBooking = new MatTableDataSource<Booking>();
     this.dsBooking.data = [];
   }
 
-
-
   ngOnInit() {
     this.updateReservations();
+    this.getRooms();
   }
+
+  onClickResaPonctuelles(){
+    this.resaPonctuelles = true;
+    this.resaRecurrence = false;
+    this.resaParSalles = false;
+    this.resaOfToday = false;
+  }
+
+  onClickResaRecurrence(){
+    this.resaPonctuelles = false;
+    this.resaRecurrence = true;
+    this.resaParSalles = false;
+    this.resaOfToday = false;
+  }
+
+  onClickResaParSalles(){
+    this.resaPonctuelles = false;
+    this.resaRecurrence = false;
+    this.resaParSalles = true;
+    this.resaOfToday = false;
+  }
+
+  onClickResaOfToday(){
+    this.resaPonctuelles = false;
+    this.resaRecurrence = false;
+    this.resaParSalles = false;
+    this.resaOfToday = true;
+
+    this.resaToday = [];
+
+    for(const resa of this.reservationsOfUser){
+      let resaDate = moment(resa.startDate).format('dddd DD MMM');
+      if(resaDate == moment().format('dddd DD MMM')){
+        this.resaToday.push(resa);
+      }
+    }
+  }
+
+  getRooms(){
+    this.roomService.getRooms().subscribe( res => {
+      this.rooms = res['result'];
+    })
+  }
+
+  getSelectedRoom(roomId){
+    this.selectedRoomId = roomId;
+  }
+
+
 
   /*getReservationsbyUser(): Observable<Booking[]> {
     this.reservationService.getReservationsFromUserConnected();
@@ -92,6 +158,7 @@ export class DashboardComponent implements OnInit {
     this.dsBooking.data = [];
     this.reservationService.getReservationsFromUserConnected().subscribe(
       (response) => {
+        this.reservationsOfUser = response['result'];
         this.dsBooking.data = (response['result']);
         
         //for(const resa of this.dsBooking.data){
