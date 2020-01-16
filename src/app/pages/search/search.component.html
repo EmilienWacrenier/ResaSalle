@@ -247,20 +247,19 @@
     <mat-step>
         <div class="container-fluid">
             <ng-template matStepLabel>Résultats</ng-template>
-            <div class="row">
-                <div *ngFor="let room of roomList" class="col-md-4" (click)="openDialog(room)">
-                    <div class="thumbnails">
-                        <img src="../../../assets/salleDeReunion.jpg" class="img-fluid" alt="salleDeReunion">
-                        <div class="caption">
-                            {{room.name}}<br>
-                            <span class="small">{{room.area}}</span>
-                            <span class="small mx-2">-</span>
-                            <span class="small ">{{room.capacity}} pers.</span>
-                            <a class="d-block px-3 pb-3 text-right">
-                                <mat-icon>check_circle_outline</mat-icon>
-                            </a>
-                        </div>
+            <div class="container">
+                <div class="row">
+                    <!-- Liste Réservations -->
+                    <div class="col-md-6 col-xs-12" style="height: 400px; background-color: blue;">
+
                     </div>
+                    <!-- /Liste Réservations -->
+
+                    <!-- Calendrier -->
+                    <div class="col-md-6 col-xs-12" style="height: 400px; background-color: red;">
+
+                    </div>
+                    <!-- /Calendrier -->
                 </div>
             </div>
         </div>
