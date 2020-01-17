@@ -324,7 +324,7 @@ export class SearchComponent implements OnInit {
   }
 */
 
-  /* PLANNING */
+  /* PLANNING 
 
   //au changement de salle, on change le planning en fonction de la salle selectionnée en appelant la fonction getPlanning
   onSelectRoomPlanning() {
@@ -457,6 +457,8 @@ export class SearchComponent implements OnInit {
     this.selectedDate = new Date(moment(this.selectedDate).add(7, 'days').format());
     this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
   }
+
+  */
 
   //STEP FINAL
   deleteBooking(booking) {

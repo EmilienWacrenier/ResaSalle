@@ -30,7 +30,7 @@
             <div class="row mb-3 justify-content-between">
                 <div class="col-auto p-3 border rounded bg-white">
                     <div class="calendrier">
-                        <mat-calendar min="today" [selected]="selectedStartDate"
+                        <mat-calendar min="today" [selected]="selectedDate"
                             (selectedChange)="onSelectDate($event); checkInput()">
                         </mat-calendar>
                         <div class="d-block text-danger small" *ngIf="errorDate">{{errorDate}}</div>
