@@ -15,6 +15,7 @@ import { MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/materia
 import { BookingsearchComponent } from 'src/app/modals/bookingsearch/bookingsearch.component';
 import { Booking } from 'src/app/classes/booking';
 import { Room } from 'src/app/classes/room';
+import { ReservationService } from 'src/app/services/reservation.service';
 
 
 @Component({
@@ -70,13 +71,14 @@ export class SearchComponent implements OnInit {
   //liste des salles (reponse)
   roomList = []
 
-
+  bookingBuilt: Booking[];
 
   dsBooking: MatTableDataSource<Booking>;
   displayedColumns: string[] = ['date', 'startDate', 'endDate', 'room'];
 
   constructor(
     private roomService: RoomService,
+    private reservationService: ReservationService,
     public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -272,6 +274,17 @@ export class SearchComponent implements OnInit {
     console.log(this.roomParameters);
   }
 
+  loadAvailablesIfNoRecurrence(){
+    if(this.recurrenceIsChecked){
+      this.roomList = null;
+      this.roomService
+        .getAvailableRooms(this.roomRequiredCapacity,this.startDate, this.endDate)
+        .subscribe(
+          data => 
+          {this.roomList = data['result']}
+        );
+    }
+  }
   setRoomlist() {
     this.roomService.getRooms().subscribe(data => {
       this.roomList = data['result'];
@@ -289,7 +302,7 @@ export class SearchComponent implements OnInit {
       })
   }
 
-  
+
 
   // Sélectionne une salle pour l'étape suivante, modifie les styles css sur la bonne card
   onSelectRoom(room) {
@@ -300,6 +313,7 @@ export class SearchComponent implements OnInit {
 
   onChangeCapacity() {
     this.selectedRoom = null;
+    this.loadAvailablesIfNoRecurrence();
     console.log("No more selected room")
   }
 
@@ -332,17 +346,25 @@ export class SearchComponent implements OnInit {
     console.log(this.selectedObjet);
     console.log(this.selectedStartDate);
     console.log(this.selectedHourStart + ':' + this.selectedMinuteStart);
-    if(this.selectedEndDate) console.log(this.selectedEndDate);
+    if (this.selectedEndDate) console.log(this.selectedEndDate);
     console.log(this.selectedHourEnd + ':' + this.selectedMinuteEnd);
     this.dsBooking = new MatTableDataSource<Booking>();
+    let bookingBuilt = new Booking();
+    /*bookingBuilt = {
+      startDate: moment().hours(this.selectedHourStart).minutes(this.selectedMinuteStart).toString(),
+      endDate: moment().hours(this.selectedHourEnd).minutes(this.selectedMinuteEnd).toString(),
+      object: this.selectedObjet,
+      roomId: this.selectedRoom.roomId,
+      userId: 
+    }*/
   }
 
   updateBookingsVerification() {
     this.dsBooking.data = null;
-    this.roomService.getRooms().subscribe(
+    /*this.reservationService.getCheckReservation().subscribe(
       (response) => {
         this.dsBooking.data = (response['result']);
-      })
+      })*/
   }
 
 }
