@@ -8,6 +8,15 @@
     </div>
 
     <div class="row my-2">
+
+        <div class="col-auto">
+            <mat-form-field class="search-form">
+                <mat-label>Objet</mat-label>
+                <input matInput autocomplete="off" (keyup)="onKey($event)">
+                <mat-icon matPrefix>search</mat-icon>
+            </mat-form-field>
+        </div>
+
         <a class="col-auto p-3 border rounded bg-white" (click)="onClickResaPonctuelles()">
             Réservations ponctuelles
         </a>
@@ -20,6 +29,18 @@
         <a class="col-auto p-3 border rounded bg-white" (click)="onClickResaOfToday()">
             Réservation du jour
         </a>
+    </div>
+
+    <div class="row">
+        <div *ngFor="let resa of reservationsFilteredByObject">
+            <div class="row" *ngIf="resa.recurrenceId != null">
+                {{resa.startDate | date: 'dd MMM.'}}
+                - {{resa.startDate | date: 'HH:mm' : 'GMT+0'}}
+                - {{resa.endDate | date: 'HH:mm' : 'GMT+0'}}
+                - {{resa.room.name}}
+                - {{resa.object}}
+            </div>
+        </div>
     </div>
 
     <div class="row" *ngIf="resaPonctuelles">

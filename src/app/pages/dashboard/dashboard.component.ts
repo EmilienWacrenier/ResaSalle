@@ -27,23 +27,23 @@ export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['date', 'start', 'end', 'room', 'subject', 'participants', 'actions'];
   dataSource$: Observable<Booking[]>;
 
-  rooms : Room[];
-  selectedRoomId : number = 1;
-  resaPonctuelles : boolean = true;
-  resaRecurrence : boolean = false;
-  resaParSalles : boolean = false;
-  resaOfToday : boolean = false;
+  rooms: Room[];
+  selectedRoomId: number = 1;
+  resaPonctuelles: boolean = true;
+  resaRecurrence: boolean = false;
+  resaParSalles: boolean = false;
+  resaOfToday: boolean = false;
   reservationsOfUser: Booking[];
   resaToday: Booking[];
+  reservationsFilteredByObject: Booking[];
 
 
   constructor(
     private reservationService: ReservationService,
-    private roomService: RoomService, 
-    public dialog: MatDialog, 
-    private cst: ApiConstants, 
-    private toastr: ToastrService) 
-    {
+    private roomService: RoomService,
+    public dialog: MatDialog,
+    private cst: ApiConstants,
+    private toastr: ToastrService) {
     this.dsBooking = new MatTableDataSource<Booking>();
     this.dsBooking.data = [];
   }
@@ -53,28 +53,39 @@ export class DashboardComponent implements OnInit {
     this.getRooms();
   }
 
-  onClickResaPonctuelles(){
+  //recherche de participants
+  onKey(event) {
+    this.reservationsFilteredByObject = [];
+
+    let resaObjet = event.target.value.toLowerCase();
+    console.log(resaObjet);
+
+    this.reservationsFilteredByObject = this.reservationsOfUser.filter(resa =>
+      resa.object.toLowerCase().includes(resaObjet));
+  }
+
+  onClickResaPonctuelles() {
     this.resaPonctuelles = true;
     this.resaRecurrence = false;
     this.resaParSalles = false;
     this.resaOfToday = false;
   }
 
-  onClickResaRecurrence(){
+  onClickResaRecurrence() {
     this.resaPonctuelles = false;
     this.resaRecurrence = true;
     this.resaParSalles = false;
     this.resaOfToday = false;
   }
 
-  onClickResaParSalles(){
+  onClickResaParSalles() {
     this.resaPonctuelles = false;
     this.resaRecurrence = false;
     this.resaParSalles = true;
     this.resaOfToday = false;
   }
 
-  onClickResaOfToday(){
+  onClickResaOfToday() {
     this.resaPonctuelles = false;
     this.resaRecurrence = false;
     this.resaParSalles = false;
@@ -82,21 +93,21 @@ export class DashboardComponent implements OnInit {
 
     this.resaToday = [];
 
-    for(const resa of this.reservationsOfUser){
+    for (const resa of this.reservationsOfUser) {
       let resaDate = moment(resa.startDate).format('dddd DD MMM');
-      if(resaDate == moment().format('dddd DD MMM')){
+      if (resaDate == moment().format('dddd DD MMM')) {
         this.resaToday.push(resa);
       }
     }
   }
 
-  getRooms(){
-    this.roomService.getRooms().subscribe( res => {
+  getRooms() {
+    this.roomService.getRooms().subscribe(res => {
       this.rooms = res['result'];
     })
   }
 
-  getSelectedRoom(roomId){
+  getSelectedRoom(roomId) {
     this.selectedRoomId = roomId;
   }
 
@@ -146,11 +157,11 @@ export class DashboardComponent implements OnInit {
 
     const dialogRef = this.dialog.open(EditBookingComponent, {
       width: '60vw',
-      height:'80vh',
+      height: '80vh',
       data: dialogData
     });
     dialogRef.afterClosed().subscribe(
-      ()=> this.updateReservations() 
+      () => this.updateReservations()
     );
   }
 
@@ -160,11 +171,11 @@ export class DashboardComponent implements OnInit {
       (response) => {
         this.reservationsOfUser = response['result'];
         this.dsBooking.data = (response['result']);
-        
+
         //for(const resa of this.dsBooking.data){
         //  resa.startDate = moment(resa.startDate).locale('fr').format('HH mm');
         //}
-        
+
         console.log(this.dsBooking.data)
       }
     );
