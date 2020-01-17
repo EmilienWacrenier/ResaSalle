@@ -19,7 +19,7 @@ export class ReservationService {
     this.user = JSON.parse(localStorage.getItem('user'));
   }
 
-  createReservation(reservation):Observable<string>{
+  createReservation(reservation): Observable<string> {
     return this.httpClient
       .post<string>(this.cst.apiUrl + 'reservation/createReservation', reservation)
       .pipe(
@@ -28,7 +28,7 @@ export class ReservationService {
   }
 
 
-  getReservationsFromUserConnected(): Observable<Booking[]>{
+  getReservationsFromUserConnected(): Observable<Booking[]> {
     let bookings;
     this.dashboardDataSource.splice(0);
     const params = new HttpParams().set('userId', this.user.userId);
@@ -52,7 +52,7 @@ export class ReservationService {
           this.toastr.error(error.error['result'], this.cst.toastrTitle, this.cst.toastrOptions);
         }
       );*/
-      return this.httpClient.delete(this.cst.apiUrl + 'reservation/deleteReservation', { params: param });
+    return this.httpClient.delete(this.cst.apiUrl + 'reservation/deleteReservation', { params: param });
 
   }
 
@@ -68,6 +68,20 @@ export class ReservationService {
     return this.httpClient
       .get<Booking[]>(
         this.cst.apiUrl + 'reservation/reservationsByRoomId/',
+        { params: params });
+  }
+
+  getCheckReservation(roomId, startDate, endDate): Observable<Booking> {
+    // let roomId: string = roomId.toString();
+
+    const params = new HttpParams()
+      .set('roomId', roomId)
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+
+    return this.httpClient
+      .get<Booking>(
+        this.cst.apiUrl + 'reservation/checkReservation/',
         { params: params });
   }
 

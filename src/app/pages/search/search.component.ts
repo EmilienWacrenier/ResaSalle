@@ -301,6 +301,17 @@ export class SearchComponent implements OnInit {
     }
   }
 
+  loadAvailablesIfNoRecurrence(){
+    if(this.recurrenceIsChecked){
+      this.roomList = null;
+      this.roomService
+        .getAvailableRooms(this.roomRequiredCapacity,this.startDate, this.endDate)
+        .subscribe(
+          data => 
+          {this.roomList = data['result']}
+        );
+    }
+  }
   setRoomlist() {
     this.roomService.getRooms().subscribe(data => {
       this.roomList = data['result'];
@@ -471,14 +482,20 @@ export class SearchComponent implements OnInit {
     if (this.selectedEndDate) console.log(this.selectedEndDate);
     console.log(this.selectedHourEnd + ':' + this.selectedMinuteEnd);
     this.dsBooking = new MatTableDataSource<Booking>();
+    let bookingBuilt = new Booking();
+    /*bookingBuilt = {
+      startDate: moment().hours(this.selectedHourStart).minutes(this.selectedMinuteStart).toString(),
+      endDate: moment().hours(this.selectedHourEnd).minutes(this.selectedMinuteEnd).toString(),
+      object: this.selectedObjet,
+      roomId: this.selectedRoom.roomId,
+      userId: 
+    }*/
+    updateBookingsVerification() {
+      this.dsBooking.data = null;
+      /*this.reservationService.getCheckReservation().subscribe(
+        (response) => {
+          this.dsBooking.data = (response['result']);
+        })*/
+    }
   }
-*/
-  updateBookingsVerification() {
-    this.dsBooking.data = null;
-    this.roomService.getRooms().subscribe(
-      (response) => {
-        this.dsBooking.data = (response['result']);
-      })
-  }
-
-}
+  
