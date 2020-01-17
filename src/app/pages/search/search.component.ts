@@ -89,14 +89,10 @@ export class SearchComponent implements OnInit {
   //liste des salles (reponse)
   roomList = []
 
-<<<<<<< HEAD
-  bookingBuilt: Booking[];
-=======
   //variable pour le planning
   listeReservation: Booking[];
   weekDays: any[];
   bookingsOfTheWeek: any;
->>>>>>> 8da7a400ec4e9191849f6d0f1dc1984f6e027bf6
 
   dsBooking: MatTableDataSource<Booking>;
   displayedColumns: string[] = ['date', 'startDate', 'endDate', 'room'];
@@ -328,11 +324,7 @@ export class SearchComponent implements OnInit {
   }
 */
 
-<<<<<<< HEAD
-
-=======
   /* PLANNING */
->>>>>>> 8da7a400ec4e9191849f6d0f1dc1984f6e027bf6
 
   //au changement de salle, on change le planning en fonction de la salle selectionnée en appelant la fonction getPlanning
   onSelectRoomPlanning() {
@@ -390,12 +382,6 @@ export class SearchComponent implements OnInit {
     }
   }
 
-<<<<<<< HEAD
-  onChangeCapacity() {
-    this.selectedRoom = null;
-    this.loadAvailablesIfNoRecurrence();
-    console.log("No more selected room")
-=======
   //créer des listes en fonction des jours du tableau daysOfPlanning (qui est un tableau de jour de la semaine)
   //ca met les reservations dans une liste en fonction du jour de la semaine
   //en gros ca trie la liste des réservations en fonction du jour de la semaine
@@ -430,7 +416,6 @@ export class SearchComponent implements OnInit {
       this.sortReservationOfTheDayByHours(day, element);
     }
     return this.bookingsOfTheWeek;
->>>>>>> 8da7a400ec4e9191849f6d0f1dc1984f6e027bf6
   }
 
   // on cherche quand démarre la réunion donc on cherche l'index dans le tableau correspondant
@@ -496,14 +481,12 @@ export class SearchComponent implements OnInit {
       roomId: this.selectedRoom.roomId,
       userId: 
     }*/
+    updateBookingsVerification() {
+      this.dsBooking.data = null;
+      /*this.reservationService.getCheckReservation().subscribe(
+        (response) => {
+          this.dsBooking.data = (response['result']);
+        })*/
+    }
   }
-*/
-  updateBookingsVerification() {
-    this.dsBooking.data = null;
-    /*this.reservationService.getCheckReservation().subscribe(
-      (response) => {
-        this.dsBooking.data = (response['result']);
-      })*/
-  }
-
-}
+  
