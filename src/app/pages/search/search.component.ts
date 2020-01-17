@@ -11,7 +11,7 @@ import {
   BOOKING_MINUTES
 } from "../../constantes/constantes";
 import { RoomService } from 'src/app/services/room.service';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/material';
 import { BookingsearchComponent } from 'src/app/modals/bookingsearch/bookingsearch.component';
 import { Booking } from 'src/app/classes/booking';
 import { Room } from 'src/app/classes/room';
@@ -69,6 +69,11 @@ export class SearchComponent implements OnInit {
 
   //liste des salles (reponse)
   roomList = []
+
+
+
+  dsBooking: MatTableDataSource<Booking>;
+  displayedColumns: string[] = ['date', 'startDate', 'endDate', 'room'];
 
   constructor(
     private roomService: RoomService,
@@ -284,16 +289,16 @@ export class SearchComponent implements OnInit {
       })
   }
 
+  
+
   // Sélectionne une salle pour l'étape suivante, modifie les styles css sur la bonne card
   onSelectRoom(room) {
     if (room !== this.selectedRoom) {
       this.selectedRoom = room;
-
-      console.log(this.selectedRoom);
     }
   }
 
-  onChangeCapacity(){
+  onChangeCapacity() {
     this.selectedRoom = null;
     console.log("No more selected room")
   }
@@ -313,6 +318,31 @@ export class SearchComponent implements OnInit {
       .afterClosed().subscribe((data) => {
         console.log(data);
       });
+  }
+
+  //STEP FINAL
+  deleteBooking(booking) {
+    console.log(booking);
+
+  }
+
+  sendToVerification() {
+    console.log('Réservation : ');
+    console.log(this.selectedRoom);
+    console.log(this.selectedObjet);
+    console.log(this.selectedStartDate);
+    console.log(this.selectedHourStart + ':' + this.selectedMinuteStart);
+    if(this.selectedEndDate) console.log(this.selectedEndDate);
+    console.log(this.selectedHourEnd + ':' + this.selectedMinuteEnd);
+    this.dsBooking = new MatTableDataSource<Booking>();
+  }
+
+  updateBookingsVerification() {
+    this.dsBooking.data = null;
+    this.roomService.getRooms().subscribe(
+      (response) => {
+        this.dsBooking.data = (response['result']);
+      })
   }
 
 }
