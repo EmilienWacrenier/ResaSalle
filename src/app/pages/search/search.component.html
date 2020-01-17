@@ -31,7 +31,7 @@
                 <div class="col-auto p-3 border rounded bg-white">
                     <div class="calendrier">
                         <mat-calendar min="today" [selected]="selectedStartDate"
-                            (selectedChange)="onSelect($event); checkInput()">
+                            (selectedChange)="onSelectDate($event); checkInput()">
                         </mat-calendar>
                         <div class="d-block text-danger small" *ngIf="errorDate">{{errorDate}}</div>
                     </div>
@@ -125,47 +125,8 @@
                         {{recurrence}}
                     </mat-radio-button>
                 </mat-radio-group>
-                <div class="w-100 text-center text-danger small" *ngIf="errorMensualite">{{errorMensualite}}</div>
+                <div class="w-100 text-center text-danger small" *ngIf="errorLabelRecurrence">{{errorMensualite}}</div>
 
-            </div>
-
-            <div class="col-auto mensuelle">
-                <!-- if mensuelle -->
-                <div *ngIf="selectedRecurrence === 'mensuelle'">
-
-                    <!-- Groupe bouton radio "mensuelle"-->
-                    <mat-radio-group [(ngModel)]="selectedMensualite">
-
-                        <!-- Tous les x du mois -->
-                        <mat-radio-button class="d-block">
-                            Le
-                            <input matInput type="number" min="1" max="31" placeholder="1">
-                            tous les mois
-                        </mat-radio-button>
-
-                        <!-- Tous les "x ème" "jours" du mois -->
-                        <mat-radio-button class="d-block">
-                            Le
-                            <mat-form-field>
-                                <mat-select>
-                                    <mat-option *ngFor="let numSemaine of numSemaines" [value]="numSemaine">
-                                        {{numSemaine}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field>
-                                <mat-select>
-                                    <mat-option *ngFor="let jourSemaine of jourSemaines" [value]="jourSemaine">
-                                        {{jourSemaine}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            de tous les mois
-                        </mat-radio-button>
-
-                    </mat-radio-group>
-
-                </div>
             </div>
         </div>
 
@@ -174,12 +135,12 @@
             <!-- Date de fin de la recurrence -->
             <span class="finile">Fini le </span>
             <mat-form-field>
-                <input matInput [(ngModel)]="selectedEndDate" [matDatepicker]="picker"
+                <input matInput [(ngModel)]="selectedEndDateRecurrence" [matDatepicker]="picker"
                     (dateChange)="checkInputRecurrence()">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-            <div class="w-100 text-center text-danger small" *ngIf="errorEndDate">{{errorEndDate}}</div>
+            <div class="w-100 text-center text-danger small" *ngIf="errorEndDateRecurrence">{{errorEndDate}}</div>
         </div>
 
         <div class="row">
@@ -199,7 +160,8 @@
 
             <div class="container-fluid">
                 <h2>Capacité</h2>
-                <mat-slider [(ngModel)]="roomRequiredCapacity" thumbLabel="true" tickInterval="1" min="2" max="10" (change)="onChangeCapacity()">
+                <mat-slider [(ngModel)]="roomRequiredCapacity" thumbLabel="true" tickInterval="1" min="2" max="10"
+                    (change)="onChangeCapacity()">
                 </mat-slider>
             </div>
         </div>
@@ -236,8 +198,7 @@
             <div class="row">
                 <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
                 <div class="col-8">
-                    <button class="bouton-back-next" mat-button (click)="sendToVerification()"
-                        matStepperNext
+                    <button class="bouton-back-next" mat-button (click)="sendToVerification()" matStepperNext
                         [disabled]="!selectedRoom">Réserver</button>
                 </div>
             </div>
@@ -259,13 +220,13 @@
                                 <mat-cell *matCellDef="let element" class="dateTableCell"> {{ element.startDate }}
                                 </mat-cell>
                             </ng-container>
-            
+
                             <!-- Start Column -->
                             <ng-container matColumnDef="startDate">
                                 <mat-header-cell *matHeaderCellDef> Début </mat-header-cell>
                                 <mat-cell *matCellDef="let element"> {{ element.startDate }} </mat-cell>
                             </ng-container>
-            
+
                             <!-- End Column -->
                             <ng-container matColumnDef="endDate">
                                 <mat-header-cell *matHeaderCellDef> Fin </mat-header-cell>
@@ -276,20 +237,21 @@
                                 <mat-header-cell *matHeaderCellDef> Salle </mat-header-cell>
                                 <mat-cell *matCellDef="let element"> {{element.startDate}} </mat-cell>
                             </ng-container>
-            
+
                             <ng-container matColumnDef="actions">
                                 <mat-header-cell *matHeaderCellDef> </mat-header-cell>
                                 <mat-cell *matCellDef="let booking;  let j = index;">
                                     <i class="material-icons editBtn" focusable="false">
                                         edit
                                     </i>
-                                    <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(booking)">
+                                    <i class="material-icons deleteBtn" focusable="false"
+                                        (click)="deleteBooking(booking)">
                                         delete
                                     </i>
                                 </mat-cell>
                             </ng-container>
-            
-            
+
+
                             <mat-header-row class="tableHeader" *matHeaderRowDef="displayedColumns"></mat-header-row>
                             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                         </mat-table>
@@ -298,6 +260,109 @@
 
                     <!-- Calendrier -->
                     <div class="col-md-6 col-xs-12" style="height: 400px; background-color: red;">
+                        <div class="container">
+
+                            <div class="row align-items-center">
+                                <div class="col-auto text-center" *ngIf="rooms">
+                                    <mat-form-field>
+                                        <mat-select [(value)]="selectedRoom" (selectionChange)="onSelectRoom()">
+                                            <mat-option *ngFor="let room of rooms" [value]="room">
+                                                Salle {{room.name}} - Zone {{room.area}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                </div>
+
+                                <div class="col pr-5">
+                                    <mat-form-field class="float-right">
+                                        <input matInput [matDatepicker]="picker" placeholder="Selectionner une date"
+                                            (dateChange)="onSelectDate($event)" [value]="selectedDate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker startAt="today"></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container shadow mt-2 border">
+
+                            <div class="row mb-2">
+                                <div class="col-1 col-arrow-left position-relative" (click)="previousWeek()">
+                                    <mat-icon class="arrow-left">keyboard_arrow_left</mat-icon>
+                                </div>
+                                <div class="col">
+                                    <div class="row bg-white">
+                                        <div class="col-auto">
+                                            <div class="row">
+                                                <div class="w-100 text-right">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col border border-white text-center p-3 text-capitalize"
+                                            *ngFor="let day of weekDays">
+                                            {{day}}</div>
+                                    </div>
+
+                                    <div class="row light-blue-bg" id="week-header">
+                                        <div class="col-auto">
+                                            <div class="row bg-white px-2"
+                                                *ngFor="let hourOfPlanning of hoursOfPlanning; let i = index">
+                                                <div class="w-100 border border-white border-bottom-0 text-right"
+                                                    *ngIf="i%2 == 0">
+                                                    {{hourOfPlanning}}
+                                                </div>
+                                                <div class="w-100 border border-white border-bottom-0"
+                                                    *ngIf="i%2 !== 0">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col p-0" *ngFor="let resa of bookingsOfTheWeek; let i = index">
+                                            <div class="container">
+                                                <div class="row" *ngFor="let item of resa; let j = index">
+                                                    <div class=" w-100 border border-bottom-0 border-white text-right"
+                                                        *ngIf="j%2 == 0">
+                                                        <div class="item-is-true" *ngIf="item" matTooltip='
+                                                                        Réservé par : {{item.firstName}} {{item.lastName}},
+                                                                        Objet : {{item.object}},
+                                                                        Capacité : {{item.capacity}} pers.'>
+                                                            &nbsp;
+                                                        </div>
+
+                                                        <div class="item-is-false" *ngIf="!item"
+                                                            (click)="openDialog(i, j)">
+                                                            &nbsp;
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-100 border border-top-0 border-white"
+                                                        *ngIf="j%2 !== 0">
+                                                        <div class="item-is-true" *ngIf="item" matTooltip='
+                                                                    Réservé par : {{item.firstName}} {{item.lastName}},
+                                                                    Objet : {{item.object}},
+                                                                    Capacité : {{item.capacity}} pers.'>
+                                                            &nbsp;
+                                                        </div>
+
+                                                        <div class="item-is-false" *ngIf="!item"
+                                                            (click)="openDialog(i, j)">
+                                                            &nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-1 col-arrow-right position-relative" (click)="nextWeek()">
+                                    <mat-icon class="arrow-right">keyboard_arrow_right</mat-icon>
+                                </div>
+
+                            </div>
+                        </div>
 
                     </div>
                     <!-- /Calendrier -->
@@ -307,8 +372,7 @@
                 <div class="row">
                     <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
                     <div class="col-8">
-                        <button class="bouton-back-next" mat-button
-                            matStepperNext
+                        <button class="bouton-back-next" mat-button matStepperNext
                             [disabled]="!selectedRoom">Confirmer</button>
                     </div>
                 </div>
