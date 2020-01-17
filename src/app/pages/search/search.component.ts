@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import * as moment from 'moment'
+import * as moment from 'moment';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+
 
 import {
   RECURRENCE,
@@ -12,7 +14,6 @@ import {
 } from "../../constantes/constantes";
 import { RoomService } from 'src/app/services/room.service';
 import { MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/material';
-import { BookingsearchComponent } from 'src/app/modals/bookingsearch/bookingsearch.component';
 import { Booking } from 'src/app/classes/booking';
 import { Room } from 'src/app/classes/room';
 import { ReservationService } from 'src/app/services/reservation.service';
@@ -111,8 +112,6 @@ export class SearchComponent implements OnInit {
     this.selectedMinuteEnd = 0;
     this.selectedRoom = null;
     this.checkInput();
-    console.log(this.capacites);
-    this.capacites = CAPACITE;
     this.setRoomlist();
   }
 
@@ -211,6 +210,13 @@ export class SearchComponent implements OnInit {
     else return false;
   }
 
+  //A LA SELECTION DE LA DATE
+  //Met la valeur dans la variable selectedStartDate
+  //Affiche la valeur dans une autre variable (selectedDateDisplay)
+  onSelectEndDateRecurrence(event) {
+    this.selectedEndDateRecurrence = event.value;
+  }
+
   /* STEP RECURRENCE */
   checkInputRecurrence() {
     this.errorEndDateRecurrence = null;
@@ -233,10 +239,11 @@ export class SearchComponent implements OnInit {
 
   errorCheckRecurrence() {
     //check si la date est selectionnée
-    if (!this.selectedEndDateRecurrence) { this.errorEndDateRecurrence = "Veuillez renseigner une date" };
-
+    if (!this.selectedEndDateRecurrence || this.selectedEndDateRecurrence == null) {
+      this.errorEndDateRecurrence = "Veuillez renseigner une date" ;
+    }
     //check si la date selectionnée n'est pas passée
-    if (this.endDateIsWrong(this.selectedDate, this.selectedEndDateRecurrence)) {
+    else if (this.endDateIsWrong(this.selectedDate, this.selectedEndDateRecurrence)) {
       this.errorEndDateRecurrence = "Selectionner une date de fin de récurrence qui soit après la date de début"
     }
 

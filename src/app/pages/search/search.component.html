@@ -8,10 +8,10 @@
             <div class="row mb-3 p-3 border rounded bg-white">
                 <p class="m-0">
                     <mat-icon class="mr-2 blue-color">info</mat-icon>
-                    <span *ngIf="selectedStartDate">
+                    <span *ngIf="selectedObjet">
                         {{selectedObjet}}
                     </span>
-                    <span *ngIf="selectedStartDate">
+                    <span *ngIf="selectedDate">
                         {{selectedDateDisplay}}
                     </span>
                     <span *ngIf="selectedMinuteStart != null">
@@ -125,7 +125,7 @@
                         {{recurrence}}
                     </mat-radio-button>
                 </mat-radio-group>
-                <div class="w-100 text-center text-danger small" *ngIf="errorLabelRecurrence">{{errorMensualite}}</div>
+                <div class="w-100 text-center text-danger small" *ngIf="errorLabelRecurrence">{{errorLabelRecurrence}}</div>
 
             </div>
         </div>
@@ -134,13 +134,14 @@
         <div class="row my-3">
             <!-- Date de fin de la recurrence -->
             <span class="finile">Fini le </span>
-            <mat-form-field>
-                <input matInput [(ngModel)]="selectedEndDateRecurrence" [matDatepicker]="picker"
-                    (dateChange)="checkInputRecurrence()">
+            <mat-form-field>            
+                <input matInput [matDatepicker]="picker" 
+                (dateChange)="onSelectEndDateRecurrence($event); checkInputRecurrence()"
+                [value]="selectedEndDateRecurrence">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-            <div class="w-100 text-center text-danger small" *ngIf="errorEndDateRecurrence">{{errorEndDate}}</div>
+            <div class="w-100 text-center text-danger small" *ngIf="errorEndDateRecurrence">{{errorEndDateRecurrence}}</div>
         </div>
 
         <div class="row">
