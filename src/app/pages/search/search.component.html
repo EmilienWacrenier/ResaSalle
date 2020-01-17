@@ -236,8 +236,9 @@
             <div class="row">
                 <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
                 <div class="col-8">
-                    <button class="bouton-back-next" style="float: right;" mat-button (click)="getRoomsAvailable()"
-                        matStepperNext>Chercher les salles disponibles</button>
+                    <button class="bouton-back-next" mat-button (click)="sendToVerification()"
+                        matStepperNext
+                        [disabled]="!selectedRoom">Réserver</button>
                 </div>
             </div>
         </div>
@@ -251,7 +252,47 @@
                 <div class="row">
                     <!-- Liste Réservations -->
                     <div class="col-md-6 col-xs-12" style="height: 400px; background-color: blue;">
+                        <mat-table [dataSource]="dsBooking" class="mat-elevation-z8">
+                            <!-- Date Column -->
+                            <ng-container matColumnDef="date">
+                                <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                                <mat-cell *matCellDef="let element" class="dateTableCell"> {{ element.startDate }}
+                                </mat-cell>
+                            </ng-container>
+            
+                            <!-- Start Column -->
+                            <ng-container matColumnDef="startDate">
+                                <mat-header-cell *matHeaderCellDef> Début </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{ element.startDate }} </mat-cell>
+                            </ng-container>
+            
+                            <!-- End Column -->
+                            <ng-container matColumnDef="endDate">
+                                <mat-header-cell *matHeaderCellDef> Fin </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.endDate}} </mat-cell>
+                            </ng-container>
 
+                            <ng-container matColumnDef="room">
+                                <mat-header-cell *matHeaderCellDef> Salle </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.startDate}} </mat-cell>
+                            </ng-container>
+            
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                                <mat-cell *matCellDef="let booking;  let j = index;">
+                                    <i class="material-icons editBtn" focusable="false">
+                                        edit
+                                    </i>
+                                    <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(booking)">
+                                        delete
+                                    </i>
+                                </mat-cell>
+                            </ng-container>
+            
+            
+                            <mat-header-row class="tableHeader" *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table>
                     </div>
                     <!-- /Liste Réservations -->
 
@@ -260,6 +301,16 @@
 
                     </div>
                     <!-- /Calendrier -->
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
+                    <div class="col-8">
+                        <button class="bouton-back-next" mat-button
+                            matStepperNext
+                            [disabled]="!selectedRoom">Confirmer</button>
+                    </div>
                 </div>
             </div>
         </div>

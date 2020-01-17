@@ -6,6 +6,10 @@ h5{
   color: #0066a1;
 }
 
+::ng-deep .mat-horizontal-stepper-header{
+  pointer-events: none !important;
+}
+
 .stepper{
     margin: 3% 10% 0 10%;
     background-color: transparent;
@@ -38,6 +42,11 @@ h5{
     float: right;
     color: rgb(115, 154, 224);
     border: 1px solid rgb(115, 154, 224);
+}
+
+.bouton-back-next:disabled{
+  color: rgba(155, 152, 152, 0.585);
+  border: 1px solid rgba(155, 152, 152, 0.585);
 }
 
 .w-auto{

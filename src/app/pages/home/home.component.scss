@@ -3,9 +3,16 @@
   font-size:1.5em;
 }
 
+.rowRoom{
+  transition: 0.20s ease;
+}
+
 .rowRoom:hover{
   border-left: 5px solid rgb(57, 77, 112);
-  background-color: rgb(220, 230, 247)!important;
+  -webkit-box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.34);
+  -moz-box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.34);
+   box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.34);
+   transform: scale(1.01);
   cursor: pointer;
 }
 
