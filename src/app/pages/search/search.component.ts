@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Injectable } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import * as moment from 'moment'
 
@@ -15,13 +15,14 @@ import { BookingsearchComponent } from 'src/app/modals/bookingsearch/bookingsear
 import { Booking } from 'src/app/classes/booking';
 import { Room } from 'src/app/classes/room';
 
-
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
+
+  displayedColumns: string[] = ['date', 'heureDebut', 'heureFin','room'];
 
   //**********************DATE*************************
 
@@ -68,9 +69,21 @@ export class SearchComponent implements OnInit {
   //liste des salles (reponse)
   roomList = []
 
+
+ /*  config: NgbPopoverConfig;
+  configPopUp(config: NgbPopoverConfig){
+ // customize default values of popovers used by this component tree
+ config.placement = 'auto';
+ config.triggers = 'hover';
+  } */
+
+
+
   constructor(
     private roomService: RoomService,
-    public dialog: MatDialog){}
+    public dialog: MatDialog
+    ){}
+    
 
   ngOnInit() {
     this.onSelect(new Date());
@@ -302,6 +315,6 @@ export class SearchComponent implements OnInit {
       .afterClosed().subscribe((data) => {
         console.log(data);
       });
-  }
-
+  } 
 }
+

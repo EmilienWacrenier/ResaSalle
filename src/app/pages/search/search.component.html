@@ -211,33 +211,79 @@
             </div>
         </div>
         <div class=" my-3">
-                <div>
-                    <h2>Salles ({{roomRequiredCapacity}} personnes)</h2>
-                </div>
-                <div class="card-deck">
+            <div>
+                <h2>Salles ({{roomRequiredCapacity}} personnes)</h2>
+            </div>
+            <div class="card-deck">
 
-                    <div *ngFor="let room of roomList" (click)="openDialog(room)">
-                        <div *ngIf="room.capacity >= roomRequiredCapacity" class="card mb-3">
-                            <img src="../../../assets/salleDeReunion.jpg" class="card-img-top" alt="salleDeReunion">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ room.name }}</h5>
-                                <p class="card-text">
-                                    <small class="text-muted">{{ room.area }} - {{room.capacity}} pers.
-                                    </small>
-                                </p>
+                <div *ngFor="let room of roomList" (click)="openDialog(room)">
+                    <div *ngIf="room.capacity >= roomRequiredCapacity" class="card mb-3">
+                        <img src="../../../assets/salleDeReunion.jpg" class="card-img-top" alt="salleDeReunion">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ room.name }}</h5>
+                            <p class="card-text">
+                                <small class="text-muted">{{ room.area }} - {{room.capacity}} pers.
+                                </small>
+                            </p>
 
-                            </div>
                         </div>
                     </div>
                 </div>
-        </div>
-        <div class="container-fluid">
-            <div class="row">
-                <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
-                <div class="col-8">
-                    <button class="bouton-back-next" style="float: right;" mat-button (click)="getRoomsAvailable()"
-                        matStepperNext>Chercher les salles disponibles</button>
-                </div>
+            </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
+                <!--bouton d'apparance-->
+                <button type="button" class="btn btn-outline-secondary" [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="false" #p="ngbPopover">              
+                    Je suis un créneau du planing
+                </button>
+                <!--Pop up-->
+                <ng-template #popTitle class="popUp">
+                    Choix horaire 
+                    <button type="button" (click)="p.close()" class="btn btn-outline-secondary mr-2">
+                        <mat-icon >
+                            <i class="material-icons">
+                                close
+                            </i>
+                        </mat-icon>
+                    </button>
+                    
+                    
+                </ng-template>
+                <ng-template #popContent>
+                    <!-- <mat-form-field> -->
+                        
+                        
+                        <b >Début :</b>
+                        <mat-select [(ngModel)]="selectedHourStart" (openedChange)="checkInput()" >
+                            <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart" >
+                                {{hourStart}}
+                            </mat-option>
+                        </mat-select>
+                            <b >h</b> 
+                        <mat-select [(ngModel)]="selectedMinuteStart" (openedChange)="checkInput()" >
+                            <mat-option *ngFor="let minuteStart of bookingMinutes" [value]="minuteStart" >
+                                {{minuteStart}}
+                            </mat-option>
+                        </mat-select>
+                        <b >Fin :</b>
+                        
+                        <mat-select [(ngModel)]="selectedHourEnd" (openedChange)="checkInput()" >
+                            <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd" >
+                                {{hourEnd}}
+                            </mat-option>
+                        </mat-select> 
+                            <b >h</b>
+                        <mat-select [(ngModel)]="selectedMinuteEnd" (openedChange)="checkInput()" >
+                            <mat-option *ngFor="let minuteEnd of bookingMinutes" [value]="minuteEnd" >
+                                {{minuteEnd}}
+                            </mat-option>
+                        </mat-select>
+                        <input type="button" value="Valider" (click)="p.close()"> 
+                     <!-- </mat-form-field>  -->
+                </ng-template>
+                
             </div>
         </div>
     </mat-step>
@@ -246,21 +292,58 @@
     <mat-step>
         <div class="container-fluid">
             <ng-template matStepLabel>Résultats</ng-template>
-            <div class="row">
-                <div *ngFor="let room of roomList" class="col-md-4" (click)="openDialog(room)">
-                    <div class="thumbnails">
-                        <img src="../../../assets/salleDeReunion.jpg" class="img-fluid" alt="salleDeReunion">
-                        <div class="caption">
-                            {{room.name}}<br>
-                            <span class="small">{{room.area}}</span>
-                            <span class="small mx-2">-</span>
-                            <span class="small ">{{room.capacity}} pers.</span>
-                            <a class="d-block px-3 pb-3 text-right">
-                                <mat-icon>check_circle_outline</mat-icon>
-                            </a>
-                        </div>
-                    </div>
+            <div class="row row-cols-2">
+                
+                    <div class="col-7">
+                        <!-- <mat-list>
+                            <mat-list-item *ngFor="let room of roomList"> --> <!-- (click)="managConf" -->
+                                
+                                
+                                    <mat-table  >
+                                        <!-- Date Column -->
+                                        <ng-container matColumnDef="date">
+                                            <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                                            <mat-cell *matCellDef="let element" class="dateTableCell"> {{room.name}}
+                                            </mat-cell>
+                                        </ng-container>
+                        
+                                        <!-- Start Column -->
+                                        <ng-container matColumnDef="heureDebut">
+                                            <mat-header-cell *matHeaderCellDef> Début </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> {{room.area}} </mat-cell>
+                                        </ng-container>
+                        
+                                        <!-- End Column -->
+                                        <ng-container matColumnDef="heureFin">
+                                            <mat-header-cell *matHeaderCellDef> Fin </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> {{room.capacity}} </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="room">
+                                            <mat-header-cell *matHeaderCellDef> Salle </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> {{room.capacity}} </mat-cell>
+                                        </ng-container>
+                        
+                        
+                        
+                                        <mat-header-row class="tableHeader" *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+                                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                                    </mat-table>
+                                   
+                                
+                             <!--    {{room.name}}<br>
+                            {{room.area}}
+                                
+                                {{room.capacity}} -->
+                                <!-- <mat-divider></mat-divider -->
+                            <!-- </mat-list-item>
+                        </mat-list> -->
+                    
+                   
                 </div>
+                <div class="col-5">
+                    <p>calendrier</p>
+                </div>    
             </div>
         </div>
 
