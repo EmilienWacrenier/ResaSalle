@@ -1,75 +1,222 @@
 <div class="container-fluid p-5">
 
-    <div class="row mb-5">
+    <div class="row mb-3">
 
         <div class="col-auto">
             <h2> Mes Réservations </h2>
         </div>
     </div>
-    <mat-table [dataSource]="dsBooking" class="mat-elevation-z8" *ngIf="dsBooking.data.length > 0; else noDsData">
-        <!-- Date Column -->
-        <ng-container matColumnDef="date">
-            <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="dateTableCell"> {{element.startDate | date: 'dd MMM.'}}
-            </mat-cell>
-        </ng-container>
 
-        <!-- Start Column -->
-        <ng-container matColumnDef="start">
-            <mat-header-cell *matHeaderCellDef> Début </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.startDate | date: 'HH:mm' : 'GMT+0'}} </mat-cell>
-        </ng-container>
+    <div class="row my-2">
 
-        <!-- End Column -->
-        <ng-container matColumnDef="end">
-            <mat-header-cell *matHeaderCellDef> Fin </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.endDate | date: 'HH:mm' : 'GMT+0'}} </mat-cell>
-        </ng-container>
-
-        <!-- Room Column -->
-        <ng-container matColumnDef="room">
-            <mat-header-cell *matHeaderCellDef> Salle </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="roomTableCell"> {{element.room.name}} </mat-cell>
-        </ng-container>
-
-        <!-- Subject Column -->
-        <ng-container matColumnDef="subject">
-            <mat-header-cell *matHeaderCellDef> Sujet </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.object}} </mat-cell>
-        </ng-container>
-
-        <!-- Participants Column -->
-        <ng-container matColumnDef="participants">
-            <mat-header-cell *matHeaderCellDef> Participants </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                {{element.participants.length > 0 ? element.participants.length : 'N/A'}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="actions">
-            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-            <mat-cell *matCellDef="let element;  let j = index;">
-                <i class="material-icons editBtn" focusable="false" (click)="editBooking(element)">
-                    edit
-                </i>
-                <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(element.reservationId)">
-                    clear
-                </i>
-            </mat-cell>
-        </ng-container>
-
-
-        <mat-header-row class="tableHeader" *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-    <ng-template #noDsData>
-        <div class="row">
-            <mat-card class="col-12">
-                <mat-card-content>
-                    <div class="d-flex justify-content-center">
-                        <h5>Aucune réservation programmée</h5>
-                    </div>
-                </mat-card-content>
-            </mat-card>
+        <div class="col-auto">
+            <mat-form-field class="search-form">
+                <mat-label>Objet</mat-label>
+                <input matInput autocomplete="off" (keyup)="onKey($event)">
+                <mat-icon matPrefix>search</mat-icon>
+            </mat-form-field>
         </div>
-    </ng-template>
+
+        <a class="col-auto p-3 border rounded bg-white" (click)="onClickResaPonctuelles()">
+            Réservations ponctuelles
+        </a>
+        <a class="col-auto p-3 border rounded bg-white" (click)="onClickResaRecurrence()">
+            Réservations avec récurrence
+        </a>
+        <a class="col-auto p-3 border rounded bg-white" (click)="onClickResaParSalles()">
+            Réservation par salles
+        </a>
+        <a class="col-auto p-3 border rounded bg-white" (click)="onClickResaOfToday()">
+            Réservation du jour
+        </a>
+    </div>
+
+    <div class="row">
+        <div *ngFor="let resa of reservationsFilteredByObject">
+            <div class="row" *ngIf="resa.recurrenceId != null">
+                {{resa.startDate | date: 'dd MMM.'}}
+                - {{resa.startDate | date: 'HH:mm' : 'GMT+0'}}
+                - {{resa.endDate | date: 'HH:mm' : 'GMT+0'}}
+                - {{resa.room.name}}
+                - {{resa.object}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="resaPonctuelles">
+        <mat-table [dataSource]="dsBooking" class="mat-elevation-z8" *ngIf="dsBooking.data.length > 0; else noDsData">
+            <!-- Date Column -->
+            <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="dateTableCell"> {{element.startDate | date: 'dd MMM.'}}
+                </mat-cell>
+            </ng-container>
+
+            <!-- Start Column -->
+            <ng-container matColumnDef="start">
+                <mat-header-cell *matHeaderCellDef> Début </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.startDate | date: 'HH:mm' : 'GMT+0'}} </mat-cell>
+            </ng-container>
+
+            <!-- End Column -->
+            <ng-container matColumnDef="end">
+                <mat-header-cell *matHeaderCellDef> Fin </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.endDate | date: 'HH:mm' : 'GMT+0'}} </mat-cell>
+            </ng-container>
+
+            <!-- Room Column -->
+            <ng-container matColumnDef="room">
+                <mat-header-cell *matHeaderCellDef> Salle </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="roomTableCell"> {{element.room.name}} </mat-cell>
+            </ng-container>
+
+            <!-- Subject Column -->
+            <ng-container matColumnDef="subject">
+                <mat-header-cell *matHeaderCellDef> Sujet </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.object}} </mat-cell>
+            </ng-container>
+
+            <!-- Participants Column -->
+            <ng-container matColumnDef="participants">
+                <mat-header-cell *matHeaderCellDef> Participants </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.participants.length > 0 ? element.participants.length : 'N/A'}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let element;  let j = index;">
+                    <i class="material-icons editBtn" focusable="false" (click)="editBooking(element)">
+                        edit
+                    </i>
+                    <i class="material-icons deleteBtn" focusable="false"
+                        (click)="deleteBooking(element.reservationId)">
+                        clear
+                    </i>
+                </mat-cell>
+            </ng-container>
+
+
+            <mat-header-row class="tableHeader" *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <ng-template #noDsData>
+            <div class="row">
+                <mat-card class="col-12">
+                    <mat-card-content>
+                        <div class="d-flex justify-content-center">
+                            <h5>Aucune réservation programmée</h5>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </ng-template>
+    </div>
+
+    <div class="row" *ngIf="resaRecurrence">
+        <div *ngFor="let resa of reservationsOfUser">
+            <div class="row" *ngIf="resa.recurrenceId != null">
+                {{resa.startDate | date: 'dd MMM.'}}
+                - {{resa.startDate | date: 'HH:mm' : 'GMT+0'}}
+                - {{resa.endDate | date: 'HH:mm' : 'GMT+0'}}
+                - {{resa.room.name}}
+                - {{resa.object}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="resaParSalles">
+        <div class="container-fluid">
+            <div class="row text-center mb-3">
+                <a class="col p-3 bg-dark text-white" *ngFor="let room of rooms" (click)="getSelectedRoom(room.roomId)">
+                    {{room.name}}
+                </a>
+            </div>
+
+            <div class="row border-top border-bottom bg-info text-white p-3">
+                <div class="col-2">Date</div>
+                <div class="col-1">Début</div>
+                <div class="col-1">Fin</div>
+                <div class="col-2">Salle</div>
+                <div class="col-2">Object</div>
+                <div class="col-2">Participants</div>
+                <div class="col-2">.</div>
+            </div>
+
+            <div *ngFor="let resa of reservationsOfUser">
+                <div class="row border-bottom p-3 bg-white" *ngIf="resa.room.roomId == selectedRoomId">
+                    <div class="col-2">
+                        {{resa.startDate | date: 'dd MMMM'}}
+                    </div>
+                    <div class="col-1">
+                        {{resa.startDate | date: 'HH:mm' : 'GMT+0'}}
+                    </div>
+                    <div class="col-1">
+                        {{resa.endDate | date: 'HH:mm' : 'GMT+0'}}
+                    </div>
+                    <div class="col-2">
+                        {{resa.room.name}}
+                    </div>
+                    <div class="col-2">
+                        {{resa.object}}
+                    </div>
+                    <div class="col-2">
+                        {{resa.participants.length > 0 ? element.participants.length : 'N/A'}}
+                    </div>
+                    <div class="col-2">
+                        <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
+                            edit
+                        </i>
+                        <i class="material-icons deleteBtn" focusable="false"
+                            (click)="deleteBooking(resa.reservationId)">
+                            clear
+                        </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="resaOfToday">
+        <div class="container-fluid text-center">
+            <div class="row border-top border-bottom bg-info text-white p-3">
+                <div class="col-2">Date</div>
+                <div class="col-1">Début</div>
+                <div class="col-1">Fin</div>
+                <div class="col-2">Salle</div>
+                <div class="col-2">Object</div>
+                <div class="col-2">Participants</div>
+                <div class="col-2">.</div>
+            </div>
+
+            <div class="row border-bottom p-3 bg-white" *ngFor="let resa of resaToday">
+                <div class="col-2">
+                    {{resa.startDate | date: 'dd MMMM'}}
+                </div>
+                <div class="col-1">
+                    {{resa.startDate | date: 'HH:mm' : 'GMT+0'}}
+                </div>
+                <div class="col-1">
+                    {{resa.endDate | date: 'HH:mm' : 'GMT+0'}}
+                </div>
+                <div class="col-2">
+                    {{resa.room.name}}
+                </div>
+                <div class="col-2">
+                    {{resa.object}}
+                </div>
+                <div class="col-2">
+                    {{resa.participants.length > 0 ? element.participants.length : 'N/A'}}
+                </div>
+                <div class="col-2">
+                    <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
+                        edit
+                    </i>
+                    <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(resa.reservationId)">
+                        clear
+                    </i>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

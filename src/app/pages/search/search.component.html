@@ -8,10 +8,10 @@
             <div class="row mb-3 p-3 border rounded bg-white">
                 <p class="m-0">
                     <mat-icon class="mr-2 blue-color">info</mat-icon>
-                    <span *ngIf="selectedStartDate">
+                    <span *ngIf="selectedObjet">
                         {{selectedObjet}}
                     </span>
-                    <span *ngIf="selectedStartDate">
+                    <span *ngIf="selectedDate">
                         {{selectedDateDisplay}}
                     </span>
                     <span *ngIf="selectedMinuteStart != null">
@@ -30,8 +30,8 @@
             <div class="row mb-3 justify-content-between">
                 <div class="col-auto p-3 border rounded bg-white">
                     <div class="calendrier">
-                        <mat-calendar min="today" [selected]="selectedStartDate"
-                            (selectedChange)="onSelect($event); checkInput()">
+                        <mat-calendar min="today" [selected]="selectedDate"
+                            (selectedChange)="onSelectDate($event); checkInput()">
                         </mat-calendar>
                         <div class="d-block text-danger small" *ngIf="errorDate">{{errorDate}}</div>
                     </div>
@@ -125,47 +125,8 @@
                         {{recurrence}}
                     </mat-radio-button>
                 </mat-radio-group>
-                <div class="w-100 text-center text-danger small" *ngIf="errorMensualite">{{errorMensualite}}</div>
+                <div class="w-100 text-center text-danger small" *ngIf="errorLabelRecurrence">{{errorLabelRecurrence}}</div>
 
-            </div>
-
-            <div class="col-auto mensuelle">
-                <!-- if mensuelle -->
-                <div *ngIf="selectedRecurrence === 'mensuelle'">
-
-                    <!-- Groupe bouton radio "mensuelle"-->
-                    <mat-radio-group [(ngModel)]="selectedMensualite">
-
-                        <!-- Tous les x du mois -->
-                        <mat-radio-button class="d-block">
-                            Le
-                            <input matInput type="number" min="1" max="31" placeholder="1">
-                            tous les mois
-                        </mat-radio-button>
-
-                        <!-- Tous les "x ème" "jours" du mois -->
-                        <mat-radio-button class="d-block">
-                            Le
-                            <mat-form-field>
-                                <mat-select>
-                                    <mat-option *ngFor="let numSemaine of numSemaines" [value]="numSemaine">
-                                        {{numSemaine}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field>
-                                <mat-select>
-                                    <mat-option *ngFor="let jourSemaine of jourSemaines" [value]="jourSemaine">
-                                        {{jourSemaine}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            de tous les mois
-                        </mat-radio-button>
-
-                    </mat-radio-group>
-
-                </div>
             </div>
         </div>
 
@@ -173,13 +134,14 @@
         <div class="row my-3">
             <!-- Date de fin de la recurrence -->
             <span class="finile">Fini le </span>
-            <mat-form-field>
-                <input matInput [(ngModel)]="selectedEndDate" [matDatepicker]="picker"
-                    (dateChange)="checkInputRecurrence()">
+            <mat-form-field>            
+                <input matInput [matDatepicker]="picker" 
+                (dateChange)="onSelectEndDateRecurrence($event); checkInputRecurrence()"
+                [value]="selectedEndDateRecurrence">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-            <div class="w-100 text-center text-danger small" *ngIf="errorEndDate">{{errorEndDate}}</div>
+            <div class="w-100 text-center text-danger small" *ngIf="errorEndDateRecurrence">{{errorEndDateRecurrence}}</div>
         </div>
 
         <div class="row">
@@ -197,35 +159,37 @@
 
         <div class="row my-3">
 
-            <div class="example-container">
+            <div class="container-fluid">
                 <h2>Capacité</h2>
-
-                <mat-slider [(ngModel)]="roomRequiredCapacity" thumbLabel="true" tickInterval="1" min="2" max="10">
+                <mat-slider [(ngModel)]="roomRequiredCapacity" thumbLabel="true" tickInterval="1" min="2" max="10"
+                    (change)="onChangeCapacity()">
                 </mat-slider>
-                <!--
-                <div cdkDropList #capaciteList="cdkDropList" [cdkDropListData]="capacites"
-                    [cdkDropListConnectedTo]="[choixList]" class="capacite-list" (cdkDropListDropped)="drop($event)">
-                    <div class="drag-drop-items" *ngFor="let item of capacites" cdkDrag>{{item}} pers
-                    </div>
-                </div>-->
             </div>
         </div>
-        <div class=" my-3">
-            <div>
-                <h2>Salles ({{roomRequiredCapacity}} personnes)</h2>
-            </div>
-            <div class="card-deck">
 
-                <div *ngFor="let room of roomList" (click)="openDialog(room)">
-                    <div *ngIf="room.capacity >= roomRequiredCapacity" class="card mb-3">
-                        <img src="../../../assets/salleDeReunion.jpg" class="card-img-top" alt="salleDeReunion">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ room.name }}</h5>
-                            <p class="card-text">
-                                <small class="text-muted">{{ room.area }} - {{room.capacity}} pers.
-                                </small>
-                            </p>
+        <div class="row my-3">
+            <div class="container-fluid">
+                <div class="mb-3">
+                    <h2>Salles ({{roomRequiredCapacity}} personnes)</h2>
+                </div>
+                <div class="card-deck">
+                    <div *ngFor="let room of roomList" (click)="onSelectRoom(room)">
+                        <div *ngIf="room.capacity >= roomRequiredCapacity" class="card mb-3">
+                            <img src="../../../assets/salleDeReunion.jpg" class="card-img-top" alt="salleDeReunion">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ room.name }}
+                                    <mat-icon [ngClass]="{
+                                        'badge-unselected-room':selectedRoom === null || selectedRoom !== room,
+                                        'badge-selected-room':selectedRoom === room
+                                    }">
+                                        check_circle_outline</mat-icon>
+                                </h5>
+                                <p class="card-text">
+                                    <small class="text-muted">{{ room.area }} - {{room.capacity}} pers.
+                                    </small>
+                                </p>
 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -284,6 +248,14 @@
                      <!-- </mat-form-field>  -->
                 </ng-template>
                 
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
+                <div class="col-8">
+                    <button class="bouton-back-next" mat-button (click)="sendToVerification()" matStepperNext
+                        [disabled]="!selectedRoom">Réserver</button>
+                </div>
             </div>
         </div>
     </mat-step>
@@ -292,54 +264,172 @@
     <mat-step>
         <div class="container-fluid">
             <ng-template matStepLabel>Résultats</ng-template>
-            <div class="row row-cols-2">
-                
-                    <div class="col-7">
-                        <!-- <mat-list>
-                            <mat-list-item *ngFor="let room of roomList"> --> <!-- (click)="managConf" -->
-                                
-                                
-                                    <mat-table  >
-                                        <!-- Date Column -->
-                                        <ng-container matColumnDef="date">
-                                            <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-                                            <mat-cell *matCellDef="let element" class="dateTableCell"> {{room.name}}
-                                            </mat-cell>
-                                        </ng-container>
-                        
-                                        <!-- Start Column -->
-                                        <ng-container matColumnDef="heureDebut">
-                                            <mat-header-cell *matHeaderCellDef> Début </mat-header-cell>
-                                            <mat-cell *matCellDef="let element"> {{room.area}} </mat-cell>
-                                        </ng-container>
-                        
-                                        <!-- End Column -->
-                                        <ng-container matColumnDef="heureFin">
-                                            <mat-header-cell *matHeaderCellDef> Fin </mat-header-cell>
-                                            <mat-cell *matCellDef="let element"> {{room.capacity}} </mat-cell>
-                                        </ng-container>
+            <div class="container">
+                <div class="row">
+                    <!-- Liste Réservations -->
+                    <div class="col-md-6 col-xs-12" style="height: 400px; background-color: blue;">
+                        <mat-table [dataSource]="dsBooking" class="mat-elevation-z8">
+                            <!-- Date Column -->
+                            <ng-container matColumnDef="date">
+                                <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                                <mat-cell *matCellDef="let element" class="dateTableCell"> {{ element.startDate }}
+                                </mat-cell>
+                            </ng-container>
 
-                                        <ng-container matColumnDef="room">
-                                            <mat-header-cell *matHeaderCellDef> Salle </mat-header-cell>
-                                            <mat-cell *matCellDef="let element"> {{room.capacity}} </mat-cell>
-                                        </ng-container>
-                        
-                        
-                        
-                                        <mat-header-row class="tableHeader" *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
-                                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                                    </mat-table>
-                                   
-                                
-                             <!--    {{room.name}}<br>
-                            {{room.area}}
-                                
-                                {{room.capacity}} -->
-                                <!-- <mat-divider></mat-divider -->
-                            <!-- </mat-list-item>
-                        </mat-list> -->
-                    
-                   
+                            <!-- Start Column -->
+                            <ng-container matColumnDef="startDate">
+                                <mat-header-cell *matHeaderCellDef> Début </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{ element.startDate }} </mat-cell>
+                            </ng-container>
+
+                            <!-- End Column -->
+                            <ng-container matColumnDef="endDate">
+                                <mat-header-cell *matHeaderCellDef> Fin </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.endDate}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="room">
+                                <mat-header-cell *matHeaderCellDef> Salle </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.startDate}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                                <mat-cell *matCellDef="let booking;  let j = index;">
+                                    <i class="material-icons editBtn" focusable="false">
+                                        edit
+                                    </i>
+                                    <i class="material-icons deleteBtn" focusable="false"
+                                        (click)="deleteBooking(booking)">
+                                        delete
+                                    </i>
+                                </mat-cell>
+                            </ng-container>
+
+
+                            <mat-header-row class="tableHeader" *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table>
+                    </div>
+                    <!-- /Liste Réservations -->
+
+                    <!-- Calendrier -->
+                    <div class="col-md-6 col-xs-12" style="height: 400px; background-color: red;">
+                        <div class="container">
+
+                            <div class="row align-items-center">
+                                <div class="col-auto text-center" *ngIf="rooms">
+                                    <mat-form-field>
+                                        <mat-select [(value)]="selectedRoom" (selectionChange)="onSelectRoom()">
+                                            <mat-option *ngFor="let room of rooms" [value]="room">
+                                                Salle {{room.name}} - Zone {{room.area}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                </div>
+
+                                <div class="col pr-5">
+                                    <mat-form-field class="float-right">
+                                        <input matInput [matDatepicker]="picker" placeholder="Selectionner une date"
+                                            (dateChange)="onSelectDate($event)" [value]="selectedDate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker startAt="today"></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container shadow mt-2 border">
+
+                            <div class="row mb-2">
+                                <div class="col-1 col-arrow-left position-relative" (click)="previousWeek()">
+                                    <mat-icon class="arrow-left">keyboard_arrow_left</mat-icon>
+                                </div>
+                                <div class="col">
+                                    <div class="row bg-white">
+                                        <div class="col-auto">
+                                            <div class="row">
+                                                <div class="w-100 text-right">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col border border-white text-center p-3 text-capitalize"
+                                            *ngFor="let day of weekDays">
+                                            {{day}}</div>
+                                    </div>
+
+                                    <div class="row light-blue-bg" id="week-header">
+                                        <div class="col-auto">
+                                            <div class="row bg-white px-2"
+                                                *ngFor="let hourOfPlanning of hoursOfPlanning; let i = index">
+                                                <div class="w-100 border border-white border-bottom-0 text-right"
+                                                    *ngIf="i%2 == 0">
+                                                    {{hourOfPlanning}}
+                                                </div>
+                                                <div class="w-100 border border-white border-bottom-0"
+                                                    *ngIf="i%2 !== 0">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col p-0" *ngFor="let resa of bookingsOfTheWeek; let i = index">
+                                            <div class="container">
+                                                <div class="row" *ngFor="let item of resa; let j = index">
+                                                    <div class=" w-100 border border-bottom-0 border-white text-right"
+                                                        *ngIf="j%2 == 0">
+                                                        <div class="item-is-true" *ngIf="item" matTooltip='
+                                                                        Réservé par : {{item.firstName}} {{item.lastName}},
+                                                                        Objet : {{item.object}},
+                                                                        Capacité : {{item.capacity}} pers.'>
+                                                            &nbsp;
+                                                        </div>
+
+                                                        <div class="item-is-false" *ngIf="!item"
+                                                            (click)="openDialog(i, j)">
+                                                            &nbsp;
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-100 border border-top-0 border-white"
+                                                        *ngIf="j%2 !== 0">
+                                                        <div class="item-is-true" *ngIf="item" matTooltip='
+                                                                    Réservé par : {{item.firstName}} {{item.lastName}},
+                                                                    Objet : {{item.object}},
+                                                                    Capacité : {{item.capacity}} pers.'>
+                                                            &nbsp;
+                                                        </div>
+
+                                                        <div class="item-is-false" *ngIf="!item"
+                                                            (click)="openDialog(i, j)">
+                                                            &nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-1 col-arrow-right position-relative" (click)="nextWeek()">
+                                    <mat-icon class="arrow-right">keyboard_arrow_right</mat-icon>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /Calendrier -->
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
+                    <div class="col-8">
+                        <button class="bouton-back-next" mat-button matStepperNext
+                            [disabled]="!selectedRoom">Confirmer</button>
+                    </div>
                 </div>
                 <div class="col-5">
                     <p>calendrier</p>
