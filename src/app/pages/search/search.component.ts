@@ -204,10 +204,27 @@ export class SearchComponent implements OnInit {
     else return false;
   }
 
+  //formate les dates pour le back
+  formatDates() {
+    this.startDateWithHours = moment(this.selectedDate)
+      .set({ hour: this.selectedHourStart, minute: this.selectedMinuteStart, second: 0, millisecond: 0 })
+      .format();
+
+    this.endDateWithHours = moment(this.selectedDate)
+      .set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
+      .format();
+  }
+
   //check si la récurrence est activée
   isReccurent() {
-    if (this.recurrenceIsChecked) { return true; }
-    else return false;
+    if (this.recurrenceIsChecked) {
+      this.getRoomsAvailable(this.roomRequiredCapacity, this.startDateWithHours, this.endDateWithHours);
+      return true; 
+    }
+    else {
+      this.setRoomlist();
+      return false;
+    }
   }
 
   //A LA SELECTION DE LA DATE
@@ -269,67 +286,31 @@ export class SearchComponent implements OnInit {
   onChangeCapacity() {
     this.selectedRoom = null;
     console.log("No more selected room")
-  }
 
-
-  setParameters() {
-    this.startDateWithHours = moment(this.selectedDate)
-      .set({ hour: this.selectedHourStart, minute: this.selectedMinuteStart, second: 0, millisecond: 0 })
-      .format();
-
-    this.endDateWithHours = moment(this.selectedDate)
-      .set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
-      .format();
-
-    if (!this.recurrenceIsChecked) {
-      this.roomParameters = {
-        startDate: this.startDateWithHours,
-        endDate: this.endDateWithHours,
-        roomId: this.selectedRoom.roomId
-      }
-      console.log(this.roomParameters);
-    }
-    else {
-      this.roomParameters = {
-        startDate: this.startDateWithHours,
-        endDate: this.endDateWithHours,
-        roomId: this.selectedRoom.roomId,
-        labelRecurrence: this.selectedRecurrence,
-        endDateRecurrence: this.selectedEndDateRecurrence
-      }
-      console.log(this.roomParameters);
+    if(!this.isReccurent){
+      this.getRoomsAvailable(this.roomRequiredCapacity, this.startDateWithHours, this.endDateWithHours);
     }
   }
 
-  loadAvailablesIfNoRecurrence(){
-    if(this.recurrenceIsChecked){
-      this.roomList = null;
-      this.roomService
-        .getAvailableRooms(this.roomRequiredCapacity,this.startDate, this.endDate)
-        .subscribe(
-          data => 
-          {this.roomList = data['result']}
-        );
-    }
-  }
   setRoomlist() {
     this.roomService.getRooms().subscribe(data => {
       this.roomList = data['result'];
     })
   }
 
-  /*
-  getRoomsAvailable() {
-    this.setParameters();
-
+  getRoomsAvailable(capacity, startDate, endDate) {
     this.roomService
-      .getAvailableRooms(this.capacity, this.startDate, this.endDate)
+      .getAvailableRooms(capacity, startDate, endDate)
       .subscribe(data => {
         this.roomList = data['result'];
         console.log(this.roomList)
       })
   }
-*/
+
+
+  
+
+  
 
   /* PLANNING 
 
