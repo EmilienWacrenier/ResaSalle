@@ -17,6 +17,7 @@ import { MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/materia
 import { Booking } from 'src/app/classes/booking';
 import { Room } from 'src/app/classes/room';
 import { ReservationService } from 'src/app/services/reservation.service';
+import { User } from 'src/app/classes/user';
 
 
 @Component({
@@ -26,6 +27,7 @@ import { ReservationService } from 'src/app/services/reservation.service';
 })
 export class SearchComponent implements OnInit {
 
+  currentUser : User;
   //**********************DATE*************************
 
   //heures et minutes dans le select
@@ -101,7 +103,9 @@ export class SearchComponent implements OnInit {
   constructor(
     private roomService: RoomService,
     private reservationService: ReservationService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog) {
+      this.currentUser = JSON.parse(localStorage.getItem('user'));
+     }
 
   ngOnInit() {
     this.onSelectDate(new Date());
@@ -217,12 +221,14 @@ export class SearchComponent implements OnInit {
 
   //check si la récurrence est activée
   isReccurent() {
-    if (this.recurrenceIsChecked) {
+    if (!this.recurrenceIsChecked) {
       this.getRoomsAvailable(this.roomRequiredCapacity, this.startDateWithHours, this.endDateWithHours);
+      console.log("n'est pas recurrent, montre les salles dispos");
       return true; 
     }
     else {
       this.setRoomlist();
+      console.log("est recurrent, montre la step de la recurrence");
       return false;
     }
   }
@@ -285,9 +291,11 @@ export class SearchComponent implements OnInit {
 
   onChangeCapacity() {
     this.selectedRoom = null;
-    console.log("No more selected room")
+    console.log("No more selected room");
+    console.log(this.recurrenceIsChecked);
 
-    if(!this.isReccurent){
+    if(!this.recurrenceIsChecked){
+      this.roomList = [];
       this.getRoomsAvailable(this.roomRequiredCapacity, this.startDateWithHours, this.endDateWithHours);
     }
   }
@@ -299,12 +307,36 @@ export class SearchComponent implements OnInit {
   }
 
   getRoomsAvailable(capacity, startDate, endDate) {
+
     this.roomService
       .getAvailableRooms(capacity, startDate, endDate)
       .subscribe(data => {
         this.roomList = data['result'];
         console.log(this.roomList)
       })
+  }
+
+  sendToVerification() {
+    console.log('Réservation : ');
+    console.log(this.selectedRoom);
+    console.log(this.selectedObjet);
+    console.log(this.startDateWithHours);
+    console.log(this.endDateWithHours);
+    console.log(this.selectedRecurrence);
+    console.log(this.selectedEndDateRecurrence);
+    
+    this.dsBooking = new MatTableDataSource<Booking>();
+    
+    let bookingBuilt = {
+      startDate: this.startDateWithHours,
+      endDate: this.endDateWithHours,
+      object: this.selectedObjet,
+      roomId: this.selectedRoom.roomId,
+      userId: this.currentUser.userId,
+      recurrenceLabel : this.selectedRecurrence,
+      recurrenceEndDate : this.selectedEndDateRecurrence
+    }
+    console.log("send to verif")
   }
 
 
@@ -453,24 +485,9 @@ export class SearchComponent implements OnInit {
     console.log(booking);
 
   }
-/*
-  sendToVerification() {
-    console.log('Réservation : ');
-    console.log(this.selectedRoom);
-    console.log(this.selectedObjet);
-    console.log(this.selectedStartDate);
-    console.log(this.selectedHourStart + ':' + this.selectedMinuteStart);
-    if (this.selectedEndDate) console.log(this.selectedEndDate);
-    console.log(this.selectedHourEnd + ':' + this.selectedMinuteEnd);
-    this.dsBooking = new MatTableDataSource<Booking>();
-    let bookingBuilt = new Booking();
-    /*bookingBuilt = {
-      startDate: moment().hours(this.selectedHourStart).minutes(this.selectedMinuteStart).toString(),
-      endDate: moment().hours(this.selectedHourEnd).minutes(this.selectedMinuteEnd).toString(),
-      object: this.selectedObjet,
-      roomId: this.selectedRoom.roomId,
-      userId: 
-    }*/
+
+  
+
     updateBookingsVerification() {
       this.dsBooking.data = null;
       /*this.reservationService.getCheckReservation().subscribe(

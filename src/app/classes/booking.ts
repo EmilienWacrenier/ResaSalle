@@ -12,5 +12,4 @@ export class Booking {
     recurence_id?: number;
     roomId: number;
     room?: Room;
-    users: User[];
 }

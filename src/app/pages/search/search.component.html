@@ -105,7 +105,7 @@
             <div class="row">
                 <div class="col-12">
                     <button class="bouton-back-next" mat-button matStepperNext
-                        [disabled]="!datasAreGood">Suivant</button>
+                    (click)="formatDates(); isReccurent()" [disabled]="!datasAreGood">Suivant</button>
                 </div>
             </div>
 
