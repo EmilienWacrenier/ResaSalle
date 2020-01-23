@@ -21,6 +21,14 @@ export class ReservationService {
 
   createReservation(reservation): Observable<string> {
     return this.httpClient
+      .post<string>(this.cst.apiUrl + 'reservation/createSimpleReservation', reservation)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  createReservationRecurrence(reservation): Observable<string> {
+    return this.httpClient
       .post<string>(this.cst.apiUrl + 'reservation/createReservation', reservation)
       .pipe(
         catchError(this.handleError)
