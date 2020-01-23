@@ -34,7 +34,7 @@ export class BookingdetailsComponent implements OnInit {
   selectedMinuteStart: number;
   selectedHourEnd: number;
   selectedMinuteEnd: number;
-  objet: string;
+  objet: string = "Réunion";
 
 
   errorObjet: string;
@@ -42,11 +42,6 @@ export class BookingdetailsComponent implements OnInit {
   errorHourEnd: string;
   errorDate: string;
   baseMessage: string;
-
-  users: User[]
-  usersList;
-  selectedParticipants = [];
-  emailList = [];
 
   selectedDateFromPlanning;
 
@@ -63,8 +58,12 @@ export class BookingdetailsComponent implements OnInit {
     console.log(this.currentUser);
     //récupération des infos de la salle selectionnée par rapport au component parent
     this.room = this.data.room;
+
+    /*
     //récupération des users en base
     this.getUsers();
+    */
+
     //set les paramètres en fonction de la case cliquée sur le planning
     this.setParamsOnInit(this.data.day, this.data.hour);
   }
@@ -72,6 +71,7 @@ export class BookingdetailsComponent implements OnInit {
   onNoClick(): void {
     this.bookingDetailsDialogRef.close();
   }
+
   //set les paramètres en fonction de la case cliquée sur le planning
   setParamsOnInit(day, hour) {
     this.selectedDate = new Date(moment().isoWeekday(day + 1).format());
@@ -96,68 +96,7 @@ export class BookingdetailsComponent implements OnInit {
     this.selectedDate = event.value;
     console.log(this.selectedDate);
   }
-
-  //Appel à l'api pour avoir la liste des participants
-  getUsers() {
-    this.userService
-      .getUsers()
-      .subscribe(data => {
-        this.users = data['result'];
-        this.users.sort(
-          (a, b) => a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase())
-        );
-        console.log(this.users);
-        this.usersList = this.users;
-      })
-  }
-
-  //recherche de participants
-  onKey(event) {
-    let valueSearch = event.target.value.toLowerCase();
-    console.log(valueSearch);
-    this.usersList = this.users.filter(user =>
-      user.firstName.toLowerCase().includes(valueSearch)
-      || user.lastName.toLowerCase().includes(valueSearch)
-    );
-  }
-
-  //Affichage des vignettes
-  //parcours d'une collection de users selectionnés et insertion de value cf hmtl l.23 [value]="user.miniature"
-  onSelectParticipant(user) {
-    console.log(user);
-    if (this.selectedParticipants.includes(user)) {
-      //supprime le participant
-      this.selectedParticipants.splice(this.selectedParticipants.indexOf(user), 1);
-    }
-    else {
-      //ajoute le participant
-      this.selectedParticipants.push(user);
-      console.log(this.selectedParticipants);
-    }
-  }
-
-  //ajout d'un email quand on presse entrée
-  onKeyEnter(event) {
-    let valueEmail = event.target.value;
-    this.emailList.push(valueEmail);
-  }
-
-  //supprimer un participant selectionné au clic
-  removeParticipant(user) {
-    this.selectedParticipants.splice(this.selectedParticipants.indexOf(user), 1);
-  }
-
-  //supprime un email ajouté au clic
-  removeEmail(email) {
-    this.emailList.splice(this.selectedParticipants.indexOf(email), 1);
-  }
-
-  //reset la liste des participants quand on clique sur le bouton reset
-  resetParticipants() {
-    this.selectedParticipants = [];
-    this.emailList = [];
-  }
-
+  
   //au clic de la création de la réservation
   onSubmit() {
 
@@ -190,20 +129,12 @@ export class BookingdetailsComponent implements OnInit {
         "startDate : " + startDate + " . endDate : " + endDate
       )
 
-      let participantIdList = [];
-      for (const participant of this.selectedParticipants) {
-        participantIdList.push(participant.userId);
-      }
-
-      console.log(participantIdList);
-
       let reservation = {
         startDate: startDate,
         endDate: endDate,
         object: this.objet,
         userId: this.currentUser.userId,
-        roomId: this.room.roomId,
-        users: participantIdList
+        roomId: this.room.roomId
       };
 
       console.log('La réservation : ' + reservation.startDate);
@@ -211,7 +142,6 @@ export class BookingdetailsComponent implements OnInit {
       console.log('La réservation : ' + reservation.object);
       console.log('La réservation : ' + reservation.userId);
       console.log('La réservation : ' + reservation.roomId);
-      console.log('La réservation : ' + reservation.users);
       //this.createReservation(reservation);
 
       this.createReservation(reservation);

@@ -15,12 +15,12 @@
                         {{selectedDateDisplay}}
                     </span>
                     <span *ngIf="selectedMinuteStart != null">
-                        de {{selectedHourStart}}:
+                        de {{selectedHourStart}} :
                         <span *ngIf="selectedMinuteStart == 0">00</span>
                         <span *ngIf="selectedMinuteStart == 30">30</span>
                     </span>
                     <span *ngIf="selectedMinuteEnd != null">
-                        jusqu'à {{selectedHourEnd}}:
+                        jusqu'à {{selectedHourEnd}} :
                         <span *ngIf="selectedMinuteEnd == 0">00</span>
                         <span *ngIf="selectedMinuteEnd == 30">30</span>.
                     </span>
@@ -105,7 +105,7 @@
             <div class="row">
                 <div class="col-12">
                     <button class="bouton-back-next" mat-button matStepperNext
-                        [disabled]="!datasAreGood">Suivant</button>
+                    (click)="formatDates(); isReccurent()" [disabled]="!datasAreGood">Suivant</button>
                 </div>
             </div>
 

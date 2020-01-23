@@ -52,7 +52,7 @@ export class AdminComponent implements OnInit {
       const body = {
         name: this.createRoomForm.controls.roomName.value,
         area: this.createRoomForm.controls.roomArea.value,
-        capacity: this.newRoomCapacity
+        capacity: this.newRoomCapacity.toString()
       }
 
       this.roomService.createRoom(body).subscribe(
