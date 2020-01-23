@@ -473,8 +473,8 @@ export class SearchComponent implements OnInit {
     console.log(booking);
 
   }
-/*
-  sendToVerification() {
+
+  /* sendToVerification() {
     console.log('Réservation : ');
     console.log(this.selectedRoom);
     console.log(this.selectedObjet);
@@ -484,19 +484,19 @@ export class SearchComponent implements OnInit {
     console.log(this.selectedHourEnd + ':' + this.selectedMinuteEnd);
     this.dsBooking = new MatTableDataSource<Booking>();
     let bookingBuilt = new Booking();
-    /*bookingBuilt = {
+    bookingBuilt = {
       startDate: moment().hours(this.selectedHourStart).minutes(this.selectedMinuteStart).toString(),
       endDate: moment().hours(this.selectedHourEnd).minutes(this.selectedMinuteEnd).toString(),
       object: this.selectedObjet,
       roomId: this.selectedRoom.roomId,
       userId: 
-    }*/
+    } */
     updateBookingsVerification() {
       this.dsBooking.data = null;
-      /*this.reservationService.getCheckReservation().subscribe(
+      /* this.reservationService.getCheckReservation().subscribe(
         (response) => {
           this.dsBooking.data = (response['result']);
-        })*/
+        }) */
     }
   }
   

@@ -197,11 +197,11 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
+            <!-- <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button> -->
                 <!--bouton d'apparance-->
-                <button type="button" class="btn btn-outline-secondary" [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="false" #p="ngbPopover">              
+               <!--  <button type="button" class="btn btn-outline-secondary" [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="false" #p="ngbPopover">              
                     Je suis un créneau du planing
-                </button>
+                </button> -->
                 <!--Pop up-->
                 <ng-template #popTitle class="popUp">
                     Choix horaire 
@@ -258,6 +258,7 @@
                 </div>
             </div>
         </div>
+        </div>
     </mat-step>
 
     <!-- Résultats -->
@@ -268,22 +269,22 @@
                 <div class="row">
                     <!-- Liste Réservations -->
                     <div class="col-md-6 col-xs-12" style="height: 400px; background-color: blue;">
-                        <mat-table [dataSource]="dsBooking" class="mat-elevation-z8">
+                        <!-- <mat-table [dataSource]="dsBooking" class="mat-elevation-z8"> -->
                             <!-- Date Column -->
-                            <ng-container matColumnDef="date">
+                            <!-- <ng-container matColumnDef="date">
                                 <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
                                 <mat-cell *matCellDef="let element" class="dateTableCell"> {{ element.startDate }}
                                 </mat-cell>
-                            </ng-container>
+                            </ng-container> -->
 
                             <!-- Start Column -->
-                            <ng-container matColumnDef="startDate">
+                           <!--  <ng-container matColumnDef="startDate">
                                 <mat-header-cell *matHeaderCellDef> Début </mat-header-cell>
                                 <mat-cell *matCellDef="let element"> {{ element.startDate }} </mat-cell>
-                            </ng-container>
+                            </ng-container> -->
 
                             <!-- End Column -->
-                            <ng-container matColumnDef="endDate">
+                          <!--   <ng-container matColumnDef="endDate">
                                 <mat-header-cell *matHeaderCellDef> Fin </mat-header-cell>
                                 <mat-cell *matCellDef="let element"> {{element.endDate}} </mat-cell>
                             </ng-container>
@@ -309,7 +310,49 @@
 
                             <mat-header-row class="tableHeader" *matHeaderRowDef="displayedColumns"></mat-header-row>
                             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                        </mat-table>
+                        </mat-table> -->
+                        <!-- <table class="table mat-table table-hover" [dataSource]="dsBooking" class="mat-elevation-z8">
+                            <thead>
+                              <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Début</th>
+                                <th scope="col">Fin</th>
+                                <th scope="col">Salle</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td scope="row" ></td>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                              </tr>
+                              <tr>
+                                <td scope="row"></td>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                              </tr>
+                              <tr>
+                                <td scope="row">3</td>
+                                <td>Larry the Bird</td>
+                                <td>@twitter</td>
+                                <td>@jfkld</td>
+                              </tr>
+                            </tbody>
+                          </table> -->
+                         
+                          <div class="list-group" >
+                            <a href="" class="list-group-item list-group-item-action active"> Cras justo odio</a>
+                            <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+                            <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+                            <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+                            <a href="#" class="list-group-item list-group-item-action">Vestibulum at eros</a>
+                          </div>
+
+                          
+                        
+
                     </div>
                     <!-- /Liste Réservations -->
 
@@ -436,6 +479,6 @@
                 </div>    
             </div>
         </div>
-
+    
     </mat-step>
 </mat-horizontal-stepper>
