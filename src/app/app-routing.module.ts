@@ -27,7 +27,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: '**',
+    path: '**',// si on demande une page qui n'est pas identifiée comme connue
     redirectTo: '/',
     pathMatch: 'full'
   }
