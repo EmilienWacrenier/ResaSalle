@@ -29,7 +29,6 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import {NgModule} from '@angular/core';
 
@@ -66,8 +65,7 @@ import {NgModule} from '@angular/core';
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule,
-    DragDropModule
+    MatPaginatorModule
   ],
   exports: [
     MatCheckboxModule,
@@ -101,8 +99,7 @@ import {NgModule} from '@angular/core';
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule,
-    DragDropModule
+    MatPaginatorModule
   ],
 })
 

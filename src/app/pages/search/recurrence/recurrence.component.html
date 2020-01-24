@@ -1,0 +1,33 @@
+<div class="row my-3">
+    <div class="col-4 border-right">
+
+        <!-- Groupe radio bouton mensualité -->
+        <mat-radio-group [(ngModel)]="selectedRecurrence" (change)="checkInputRecurrence()">
+            <mat-radio-button class="d-block marg" *ngFor="let recurrence of recurrences" [value]="recurrence">
+                {{recurrence}}
+            </mat-radio-button>
+        </mat-radio-group>
+        <div class="w-100 text-center text-danger small" *ngIf="errorLabelRecurrence">{{errorLabelRecurrence}}</div>
+
+    </div>
+</div>
+
+
+<div class="row my-3">
+    <!-- Date de fin de la recurrence -->
+    <span class="finile">Fini le </span>
+    <mat-form-field>            
+        <input matInput [matDatepicker]="picker" 
+        (dateChange)="onSelectEndDateRecurrence($event); checkInputRecurrence()"
+        [value]="selectedEndDateRecurrence">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div class="w-100 text-center text-danger small" *ngIf="errorEndDateRecurrence">{{errorEndDateRecurrence}}</div>
+</div>
+
+<div class="row">
+    <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
+    <button class="bouton-back-next" mat-button matStepperNext
+        [disabled]="!datasRecurrenceAreGood">Suivant</button>
+</div>
