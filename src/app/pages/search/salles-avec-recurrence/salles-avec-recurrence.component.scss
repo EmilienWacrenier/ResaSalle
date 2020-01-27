@@ -1,0 +1,62 @@
+.img-salle{
+    width: 100%;
+    height: 100px;
+    background-color:lightgrey ;
+  }
+
+  mat-icon{
+    vertical-align: bottom;
+  }
+
+  .mat-slider-horizontal {
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .card-deck{
+    justify-content: center;
+  }
+
+  .card{
+    cursor: pointer;
+    transition: 0.20s ease;
+  }
+
+  .badge-selected-room{
+    position: absolute;
+    color: limegreen;
+    right: 20px;
+    font-size: 25px;
+  }
+
+  .badge-unselected-room{
+    position: absolute;
+    color: rgba(0,0,0,.38);
+    right: 20px;
+    font-size: 25px;
+  }
+
+
+  .card:hover .badge-unselected-room {
+    position: absolute;
+    color: limegreen;
+    font-size: 25px;
+  }
+  .card:hover {
+    -webkit-box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.34);
+    -moz-box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.34);
+    box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.34);
+    transform: scale(1.05);
+  }
+
+  .bouton-back-next{
+    margin-right: 10px ;
+    float: right;
+    color: rgb(115, 154, 224);
+    border: 1px solid rgb(115, 154, 224);
+}
+
+.bouton-back-next:disabled{
+  color: rgba(155, 152, 152, 0.585);
+  border: 1px solid rgba(155, 152, 152, 0.585);
+}

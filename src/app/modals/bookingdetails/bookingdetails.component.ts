@@ -59,11 +59,6 @@ export class BookingdetailsComponent implements OnInit {
     //récupération des infos de la salle selectionnée par rapport au component parent
     this.room = this.data.room;
 
-    /*
-    //récupération des users en base
-    this.getUsers();
-    */
-
     //set les paramètres en fonction de la case cliquée sur le planning
     this.setParamsOnInit(this.data.day, this.data.hour);
   }
@@ -159,7 +154,7 @@ export class BookingdetailsComponent implements OnInit {
             selectedDate: this.selectedDate
           }
           
-          setTimeout( () => this.bookingDetailsDialogRef.close(data), 2000 );
+          setTimeout( () => this.bookingDetailsDialogRef.close(data), 1000 );
         }, (error) => {
           console.log(error);
           this.baseMessage = error;
