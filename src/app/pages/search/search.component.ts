@@ -302,13 +302,27 @@ export class SearchComponent implements OnInit {
   }
 
   loadAvailablesIfNoRecurrence(){
-    if(this.recurrenceIsChecked){
+    console.log(this.recurrenceIsChecked);
+    this.startDateWithHours = moment(this.selectedDate)
+    .set({ hour: this.selectedHourStart, minute: this.selectedMinuteStart, second: 0, millisecond: 0 })
+    .format("YYYY-MM-DD HH:mm:ss");
+
+  this.endDateWithHours = moment(this.selectedDate)
+    .set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
+    .format("YYYY-MM-DD HH:mm:ss");
+    console.log(this.roomRequiredCapacity,this.startDateWithHours, this.endDateWithHours);
+    
+    if(!this.recurrenceIsChecked){
       this.roomList = null;
+      
       this.roomService
-        .getAvailableRooms(this.roomRequiredCapacity,this.startDate, this.endDate)
+        .getAvailableRooms(this.roomRequiredCapacity,this.startDateWithHours, this.endDateWithHours)
         .subscribe(
           data => 
-          {this.roomList = data['result']}
+          {
+            this.roomList = data['result'],
+            console.log(data['result'])
+          }
         );
     }
   }
