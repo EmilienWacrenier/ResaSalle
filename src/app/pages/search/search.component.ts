@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 import {
@@ -17,7 +17,7 @@ import { MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/materia
 import { Booking } from 'src/app/classes/booking';
 import { Room } from 'src/app/classes/room';
 import { ReservationService } from 'src/app/services/reservation.service';
-
+import { User } from 'src/app/classes/user';
 
 @Component({
   selector: 'app-search',
@@ -26,6 +26,9 @@ import { ReservationService } from 'src/app/services/reservation.service';
 })
 export class SearchComponent implements OnInit {
 
+  displayedColumns: string[] = ['date', 'heureDebut', 'heureFin', 'room'];
+
+  currentUser: User;
   //**********************DATE*************************
 
   //heures et minutes dans le select
@@ -96,12 +99,14 @@ export class SearchComponent implements OnInit {
   bookingsOfTheWeek: any;
 
   dsBooking: MatTableDataSource<Booking>;
-  displayedColumns: string[] = ['date', 'startDate', 'endDate', 'room'];
+  /* displayedColumns: string[] = ['date', 'startDate', 'endDate', 'room']; */
 
   constructor(
     private roomService: RoomService,
     private reservationService: ReservationService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog) {
+    this.currentUser = JSON.parse(localStorage.getItem('user'));
+  }
 
   ngOnInit() {
     this.onSelectDate(new Date());
@@ -204,10 +209,29 @@ export class SearchComponent implements OnInit {
     else return false;
   }
 
+  //formate les dates pour le back
+  formatDates() {
+    this.startDateWithHours = moment(this.selectedDate)
+      .set({ hour: this.selectedHourStart, minute: this.selectedMinuteStart, second: 0, millisecond: 0 })
+      .format();
+
+    this.endDateWithHours = moment(this.selectedDate)
+      .set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
+      .format();
+  }
+
   //check si la récurrence est activée
   isReccurent() {
-    if (this.recurrenceIsChecked) { return true; }
-    else return false;
+    if (!this.recurrenceIsChecked) {
+      this.getRoomsAvailable(this.roomRequiredCapacity, this.startDateWithHours, this.endDateWithHours);
+      console.log("n'est pas recurrent, montre les salles dispos");
+      return true;
+    }
+    else {
+      this.setRoomlist();
+      console.log("est recurrent, montre la step de la recurrence");
+      return false;
+    }
   }
 
   //A LA SELECTION DE LA DATE
@@ -240,7 +264,7 @@ export class SearchComponent implements OnInit {
   errorCheckRecurrence() {
     //check si la date est selectionnée
     if (!this.selectedEndDateRecurrence || this.selectedEndDateRecurrence == null) {
-      this.errorEndDateRecurrence = "Veuillez renseigner une date" ;
+      this.errorEndDateRecurrence = "Veuillez renseigner une date";
     }
     //check si la date selectionnée n'est pas passée
     else if (this.endDateIsWrong(this.selectedDate, this.selectedEndDateRecurrence)) {
@@ -268,248 +292,231 @@ export class SearchComponent implements OnInit {
 
   onChangeCapacity() {
     this.selectedRoom = null;
-    console.log("No more selected room")
+    console.log("No more selected room");
+    console.log(this.recurrenceIsChecked);
+
+    if (!this.recurrenceIsChecked) {
+      this.getRoomsAvailable(this.roomRequiredCapacity, this.startDateWithHours, this.endDateWithHours);
+    }
   }
 
-
-  setParameters() {
+ /* loadAvailablesIfNoRecurrence() {
+    console.log(this.recurrenceIsChecked);
     this.startDateWithHours = moment(this.selectedDate)
       .set({ hour: this.selectedHourStart, minute: this.selectedMinuteStart, second: 0, millisecond: 0 })
-      .format();
+      .format("YYYY-MM-DD HH:mm:ss");
 
     this.endDateWithHours = moment(this.selectedDate)
       .set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
-      .format();
+      .format("YYYY-MM-DD HH:mm:ss");
+    console.log(this.roomRequiredCapacity, this.startDateWithHours, this.endDateWithHours);
 
     if (!this.recurrenceIsChecked) {
-      this.roomParameters = {
-        startDate: this.startDateWithHours,
-        endDate: this.endDateWithHours,
-        roomId: this.selectedRoom.roomId
-      }
-      console.log(this.roomParameters);
-    }
-    else {
-      this.roomParameters = {
-        startDate: this.startDateWithHours,
-        endDate: this.endDateWithHours,
-        roomId: this.selectedRoom.roomId,
-        labelRecurrence: this.selectedRecurrence,
-        endDateRecurrence: this.selectedEndDateRecurrence
-      }
-      console.log(this.roomParameters);
-    }
-  }
-
-  loadAvailablesIfNoRecurrence(){
-    console.log(this.recurrenceIsChecked);
-    this.startDateWithHours = moment(this.selectedDate)
-    .set({ hour: this.selectedHourStart, minute: this.selectedMinuteStart, second: 0, millisecond: 0 })
-    .format("YYYY-MM-DD HH:mm:ss");
-
-  this.endDateWithHours = moment(this.selectedDate)
-    .set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
-    .format("YYYY-MM-DD HH:mm:ss");
-    console.log(this.roomRequiredCapacity,this.startDateWithHours, this.endDateWithHours);
-    
-    if(!this.recurrenceIsChecked){
       this.roomList = null;
-      
+
       this.roomService
-        .getAvailableRooms(this.roomRequiredCapacity,this.startDateWithHours, this.endDateWithHours)
+        .getAvailableRooms(this.roomRequiredCapacity, this.startDateWithHours, this.endDateWithHours)
         .subscribe(
-          data => 
-          {
+          data => {
             this.roomList = data['result'],
-            console.log(data['result'])
+              console.log(data['result'])
           }
         );
     }
-  }
-  setRoomlist() {
-    this.roomService.getRooms().subscribe(data => {
+  } */
+setRoomlist() {
+  this.roomService.getRooms().subscribe(data => {
+    this.roomList = data['result'];
+  })
+}
+
+getRoomsAvailable(capacity, startDate, endDate) {
+
+  this.roomService
+    .getAvailableRooms(capacity, startDate, endDate)
+    .subscribe(data => {
       this.roomList = data['result'];
+      console.log(this.roomList)
     })
+}
+
+sendToVerification() {
+  console.log('Réservation : ');
+  console.log(this.selectedRoom);
+  console.log(this.selectedObjet);
+  console.log(this.startDateWithHours);
+  console.log(this.endDateWithHours);
+  console.log(this.selectedRecurrence);
+  console.log(this.selectedEndDateRecurrence);
+
+  this.dsBooking = new MatTableDataSource<Booking>();
+
+  let bookingBuilt = {
+    startDate: this.startDateWithHours,
+    endDate: this.endDateWithHours,
+    object: this.selectedObjet,
+    roomId: this.selectedRoom.roomId,
+    userId: this.currentUser.userId,
+    recurrenceLabel: this.selectedRecurrence,
+    recurrenceEndDate: this.selectedEndDateRecurrence
+  }
+  console.log("send to verif")
+}
+
+
+
+
+
+
+/* PLANNING 
+
+//au changement de salle, on change le planning en fonction de la salle selectionnée en appelant la fonction getPlanning
+onSelectRoomPlanning() {
+  this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+}
+
+//au changement de la date, on change la valeur de la date et on appel la fonction getPlanning
+onSelectDatePlanning(event) {
+  this.selectedDate = event.value;
+  this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+}
+
+//inialise le tableau des jours de la semaine, le 1er jour de la semaine et le dernier pour les paramètres de la fonction getReservationsOfThisWeek
+getPlanning(roomId, selectedDate) {
+  //recupère les jours de la semaine pour le header en affichage
+  this.getDaysOfThisWeek(selectedDate);
+
+  //récupère le lundi de la semaine du jour sélectionné
+  let startWeek = this.findStartOfWeek(selectedDate);
+
+  //récupère le dimanche de la semaine du jour sélectionné
+  let endWeek = this.findEndOfWeek(selectedDate);
+
+  //appel à l'API pour récupèrer les reservations en base
+  this.getReservationsOfThisWeek(roomId, startWeek, endWeek);
+}
+
+//Appel à l'api
+getReservationsOfThisWeek(salleId, startDate, endDate) {
+  this.reservationService
+    .getReservationsOfThisWeek(salleId, startDate, endDate)
+    .subscribe(data => {
+      this.listeReservation = data['result'];
+      console.log(this.listeReservation);
+      //Traitement de la liste de réservation et création du tableau planning
+      this.createBookingListsbyDay(this.listeReservation);
+    })
+}
+
+//retourne la date du lundi de la semaine du jour selectionné
+findStartOfWeek(date) {
+  return moment(date).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).isoWeekday(1).format();
+}
+
+//retourne la date du dimanche de la semaine du jour selectionné
+findEndOfWeek(date) {
+  return moment(date).set({ hour: 23, minute: 59, second: 59, millisecond: 0 }).isoWeekday(7).format();
+}
+
+//retourne un tableau avec la date des jours de la semaine selectionnée
+getDaysOfThisWeek(date) {
+  this.weekDays = [];
+  for (var i = 1; i < 6; i++) {
+    this.weekDays.push(moment(date).locale('fr').isoWeekday(i).format('dddd DD MMM'));
+  }
+}
+
+//créer des listes en fonction des jours du tableau daysOfPlanning (qui est un tableau de jour de la semaine)
+//ca met les reservations dans une liste en fonction du jour de la semaine
+//en gros ca trie la liste des réservations en fonction du jour de la semaine
+createBookingListsbyDay(liste) {
+
+  //initialisation du tableau planning avec des valeurs "null"
+  var objet = null;
+
+  for (var i = 0; i < 5; i++) {
+    this.bookingsOfTheWeek[i] = [];
   }
 
-  /*
-  getRoomsAvailable() {
-    this.setParameters();
-
-    this.roomService
-      .getAvailableRooms(this.capacity, this.startDate, this.endDate)
-      .subscribe(data => {
-        this.roomList = data['result'];
-        console.log(this.roomList)
-      })
+  for (var i = 0; i < 5; i++) {
+    for (var j = 0; j < 20; j++) {
+      this.bookingsOfTheWeek[i].push(objet);
+    }
   }
+
+  // pour chaque réservation de la liste, on lui donne une variable "day" dont la valeur correspond au jour de la semaine (lundi = 0, mardi= 1, ect)
+  // puis on appelle la fonction sortReservationOfTheDayByHours
+  for (const element of liste) {
+    let day = 0;;
+
+    switch (moment(element.startDate).locale('fr').format('dddd')) {
+      case 'lundi': day = 0; break;
+      case 'mardi': day = 1; break;
+      case 'mercredi': day = 2; break;
+      case 'jeudi': day = 3; break;
+      case 'vendredi': day = 4; break;
+    }
+
+    this.sortReservationOfTheDayByHours(day, element);
+  }
+  return this.bookingsOfTheWeek;
+}
+
+// on cherche quand démarre la réunion donc on cherche l'index dans le tableau correspondant
+// et on remplace la valeur null autant de fois que la réservation dure
+sortReservationOfTheDayByHours(day, element) {
+  // on cherche l'heure de début, l'heure de fin et la durée de la réservation en minutes
+  let hDebut = new Date(element.startDate).getUTCHours() * 60 + new Date(element.startDate).getUTCMinutes();
+  let hFin = new Date(element.endDate).getUTCHours() * 60 + new Date(element.endDate).getUTCMinutes();
+  let dureeResa = (hFin - hDebut);
+
+  //on démarre le compteur de minute à 8h donc 480 minutes
+  let compteurMinute = 480;
+  //on démarre le compteur d'index à 0
+  let compteurIndex = 0;
+
+  //iteration pour savoir quand remplir le tableau:
+  //On ajoute 30 minutes au compteur de minutes tant que le compteur de minute est différent de l'heure de début
+  //Tant que la condition on ajoute 1 au compteur d'index. On aura alors la valeur de l'index ou il faut ajouter la réservation
+  while (hDebut != compteurMinute) {
+    compteurMinute = compteurMinute + 30;
+    compteurIndex = compteurIndex + 1;
+  }
+
+  //on remplit le tableau à l'index calculé et on le remplit autant de fois que la condition le peut (en fonction de la durée de la réservation)
+  for (let k = 0; k < dureeResa; k = k + 30) {
+    this.bookingsOfTheWeek[day][compteurIndex] = element;
+    compteurIndex = compteurIndex + 1;
+  }
+}
+
+//bouton pour aller à la semaine précédente
+previousWeek() {
+  this.selectedDate = new Date(moment(this.selectedDate).subtract(7, 'days').format());
+  this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+}
+
+//bouton pour aller à la semaine suivante
+nextWeek() {
+  this.selectedDate = new Date(moment(this.selectedDate).add(7, 'days').format());
+  this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+}
+
 */
 
-  /* PLANNING 
+//STEP FINAL
+deleteBooking(booking) {
+  console.log(booking);
 
-  //au changement de salle, on change le planning en fonction de la salle selectionnée en appelant la fonction getPlanning
-  onSelectRoomPlanning() {
-    this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+}
+
+
+updateBookingsVerification() {
+  this.dsBooking.data = null;
+  /* this.reservationService.getCheckReservation().subscribe(
+    (response) => {
+      this.dsBooking.data = (response['result']);
+    }) */
+}
   }
 
-  //au changement de la date, on change la valeur de la date et on appel la fonction getPlanning
-  onSelectDatePlanning(event) {
-    this.selectedDate = event.value;
-    this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
-  }
-
-  //inialise le tableau des jours de la semaine, le 1er jour de la semaine et le dernier pour les paramètres de la fonction getReservationsOfThisWeek
-  getPlanning(roomId, selectedDate) {
-    //recupère les jours de la semaine pour le header en affichage
-    this.getDaysOfThisWeek(selectedDate);
-
-    //récupère le lundi de la semaine du jour sélectionné
-    let startWeek = this.findStartOfWeek(selectedDate);
-
-    //récupère le dimanche de la semaine du jour sélectionné
-    let endWeek = this.findEndOfWeek(selectedDate);
-
-    //appel à l'API pour récupèrer les reservations en base
-    this.getReservationsOfThisWeek(roomId, startWeek, endWeek);
-  }
-
-  //Appel à l'api
-  getReservationsOfThisWeek(salleId, startDate, endDate) {
-    this.reservationService
-      .getReservationsOfThisWeek(salleId, startDate, endDate)
-      .subscribe(data => {
-        this.listeReservation = data['result'];
-        console.log(this.listeReservation);
-        //Traitement de la liste de réservation et création du tableau planning
-        this.createBookingListsbyDay(this.listeReservation);
-      })
-  }
-
-  //retourne la date du lundi de la semaine du jour selectionné
-  findStartOfWeek(date) {
-    return moment(date).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).isoWeekday(1).format();
-  }
-
-  //retourne la date du dimanche de la semaine du jour selectionné
-  findEndOfWeek(date) {
-    return moment(date).set({ hour: 23, minute: 59, second: 59, millisecond: 0 }).isoWeekday(7).format();
-  }
-
-  //retourne un tableau avec la date des jours de la semaine selectionnée
-  getDaysOfThisWeek(date) {
-    this.weekDays = [];
-    for (var i = 1; i < 6; i++) {
-      this.weekDays.push(moment(date).locale('fr').isoWeekday(i).format('dddd DD MMM'));
-    }
-  }
-
-  //créer des listes en fonction des jours du tableau daysOfPlanning (qui est un tableau de jour de la semaine)
-  //ca met les reservations dans une liste en fonction du jour de la semaine
-  //en gros ca trie la liste des réservations en fonction du jour de la semaine
-  createBookingListsbyDay(liste) {
-
-    //initialisation du tableau planning avec des valeurs "null"
-    var objet = null;
-
-    for (var i = 0; i < 5; i++) {
-      this.bookingsOfTheWeek[i] = [];
-    }
-
-    for (var i = 0; i < 5; i++) {
-      for (var j = 0; j < 20; j++) {
-        this.bookingsOfTheWeek[i].push(objet);
-      }
-    }
-
-    // pour chaque réservation de la liste, on lui donne une variable "day" dont la valeur correspond au jour de la semaine (lundi = 0, mardi= 1, ect)
-    // puis on appelle la fonction sortReservationOfTheDayByHours
-    for (const element of liste) {
-      let day = 0;;
-
-      switch (moment(element.startDate).locale('fr').format('dddd')) {
-        case 'lundi': day = 0; break;
-        case 'mardi': day = 1; break;
-        case 'mercredi': day = 2; break;
-        case 'jeudi': day = 3; break;
-        case 'vendredi': day = 4; break;
-      }
-
-      this.sortReservationOfTheDayByHours(day, element);
-    }
-    return this.bookingsOfTheWeek;
-  }
-
-  // on cherche quand démarre la réunion donc on cherche l'index dans le tableau correspondant
-  // et on remplace la valeur null autant de fois que la réservation dure
-  sortReservationOfTheDayByHours(day, element) {
-    // on cherche l'heure de début, l'heure de fin et la durée de la réservation en minutes
-    let hDebut = new Date(element.startDate).getUTCHours() * 60 + new Date(element.startDate).getUTCMinutes();
-    let hFin = new Date(element.endDate).getUTCHours() * 60 + new Date(element.endDate).getUTCMinutes();
-    let dureeResa = (hFin - hDebut);
-
-    //on démarre le compteur de minute à 8h donc 480 minutes
-    let compteurMinute = 480;
-    //on démarre le compteur d'index à 0
-    let compteurIndex = 0;
-
-    //iteration pour savoir quand remplir le tableau:
-    //On ajoute 30 minutes au compteur de minutes tant que le compteur de minute est différent de l'heure de début
-    //Tant que la condition on ajoute 1 au compteur d'index. On aura alors la valeur de l'index ou il faut ajouter la réservation
-    while (hDebut != compteurMinute) {
-      compteurMinute = compteurMinute + 30;
-      compteurIndex = compteurIndex + 1;
-    }
-
-    //on remplit le tableau à l'index calculé et on le remplit autant de fois que la condition le peut (en fonction de la durée de la réservation)
-    for (let k = 0; k < dureeResa; k = k + 30) {
-      this.bookingsOfTheWeek[day][compteurIndex] = element;
-      compteurIndex = compteurIndex + 1;
-    }
-  }
-
-  //bouton pour aller à la semaine précédente
-  previousWeek() {
-    this.selectedDate = new Date(moment(this.selectedDate).subtract(7, 'days').format());
-    this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
-  }
-
-  //bouton pour aller à la semaine suivante
-  nextWeek() {
-    this.selectedDate = new Date(moment(this.selectedDate).add(7, 'days').format());
-    this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
-  }
-
-  */
-
-  //STEP FINAL
-  deleteBooking(booking) {
-    console.log(booking);
-
-  }
-/*
-  sendToVerification() {
-    console.log('Réservation : ');
-    console.log(this.selectedRoom);
-    console.log(this.selectedObjet);
-    console.log(this.selectedStartDate);
-    console.log(this.selectedHourStart + ':' + this.selectedMinuteStart);
-    if (this.selectedEndDate) console.log(this.selectedEndDate);
-    console.log(this.selectedHourEnd + ':' + this.selectedMinuteEnd);
-    this.dsBooking = new MatTableDataSource<Booking>();
-    let bookingBuilt = new Booking();
-    /*bookingBuilt = {
-      startDate: moment().hours(this.selectedHourStart).minutes(this.selectedMinuteStart).toString(),
-      endDate: moment().hours(this.selectedHourEnd).minutes(this.selectedMinuteEnd).toString(),
-      object: this.selectedObjet,
-      roomId: this.selectedRoom.roomId,
-      userId: 
-    }*/
-    updateBookingsVerification() {
-      this.dsBooking.data = null;
-      /*this.reservationService.getCheckReservation().subscribe(
-        (response) => {
-          this.dsBooking.data = (response['result']);
-        })*/
-    }
-  }
-  
