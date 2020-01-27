@@ -2,7 +2,7 @@
     <div class="col-4 border-right">
 
         <!-- Groupe radio bouton mensualité -->
-        <mat-radio-group [(ngModel)]="selectedRecurrence" (change)="checkInputRecurrence()">
+        <mat-radio-group [(ngModel)]="selectedRecurrenceName" (change)="checkInputRecurrence()">
             <mat-radio-button class="d-block marg" *ngFor="let recurrence of recurrences" [value]="recurrence">
                 {{recurrence}}
             </mat-radio-button>
@@ -28,6 +28,6 @@
 
 <div class="row">
     <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
-    <button class="bouton-back-next" mat-button matStepperNext
+    <button class="bouton-back-next" mat-button matStepperNext (click)="setRecurrenceParams"
         [disabled]="!datasRecurrenceAreGood">Suivant</button>
 </div>

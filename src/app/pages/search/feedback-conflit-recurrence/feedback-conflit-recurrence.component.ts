@@ -9,7 +9,7 @@ import { Booking } from 'src/app/classes/booking';
 })
 export class FeedbackConflitRecurrenceComponent implements OnInit {
 
-    //variable pour le planning
+  //variable pour le planning
   listeReservation: Booking[];
   weekDays: any[];
   bookingsOfTheWeek: any;
@@ -20,6 +20,20 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  //STEP FINAL
+  deleteBooking(booking) {
+    console.log(booking);
+
+  }
+
+  updateBookingsVerification() {
+    this.dsBooking.data = null;
+    /*this.reservationService.getCheckReservation().subscribe(
+      (response) => {
+        this.dsBooking.data = (response['result']);
+      })*/
   }
   /* PLANNING 
 
@@ -157,20 +171,6 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
 
   */
 
-  //STEP FINAL
-  deleteBooking(booking) {
-    console.log(booking);
 
-  }
-
-  
-
-    updateBookingsVerification() {
-      this.dsBooking.data = null;
-      /*this.reservationService.getCheckReservation().subscribe(
-        (response) => {
-          this.dsBooking.data = (response['result']);
-        })*/
-    }
 
 }

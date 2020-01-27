@@ -1,23 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 
+import { RECURRENCE } from "../../../constantes/constantes";
+import { SearchDataServiceService } from 'src/app/services/search-data-service.service';
+
 @Component({
   selector: 'app-recurrence',
   templateUrl: './recurrence.component.html',
   styleUrls: ['./recurrence.component.scss']
 })
 export class RecurrenceComponent implements OnInit {
+
+  recurrences: string[] = RECURRENCE;
+  startDate : Date;
    //variables pour le slide toggle pour activer la récurrence ou non
   selectedEndDateRecurrence: Date;
-  selectedRecurrence: string;
+  selectedRecurrenceName: string;
 
   errorLabelRecurrence: string;
   errorEndDateRecurrence: string;
 
   datasRecurrenceAreGood = false;
 
-  constructor() { }
+  constructor(
+    private searchDataService : SearchDataServiceService
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.searchDataService.startDate$.subscribe(res => this.startDate = res);
+  }
   
     //A LA SELECTION DE LA DATE
   //Met la valeur dans la variable selectedStartDate
@@ -27,17 +37,19 @@ export class RecurrenceComponent implements OnInit {
   }
 
   /* STEP RECURRENCE */
-  /*
+  
   checkInputRecurrence() {
     this.errorEndDateRecurrence = null;
     this.errorLabelRecurrence = null;
 
+    console.log(this.selectedRecurrenceName);
+
     if (!this.selectedEndDateRecurrence
-      || !this.selectedRecurrence
-      || this.endDateIsWrong(this.selectedDate, this.selectedEndDateRecurrence)) {
+      || !this.selectedRecurrenceName
+      || this.endDateIsWrong(this.startDate, this.selectedEndDateRecurrence)) {
       this.errorCheckRecurrence();
       console.log(this.selectedEndDateRecurrence);
-      console.log(this.selectedRecurrence);
+      console.log(this.selectedRecurrenceName);
       this.datasRecurrenceAreGood = false;
       console.log(this.datasRecurrenceAreGood);
     }
@@ -47,18 +59,18 @@ export class RecurrenceComponent implements OnInit {
     }
   }
 
-
   errorCheckRecurrence() {
     //check si la date est selectionnée
     if (!this.selectedEndDateRecurrence || this.selectedEndDateRecurrence == null) {
       this.errorEndDateRecurrence = "Veuillez renseigner une date" ;
     }
     //check si la date selectionnée n'est pas passée
-    else if (this.endDateIsWrong(this.selectedDate, this.selectedEndDateRecurrence)) {
+    else if (this.endDateIsWrong(this.startDate, this.selectedEndDateRecurrence)) {
       this.errorEndDateRecurrence = "Selectionner une date de fin de récurrence qui soit après la date de début"
     }
 
-    if (!this.selectedRecurrence) { this.errorLabelRecurrence = "Veuillez selectionner une mensualité" };
+    if (!this.selectedRecurrenceName) { 
+      this.errorLabelRecurrence = "Veuillez selectionner une mensualité" };
   }
 
   endDateIsWrong(startDate, endDate) {
@@ -68,5 +80,11 @@ export class RecurrenceComponent implements OnInit {
     if (endDate.getTime() < startDate.getTime()) { return true; }
     else return false;
   }
-*/
+
+  setRecurrenceParams(){
+    this.searchDataService.getEndDateRecurrence(this.selectedEndDateRecurrence);
+    this.searchDataService.getRecurrenceName(this.selectedRecurrenceName);
+  }
+ 
+
 }

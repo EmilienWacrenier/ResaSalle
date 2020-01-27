@@ -1,0 +1,31 @@
+<mat-horizontal-stepper class="stepper" [linear]="true" #stepper>
+    <mat-step>
+        <ng-template matStepLabel>Date & Objet</ng-template>
+        <app-criteres 
+            (recurrenceChangeEvent)="onChangeRecurrence($event)"></app-criteres>
+    </mat-step>
+
+    <!-- Salles sans récurrence -->
+    <mat-step *ngIf="!recurrenceIsChecked">
+        <ng-template matStepLabel>Salles disponibles</ng-template>
+        <app-salles-sans-recurrence [user]="currentUser"></app-salles-sans-recurrence>
+    </mat-step>
+
+    <!-- Salles avec récurrence -->
+    <mat-step *ngIf="recurrenceIsChecked">
+        <ng-template matStepLabel>Critères de récurrence</ng-template>
+        <app-recurrence></app-recurrence>
+    </mat-step>
+
+    <!-- Salles avec récurrence -->
+    <mat-step *ngIf="recurrenceIsChecked">
+        <ng-template matStepLabel>Choix de la salle</ng-template>
+        <app-salles-avec-recurrence [user]="currentUser"></app-salles-avec-recurrence>
+    </mat-step>
+
+    <!-- FeedBack/Conflit recurrence -->
+    <mat-step *ngIf="recurrenceIsChecked">
+        <ng-template matStepLabel>Récap</ng-template>
+        <app-feedback-conflit-recurrence></app-feedback-conflit-recurrence>
+    </mat-step>
+</mat-horizontal-stepper>

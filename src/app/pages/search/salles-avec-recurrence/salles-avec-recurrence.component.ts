@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Room } from 'src/app/classes/room';
+import { RoomService } from 'src/app/services/room.service';
+import { ReservationService } from 'src/app/services/reservation.service';
+import { SearchDataServiceService } from 'src/app/services/search-data-service.service';
+import { User } from 'src/app/classes/user';
 
 @Component({
   selector: 'app-salles-avec-recurrence',
@@ -8,6 +12,8 @@ import { Room } from 'src/app/classes/room';
 })
 export class SallesAvecRecurrenceComponent implements OnInit {
 
+  @Input() user : User;
+  
    //variables de capacité
    roomRequiredCapacity: number = 6;
 
@@ -16,11 +22,26 @@ export class SallesAvecRecurrenceComponent implements OnInit {
 
   //variable salle
   selectedRoom: Room;
-  roomService: any;
 
-  constructor() { }
+  fullStartDate : string;
+  fullEndDate: string;
+  object:string;
+
+  recurrenceName: string;
+  endDateRecurrence:Date;
+
+  constructor(private roomService: RoomService,
+    private reservationService : ReservationService,
+    private searchDataService : SearchDataServiceService) { }
 
   ngOnInit() {
+    this.searchDataService.fullStartDate$.subscribe(res => this.fullStartDate = res);
+    this.searchDataService.fullEndDate$.subscribe(res => this.fullEndDate = res);
+    this.searchDataService.object$.subscribe(res => this.object = res);
+
+    this.searchDataService.recurrenceName$.subscribe(res => this.recurrenceName = res);
+    this.searchDataService.endDateRecurrence$.subscribe(res => this.endDateRecurrence = res);
+
     this.getRooms();
   }
 
@@ -37,41 +58,26 @@ export class SallesAvecRecurrenceComponent implements OnInit {
   }
 
   getRooms() {
-    this.roomService
-      .getRooms()
+    this.roomService.getRooms()
       .subscribe(data => {
         this.roomList = data['result'];
         console.log(this.roomList)
       })
   }
 
-  
-  /*
   sendToVerification() {
-    console.log('Réservation : ');
-    console.log(this.selectedRoom);
-    console.log(this.selectedObjet);
-    console.log(this.startDateWithHours);
-    console.log(this.endDateWithHours);
-    console.log(this.selectedRecurrence);
-    console.log(this.selectedEndDateRecurrence);
     
-    this.dsBooking = new MatTableDataSource<Booking>();
-    
-    let bookingBuilt = {
-      startDate: this.startDateWithHours,
-      endDate: this.endDateWithHours,
-      object: this.selectedObjet,
+    let reservationRecurrenceParameters = {
+      startDate : this.fullStartDate,
+      endDate : this.fullEndDate,
+      object : this.object,
+      userId : this.user.userId,
       roomId: this.selectedRoom.roomId,
-      userId: this.currentUser.userId,
-      recurrenceLabel : this.selectedRecurrence,
-      recurrenceEndDate : this.selectedEndDateRecurrence
+      recurrenceLabel : this.recurrenceName,
+      recurrenceEndDate : this.endDateRecurrence
     }
-    console.log("send to verif")
+
+    console.log("send to verif");
+    console.log(reservationRecurrenceParameters);
   }
-*/
-
-
-
-
 }

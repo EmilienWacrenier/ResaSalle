@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import * as moment from 'moment';
 
 import {
-  RECURRENCE,
   NUMERO_SEMAINE,
   JOUR_SEMAINE,
-  CAPACITE,
   BOOKING_HOURS,
   BOOKING_MINUTES
 } from "../../../constantes/constantes";
+
+import { EventEmitter } from '@angular/core';
+import { SearchDataServiceService } from 'src/app/services/search-data-service.service';
 
 @Component({
   selector: 'app-criteres',
@@ -20,7 +21,7 @@ export class CriteresComponent implements OnInit {
   //heures et minutes dans le select
   bookingHours: number[] = BOOKING_HOURS;
   bookingMinutes: number[] = BOOKING_MINUTES;
-  recurrences: string[] = RECURRENCE;
+
   numSemaines: string[] = NUMERO_SEMAINE;
   jourSemaines: string[] = JOUR_SEMAINE;
 
@@ -38,7 +39,7 @@ export class CriteresComponent implements OnInit {
   selectedMinuteStart: number = 0;
 
   //variables heures date de fin
-  selectedHourEnd: number =  this.selectedHourStart + 1;
+  selectedHourEnd: number = this.selectedHourStart + 1;
   selectedMinuteEnd: number = 0;
 
   //variables des dates avec les heures de debut et de fin de la resa
@@ -52,18 +53,22 @@ export class CriteresComponent implements OnInit {
   errorHourStart: string;
   errorHourEnd: string;
 
-  datasAreGood = false;
+  datasAreGood: boolean = false;
 
   //variables pour le slide toggle pour activer la récurrence ou non
-  recurrenceIsChecked = false;
+  recurrenceIsChecked: boolean = false;
 
-  constructor() { }
+  @Output() recurrenceChangeEvent = new EventEmitter<boolean>();
+
+  constructor(
+    private searchDataService : SearchDataServiceService
+  ) { }
 
   ngOnInit() {
-    //
     this.onSelectDate(new Date());
     this.checkInput();
   }
+
 
   //A LA SELECTION DE LA DATE
   //Met la valeur dans la variable selectedStartDate
@@ -152,15 +157,25 @@ export class CriteresComponent implements OnInit {
     else return false;
   }
 
-     //formate les dates pour le back
-     formatDates() {
-      this.startDateWithHours = moment(this.selectedDate)
-        .set({ hour: this.selectedHourStart, minute: this.selectedMinuteStart, second: 0, millisecond: 0 })
-        .format();
-  
-      this.endDateWithHours = moment(this.selectedDate)
-        .set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
-        .format();
-    }
+  //formate les dates pour le back
+  formatDates() {
+    this.startDateWithHours = moment(this.selectedDate)
+      .set({ hour: this.selectedHourStart, minute: this.selectedMinuteStart, second: 0, millisecond: 0 })
+      .format();
+
+    this.endDateWithHours = moment(this.selectedDate)
+      .set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
+      .format();
+
+      this.searchDataService.getfullStartDate(this.startDateWithHours);
+      this.searchDataService.getfullEndDate(this.endDateWithHours);
+      this.searchDataService.getObject(this.selectedObjet);
+  }
+
+  changeRecurrence() {
+    this.recurrenceIsChecked = !this.recurrenceIsChecked;
+    console.log(this.recurrenceIsChecked);
+    this.recurrenceChangeEvent.emit(this.recurrenceIsChecked);
+  }
 
 }
