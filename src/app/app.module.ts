@@ -32,11 +32,7 @@ import { EditRoomComponent } from './modals/edit-room/edit-room.component';
 import { EditBookingComponent } from './modals/edit-booking/edit-booking.component';
 import { ConfirmComponent } from './pages/confirm/confirm.component';
 import { BookingsearchComponent } from './modals/bookingsearch/bookingsearch.component';
-import { CriteresComponent } from './pages/search/criteres/criteres.component';
-import { SallesSansRecurrenceComponent } from './pages/search/salles-sans-recurrence/salles-sans-recurrence.component';
-import { SallesAvecRecurrenceComponent } from './pages/search/salles-avec-recurrence/salles-avec-recurrence.component';
-import { FeedbackConflitRecurrenceComponent } from './pages/search/feedback-conflit-recurrence/feedback-conflit-recurrence.component';
-import { RecurrenceComponent } from './pages/search/recurrence/recurrence.component';
+import { ConfirmationReservationComponent } from './modals/confirmation-reservation/confirmation-reservation.component';
 
 
 export function tokenGetter() {
@@ -62,11 +58,7 @@ export function tokenGetter() {
     EditBookingComponent,
     ConfirmComponent,
     BookingsearchComponent,
-    CriteresComponent,
-    SallesSansRecurrenceComponent,
-    SallesAvecRecurrenceComponent,
-    FeedbackConflitRecurrenceComponent,
-    RecurrenceComponent
+    ConfirmationReservationComponent
   ],
   imports: [
     BrowserModule,
