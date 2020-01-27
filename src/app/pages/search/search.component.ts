@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { User } from 'src/app/classes/user';
-
 import * as moment from 'moment';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
