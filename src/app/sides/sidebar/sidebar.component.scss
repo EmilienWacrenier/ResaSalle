@@ -1,0 +1,54 @@
+/* SIDEBAR : LOGO + BOUTONS */
+#sidebar {
+width: 10%;
+text-align: center;
+background:rgb(115, 154, 224);
+font-size: 20px;
+}
+
+/* LOGO */
+#logo {
+  margin: 10%;
+  width: 75%;
+}
+
+.brand{
+  background: rgb(28, 71, 151);
+}
+
+/* BOUTONS */
+.mat-drawer-content::-webkit-scrollbar
+{
+  display: none;
+}
+
+.active-list-item {
+  color: rgb(115, 154, 224)!important;
+  background-color: white!important;
+}
+
+a.tabs {
+  color:rgba(255, 255, 255, 0.555);
+  text-decoration: none;
+}
+
+.tabs:hover{
+  color: white;
+}
+
+.tabs-title{
+  padding-left:0.3em;
+  font-size: 0.8rem;
+  text-align:left;
+}
+
+.grid-container{
+  margin: 20px;
+}
+
+
+#sidebar{
+  box-shadow: 0px 68px 8px 3px rgba(0, 0, 0, 0.34);
+  -webkit-box-shadow: 0px 68px 8px 3px rgba(0, 0, 0, 0.34);
+  -moz-box-shadow: 0px 68px 8px 3px rgba(0, 0, 0, 0.34);
+}

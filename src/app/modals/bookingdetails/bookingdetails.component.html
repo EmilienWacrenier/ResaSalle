@@ -1,1 +1,120 @@
-<p>bookingdetails works!</p>
+<button type="button" class="close_button" data-dismiss="modal" aria-hidden="true"
+  (click)="onNoClick()">&times;</button>
+
+
+<div class="container-fluid" id="createReservation">
+  <!-- titre -->
+  <div class="row justify-content-center mb-2 p-2 rounded ">
+    <h4 class="titre m-0 align-items-center" >Salle {{room.name}}</h4>
+  </div>
+
+  <!-- objet -->
+  <div class="row justify-content-center align-items-start">
+    <div class="col-6 pl-0">
+      <mat-form-field class="w-100">
+        <input matInput autocomplete="off" placeholder="Objet" [(ngModel)]="objet" autofocus>
+      </mat-form-field>
+      <span class="d-block text-danger small" *ngIf="errorObjet">{{errorObjet}}</span>
+    </div>
+    <div class="col-6">
+      <mat-form-field class="w-100">
+        <input matInput autocomplete="off" (dateChange)="onSelectDate($event)" [value]="selectedDate"
+          [matDatepicker]="picker" placeholder="Date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <span class="d-block text-danger small" *ngIf="errorDate">{{errorDate}}</span>
+    </div>
+  </div>
+
+  <!-- date debut -->
+  <div class="row justify-content-center border rounded p-2 my-2">
+    <h6 class="w-100 text-center">Debut</h6>
+    <mat-form-field class="w-50 px-2">
+      <mat-label>Heure</mat-label>
+      <mat-select [(value)]="selectedHourStart">
+        <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart">
+          {{hourStart}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-50 px-2">
+      <mat-label mat-body>Minute</mat-label>
+      <mat-select [(value)]="selectedMinuteStart">
+        <mat-option *ngFor="let minuteStart of bookingMinutes" [value]="minuteStart">
+          {{minuteStart}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span class="d-block text-danger small" *ngIf="errorHourStart">{{errorHourStart}}</span>
+  </div>
+
+  <!-- date fin -->
+  <div class="row justify-content-center border rounded p-2 my-2">
+    <h6 class="w-100 text-center">Fin</h6>
+    <mat-form-field class="w-50 px-2">
+      <mat-label>Heure</mat-label>
+      <mat-select [(value)]="selectedHourEnd">
+        <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
+          {{hourEnd}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-50 px-2">
+      <mat-label>Minute</mat-label>
+      <mat-select [(value)]="selectedMinuteEnd">
+        <mat-option *ngFor="let minuteEnd of bookingMinutes" [value]="minuteEnd">
+          {{minuteEnd}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span class="d-block text-danger small" *ngIf="errorHourEnd">{{errorHourEnd}}</span>
+  </div>
+
+  <!-- bouton crea -->
+  <div class="row justify-content-center my-2">
+    <mat-dialog-actions>
+      <button matButton class="mat-raised-button" (click)="onSubmit()">Créer la réservation</button>
+      <span class="d-block text-danger small p-1" *ngIf="baseMessage">{{baseMessage}}</span>
+    </mat-dialog-actions>
+  </div>
+</div>
+
+
+  <!-- <div class="col-6 border rounded p-2">
+      <div class="container-fluid">
+        <div class="row justify-content-center text-center align-items-center">
+
+          <div class="col-auto">
+            <mat-form-field class="search-form">
+              <mat-label>Participants</mat-label>
+              <input matInput autocomplete="off" (keyup)="onKey($event)" (keyup.enter)="onKeyEnter($event)">
+              <mat-icon matPrefix>search</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col">
+            <button mat-stroked-button color="primary" (click)="resetParticipants()">Reset</button>
+          </div>
+        </div>
+
+        <div class="row liste">
+          <mat-list>
+            <mat-list-item *ngFor="let user of usersList" (click)="onSelectParticipant(user)">
+              {{user.firstName|titlecase}} {{user.lastName|titlecase}}
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="row p-2 justify-content-around">
+          <div class="col-3 m-1 p-1 border rounded text-center" *ngFor="let participant of selectedParticipants" (click)="removeParticipant(participant)">
+              {{participant.firstName | slice:0:1}}. {{participant.lastName}}
+          </div>
+        </div>
+        <div class="row p-2 justify-content-around">
+          <div class="col-3 m-1 p-1 border rounded text-center" *ngFor="let email of emailList" (click)="removeEmail(email)">
+              {{email}}
+          </div>
+        </div>
+      </div>
+    </div> -->

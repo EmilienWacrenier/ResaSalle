@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,13 +11,42 @@ import { UserlayoutComponent } from './layouts/userlayout/userlayout.component';
 import { HomeComponent } from './pages/home/home.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SearchComponent } from './pages/search/search.component';
-import { ResaDateComponent } from './pages/search/steps/resa-date/resa-date.component';
-import { ResaRecurrenceComponent } from './pages/search/steps/resa-recurrence/resa-recurrence.component';
-import { ResaResultatComponent } from './pages/search/steps/resa-resultat/resa-resultat.component';
 import { BookingcalendarComponent } from './modals/bookingcalendar/bookingcalendar.component';
 import { BookingdetailsComponent } from './modals/bookingdetails/bookingdetails.component';
+<<<<<<< HEAD
 import { ResaCaracteristiqueComponent } from './pages/search/steps/resa-caracteristique/resa-caracteristique.component';
  
+=======
+import { RoomPlanningComponent } from './pages/home/room-planning/room-planning.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ApiConstants } from '../app/constantes/constantes';
+import { MaterialModule } from './material.module';
+import { HttpClientModule } from '@angular/common/http';
+
+import { JwtModule } from '@auth0/angular-jwt';
+
+import { ToastrModule } from 'ngx-toastr';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DeleteConfirmationComponent } from './modals/delete-confirmation/delete-confirmation.component';
+import { AdminComponent } from './pages/admin/admin.component';
+import { EditRoomComponent } from './modals/edit-room/edit-room.component';
+import { EditBookingComponent } from './modals/edit-booking/edit-booking.component';
+import { ConfirmComponent } from './pages/confirm/confirm.component';
+import { BookingsearchComponent } from './modals/bookingsearch/bookingsearch.component';
+import { CriteresComponent } from './pages/search/criteres/criteres.component';
+import { SallesSansRecurrenceComponent } from './pages/search/salles-sans-recurrence/salles-sans-recurrence.component';
+import { SallesAvecRecurrenceComponent } from './pages/search/salles-avec-recurrence/salles-avec-recurrence.component';
+import { FeedbackConflitRecurrenceComponent } from './pages/search/feedback-conflit-recurrence/feedback-conflit-recurrence.component';
+import { RecurrenceComponent } from './pages/search/recurrence/recurrence.component';
+
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
+>>>>>>> ab1aa285d8884f8378a1a6a741a0c9dd200aa6d5
 
 @NgModule({
   declarations: [
@@ -28,18 +58,51 @@ import { ResaCaracteristiqueComponent } from './pages/search/steps/resa-caracter
     HomeComponent,
     DashboardComponent,
     SearchComponent,
-    ResaDateComponent,
-    ResaRecurrenceComponent,
-    ResaResultatComponent,
     BookingcalendarComponent,
     BookingdetailsComponent,
-    ResaCaracteristiqueComponent
+    RoomPlanningComponent,
+    DeleteConfirmationComponent,
+    AdminComponent,
+    EditRoomComponent,
+    EditBookingComponent,
+    ConfirmComponent,
+    BookingsearchComponent,
+    CriteresComponent,
+    SallesSansRecurrenceComponent,
+    SallesAvecRecurrenceComponent,
+    FeedbackConflitRecurrenceComponent,
+    RecurrenceComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    NgbModule,
+    ToastrModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['http://localhost:3000']
+      }
+    }),
+    HttpClientModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ApiConstants],
+  bootstrap: [AppComponent],
+
+  entryComponents: [
+    BookingcalendarComponent,
+    BookingdetailsComponent,
+    DeleteConfirmationComponent,
+    EditRoomComponent,
+    EditBookingComponent,
+    BookingsearchComponent
+  ]
 })
 export class AppModule { }

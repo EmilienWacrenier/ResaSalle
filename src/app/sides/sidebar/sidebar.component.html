@@ -1,1 +1,56 @@
-<p>sidebar works!</p>
+<mat-sidenav-container class="h-100">
+  <mat-sidenav mode="side" opened id="sidebar">
+
+    <mat-toolbar class="brand">
+      <img src="assets/Image1.png" id="logo" alt="atos">
+    </mat-toolbar>
+
+    <!-- NAV LIST ITEMS -->
+
+    <div class="container-fluid mt-3">
+      <a class="row tabs px-0 py-2 align-items-center" routerLink="/" id="homeNavItem" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
+        <div class="col-3">
+          <i class="material-icons align-middle pb-1">home</i>
+        </div>
+        <div class="col-9">
+          <div class="tabs-title">Accueil</div>
+        </div>
+      </a>
+      <a class="row tabs px-0 py-2 align-items-center" routerLink="/dashboard" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
+        [routerLinkActiveOptions]="{exact: true}">
+        <div class="col-3">
+          <i class="material-icons align-middle pb-1">dashboard</i>
+        </div>
+        <div class="col-9">
+          <div class="tabs-title">Dashboard</div>
+        </div>
+      </a>
+      <a class="row tabs px-0 py-2 align-items-center" routerLink="/search" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
+        [routerLinkActiveOptions]="{exact: true}">
+        <div class="col-3">
+          <i class="material-icons align-middle pb-1">search</i>
+        </div>
+        <div class="col-9">
+          <div class="tabs-title">Rechercher</div>
+        </div>
+      </a>
+      <a class="row tabs px-0 py-2 align-items-center" routerLink="/admin" (click)="forceDeactiveHome()" routerLinkActive="active-list-item"
+        [routerLinkActiveOptions]="{exact: true}">
+        <div class="col-3">
+          <i class="material-icons align-middle pb-1">build</i>
+        </div>
+        <div class="col-9">
+          <div class="tabs-title">Admin</div>
+        </div>
+      </a>
+    </div>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <app-navbar></app-navbar>
+    <div class="grid-container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

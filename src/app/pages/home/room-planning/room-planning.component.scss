@@ -1,0 +1,44 @@
+.title{
+  color: grey;
+  font-size:1.5em;
+}
+
+.item-is-true{
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 102, 161) ;
+}
+
+.item-is-false{
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(191, 217, 232) ;
+  cursor: pointer;
+}
+
+.item-is-false:hover{
+  background-color: rgb(0, 102, 161) ;
+}
+
+.light-blue-bg{
+  background-color: rgb(220, 230, 247);
+}
+
+.col-arrow-left, .col-arrow-right{
+  color: rgb(0, 102, 161) ;
+  cursor:pointer;
+}
+
+.col-arrow-left:hover, .col-arrow-right:hover{
+  background-color: rgb(191, 217, 232);
+}
+
+.arrow-left, .arrow-right{
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  user-select: none;
+}

@@ -1,0 +1,100 @@
+<div class="container">
+
+    <div class="row align-items-center">
+        <!--
+        <div class="col-auto p-0">
+            <button mat-raised-button (click)="goBack()">Retour</button>
+        </div>
+        -->
+        <div class="col-auto text-center" *ngIf="rooms">
+            <mat-form-field>
+                <mat-select [(value)]="selectedRoom" (selectionChange)="onSelectRoom()">
+                    <mat-option *ngFor="let room of rooms" [value]="room">
+                        Salle {{room.name}} - Zone {{room.area}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+
+        <div class="col pr-5">
+            <mat-form-field class="float-right">
+                <input matInput [matDatepicker]="picker" placeholder="Selectionner une date"
+                    (dateChange)="onSelectDate($event)" [value]="selectedDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker startAt="today"></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+
+<div class="container shadow mt-2 border">
+
+    <div class="row mb-2">
+        <div class="col-1 col-arrow-left position-relative" (click)="previousWeek()">
+            <mat-icon class="arrow-left">keyboard_arrow_left</mat-icon>
+        </div>
+        <div class="col">
+            <div class="row bg-white">
+                <div class="col-auto">
+                    <div class="row">
+                        <div class="w-100 text-right">
+                            &nbsp;
+                        </div>
+                    </div>
+                </div>
+                <div class="col border border-white text-center p-3 text-capitalize" *ngFor="let day of weekDays">
+                    {{day}}</div>
+            </div>
+
+            <div class="row light-blue-bg" id="week-header">
+                <div class="col-auto">
+                    <div class="row bg-white px-2" *ngFor="let hourOfPlanning of hoursOfPlanning; let i = index">
+                        <div class="w-100 border border-white border-bottom-0 text-right" *ngIf="i%2 == 0">
+                            {{hourOfPlanning}}
+                        </div>
+                        <div class="w-100 border border-white border-bottom-0" *ngIf="i%2 !== 0">
+                            &nbsp;
+                        </div>
+                    </div>
+                </div>
+                <div class="col p-0" *ngFor="let resa of bookingsOfTheWeek; let i = index">
+                    <div class="container">
+                        <div class="row" *ngFor="let item of resa; let j = index">
+                            <div class=" w-100 border border-bottom-0 border-white text-right" *ngIf="j%2 == 0">
+                                <div class="item-is-true" *ngIf="item" matTooltip='
+                                                Réservé par : {{item.firstName}} {{item.lastName}},
+                                                Objet : {{item.object}},
+                                                Capacité : {{item.capacity}} pers.'>
+                                    &nbsp;
+                                </div>
+
+                                <div class="item-is-false" *ngIf="!item" (click)="openDialog(i, j)">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="w-100 border border-top-0 border-white" *ngIf="j%2 !== 0">
+                                <div class="item-is-true" *ngIf="item" matTooltip='
+                                            Réservé par : {{item.firstName}} {{item.lastName}},
+                                            Objet : {{item.object}},
+                                            Capacité : {{item.capacity}} pers.'>
+                                    &nbsp;
+                                </div>
+
+                                <div class="item-is-false" *ngIf="!item" (click)="openDialog(i, j)">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-1 col-arrow-right position-relative" (click)="nextWeek()">
+            <mat-icon class="arrow-right">keyboard_arrow_right</mat-icon>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,42 @@
+.container-login{
+    height: 100vh;
+    width:100vw;
+    background-color: rgb(115, 154, 224);
+}
+
+.title{
+    color:grey;
+    text-indent: 10px;
+    font-size: 1.5em;
+}
+
+.connexion-button{
+    display: block;
+    height: 50px;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+    background-color: rgb(115, 154, 224);
+    border:none;
+    color:white;
+}
+
+.connexion-button:not([disabled]):hover{
+    background-color: rgb(74, 121, 207);
+}
+
+.mdp-oublie{
+    font-size: smaller;
+    text-decoration: none;
+    color:rgb(115, 154, 224);
+}
+
+.grey{
+    color:grey;
+}
+
+.w-50{
+    width:48%;
+}
+

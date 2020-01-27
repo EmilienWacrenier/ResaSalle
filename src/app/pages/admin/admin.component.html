@@ -1,0 +1,100 @@
+<div class="container-fluid p-5">
+
+    <div class="row mb-5">
+
+        <div class="col-auto">
+            <h2> Administration des salles </h2>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+
+        <div class="col-md-4 col-xs-12">
+            <h4 class="lightblue-txt-color">Ajout Rapide</h4>
+            <mat-card class="example-card">
+                <mat-card-content>
+                    <form class="example-form" [formGroup]="createRoomForm">
+                        <div class="row">
+
+                            <div class="col-12">
+                                <mat-form-field class="col-8" appearance="outline">
+                                    <mat-label> Nom </mat-label>
+                                    <input type="text" placeholder="Nom" aria-label="roomName" matInput formControlName="roomName" [matAutocomplete]="auto" required>
+                                    <mat-autocomplete #auto="matAutocomplete">
+                                      <mat-option *ngFor="let name of names" [value]="name">
+                                        {{name}}
+                                      </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+
+                                <mat-form-field class=" col-4 f-right">
+                                    <mat-label>Zone</mat-label>
+                                    <mat-select matInput formControlName="roomArea" placeholder="Zone" required>
+                                        <mat-option *ngFor="let area of areas" [value]="area">
+                                            {{area}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+                    <table class="example-full-width" cellspacing="0">
+                        <tr>
+                            <td><span class="btn btn-primary" (click)="decrementCapacity()">-</span></td>
+                            <td>
+                                <input maxlength=2 numbersOnly class="form-control centralCapacity"
+                                    (keyup)="checkRoomCapacityValue()" [(ngModel)]="newRoomCapacity"/>
+                            </td>
+                            <td><span class="btn btn-primary" (click)="incrementCapacity()">+</span></td>
+                        </tr>
+                    </table>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button type="submit" [ngClass]="!createRoomForm.valid ? 'btn-secondary' : 'btn-primary'"
+                        class="btn btn-block" (click)="createRoom()" [disabled]="!createRoomForm.valid"> AJOUTER UNE
+                        SALLE </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+        <div class="col-md-8 col-xs-12">
+            <mat-table [dataSource]="dsRoom" class="mat-elevation-z8">
+                <!-- Date Column -->
+                <ng-container matColumnDef="room">
+                    <mat-header-cell *matHeaderCellDef> Salle </mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="dateTableCell"> {{ element.name }}
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Start Column -->
+                <ng-container matColumnDef="area">
+                    <mat-header-cell *matHeaderCellDef> Zone </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.area }} </mat-cell>
+                </ng-container>
+
+                <!-- End Column -->
+                <ng-container matColumnDef="capacity">
+                    <mat-header-cell *matHeaderCellDef> Capacité </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.capacity}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                    <mat-cell *matCellDef="let room;  let j = index;">
+                        <i class="material-icons editBtn" focusable="false" (click)="editRoom(room)">
+                            edit
+                        </i>
+                        <i class="material-icons deleteBtn" focusable="false" (click)="deleteRoom(room)">
+                            delete
+                        </i>
+                    </mat-cell>
+                </ng-container>
+
+
+                <mat-header-row class="tableHeader" *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </div>
+
+</div>
