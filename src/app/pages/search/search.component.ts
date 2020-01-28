@@ -13,7 +13,7 @@ export class SearchComponent implements OnInit {
 
   currentUser: User;
 
-  recurrenceIsChecked : boolean = false;
+  recurrenceIsChecked: boolean = false;
   critereAreGood: boolean = false;
 
   startDateWithHours: string;
@@ -27,9 +27,12 @@ export class SearchComponent implements OnInit {
     console.log(this.recurrenceIsChecked);
   }
 
-  onChangeRecurrence($event){
+  onChangeRecurrence($event) {
     this.recurrenceIsChecked = $event;
     console.log(this.recurrenceIsChecked);
   }
+
 }
+
+
 

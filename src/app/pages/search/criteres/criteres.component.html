@@ -95,7 +95,7 @@
         </div>
         <div class="col">
             <button class="bouton-back-next" mat-button matStepperNext
-            (click)="formatDates();" [disabled]="!datasAreGood">Suivant</button>
+            (click)="formatDates(); !recurrenceIsChecked ? clickWithoutRecurrence() : null;" [disabled]="!datasAreGood">Suivant</button>
         </div>
     </div>
 

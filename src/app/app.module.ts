@@ -33,10 +33,9 @@ import { EditBookingComponent } from './modals/edit-booking/edit-booking.compone
 import { ConfirmComponent } from './pages/confirm/confirm.component';
 import { BookingsearchComponent } from './modals/bookingsearch/bookingsearch.component';
 import { CriteresComponent } from './pages/search/criteres/criteres.component';
-import { SallesSansRecurrenceComponent } from './pages/search/salles-sans-recurrence/salles-sans-recurrence.component';
-import { SallesAvecRecurrenceComponent } from './pages/search/salles-avec-recurrence/salles-avec-recurrence.component';
 import { FeedbackConflitRecurrenceComponent } from './pages/search/feedback-conflit-recurrence/feedback-conflit-recurrence.component';
 import { RecurrenceComponent } from './pages/search/recurrence/recurrence.component';
+import { RecurrenceStepSallesComponent } from './pages/search/recurrence-step-salles/recurrence-step-salles.component';
 
 
 export function tokenGetter() {
@@ -63,10 +62,9 @@ export function tokenGetter() {
     ConfirmComponent,
     BookingsearchComponent,
     CriteresComponent,
-    SallesSansRecurrenceComponent,
-    SallesAvecRecurrenceComponent,
     FeedbackConflitRecurrenceComponent,
-    RecurrenceComponent
+    RecurrenceComponent,
+    RecurrenceStepSallesComponent
   ],
   imports: [
     BrowserModule,
