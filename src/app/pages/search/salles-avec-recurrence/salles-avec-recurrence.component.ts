@@ -12,27 +12,27 @@ import { User } from 'src/app/classes/user';
 })
 export class SallesAvecRecurrenceComponent implements OnInit {
 
-  @Input() user : User;
-  
-   //variables de capacité
-   roomRequiredCapacity: number = 6;
+  @Input() user: User;
 
-   //liste des salles (reponse)
+  //variables de capacité
+  roomRequiredCapacity: number = 6;
+
+  //liste des salles (reponse)
   roomList = [];
 
   //variable salle
   selectedRoom: Room;
 
-  fullStartDate : string;
+  fullStartDate: string;
   fullEndDate: string;
-  object:string;
+  object: string;
 
   recurrenceName: string;
-  endDateRecurrence:Date;
+  endDateRecurrence: Date;
 
   constructor(private roomService: RoomService,
-    private reservationService : ReservationService,
-    private searchDataService : SearchDataServiceService) { }
+    private reservationService: ReservationService,
+    private searchDataService: SearchDataServiceService) { }
 
   ngOnInit() {
     this.searchDataService.fullStartDate$.subscribe(res => this.fullStartDate = res);
@@ -45,7 +45,7 @@ export class SallesAvecRecurrenceComponent implements OnInit {
     this.getRooms();
   }
 
-   onChangeCapacity() {
+  onChangeCapacity() {
     this.selectedRoom = null;
     console.log("No more selected room");
   }
@@ -66,18 +66,33 @@ export class SallesAvecRecurrenceComponent implements OnInit {
   }
 
   sendToVerification() {
-    
+
     let reservationRecurrenceParameters = {
-      startDate : this.fullStartDate,
-      endDate : this.fullEndDate,
-      object : this.object,
-      userId : this.user.userId,
+      startDate: this.fullStartDate,
+      endDate: this.fullEndDate,
+      object: this.object,
+      userId: this.user.userId,
       roomId: this.selectedRoom.roomId,
-      recurrenceLabel : this.recurrenceName,
-      recurrenceEndDate : this.endDateRecurrence
+      recurrenceLabel: this.recurrenceName,
+      recurrenceEndDate: this.endDateRecurrence
     }
 
     console.log("send to verif");
     console.log(reservationRecurrenceParameters);
+
+    this.reservationService.checkReservationRecurrence(
+      this.fullStartDate,
+      this.fullEndDate,
+      this.selectedRoom.roomId,
+      this.recurrenceName,
+      this.endDateRecurrence)
+      .subscribe(
+        (res) => {
+          console.log(res);
+          this.searchDataService.getlisteReservationCheckRecurrence(res);
+        })
+        , (error) => {
+          console.log(error);
+        }
   }
 }

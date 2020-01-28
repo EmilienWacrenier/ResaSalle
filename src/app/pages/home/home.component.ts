@@ -8,19 +8,13 @@ import { Room } from '../../classes/room'
 import { RoomService } from '../../services/room.service';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
+import { PlanningService } from 'src/app/services/planning.service';
 
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
 })
 
 
@@ -37,12 +31,20 @@ export class HomeComponent implements OnInit {
   */
   itsMorning: boolean;
 
-  constructor(private roomService: RoomService) { }
+  constructor(
+    private roomService: RoomService,
+    private planningService : PlanningService) 
+    { }
 
 
   ngOnInit() {
     this.initPlanningBtn();
     this.getRoomsAndTheirReservationsOfToday();
+  }
+
+  onClickRoom(roomId : number){
+    console.log(roomId);
+    this.planningService.getRoomId(roomId);
   }
 
   initPlanningBtn() {

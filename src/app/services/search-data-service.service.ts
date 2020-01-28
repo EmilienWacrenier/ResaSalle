@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Booking } from '../classes/booking';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,8 @@ export class SearchDataServiceService {
   private recurrenceNameSource =  new BehaviorSubject('');
   private endDateRecurrenceSource = new BehaviorSubject(new Date());
 
+  private listeReservationCheckRecurrenceSource = new BehaviorSubject([]);
+
   //Observable string streams
   startDate$ = this.startDateSource.asObservable();
   fullStartDate$ = this.fullStartDateSource.asObservable();
@@ -23,6 +26,8 @@ export class SearchDataServiceService {
 
   recurrenceName$ = this.recurrenceNameSource.asObservable();
   endDateRecurrence$ = this.endDateRecurrenceSource.asObservable();
+
+  listeReservationCheckRecurrence$ = this.listeReservationCheckRecurrenceSource.asObservable();
 
   constructor() { }
 
@@ -48,5 +53,9 @@ export class SearchDataServiceService {
 
   getEndDateRecurrence(endDateRecurrence : Date){
     this.endDateRecurrenceSource.next(endDateRecurrence);
+  }
+
+  getlisteReservationCheckRecurrence(listeReservation : Booking[]){
+    this.listeReservationCheckRecurrenceSource.next(listeReservation);
   }
 }

@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { Room } from '../../../classes/room'
 import { Booking } from '../../../classes/booking'
@@ -13,6 +12,7 @@ import { BookingdetailsComponent } from 'src/app/modals/bookingdetails/bookingde
 import { JOUR_SEMAINE, HOURS_PLANNING } from '../../../constantes/constantes'
 
 import * as moment from 'moment'
+import { PlanningService } from 'src/app/services/planning.service';
 
 
 @Component({
@@ -21,6 +21,8 @@ import * as moment from 'moment'
   styleUrls: ['./room-planning.component.scss']
 })
 export class RoomPlanningComponent implements OnInit {
+
+  @Input() reservationSearchFeedback: Booking;
 
   //jour de la semaine du planning
   daysOfPlanning: string[] = JOUR_SEMAINE;
@@ -32,7 +34,7 @@ export class RoomPlanningComponent implements OnInit {
   rooms: Room[];
 
   //variable pour stocker la salle selectionnée
-  selectedRoom : Room;
+  selectedRoom: Room;
 
   //variable pour stocker la date sélectionnée
   selectedDate: Date;
@@ -46,39 +48,73 @@ export class RoomPlanningComponent implements OnInit {
   //Tableau planning : tableau de 5 entrées qui contiennent un tableau à 20 entrées
   bookingsOfTheWeek = [];
 
+  //roomId recupérer du component HOME via service
+  roomIdFromHomeComponent: number = 0;
+
   constructor(
     private reservationService: ReservationService,
-    private route: ActivatedRoute,
     private roomService: RoomService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private planningService: PlanningService
   ) { }
 
   ngOnInit() {
     document.getElementById('homeNavItem').classList.add('active-list-item');
 
-    //récupération des salles en base
-    this.roomService.getRooms().subscribe( res => {
-      this.rooms = res['result'];
-      console.log(this.rooms);
+    if(!this.reservationSearchFeedback || this.reservationSearchFeedback == undefined || this.reservationSearchFeedback == null){
+      console.log("init home");
+      console.log(this.reservationSearchFeedback);
+      this.initPlanningHome();
+      
+    }
+    else {
+      console.log("init search");
+      this.initPlanningSearch();
+      
+    }
 
-      //pour instancier le planning avec la salle sélectionnée dans le component précédent (home),
-      //on fait passer l'ID de la salle dans l'URL
-      //on parcourt la liste des salles et on checke jusqu'à ce que l'ID récupéré dans l'URL correspond à celui dans la liste
-      //une fois que les ID matchent, on inialise la variable selectedRoom avec la salle matchée dans la liste.
-      for(const room of this.rooms){
-        if( room.roomId == +this.route.snapshot.paramMap.get('id')) {
-          this.selectedRoom = room;
+    
+  }
+
+  initPlanningSearch(){
+    this.selectedRoom.roomId = this.reservationSearchFeedback.roomId;
+    this.selectedDate = new Date(this.reservationSearchFeedback.startDate);
+    this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+  }
+
+  initPlanningHome(){
+    this.planningService.roomId$.subscribe(res => {
+
+      this.roomIdFromHomeComponent = res;
+      console.log(this.roomIdFromHomeComponent);
+      //récupération des salles en base
+      this.roomService.getRooms().subscribe(res => {
+        this.rooms = res['result'];
+        console.log(this.rooms);
+
+        //pour instancier le planning avec la salle sélectionnée dans le component précédent (home),
+        //on fait passer l'ID de la salle dans l'URL
+        //on parcourt la liste des salles et on checke jusqu'à ce que l'ID récupéré dans l'URL correspond à celui dans la liste
+        //une fois que les ID matchent, on inialise la variable selectedRoom avec la salle matchée dans la liste.
+        for (const room of this.rooms) {
+          if (room.roomId == this.roomIdFromHomeComponent) {
+            this.selectedRoom = room;
+          }
         }
-      }
-      //on initialise la date sélectionnée à la date d'aujourd'hui
-      this.selectedDate = new Date();
+        if(!this.selectedRoom || this.selectedRoom == undefined || this.selectedRoom == null){
+          this.selectedRoom = this.rooms[0];
+        }
+        console.log(this.selectedRoom);
+        //on initialise la date sélectionnée à la date d'aujourd'hui
+        this.selectedDate = new Date();
 
-      this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+        this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+      });
     });
   }
 
   //au changement de salle, on change le planning en fonction de la salle selectionnée en appelant la fonction getPlanning
-  onSelectRoom(){
+  onSelectRoom() {
     this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
   }
 
@@ -89,7 +125,7 @@ export class RoomPlanningComponent implements OnInit {
   }
 
   //inialise le tableau des jours de la semaine, le 1er jour de la semaine et le dernier pour les paramètres de la fonction getReservationsOfThisWeek
-  getPlanning(roomId, selectedDate){
+  getPlanning(roomId, selectedDate) {
     //recupère les jours de la semaine pour le header en affichage
     this.getDaysOfThisWeek(selectedDate);
 
@@ -198,14 +234,14 @@ export class RoomPlanningComponent implements OnInit {
   }
 
   //bouton pour aller à la semaine précédente
-  previousWeek(){
-    this.selectedDate = new Date( moment(this.selectedDate).subtract(7, 'days').format() );
+  previousWeek() {
+    this.selectedDate = new Date(moment(this.selectedDate).subtract(7, 'days').format());
     this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
   }
 
   //bouton pour aller à la semaine suivante
-  nextWeek(){
-    this.selectedDate = new Date( moment(this.selectedDate).add(7, 'days').format() );
+  nextWeek() {
+    this.selectedDate = new Date(moment(this.selectedDate).add(7, 'days').format());
     this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
   }
 
@@ -217,12 +253,12 @@ export class RoomPlanningComponent implements OnInit {
     //venues du front. Ce sont des index de boucles ngFor.
     const bookingDetailsDialogConfig = new MatDialogConfig();
     bookingDetailsDialogConfig.width = "400px";
-    bookingDetailsDialogConfig.data = { 
+    bookingDetailsDialogConfig.data = {
       room: this.selectedRoom,
-      selectedDate : this.selectedDate,
-      day : day,
+      selectedDate: this.selectedDate,
+      day: day,
       hour: hour,
-     };
+    };
 
     this.dialog.open(BookingdetailsComponent, bookingDetailsDialogConfig)
       .afterClosed().subscribe((data) => {
@@ -230,12 +266,4 @@ export class RoomPlanningComponent implements OnInit {
         this.getPlanning(data.roomId, data.selectedDate);
       });
   }
-
-  //BOUTON BACK
-  /*
-  goBack() {
-    document.getElementById('homeNavItem').classList.remove('active-list-item');
-    this.router.navigate(['']);
-  }
-  */
 }

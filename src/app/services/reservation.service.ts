@@ -35,6 +35,26 @@ export class ReservationService {
       );
   }
 
+  checkReservationRecurrence(startDate, endDate, roomId, labelRecurrence, endDateRecurrence) {
+    roomId = roomId.toString();
+
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate)
+      .set('roomId', roomId)
+      .set('labelRecurrence', labelRecurrence)
+      .set('endDateRecurrence', endDateRecurrence);
+
+
+    return this.httpClient
+      .get<Booking[]>(
+        this.cst.apiUrl + 'reservation/reservationsByRoomId/',
+        { params: params })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
 
   getReservationsFromUserConnected(): Observable<Booking[]> {
     let bookings;

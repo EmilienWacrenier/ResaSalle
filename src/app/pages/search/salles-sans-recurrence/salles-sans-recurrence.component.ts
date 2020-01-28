@@ -76,7 +76,7 @@ export class SallesSansRecurrenceComponent implements OnInit {
         roomId: this.selectedRoom.roomId
       }
       console.log(reservation);
-      //this.reservationService.createReservation(reservation);
+      this.reservationService.createReservation(reservation);
     }
 
 }
