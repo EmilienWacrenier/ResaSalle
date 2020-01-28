@@ -13,10 +13,6 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SearchComponent } from './pages/search/search.component';
 import { BookingcalendarComponent } from './modals/bookingcalendar/bookingcalendar.component';
 import { BookingdetailsComponent } from './modals/bookingdetails/bookingdetails.component';
-<<<<<<< HEAD
-import { ResaCaracteristiqueComponent } from './pages/search/steps/resa-caracteristique/resa-caracteristique.component';
- 
-=======
 import { RoomPlanningComponent } from './pages/home/room-planning/room-planning.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -37,16 +33,14 @@ import { EditBookingComponent } from './modals/edit-booking/edit-booking.compone
 import { ConfirmComponent } from './pages/confirm/confirm.component';
 import { BookingsearchComponent } from './modals/bookingsearch/bookingsearch.component';
 import { CriteresComponent } from './pages/search/criteres/criteres.component';
-import { SallesSansRecurrenceComponent } from './pages/search/salles-sans-recurrence/salles-sans-recurrence.component';
-import { SallesAvecRecurrenceComponent } from './pages/search/salles-avec-recurrence/salles-avec-recurrence.component';
 import { FeedbackConflitRecurrenceComponent } from './pages/search/feedback-conflit-recurrence/feedback-conflit-recurrence.component';
 import { RecurrenceComponent } from './pages/search/recurrence/recurrence.component';
+import { RecurrenceStepSallesComponent } from './pages/search/recurrence-step-salles/recurrence-step-salles.component';
 
 
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
->>>>>>> ab1aa285d8884f8378a1a6a741a0c9dd200aa6d5
 
 @NgModule({
   declarations: [
@@ -68,10 +62,9 @@ export function tokenGetter() {
     ConfirmComponent,
     BookingsearchComponent,
     CriteresComponent,
-    SallesSansRecurrenceComponent,
-    SallesAvecRecurrenceComponent,
     FeedbackConflitRecurrenceComponent,
-    RecurrenceComponent
+    RecurrenceComponent,
+    RecurrenceStepSallesComponent
   ],
   imports: [
     BrowserModule,

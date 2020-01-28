@@ -59,9 +59,10 @@ export class CriteresComponent implements OnInit {
   recurrenceIsChecked: boolean = false;
 
   @Output() recurrenceChangeEvent = new EventEmitter<boolean>();
+  @Output() loadAvailablesRoomsEvent = new EventEmitter();
 
   constructor(
-    private searchDataService : SearchDataServiceService
+    private searchDataService: SearchDataServiceService
   ) { }
 
   ngOnInit() {
@@ -167,9 +168,10 @@ export class CriteresComponent implements OnInit {
       .set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
       .format();
 
-      this.searchDataService.getfullStartDate(this.startDateWithHours);
-      this.searchDataService.getfullEndDate(this.endDateWithHours);
-      this.searchDataService.getObject(this.selectedObjet);
+    this.searchDataService.getfullStartDate(this.startDateWithHours);
+    this.searchDataService.getfullEndDate(this.endDateWithHours);
+    this.searchDataService.getObject(this.selectedObjet);
+
   }
 
   changeRecurrence() {
@@ -177,5 +179,14 @@ export class CriteresComponent implements OnInit {
     console.log(this.recurrenceIsChecked);
     this.recurrenceChangeEvent.emit(this.recurrenceIsChecked);
   }
+
+  clickWithoutRecurrence() {
+    console.log("Should load available rooms");
+    this.loadAvailablesRoomsEvent.emit();
+
+
+  }
+
+
 
 }

@@ -51,6 +51,8 @@ export class RoomService {
       .set('startDate', startDate)
       .set('endDate', endDate);
 
+      console.log(params);
+      
     return this.httpClient.get<Room[]>(this.cst.apiUrl + 'salle/availableRooms',
       { params: params });
   }
