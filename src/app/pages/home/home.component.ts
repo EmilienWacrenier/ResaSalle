@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
   }
 
   initPlanningBtn() {
-    if (new Date().getUTCHours() >= 13) {
+    if (new Date().getHours() >= 13) {
       this.setBtnAfternoon();
     }
     else {
@@ -93,13 +93,15 @@ export class HomeComponent implements OnInit {
     let startMinutes;
 
     //total de l'heure de début en minutes
-    let hoursDebut = new Date(reservation.startDate).getUTCHours();
-    let minutesDebut = (new Date(reservation.startDate)).getUTCMinutes();
+    let hoursDebut = new Date(reservation.startDate).getHours();
+    console.log(hoursDebut);
+    
+    let minutesDebut = (new Date(reservation.startDate)).getMinutes();
     let totalHoursDebut = hoursDebut*60 + minutesDebut;
 
     //total de l'heure de fin en minutes
-    let hoursFin = (new Date(reservation.endDate)).getUTCHours();
-    let minutesFin = (new Date(reservation.endDate)).getUTCMinutes();
+    let hoursFin = (new Date(reservation.endDate)).getHours();
+    let minutesFin = (new Date(reservation.endDate)).getMinutes();
     let totalHoursFin = hoursFin*60 + minutesFin;
 
     //début et fin le matin

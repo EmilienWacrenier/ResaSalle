@@ -225,8 +225,8 @@ export class RoomPlanningComponent implements OnInit {
   // et on remplace la valeur null autant de fois que la réservation dure
   sortReservationOfTheDayByHours(day, element) {
     // on cherche l'heure de début, l'heure de fin et la durée de la réservation en minutes
-    let hDebut = new Date(element.startDate).getUTCHours() * 60 + new Date(element.startDate).getUTCMinutes();
-    let hFin = new Date(element.endDate).getUTCHours() * 60 + new Date(element.endDate).getUTCMinutes();
+    let hDebut = new Date(element.startDate).getHours() * 60 + new Date(element.startDate).getMinutes();
+    let hFin = new Date(element.endDate).getHours() * 60 + new Date(element.endDate).getMinutes();
     let dureeResa = (hFin - hDebut);
 
     //on démarre le compteur de minute à 8h donc 480 minutes

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Booking } from 'src/app/classes/booking';
+import { RoomService } from 'src/app/services/room.service';
+import { ReservationService } from 'src/app/services/reservation.service';
 import { SearchDataServiceService } from 'src/app/services/search-data-service.service';
 
 @Component({
@@ -26,9 +28,9 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
 
   planningClicked: boolean = false;
 
-  constructor(
-    private searchDataService : SearchDataServiceService
-  ) { }
+  constructor(private roomService: RoomService,
+    private reservationService: ReservationService,
+    private searchDataService: SearchDataServiceService) { }
 
   ngOnInit() {
     this.searchDataService.listeReservationCheckRecurrence$.subscribe(
@@ -42,6 +44,7 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
     )
   }
 
+  
   //STEP FINAL
   deleteBooking(booking) {
     console.log(booking);
@@ -54,6 +57,11 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
       (response) => {
         this.dsBooking.data = (response['result']);
       })*/
+      
+  }
+
+  updateBookings($event){
+    this.reservationService.getCheckRecurrence($event);
   }
 
   //fonction quand on clique sur une resa avec un conflit
