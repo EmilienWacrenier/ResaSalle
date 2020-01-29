@@ -15,7 +15,7 @@
             <div *ngFor="let resa of reservationFeedback">
                 <div class="row border-bottom p-3 bg-white" (click)="displayPlanning(resa)">
                     <div class="col-2">
-                        {{resa.startDate | date: 'dd MMMM'}}
+                        {{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
                     </div>
                     <div class="col-1">
                         {{resa.startDate | date: 'HH:mm'}}

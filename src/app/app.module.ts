@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -36,6 +36,12 @@ import { CriteresComponent } from './pages/search/criteres/criteres.component';
 import { FeedbackConflitRecurrenceComponent } from './pages/search/feedback-conflit-recurrence/feedback-conflit-recurrence.component';
 import { RecurrenceComponent } from './pages/search/recurrence/recurrence.component';
 import { RecurrenceStepSallesComponent } from './pages/search/recurrence-step-salles/recurrence-step-salles.component';
+
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+// the second parameter 'fr' is optional
+registerLocaleData(localeFr, 'fr');
 
 
 export function tokenGetter() {
@@ -86,7 +92,7 @@ export function tokenGetter() {
     }),
     HttpClientModule
   ],
-  providers: [ApiConstants],
+  providers: [ApiConstants, { provide: LOCALE_ID, useValue: 'fr' }],
   bootstrap: [AppComponent],
 
   entryComponents: [

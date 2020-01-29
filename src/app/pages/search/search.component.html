@@ -16,7 +16,7 @@
     <mat-step>
         <ng-template matStepLabel>Choix de Salle</ng-template>
         <app-recurrence-step-salles #appStepSalles [user]="currentUser" [recurrenceMode]="recurrenceIsChecked"
-            (onValidationRecurrenceEvent)="appStepFeedBack.updateBookings($event)">
+            >
         </app-recurrence-step-salles>
     </mat-step>
 

@@ -7,7 +7,7 @@ export const BOOKING_MINUTES: number[] = [
 ]
 
 export const RECURRENCE: string[] = [
-    "quotidien", "hebdomadaire", "mensuelle"
+    "quotidienne", "hebdomadaire", "mensuelle"
 ]
 
 export const NUMERO_SEMAINE: string[] = [
