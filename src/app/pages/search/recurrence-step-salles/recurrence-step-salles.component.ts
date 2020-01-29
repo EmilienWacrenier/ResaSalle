@@ -35,7 +35,7 @@ export class RecurrenceStepSallesComponent implements OnInit {
   object: string;
 
   recurrenceName: string;
-  endDateRecurrence: Date;
+  endDateRecurrence: string;
 
   constructor(
     private roomService: RoomService,
@@ -121,16 +121,21 @@ export class RecurrenceStepSallesComponent implements OnInit {
 
   sendToVerification() {
 
-    let reservationRecurrenceParameters = {
+    let checkReservationRecurrence = {
       startDate: this.fullStartDate,
       endDate: this.fullEndDate,
-      object: this.object,
-      userId: this.user.userId,
       roomId: this.selectedRoom.roomId,
-      recurrenceLabel: this.recurrenceName,
-      recurrenceEndDate: this.endDateRecurrence
+      labelRecurrence: this.recurrenceName,
+      endDateRecurrence: this.endDateRecurrence
     }
-    console.log(reservationRecurrenceParameters);
+    console.log(checkReservationRecurrence);
+
+    this.reservationService.checkReservationRecurrence(checkReservationRecurrence).subscribe(
+      (res) => {
+        console.log(res);
+        this.searchDataService.getlisteReservationCheckRecurrence(res);
+      }
+    )
   }
 
 }

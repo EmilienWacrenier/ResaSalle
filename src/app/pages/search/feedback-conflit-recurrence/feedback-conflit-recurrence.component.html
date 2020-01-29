@@ -9,8 +9,6 @@
                 <div class="col-1">Début</div>
                 <div class="col-1">Fin</div>
                 <div class="col-2">Salle</div>
-                <div class="col-2">Object</div>
-                <div class="col-2">Participants</div>
                 <div class="col-2">.</div>
             </div>
 
@@ -20,19 +18,13 @@
                         {{resa.startDate | date: 'dd MMMM'}}
                     </div>
                     <div class="col-1">
-                        {{resa.startDate | date: 'HH:mm' : 'GMT+0'}}
+                        {{resa.startDate | date: 'HH:mm'}}
                     </div>
                     <div class="col-1">
-                        {{resa.endDate | date: 'HH:mm' : 'GMT+0'}}
+                        {{resa.endDate | date: 'HH:mm'}}
                     </div>
                     <div class="col-2">
-                        {{resa.room.name}}
-                    </div>
-                    <div class="col-2">
-                        {{resa.object}}
-                    </div>
-                    <div class="col-2">
-                        {{resa.participants.length > 0 ? element.participants.length : 'N/A'}}
+                        {{resa.roomId}}
                     </div>
                     <div class="col-2">
                         <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
@@ -50,7 +42,12 @@
 
     <!-- Calendrier -->
     <div class="row" *ngIf="planningClicked">
-        <app-room-planning [reservationSearchFeedback]="reservation"></app-room-planning>
+        <div class="container">
+            <div class="row" (click)="closePlanning()">X</div>
+            <div class="row">
+                <app-room-planning [reservationSearchFeedback]="reservation"></app-room-planning>
+            </div>
+        </div>
     </div>
 
 </div>

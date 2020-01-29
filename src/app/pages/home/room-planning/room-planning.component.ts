@@ -61,28 +61,44 @@ export class RoomPlanningComponent implements OnInit {
   ngOnInit() {
     document.getElementById('homeNavItem').classList.add('active-list-item');
 
-    if(!this.reservationSearchFeedback || this.reservationSearchFeedback == undefined || this.reservationSearchFeedback == null){
+    if (!this.reservationSearchFeedback || this.reservationSearchFeedback == undefined || this.reservationSearchFeedback == null) {
       console.log("init home");
       console.log(this.reservationSearchFeedback);
       this.initPlanningHome();
-      
+
     }
     else {
       console.log("init search");
       this.initPlanningSearch();
-      
+
     }
 
-    
+
   }
 
-  initPlanningSearch(){
-    this.selectedRoom.roomId = this.reservationSearchFeedback.roomId;
-    this.selectedDate = new Date(this.reservationSearchFeedback.startDate);
-    this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+  initPlanningSearch() {
+
+    this.roomService.getRooms().subscribe(res => {
+      this.rooms = res['result'];
+
+      for (const room of this.rooms) {
+        if (room.roomId == this.reservationSearchFeedback.roomId) {
+          this.selectedRoom = room;
+        }
+      }
+      if (!this.selectedRoom || this.selectedRoom == undefined || this.selectedRoom == null) {
+        this.selectedRoom = this.rooms[0];
+      }
+      this.selectedDate = new Date(this.reservationSearchFeedback.startDate);
+
+      console.log(this.reservationSearchFeedback);
+      console.log(this.reservationSearchFeedback.roomId);
+
+      this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+    });
   }
 
-  initPlanningHome(){
+  initPlanningHome() {
     this.planningService.roomId$.subscribe(res => {
 
       this.roomIdFromHomeComponent = res;
@@ -101,7 +117,7 @@ export class RoomPlanningComponent implements OnInit {
             this.selectedRoom = room;
           }
         }
-        if(!this.selectedRoom || this.selectedRoom == undefined || this.selectedRoom == null){
+        if (!this.selectedRoom || this.selectedRoom == undefined || this.selectedRoom == null) {
           this.selectedRoom = this.rooms[0];
         }
         console.log(this.selectedRoom);

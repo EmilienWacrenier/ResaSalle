@@ -24,18 +24,19 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
   //reponse avec la liste des reservations de la recurrence avec et sans conflit
   reservationFeedback: Booking[];
 
+  planningClicked: boolean = false;
+
   constructor(
     private searchDataService : SearchDataServiceService
   ) { }
 
   ngOnInit() {
     this.searchDataService.listeReservationCheckRecurrence$.subscribe(
-      res => {
+      (res) => {
         console.log(res);
-        //this.reservationFeedback = res;
-        
-      }
-      , (error) => {
+        this.reservationFeedback = res['result'];
+        console.log(this.reservationFeedback);
+      }, (error) => {
         console.log(error);
       }
     )
@@ -57,7 +58,12 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
 
   //fonction quand on clique sur une resa avec un conflit
   displayPlanning(reservation: Booking){
+    this.planningClicked = true;
     this.reservation = reservation;
+  }
+
+  closePlanning(){
+    this.planningClicked = false;
   }
 
 

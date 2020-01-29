@@ -4,6 +4,7 @@ import { RECURRENCE } from "../../../constantes/constantes";
 import { SearchDataServiceService } from 'src/app/services/search-data-service.service';
 
 import { EventEmitter } from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-recurrence',
@@ -15,7 +16,7 @@ export class RecurrenceComponent implements OnInit {
   recurrences: string[] = RECURRENCE;
   startDate: Date;
   //variables pour le slide toggle pour activer la récurrence ou non
-  selectedEndDateRecurrence: Date;
+  selectedEndDateRecurrence: string;
   selectedRecurrenceName: string;
 
   errorLabelRecurrence: string;
@@ -87,7 +88,9 @@ export class RecurrenceComponent implements OnInit {
   }
 
   setRecurrenceParams() {
-    this.searchDataService.getEndDateRecurrence(this.selectedEndDateRecurrence);
+
+    let endDateRecurrence = moment(this.selectedEndDateRecurrence).set({ hour: 23, minute: 59, second: 59, millisecond: 59 }).format("YYYY-MM-DD HH:mm:ss");
+    this.searchDataService.getEndDateRecurrence(endDateRecurrence);
     this.searchDataService.getRecurrenceName(this.selectedRecurrenceName);
     this.loadRoomListEvent.emit();
   }

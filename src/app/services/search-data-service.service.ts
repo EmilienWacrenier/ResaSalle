@@ -14,7 +14,7 @@ export class SearchDataServiceService {
   private objectSource = new BehaviorSubject('');
 
   private recurrenceNameSource =  new BehaviorSubject('');
-  private endDateRecurrenceSource = new BehaviorSubject(new Date());
+  private endDateRecurrenceSource = new BehaviorSubject('');
 
   private listeReservationCheckRecurrenceSource = new BehaviorSubject([]);
 
@@ -51,7 +51,7 @@ export class SearchDataServiceService {
     this.recurrenceNameSource.next(recurrenceName);
   }
 
-  getEndDateRecurrence(endDateRecurrence : Date){
+  getEndDateRecurrence(endDateRecurrence : string){
     this.endDateRecurrenceSource.next(endDateRecurrence);
   }
 
