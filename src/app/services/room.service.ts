@@ -35,6 +35,7 @@ export class RoomService {
 
   getRoomsAndTheirReservationsOfToday(): Observable<Room[]> {
 
+    console.log(moment().format('YYYY-MM-DD'))
     const param = new HttpParams().set('startDate', moment().format('YYYY-MM-DD'));
     return this.httpClient
       .get<Room[]>(this.cst.apiUrl + 'reservation/reservationsByDay', { params: param }).pipe(

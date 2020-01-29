@@ -13,7 +13,7 @@ export class SearchDataServiceService {
   private objectSource = new BehaviorSubject('');
 
   private recurrenceNameSource =  new BehaviorSubject('');
-  private endDateRecurrenceSource = new BehaviorSubject(new Date());
+  private endDateRecurrenceSource = new BehaviorSubject('');
 
   //Observable string streams
   startDate$ = this.startDateSource.asObservable();
@@ -28,10 +28,11 @@ export class SearchDataServiceService {
 
   getStartDate(startDate: Date){
     this.startDateSource.next(startDate);
+    
   }
 
   getfullStartDate(startDate: string) {
-    this.fullStartDateSource.next(startDate);
+    this.fullStartDateSource.next(startDate);    
   }
 
   getfullEndDate(endDate: string) {
@@ -46,7 +47,7 @@ export class SearchDataServiceService {
     this.recurrenceNameSource.next(recurrenceName);
   }
 
-  getEndDateRecurrence(endDateRecurrence : Date){
+  getEndDateRecurrence(endDateRecurrence : string){
     this.endDateRecurrenceSource.next(endDateRecurrence);
   }
 }

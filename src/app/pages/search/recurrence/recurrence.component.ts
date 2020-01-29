@@ -5,6 +5,7 @@ import { SearchDataServiceService } from 'src/app/services/search-data-service.s
 
 import { EventEmitter } from '@angular/core';
 
+import * as moment from 'moment'
 @Component({
   selector: 'app-recurrence',
   templateUrl: './recurrence.component.html',
@@ -87,7 +88,7 @@ export class RecurrenceComponent implements OnInit {
   }
 
   setRecurrenceParams() {
-    this.searchDataService.getEndDateRecurrence(this.selectedEndDateRecurrence);
+    this.searchDataService.getEndDateRecurrence(moment(this.selectedEndDateRecurrence).format('YYYY-MM-DD HH:mm:ss'));
     this.searchDataService.getRecurrenceName(this.selectedRecurrenceName);
     this.loadRoomListEvent.emit();
   }

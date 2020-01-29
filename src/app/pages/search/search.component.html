@@ -15,13 +15,14 @@
     <!-- Salles -->
     <mat-step>
         <ng-template matStepLabel>Choix de Salle</ng-template>
-        <app-recurrence-step-salles #appStepSalles [user]="currentUser" [recurrenceMode]="recurrenceIsChecked">
+        <app-recurrence-step-salles #appStepSalles [user]="currentUser" [recurrenceMode]="recurrenceIsChecked"
+            (onValidationRecurrenceEvent)="appStepFeedBack.updateBookings($event)">
         </app-recurrence-step-salles>
     </mat-step>
 
     <!-- FeedBack/Conflit recurrence -->
     <mat-step *ngIf="recurrenceIsChecked">
         <ng-template matStepLabel>Récap</ng-template>
-        <app-feedback-conflit-recurrence></app-feedback-conflit-recurrence>
+        <app-feedback-conflit-recurrence #appStepFeedBack></app-feedback-conflit-recurrence>
     </mat-step>
 </mat-horizontal-stepper>
