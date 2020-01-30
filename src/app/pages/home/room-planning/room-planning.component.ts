@@ -171,12 +171,12 @@ export class RoomPlanningComponent implements OnInit {
 
   //retourne la date du lundi de la semaine du jour selectionné
   findStartOfWeek(date) {
-    return moment(date).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).isoWeekday(1).format();
+    return moment(date).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).isoWeekday(1).format('YYYY-MM-DD HH:mm:ss');
   }
 
   //retourne la date du dimanche de la semaine du jour selectionné
   findEndOfWeek(date) {
-    return moment(date).set({ hour: 23, minute: 59, second: 59, millisecond: 0 }).isoWeekday(7).format();
+    return moment(date).set({ hour: 23, minute: 59, second: 59, millisecond: 0 }).isoWeekday(7).format('YYYY-MM-DD HH:mm:ss');
   }
 
   //retourne un tableau avec la date des jours de la semaine selectionnée

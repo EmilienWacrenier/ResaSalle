@@ -93,7 +93,7 @@ export class ReservationService {
 
     return this.httpClient
       .get<Booking[]>(
-        this.cst.apiUrl + 'reservation/reservationsByRoomId/',
+        this.cst.apiUrl + 'reservation/reservationsByRoomIdByDate/',
         { params: params });
   }
 

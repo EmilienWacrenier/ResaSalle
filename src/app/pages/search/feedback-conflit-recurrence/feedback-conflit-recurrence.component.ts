@@ -41,17 +41,11 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
     )
   }
 
-  
   //STEP FINAL
   deleteBooking(booking) {
     console.log(booking);
-
   }
-
-  updateBookings($event){
-    this.reservationService.getCheckRecurrence($event);
-  }
-
+  
   //fonction quand on clique sur une resa avec un conflit
   displayPlanning(reservation: any, indexReservation : number){
     this.planningClicked = true;
@@ -66,6 +60,8 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
   updateReservation(event){
     let index = event.indexReservation;
     let newReservation = event.reservation;
+
+    console.log(index + newReservation);
 
     this.reservationsToCheck[index] = newReservation;
 

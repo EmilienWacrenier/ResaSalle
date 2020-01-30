@@ -16,12 +16,12 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white">
-                        <tr *ngFor="let resa of reservationFeedback; let i = index"
+                        <tr *ngFor="let resa of reservationsToCheck; let i = index"
                             [ngClass]="resa.conflit ? 'bg-danger':''">
-                            <td class="hoverable" (click)="displayPlanning(resa)">{{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
+                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
                             </td>
-                            <td class="hoverable" (click)="displayPlanning(resa)">{{resa.startDate | date: 'HH:mm'}}</td>
-                            <td class="hoverable" (click)="displayPlanning(resa)">{{resa.endDate | date: 'HH:mm'}}</td>
+                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.startDate | date: 'HH:mm'}}</td>
+                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.endDate | date: 'HH:mm'}}</td>
                             <td>{{resa.roomId}}</td>
                             <td>
                                 <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
