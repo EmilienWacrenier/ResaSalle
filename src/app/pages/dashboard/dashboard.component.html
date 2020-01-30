@@ -48,7 +48,7 @@
             <!-- Date Column -->
             <ng-container matColumnDef="date">
                 <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-                <mat-cell *matCellDef="let element" class="dateTableCell"> {{element.startDate | date: 'EEEE dd MMM' | titlecase }}
+                <mat-cell *matCellDef="let element" class="dateTableCell"> {{element.startDate | date: 'EEEE dd MMMM' | titlecase }}
                 </mat-cell>
             </ng-container>
 
