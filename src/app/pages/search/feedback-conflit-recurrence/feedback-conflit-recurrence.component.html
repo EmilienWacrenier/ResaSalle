@@ -12,8 +12,8 @@
                 <div class="col-2">.</div>
             </div>
 
-            <div *ngFor="let resa of reservationFeedback">
-                <div class="row border-bottom p-3 bg-white" (click)="displayPlanning(resa)">
+            <div *ngFor="let resa of reservationsToCheck; index as i">
+                <div class="row border-bottom p-3 bg-white" (click)="displayPlanning(resa, i)">
                     <div class="col-2">
                         {{resa.startDate | date: 'dd MMMM'}}
                     </div>
@@ -45,7 +45,10 @@
         <div class="container">
             <div class="row" (click)="closePlanning()">X</div>
             <div class="row">
-                <app-room-planning [reservationSearchFeedback]="reservation"></app-room-planning>
+                <app-room-planning 
+                    [reservationSearchFeedback]="reservation" 
+                    [indexReservation]="indexReservation"
+                    (reservationToChange)="updateReservation($event)"></app-room-planning>
             </div>
         </div>
     </div>

@@ -5,10 +5,6 @@ import { Inject } from '@angular/core';
 import * as moment from 'moment';
 
 import { BOOKING_HOURS, BOOKING_MINUTES } from '../../constantes/constantes'
-import { User } from '../../classes/user';
-import { Booking } from '../../classes/booking';
-
-import { UserService } from 'src/app/services/user.service';
 import { ReservationService } from '../../services/reservation.service'
 
 
@@ -47,7 +43,6 @@ export class BookingdetailsComponent implements OnInit {
 
 
   constructor(
-    private userService: UserService,
     private reservationService: ReservationService,
     public bookingDetailsDialogRef: MatDialogRef<BookingdetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -63,7 +58,7 @@ export class BookingdetailsComponent implements OnInit {
     this.setParamsOnInit(this.data.day, this.data.hour);
   }
 
-  onNoClick(): void {
+  closeModal(): void {
     this.bookingDetailsDialogRef.close();
   }
 

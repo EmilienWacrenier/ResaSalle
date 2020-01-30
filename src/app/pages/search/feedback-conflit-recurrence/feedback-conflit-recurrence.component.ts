@@ -15,14 +15,12 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
   weekDays: any[];
   bookingsOfTheWeek: any;
 
-  dsBooking: MatTableDataSource<Booking>;
-  displayedColumns: string[] = ['date', 'startDate', 'endDate', 'room'];
-
   //reservation a afficher dans planning
-  reservation: Booking;
+  reservation: any
+  indexReservation: number;
 
   //reponse avec la liste des reservations de la recurrence avec et sans conflit
-  reservationFeedback: Booking[];
+  reservationsToCheck: any;
 
   planningClicked: boolean = false;
 
@@ -33,9 +31,8 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
   ngOnInit() {
     this.searchDataService.listeReservationCheckRecurrence$.subscribe(
       (res) => {
-        console.log(res);
-        this.reservationFeedback = res['result'];
-        console.log(this.reservationFeedback);
+        this.reservationsToCheck = res['result'];
+        console.log(this.reservationsToCheck);
       }, (error) => {
         console.log(error);
       }
@@ -48,24 +45,26 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
 
   }
 
-  updateBookingsVerification() {
-    this.dsBooking.data = null;
-    /*this.reservationService.getCheckReservation().subscribe(
-      (response) => {
-        this.dsBooking.data = (response['result']);
-      })*/
-  }
-
   //fonction quand on clique sur une resa avec un conflit
-  displayPlanning(reservation: Booking){
+  displayPlanning(reservation: any, indexReservation : number){
     this.planningClicked = true;
     this.reservation = reservation;
-  }
+    this.indexReservation = indexReservation;
+}
 
   closePlanning(){
     this.planningClicked = false;
   }
+  
+  updateReservation(event){
+    let index = event.indexReservation;
+    let newReservation = event.reservation;
 
+    this.reservationsToCheck[index] = newReservation;
 
+    console.log(this.reservationsToCheck);
+    this.planningClicked = false;
+    //check reservation si ok ou pas (voir route)
+  }
 
 }

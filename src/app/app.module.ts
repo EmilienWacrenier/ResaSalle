@@ -36,6 +36,7 @@ import { CriteresComponent } from './pages/search/criteres/criteres.component';
 import { FeedbackConflitRecurrenceComponent } from './pages/search/feedback-conflit-recurrence/feedback-conflit-recurrence.component';
 import { RecurrenceComponent } from './pages/search/recurrence/recurrence.component';
 import { RecurrenceStepSallesComponent } from './pages/search/recurrence-step-salles/recurrence-step-salles.component';
+import { HoursFeedbackStepComponent } from './modals/hours-feedback-step/hours-feedback-step.component';
 
 
 export function tokenGetter() {
@@ -64,7 +65,8 @@ export function tokenGetter() {
     CriteresComponent,
     FeedbackConflitRecurrenceComponent,
     RecurrenceComponent,
-    RecurrenceStepSallesComponent
+    RecurrenceStepSallesComponent,
+    HoursFeedbackStepComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +97,8 @@ export function tokenGetter() {
     DeleteConfirmationComponent,
     EditRoomComponent,
     EditBookingComponent,
-    BookingsearchComponent
+    BookingsearchComponent,
+    HoursFeedbackStepComponent
   ]
 })
 export class AppModule { }
