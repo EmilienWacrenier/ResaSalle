@@ -162,11 +162,11 @@ export class CriteresComponent implements OnInit {
   formatDates() {
     this.startDateWithHours = moment(this.selectedDate)
       .set({ hour: this.selectedHourStart, minute: this.selectedMinuteStart, second: 0, millisecond: 0 })
-      .format("YYYY-MM-DD HH:mm:ss");
+      .format('YYYY-MM-DD HH:mm:ss');
 
     this.endDateWithHours = moment(this.selectedDate)
       .set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
-      .format("YYYY-MM-DD HH:mm:ss");
+      .format('YYYY-MM-DD HH:mm:ss');
 
     this.searchDataService.getfullStartDate(this.startDateWithHours);
     this.searchDataService.getfullEndDate(this.endDateWithHours);
@@ -183,8 +183,6 @@ export class CriteresComponent implements OnInit {
   clickWithoutRecurrence() {
     console.log("Should load available rooms");
     this.loadAvailablesRoomsEvent.emit();
-
-
   }
 
 

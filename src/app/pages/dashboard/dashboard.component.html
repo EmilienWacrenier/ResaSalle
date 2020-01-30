@@ -48,20 +48,20 @@
             <!-- Date Column -->
             <ng-container matColumnDef="date">
                 <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-                <mat-cell *matCellDef="let element" class="dateTableCell"> {{element.startDate | date: 'dd MMM.'}}
+                <mat-cell *matCellDef="let element" class="dateTableCell"> {{element.startDate | date: 'EEEE dd MMMM' | titlecase }}
                 </mat-cell>
             </ng-container>
 
             <!-- Start Column -->
             <ng-container matColumnDef="start">
                 <mat-header-cell *matHeaderCellDef> Début </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.startDate | date: 'HH:mm' : 'GMT+0'}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.startDate | date: 'HH:mm'}} </mat-cell>
             </ng-container>
 
             <!-- End Column -->
             <ng-container matColumnDef="end">
                 <mat-header-cell *matHeaderCellDef> Fin </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.endDate | date: 'HH:mm' : 'GMT+0'}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.endDate | date: 'HH:mm'}} </mat-cell>
             </ng-container>
 
             <!-- Room Column -->

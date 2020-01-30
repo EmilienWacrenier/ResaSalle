@@ -26,9 +26,9 @@ export class RecurrenceComponent implements OnInit {
 
   @Output() loadRoomListEvent = new EventEmitter();
 
-    constructor(
-      private searchDataService: SearchDataServiceService
-    ) { }
+  constructor(
+    private searchDataService: SearchDataServiceService
+  ) { }
 
   ngOnInit() {
     this.searchDataService.startDate$.subscribe(res => this.startDate = res);
@@ -88,9 +88,11 @@ export class RecurrenceComponent implements OnInit {
   }
 
   setRecurrenceParams() {
-
-    let endDateRecurrence = moment(this.selectedEndDateRecurrence).set({ hour: 23, minute: 59, second: 59, millisecond: 59 }).format("YYYY-MM-DD HH:mm:ss");
-    this.searchDataService.getEndDateRecurrence(endDateRecurrence);
+    this.searchDataService.getEndDateRecurrence(
+      moment(this.selectedEndDateRecurrence)
+       .set({ hour: 23, minute: 59, second: 59})
+       .format('YYYY-MM-DD HH:mm:ss')
+    );
     this.searchDataService.getRecurrenceName(this.selectedRecurrenceName);
     this.loadRoomListEvent.emit();
   }

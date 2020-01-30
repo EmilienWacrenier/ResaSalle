@@ -97,6 +97,35 @@ export class ReservationService {
         { params: params });
   }
 
+  getCheckReservation(roomId, startDate, endDate): Observable<Booking> {
+    // let roomId: string = roomId.toString();
+
+    const params = new HttpParams()
+      .set('roomId', roomId)
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+
+    return this.httpClient
+      .get<Booking>(
+        this.cst.apiUrl + 'reservation/checkReservation/',
+        { params: params });
+  }
+
+  getCheckRecurrence(reservationRecurrenceParameters): Observable<Booking[]>{
+    const params = new HttpParams()
+      .set('roomId', reservationRecurrenceParameters.roomId)
+      .set('startDate', reservationRecurrenceParameters.startDate)
+      .set('endDate', reservationRecurrenceParameters.endDate)
+      .set('labelRecurrence', reservationRecurrenceParameters.labelRecurrence)
+      .set('endDateRecurrence', reservationRecurrenceParameters.endDateRecurrence);
+
+      console.log('Voici les params reçus :');
+      console.log(params);
+      
+      return this.httpClient
+        .get<Booking[]>(this.cst.apiUrl + 'reservation/checkRecurrence/', { params: params});
+  }
+
   // Error handling
   handleError(error: HttpErrorResponse) {
     return throwError(error.error["result"]);

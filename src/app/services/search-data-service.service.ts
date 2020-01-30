@@ -33,10 +33,11 @@ export class SearchDataServiceService {
 
   getStartDate(startDate: Date){
     this.startDateSource.next(startDate);
+    
   }
 
   getfullStartDate(startDate: string) {
-    this.fullStartDateSource.next(startDate);
+    this.fullStartDateSource.next(startDate);    
   }
 
   getfullEndDate(endDate: string) {
