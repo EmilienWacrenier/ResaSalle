@@ -4,41 +4,41 @@
     <div class="row">
         <div class="container-fluid">
 
-            <div class="row border-top border-bottom bg-info text-white p-3">
-                <div class="col-2">Date</div>
-                <div class="col-1">Début</div>
-                <div class="col-1">Fin</div>
-                <div class="col-2">Salle</div>
-                <div class="col-2">.</div>
-            </div>
-
-            <div *ngFor="let resa of reservationFeedback">
-                <div class="row border-bottom p-3 bg-white" (click)="displayPlanning(resa)">
-                    <div class="col-2">
-                        {{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
-                    </div>
-                    <div class="col-1">
-                        {{resa.startDate | date: 'HH:mm'}}
-                    </div>
-                    <div class="col-1">
-                        {{resa.endDate | date: 'HH:mm'}}
-                    </div>
-                    <div class="col-2">
-                        {{resa.roomId}}
-                    </div>
-                    <div class="col-2">
-                        <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
-                            edit
-                        </i>
-                        <i class="material-icons deleteBtn" focusable="false"
-                            (click)="deleteBooking(resa.reservationId)">
-                            clear
-                        </i>
-                    </div>
-                </div>
+            <div class="table-responsive-md">
+                <table class="table table-fixed">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Début</th>
+                            <th scope="col">Fin</th>
+                            <th scope="col">Salle</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        <tr *ngFor="let resa of reservationFeedback; let i = index"
+                            [ngClass]="resa.conflit ? 'bg-danger':''">
+                            <td class="hoverable" (click)="displayPlanning(resa)">{{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
+                            </td>
+                            <td class="hoverable" (click)="displayPlanning(resa)">{{resa.startDate | date: 'HH:mm'}}</td>
+                            <td class="hoverable" (click)="displayPlanning(resa)">{{resa.endDate | date: 'HH:mm'}}</td>
+                            <td>{{resa.roomId}}</td>
+                            <td>
+                                <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
+                                    edit
+                                </i>
+                                <i class="material-icons deleteBtn" focusable="false"
+                                    (click)="deleteBooking(resa.reservationId)">
+                                    clear
+                                </i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+
 
     <!-- Calendrier -->
     <div class="row" *ngIf="planningClicked">
