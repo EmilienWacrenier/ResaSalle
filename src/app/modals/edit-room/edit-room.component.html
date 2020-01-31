@@ -15,26 +15,48 @@
         <div class="modal-body">
             <form class="example-form" [formGroup]="updateRoomForm">
                 <div class="row">
-                    <mat-form-field class="col-8" appearance="outline">
+                       <mat-form-field class="col-8" appearance="outline">
                         <mat-label> Nom </mat-label>
-                        <input type="text" placeholder="Nom" aria-label="roomName" matInput formControlName="roomName" [matAutocomplete]="auto" required>
+                        <input type="text" placeholder="Nom" aria-label="roomName" matInput formControlName="roomName"
+                            [matAutocomplete]="auto" required>
                         <mat-autocomplete #auto="matAutocomplete">
-                          <mat-option *ngFor="let name of names" [value]="name">
-                            {{name}}
-                          </mat-option>
+                            <mat-option *ngFor="let name of names" [value]="name">
+                                {{name}}
+                            </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
 
-                        <mat-form-field class=" col-4 f-right">
-                            <mat-label>Zone</mat-label>
-                            <mat-select matInput formControlName="roomArea" placeholder="Zone" required>
-                                <mat-option *ngFor="let area of areas" [value]="area">
-                                    {{area}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                    <mat-form-field class=" col-4 f-right">
+                        <mat-label>Zone</mat-label>
+                        <mat-select matInput formControlName="roomArea" placeholder="Zone" required>
+                            <mat-option *ngFor="let area of areas" [value]="area">
+                                {{area}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
 
+<!--  CHANTIER NOUVELLE MODALE
+                    <div class="form-group col-8">
+                        <label class="d-inline-block" for="roomName">Nom</label>
+                        <input type="text" class="form-control d-inline-block" id="roomName" placeholder="Nom"
+                            formControlName="roomName" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let name of names" [value]="name">
+                                {{name}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </div>
+
+                    <div class="form-group col-4 f-right">
+                        <label for="roomArea">Zone</label>
+                        <select id="roomArea" class="form-control" formControlName="roomArea" placeholder="Zone" required>
+                            <option *ngFor="let name of names" [value]="name" value="">
+                                {{name}}
+                            </option>
+                        </select>
+                    </div>
+-->
 
             </form>
             <table class="example-full-width" cellspacing="0">
@@ -47,6 +69,11 @@
                     <td><span class="btn btn-capacity" (click)="incrementCapacity()">+</span></td>
                 </tr>
             </table>
+
+<!-- new gen -->
+a-ngForm
+
+
         </div>
         <div class="modal-footer" mat-dialog-actions>
             <button type="button" class="btn btn-info" (click)="onNoClick()">Annuler</button>

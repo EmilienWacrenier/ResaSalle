@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ToastrService, ToastRef } from 'ngx-toastr';
 import { Router } from '@angular/router'
 import { ApiConstants } from '../../constantes/constantes';
@@ -9,6 +9,8 @@ import { ApiConstants } from '../../constantes/constantes';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+
+  @Output() toggleSidenav = new EventEmitter<void>();
 
   protected user;
 

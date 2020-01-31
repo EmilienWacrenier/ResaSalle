@@ -1,15 +1,13 @@
 /* SIDEBAR : LOGO + BOUTONS */
-#sidebar {
-width: 10%;
-text-align: center;
-background:rgb(115, 154, 224);
-font-size: 20px;
-}
-
-/* LOGO */
-#logo {
-  margin: 10%;
-  width: 75%;
+.sidenav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 230px;
+  background: #f8f9fa;
+  box-shadow: 0px 68px 8px 3px rgba(0, 0, 0, 0.34);
+  -webkit-box-shadow: 0px 68px 8px 3px rgba(0, 0, 0, 0.34);
+  -moz-box-shadow: 0px 68px 8px 3px rgba(0, 0, 0, 0.34);
 }
 
 .brand{
@@ -23,32 +21,50 @@ font-size: 20px;
 }
 
 .active-list-item {
-  color: rgb(115, 154, 224)!important;
-  background-color: white!important;
-}
-
-a.tabs {
-  color:rgba(255, 255, 255, 0.555);
-  text-decoration: none;
-}
-
-.tabs:hover{
-  color: white;
-}
-
-.tabs-title{
-  padding-left:0.3em;
-  font-size: 0.8rem;
-  text-align:left;
+  font-weight: 550;
+  color: #1c4797!important;
+  background: rgba(0,0,0,.04);
 }
 
 .grid-container{
-  margin: 20px;
+  margin: 64px;
 }
 
+mat-sidenav-container {
+  height: 100%;
+}
 
-#sidebar{
-  box-shadow: 0px 68px 8px 3px rgba(0, 0, 0, 0.34);
-  -webkit-box-shadow: 0px 68px 8px 3px rgba(0, 0, 0, 0.34);
-  -moz-box-shadow: 0px 68px 8px 3px rgba(0, 0, 0, 0.34);
+mat-sidenav-content{
+  background: rgb(250, 250, 250);
+}
+
+app-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 998;
+}
+
+mat-nav-list {
+  margin-top: 64px;
+  padding-top: 0;
+}
+
+mat-nav-list>a{
+  color: rgb(0, 0, 0);
+}
+
+.nav-list-icon{
+  margin: 0px 12px;
+  padding: 4px;
+}
+
+@media (max-width: 599px){
+  .grid-container{
+      margin: 56px auto;
+  }
+  mat-nav-list{
+    margin-top: 56px;
+  }
 }
