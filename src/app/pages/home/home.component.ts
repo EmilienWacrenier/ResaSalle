@@ -8,19 +8,13 @@ import { Room } from '../../classes/room'
 import { RoomService } from '../../services/room.service';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
+import { PlanningService } from 'src/app/services/planning.service';
 
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
 })
 
 
@@ -37,7 +31,10 @@ export class HomeComponent implements OnInit {
   */
   itsMorning: boolean;
 
-  constructor(private roomService: RoomService) { }
+  constructor(
+    private roomService: RoomService,
+    private planningService : PlanningService) 
+    { }
 
 
   ngOnInit() {
@@ -45,8 +42,13 @@ export class HomeComponent implements OnInit {
     this.getRoomsAndTheirReservationsOfToday();
   }
 
+  onClickRoom(roomId : number){
+    console.log(roomId);
+    this.planningService.getRoomId(roomId);
+  }
+
   initPlanningBtn() {
-    if (new Date().getUTCHours() >= 13) {
+    if (new Date().getHours() >= 13) {
       this.setBtnAfternoon();
     }
     else {
@@ -91,13 +93,15 @@ export class HomeComponent implements OnInit {
     let startMinutes;
 
     //total de l'heure de début en minutes
-    let hoursDebut = new Date(reservation.startDate).getUTCHours();
-    let minutesDebut = (new Date(reservation.startDate)).getUTCMinutes();
+    let hoursDebut = new Date(reservation.startDate).getHours();
+    console.log(hoursDebut);
+    
+    let minutesDebut = (new Date(reservation.startDate)).getMinutes();
     let totalHoursDebut = hoursDebut*60 + minutesDebut;
 
     //total de l'heure de fin en minutes
-    let hoursFin = (new Date(reservation.endDate)).getUTCHours();
-    let minutesFin = (new Date(reservation.endDate)).getUTCMinutes();
+    let hoursFin = (new Date(reservation.endDate)).getHours();
+    let minutesFin = (new Date(reservation.endDate)).getMinutes();
     let totalHoursFin = hoursFin*60 + minutesFin;
 
     //début et fin le matin

@@ -35,6 +35,24 @@ export class ReservationService {
       );
   }
 
+  checkReservationRecurrence(reservationToCheck): Observable<Booking[]> {
+    const params = new HttpParams()
+      .set('startDate', reservationToCheck.startDate)
+      .set('endDate', reservationToCheck.endDate)
+      .set('roomId', reservationToCheck.roomId.toString())
+      .set('labelRecurrence', reservationToCheck.labelRecurrence)
+      .set('endDateRecurrence', reservationToCheck.endDateRecurrence);
+
+
+    return this.httpClient
+      .get<Booking[]>(
+        this.cst.apiUrl + 'reservation/checkRecurrence/',
+        { params: params })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
 
   getReservationsFromUserConnected(): Observable<Booking[]> {
     let bookings;
@@ -75,7 +93,7 @@ export class ReservationService {
 
     return this.httpClient
       .get<Booking[]>(
-        this.cst.apiUrl + 'reservation/reservationsByRoomId/',
+        this.cst.apiUrl + 'reservation/reservationsByRoomIdByDate/',
         { params: params });
   }
 
@@ -91,6 +109,21 @@ export class ReservationService {
       .get<Booking>(
         this.cst.apiUrl + 'reservation/checkReservation/',
         { params: params });
+  }
+
+  getCheckRecurrence(reservationRecurrenceParameters): Observable<Booking[]>{
+    const params = new HttpParams()
+      .set('roomId', reservationRecurrenceParameters.roomId)
+      .set('startDate', reservationRecurrenceParameters.startDate)
+      .set('endDate', reservationRecurrenceParameters.endDate)
+      .set('labelRecurrence', reservationRecurrenceParameters.labelRecurrence)
+      .set('endDateRecurrence', reservationRecurrenceParameters.endDateRecurrence);
+
+      console.log('Voici les params reçus :');
+      console.log(params);
+      
+      return this.httpClient
+        .get<Booking[]>(this.cst.apiUrl + 'reservation/checkRecurrence/', { params: params});
   }
 
   // Error handling

@@ -31,6 +31,7 @@ export class SearchComponent implements OnInit {
     this.recurrenceIsChecked = $event;
     console.log(this.recurrenceIsChecked);
   }
+
 }
 
 

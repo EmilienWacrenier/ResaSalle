@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -33,11 +33,18 @@ import { EditBookingComponent } from './modals/edit-booking/edit-booking.compone
 import { ConfirmComponent } from './pages/confirm/confirm.component';
 import { BookingsearchComponent } from './modals/bookingsearch/bookingsearch.component';
 import { CriteresComponent } from './pages/search/criteres/criteres.component';
-import { SallesSansRecurrenceComponent } from './pages/search/salles-sans-recurrence/salles-sans-recurrence.component';
-import { SallesAvecRecurrenceComponent } from './pages/search/salles-avec-recurrence/salles-avec-recurrence.component';
 import { FeedbackConflitRecurrenceComponent } from './pages/search/feedback-conflit-recurrence/feedback-conflit-recurrence.component';
 import { RecurrenceComponent } from './pages/search/recurrence/recurrence.component';
 import {ConfirmationReservationComponent} from 'src/app/modals/confirmation-reservation/confirmation-reservation.component';
+import { RecurrenceStepSallesComponent } from './pages/search/recurrence-step-salles/recurrence-step-salles.component';
+import { HoursFeedbackStepComponent } from './modals/hours-feedback-step/hours-feedback-step.component';
+
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+// the second parameter 'fr' is optional
+registerLocaleData(localeFr, 'fr');
+
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -63,11 +70,11 @@ export function tokenGetter() {
     ConfirmComponent,
     BookingsearchComponent,
     CriteresComponent,
-    SallesSansRecurrenceComponent,
-    SallesAvecRecurrenceComponent,
     FeedbackConflitRecurrenceComponent,
     RecurrenceComponent,
-    ConfirmationReservationComponent
+    ConfirmationReservationComponent,
+    RecurrenceStepSallesComponent,
+    HoursFeedbackStepComponent
   ],
   imports: [
     BrowserModule,
@@ -89,7 +96,7 @@ export function tokenGetter() {
     }),
     HttpClientModule
   ],
-  providers: [ApiConstants],
+  providers: [ApiConstants, { provide: LOCALE_ID, useValue: 'fr' }],
   bootstrap: [AppComponent],
 
   entryComponents: [
@@ -99,7 +106,8 @@ export function tokenGetter() {
     EditRoomComponent,
     EditBookingComponent,
     BookingsearchComponent,
-    ConfirmationReservationComponent
+    ConfirmationReservationComponent,
+    HoursFeedbackStepComponent
   ]
 })
 export class AppModule { }

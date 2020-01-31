@@ -1,0 +1,62 @@
+<button type="button" class="close_button" data-dismiss="modal" aria-hidden="true"
+  (click)="closeModal()">&times;</button>
+
+
+<div class="container-fluid" id="createReservation">
+  <!-- titre -->
+  <div class="row justify-content-center mb-2 p-2 rounded ">
+    <h4 class="titre m-0 align-items-center">Choisir un horaire</h4>
+  </div>
+
+  <!-- date debut -->
+  <div class="row justify-content-center border rounded p-2 my-2">
+    <h6 class="w-100 text-center">Debut</h6>
+    <mat-form-field class="w-50 px-2">
+      <mat-label>Heure</mat-label>
+      <mat-select [(value)]="selectedHourStart">
+        <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart">
+          {{hourStart}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-50 px-2">
+      <mat-label mat-body>Minute</mat-label>
+      <mat-select [(value)]="selectedMinuteStart">
+        <mat-option *ngFor="let minuteStart of bookingMinutes" [value]="minuteStart">
+          {{minuteStart}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span class="d-block text-danger small" *ngIf="errorHourStart">{{errorHourStart}}</span>
+  </div>
+
+  <!-- date fin -->
+  <div class="row justify-content-center border rounded p-2 my-2">
+    <h6 class="w-100 text-center">Fin</h6>
+    <mat-form-field class="w-50 px-2">
+      <mat-label>Heure</mat-label>
+      <mat-select [(value)]="selectedHourEnd">
+        <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
+          {{hourEnd}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-50 px-2">
+      <mat-label>Minute</mat-label>
+      <mat-select [(value)]="selectedMinuteEnd">
+        <mat-option *ngFor="let minuteEnd of bookingMinutes" [value]="minuteEnd">
+          {{minuteEnd}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span class="d-block text-danger small" *ngIf="errorHourEnd">{{errorHourEnd}}</span>
+  </div>
+
+  <!-- bouton crea -->
+  <div class="row justify-content-center my-2">
+    <mat-dialog-actions>
+      <button matButton class="mat-raised-button" (click)="onSubmit()">Valider ces horaires</button>
+      <span class="d-block text-danger small p-1" *ngIf="baseMessage">{{baseMessage}}</span>
+    </mat-dialog-actions>
+  </div>
+</div>
