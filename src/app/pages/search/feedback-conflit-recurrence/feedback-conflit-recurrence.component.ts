@@ -12,11 +12,6 @@ import { SearchDataServiceService } from 'src/app/services/search-data-service.s
 })
 export class FeedbackConflitRecurrenceComponent implements OnInit {
 
-  //variable pour le planning
-  listeReservation: Booking[];
-  weekDays: any[];
-  bookingsOfTheWeek: any;
-
   //reservation a afficher dans planning
   reservation: any
   indexReservation: number;
@@ -26,7 +21,11 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
 
   planningClicked: boolean = false;
 
-  constructor(private roomService: RoomService,
+  labelRecurrence: string;
+  startDateRecurrence: string;
+  endDateRecurrence: string;
+
+  constructor(
     private reservationService: ReservationService,
     private searchDataService: SearchDataServiceService) { }
 
@@ -45,7 +44,7 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
   deleteBooking(booking) {
     console.log(booking);
   }
-  
+
   //fonction quand on clique sur une resa avec un conflit
   displayPlanning(reservation: any, indexReservation : number){
     this.planningClicked = true;
@@ -67,7 +66,59 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
 
     console.log(this.reservationsToCheck);
     this.planningClicked = false;
-    //check reservation si ok ou pas (voir route)
+    
+    this.reservationService.getCheckReservation(newReservation.roomId, newReservation.startDate, newReservation.endDate)
+    .subscribe( res => 
+      {
+        let reservationIsGood = res['result'];
+        if (reservationIsGood){
+          newReservation.conflit = false;
+        }
+        else newReservation.conflit = true;
+      }
+    )
+  }
+
+  createReservationRecurrence(){
+    this.searchDataService.recurrenceName$.subscribe( res => this.labelRecurrence = res );
+    this.searchDataService.fullStartDate$.subscribe( res => this.startDateRecurrence = res );
+    this.searchDataService.endDateRecurrence$.subscribe( res => this.endDateRecurrence = res );
+
+    const listeReservations = this.reservationsToCheck.filter( resa => resa.conflit == false && resa.isWorkingDay == true );
+    console.log(listeReservations);
+
+    const listeReservationsWithConflit = this.reservationsToCheck.filter( resa => resa.conflit == true );
+
+    let confirmText = "Attention plusieurs créneaux ne sont pas disponibles et vont être ignorés. \r";
+
+    if(listeReservationsWithConflit || listeReservationsWithConflit != null || listeReservationsWithConflit != undefined){
+
+      for(const i in listeReservationsWithConflit){
+        confirmText += "• Début : " + listeReservationsWithConflit[i].startDate + ", Fin : " + listeReservationsWithConflit[i].endDate + ", Salle : " + listeReservationsWithConflit[i].roomId + "\r";
+      }
+
+      confirmText += "Si vous êtes d'accord, cliquez sur OK, sinon sur Annuler";
+
+
+
+      const res = window.confirm(confirmText)
+      if(res){
+        console.log("creation resa");
+      }
+    }
+    
+    const createReservationParameters = {
+      labelRecurrence : this.labelRecurrence,
+      startDateRecurrence : this.startDateRecurrence,
+      endDateRecurrence : this.endDateRecurrence,
+      listeReservation : listeReservations
+    }
+
+
+
+    //createResa
+
+
   }
 
 }

@@ -303,11 +303,7 @@ export class RoomPlanningComponent implements OnInit {
         .afterClosed().subscribe((res) => {
           this.reservationSearchFeedback = res;
           this.reservationToChange.emit({reservation: this.reservationSearchFeedback, indexReservation : this.indexReservation})
-
         });
-
     }
-
-
   }
 }

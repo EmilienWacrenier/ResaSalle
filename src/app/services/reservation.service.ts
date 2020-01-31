@@ -111,7 +111,7 @@ export class ReservationService {
         { params: params });
   }
 
-  getCheckRecurrence(reservationRecurrenceParameters): Observable<Booking[]>{
+  getCheckRecurrence(reservationRecurrenceParameters): Observable<any>{
     const params = new HttpParams()
       .set('roomId', reservationRecurrenceParameters.roomId)
       .set('startDate', reservationRecurrenceParameters.startDate)
