@@ -37,7 +37,7 @@ import { SallesSansRecurrenceComponent } from './pages/search/salles-sans-recurr
 import { SallesAvecRecurrenceComponent } from './pages/search/salles-avec-recurrence/salles-avec-recurrence.component';
 import { FeedbackConflitRecurrenceComponent } from './pages/search/feedback-conflit-recurrence/feedback-conflit-recurrence.component';
 import { RecurrenceComponent } from './pages/search/recurrence/recurrence.component';
-
+import {ConfirmationReservationComponent} from 'src/app/modals/confirmation-reservation/confirmation-reservation.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -66,7 +66,8 @@ export function tokenGetter() {
     SallesSansRecurrenceComponent,
     SallesAvecRecurrenceComponent,
     FeedbackConflitRecurrenceComponent,
-    RecurrenceComponent
+    RecurrenceComponent,
+    ConfirmationReservationComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +98,8 @@ export function tokenGetter() {
     DeleteConfirmationComponent,
     EditRoomComponent,
     EditBookingComponent,
-    BookingsearchComponent
+    BookingsearchComponent,
+    ConfirmationReservationComponent
   ]
 })
 export class AppModule { }

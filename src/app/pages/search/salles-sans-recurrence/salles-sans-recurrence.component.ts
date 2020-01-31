@@ -5,6 +5,18 @@ import { Subscription } from 'rxjs';
 import { SearchDataServiceService } from 'src/app/services/search-data-service.service';
 import { ReservationService } from 'src/app/services/reservation.service';
 import { User } from 'src/app/classes/user';
+import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
+import {ConfirmationReservation,ConfirmationReservationComponent} from 'src/app/modals/confirmation-reservation/confirmation-reservation.component';
+import {
+  NUMERO_SEMAINE,
+  JOUR_SEMAINE,
+  BOOKING_HOURS,
+  BOOKING_MINUTES
+} from "../../../constantes/constantes";
+import * as moment from 'moment';
+import { Booking } from 'src/app/classes/booking';
+import { ToastrService } from 'ngx-toastr';
+import { ApiConstants } from 'src/app/constantes/constantes';
 
 @Component({
   selector: 'app-salles-sans-recurrence',
@@ -29,11 +41,17 @@ export class SallesSansRecurrenceComponent implements OnInit {
   fullStartDate : string;
   fullEndDate: string;
   object:string;
-
+  selectedObject:string;
+  selectedDate:string;
+ 
   constructor(
     private roomService: RoomService,
     private reservationService : ReservationService,
-    private searchDataService : SearchDataServiceService
+    private searchDataService : SearchDataServiceService,
+    public dialog: MatDialog,
+   /*  private toastr: ToastrService,
+    private cst: ApiConstants, */
+   /*  public dialogRef: MatDialogRef<SallesSansRecurrenceComponent> */
   ) {
   }
 
@@ -43,6 +61,7 @@ export class SallesSansRecurrenceComponent implements OnInit {
     this.searchDataService.object$.subscribe(res => this.object = res);
     this.getRoomsAvailable(this.roomRequiredCapacity, this.fullStartDate, this.fullEndDate);
   }
+  
 
   onChangeCapacity() {
     this.selectedRoom = null;
@@ -56,8 +75,8 @@ export class SallesSansRecurrenceComponent implements OnInit {
       this.selectedRoom = room;
     }
   }
-
-    getRoomsAvailable(capacity, startDate, endDate) {
+  
+  getRoomsAvailable(capacity, startDate, endDate) {
 
       this.roomService
         .getAvailableRooms(capacity, startDate, endDate)
@@ -66,16 +85,55 @@ export class SallesSansRecurrenceComponent implements OnInit {
           console.log(this.roomList)
         })
     }
+   /*  onNoClick(): void {
+      this.dialogRef.close();
+    } */
 
     createReservation(){
-      let reservation = {
+      const message =`Souhaitez-vous vraiment réserver la salle` ;
+      const dialogData = new ConfirmationReservation(
+        `Confirmer votre réservation`, 
+        message, 
+        this.selectedRoom.name, 
+        this.fullStartDate =moment(this.fullStartDate).locale("fr").format('dddd Do MMMM YYYY [de] H[h]mm'),
+        this.fullEndDate =moment(this.fullEndDate).format('[ à] H[h]mm'),
+        this.object
+        );
+      const dialogRef = this.dialog.open(ConfirmationReservationComponent, {
+        width: '400px',
+        data: dialogData
+      });
+
+      /* dialogRef.afterClosed().subscribe( ()=>  this.onSubmit() */
+        
+        
+        /*  { */
+        /* if (result){ */
+           /* this.reservationService.createReservation(Booking).subscribe(
+            (response) => {
+              this.toastr.success(`Réservation validé !`, this.cst.toastrTitle, this.cst.toastrOptions); */
+             /*  this.dialogRef.close(); 
+              this.createReservation(); */
+            /* },
+            (error) => {
+              this.toastr.error(error.error['result'], this.cst.toastrTitle, this.cst.toastrOptions); */
+             /*  this.createReservation(); */
+            /* }
+          ); */  
+       /*  } */
+      /* } *//* ); */
+    
+       
+         
+       
+      /* let reservation = {
         startDate : this.fullStartDate,
         endDate : this.fullEndDate,
         object : this.object,
         userId : this.user.userId,
         roomId: this.selectedRoom.roomId
       }
-      console.log(reservation);
+      console.log(reservation); */
       //this.reservationService.createReservation(reservation);
     }
 
