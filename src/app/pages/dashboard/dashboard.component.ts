@@ -3,7 +3,7 @@ import { ReservationService } from 'src/app/services/reservation.service';
 import { RoomService } from 'src/app/services/room.service';
 import { Booking } from 'src/app/classes/booking';
 import { Observable } from 'rxjs';
-import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { DeleteConfirmationComponent, ConfirmDeleteModel } from '../../modals/delete-confirmation/delete-confirmation.component';
 import { MatTableDataSource } from '@angular/material';
 

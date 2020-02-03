@@ -1,0 +1,24 @@
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="quit()">&times;</button>
+
+<div class="modal-dialog modal-confirm m-0">
+  <div class="modal-content border-0">
+    <div class="modal-header border-0">
+      <div class="icon-box">
+        <i class="material-icons deleteIcon " focusable="false">
+          logout
+        </i>
+      </div>
+      <h4 class="modal-title ">
+        Déconnexion
+      </h4>
+
+    </div>
+    <div class="modal-body border-0">
+      Êtes-vous sur ?
+    </div>
+    <div class="modal-footer border-0" mat-dialog-actions>
+      <button type="button" class="btn btn-info" (click)="quit()">Annuler</button>
+      <button type="button" class="btn btn-danger" [mat-dialog-close]="true" >Déconnexion</button>
+    </div>
+  </div>
+</div>

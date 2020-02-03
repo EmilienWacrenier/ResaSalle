@@ -58,13 +58,18 @@
         </mat-nav-list>
 
         <div id="profileItems">
-            <button mat-button [matMenuTriggerFor]="menu">
+            <button mat-button >
                 <span class="user-name">{{user.firstName}} {{user.lastName | uppercase}} </span>
                 <mat-icon class="user-img-circle">
                     account_circle
                 </mat-icon>
             </button>
-            <mat-menu #menu="matMenu" xPosition="before">
+            <button mat-button (click)="logoutConfirm()">
+              <mat-icon class="material-icons md-light">
+                logout
+              </mat-icon>
+            </button>
+            <!-- <mat-menu #menu="matMenu" xPosition="before">
                 <button mat-menu-item disabled>
                     <mat-icon>person</mat-icon>
                     <span>Mon Profil</span>
@@ -73,8 +78,9 @@
                     <mat-icon>power_settings_new</mat-icon>
                     <span>Me déconnecter</span>
                 </button>
-            </mat-menu>
+            </mat-menu>-->
         </div>
     </mat-toolbar-row>
 
 </mat-toolbar>
+
