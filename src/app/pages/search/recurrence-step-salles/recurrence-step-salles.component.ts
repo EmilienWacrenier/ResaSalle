@@ -5,6 +5,9 @@ import { Subscription } from 'rxjs';
 import { SearchDataServiceService } from 'src/app/services/search-data-service.service';
 import { ReservationService } from 'src/app/services/reservation.service';
 import { User } from 'src/app/classes/user';
+import { ConfirmationReservation, ConfirmationReservationComponent } from 'src/app/modals/confirmation-reservation/confirmation-reservation.component';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-recurrence-step-salles',
@@ -107,6 +110,19 @@ export class RecurrenceStepSallesComponent implements OnInit {
     }
     console.log(reservation);
     //this.reservationService.createReservation(reservation);
+    /*const message =`Souhaitez-vous vraiment réserver la salle` ;
+      const dialogData = new ConfirmationReservation(
+        `Confirmer votre réservation`, 
+        message, 
+        this.selectedRoom.name, 
+        this.fullStartDate =moment(this.fullStartDate).locale("fr").format('dddd Do MMMM YYYY [de] H[h]mm'),
+        this.fullEndDate =moment(this.fullEndDate).format('[ à] H[h]mm'),
+        this.object
+        );
+      const dialogRef = this.dialog.open(ConfirmationReservationComponent, {
+        width: '400px',
+        data: dialogData
+      });*/
   }
 
   sendToVerification() {

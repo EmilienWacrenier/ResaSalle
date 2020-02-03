@@ -35,7 +35,9 @@ import { BookingsearchComponent } from './modals/bookingsearch/bookingsearch.com
 import { CriteresComponent } from './pages/search/criteres/criteres.component';
 import { FeedbackConflitRecurrenceComponent } from './pages/search/feedback-conflit-recurrence/feedback-conflit-recurrence.component';
 import { RecurrenceComponent } from './pages/search/recurrence/recurrence.component';
+import {ConfirmationReservationComponent} from 'src/app/modals/confirmation-reservation/confirmation-reservation.component';
 import { RecurrenceStepSallesComponent } from './pages/search/recurrence-step-salles/recurrence-step-salles.component';
+import { HoursFeedbackStepComponent } from './modals/hours-feedback-step/hours-feedback-step.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -70,7 +72,9 @@ export function tokenGetter() {
     CriteresComponent,
     FeedbackConflitRecurrenceComponent,
     RecurrenceComponent,
-    RecurrenceStepSallesComponent
+    ConfirmationReservationComponent,
+    RecurrenceStepSallesComponent,
+    HoursFeedbackStepComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +105,9 @@ export function tokenGetter() {
     DeleteConfirmationComponent,
     EditRoomComponent,
     EditBookingComponent,
-    BookingsearchComponent
+    BookingsearchComponent,
+    ConfirmationReservationComponent,
+    HoursFeedbackStepComponent
   ]
 })
 export class AppModule { }

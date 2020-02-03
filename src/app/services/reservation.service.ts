@@ -93,7 +93,7 @@ export class ReservationService {
 
     return this.httpClient
       .get<Booking[]>(
-        this.cst.apiUrl + 'reservation/reservationsByRoomId/',
+        this.cst.apiUrl + 'reservation/reservationsByRoomIdByDate/',
         { params: params });
   }
 
@@ -111,7 +111,7 @@ export class ReservationService {
         { params: params });
   }
 
-  getCheckRecurrence(reservationRecurrenceParameters): Observable<Booking[]>{
+  getCheckRecurrence(reservationRecurrenceParameters): Observable<any>{
     const params = new HttpParams()
       .set('roomId', reservationRecurrenceParameters.roomId)
       .set('startDate', reservationRecurrenceParameters.startDate)

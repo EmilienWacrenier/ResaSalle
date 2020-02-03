@@ -2,6 +2,12 @@
     <ng-template matStepLabel>Résultats</ng-template>
 
     <div class="row">
+        <button class="bouton-back-next" mat-button
+            (click)="createReservationRecurrence()">Réserver ces dates</button>
+    </div>
+
+
+    <div class="row">
         <div class="container-fluid">
 
             <div class="table-responsive-md">
@@ -16,12 +22,12 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white">
-                        <tr *ngFor="let resa of reservationFeedback; let i = index"
+                        <tr *ngFor="let resa of reservationsToCheck; let i = index"
                             [ngClass]="resa.conflit ? 'bg-danger':''">
-                            <td class="hoverable" (click)="displayPlanning(resa)">{{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
+                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
                             </td>
-                            <td class="hoverable" (click)="displayPlanning(resa)">{{resa.startDate | date: 'HH:mm'}}</td>
-                            <td class="hoverable" (click)="displayPlanning(resa)">{{resa.endDate | date: 'HH:mm'}}</td>
+                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.startDate | date: 'HH:mm'}}</td>
+                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.endDate | date: 'HH:mm'}}</td>
                             <td>{{resa.roomId}}</td>
                             <td>
                                 <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
@@ -45,7 +51,10 @@
         <div class="container">
             <div class="row" (click)="closePlanning()">X</div>
             <div class="row">
-                <app-room-planning [reservationSearchFeedback]="reservation"></app-room-planning>
+                <app-room-planning 
+                    [reservationSearchFeedback]="reservation" 
+                    [indexReservation]="indexReservation"
+                    (reservationToChange)="updateReservation($event)"></app-room-planning>
             </div>
         </div>
     </div>

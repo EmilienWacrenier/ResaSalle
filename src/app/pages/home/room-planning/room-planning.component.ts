@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Room } from '../../../classes/room'
 import { Booking } from '../../../classes/booking'
@@ -13,6 +13,8 @@ import { JOUR_SEMAINE, HOURS_PLANNING } from '../../../constantes/constantes'
 
 import * as moment from 'moment'
 import { PlanningService } from 'src/app/services/planning.service';
+import { HoursFeedbackStepComponent } from 'src/app/modals/hours-feedback-step/hours-feedback-step.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,7 +24,10 @@ import { PlanningService } from 'src/app/services/planning.service';
 })
 export class RoomPlanningComponent implements OnInit {
 
-  @Input() reservationSearchFeedback: Booking;
+  @Input() reservationSearchFeedback: any;
+  @Input() indexReservation: number;
+
+  @Output() reservationToChange = new EventEmitter<{reservation : any, indexReservation : number}>();
 
   //jour de la semaine du planning
   daysOfPlanning: string[] = JOUR_SEMAINE;
@@ -55,29 +60,29 @@ export class RoomPlanningComponent implements OnInit {
     private reservationService: ReservationService,
     private roomService: RoomService,
     public dialog: MatDialog,
-    private planningService: PlanningService
+    private planningService: PlanningService,
+    private route : Router
   ) { }
 
   ngOnInit() {
     document.getElementById('homeNavItem').classList.add('active-list-item');
+    
+    let isSearch = this.route.url.includes('search');
 
-    if (!this.reservationSearchFeedback || this.reservationSearchFeedback == undefined || this.reservationSearchFeedback == null) {
+    console.log("isSearch = " + isSearch);
+
+    if (!isSearch) {
       console.log("init home");
-      console.log(this.reservationSearchFeedback);
       this.initPlanningHome();
 
     }
     else {
       console.log("init search");
       this.initPlanningSearch();
-
     }
-
-
   }
 
   initPlanningSearch() {
-
     this.roomService.getRooms().subscribe(res => {
       this.rooms = res['result'];
 
@@ -90,9 +95,6 @@ export class RoomPlanningComponent implements OnInit {
         this.selectedRoom = this.rooms[0];
       }
       this.selectedDate = new Date(this.reservationSearchFeedback.startDate);
-
-      console.log(this.reservationSearchFeedback);
-      console.log(this.reservationSearchFeedback.roomId);
 
       this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
     });
@@ -169,12 +171,12 @@ export class RoomPlanningComponent implements OnInit {
 
   //retourne la date du lundi de la semaine du jour selectionné
   findStartOfWeek(date) {
-    return moment(date).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).isoWeekday(1).format();
+    return moment(date).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).isoWeekday(1).format('YYYY-MM-DD HH:mm:ss');
   }
 
   //retourne la date du dimanche de la semaine du jour selectionné
   findEndOfWeek(date) {
-    return moment(date).set({ hour: 23, minute: 59, second: 59, millisecond: 0 }).isoWeekday(7).format();
+    return moment(date).set({ hour: 23, minute: 59, second: 59, millisecond: 0 }).isoWeekday(7).format('YYYY-MM-DD HH:mm:ss');
   }
 
   //retourne un tableau avec la date des jours de la semaine selectionnée
@@ -264,22 +266,44 @@ export class RoomPlanningComponent implements OnInit {
   //modale de céation de la réservation, la fonction prend en paramètre day et hour qui sont récupéré dans la partie HTML
   //cela permet de préremplir les champs dans la modale en fonction de la case cliquée.
   openDialog(day, hour) {
-    //config de ma modale :
-    //dans la partie data : room et selectedDate sont explicites, day et hour correspondent aux valeurs récupérés en paramètre
-    //venues du front. Ce sont des index de boucles ngFor.
-    const bookingDetailsDialogConfig = new MatDialogConfig();
-    bookingDetailsDialogConfig.width = "400px";
-    bookingDetailsDialogConfig.data = {
-      room: this.selectedRoom,
-      selectedDate: this.selectedDate,
-      day: day,
-      hour: hour,
-    };
 
-    this.dialog.open(BookingdetailsComponent, bookingDetailsDialogConfig)
-      .afterClosed().subscribe((data) => {
-        console.log(data);
-        this.getPlanning(data.roomId, data.selectedDate);
-      });
+    if (!this.reservationSearchFeedback || this.reservationSearchFeedback == undefined || this.reservationSearchFeedback == null) {
+      console.log("init home");
+      //config de ma modale :
+      //dans la partie data : room et selectedDate sont explicites, day et hour correspondent aux valeurs récupérés en paramètre
+      //venues du front. Ce sont des index de boucles ngFor.
+      const bookingDetailsDialogConfig = new MatDialogConfig();
+      bookingDetailsDialogConfig.width = "400px";
+      bookingDetailsDialogConfig.data = {
+        room: this.selectedRoom,
+        selectedDate: this.selectedDate,
+        day: day,
+        hour: hour,
+      };
+
+      this.dialog.open(BookingdetailsComponent, bookingDetailsDialogConfig)
+        .afterClosed().subscribe((data) => {
+          console.log(data);
+          this.getPlanning(data.roomId, data.selectedDate);
+        });
+
+    }
+    else {
+      console.log("init search");
+      const hoursFeedbackStepDialogConfig = new MatDialogConfig();
+      hoursFeedbackStepDialogConfig.width = "400px";
+      hoursFeedbackStepDialogConfig.data = {
+        reservation: this.reservationSearchFeedback,
+        day: day,
+        hour: hour,
+        roomId: this.selectedRoom.roomId
+      };
+
+      this.dialog.open(HoursFeedbackStepComponent, hoursFeedbackStepDialogConfig)
+        .afterClosed().subscribe((res) => {
+          this.reservationSearchFeedback = res;
+          this.reservationToChange.emit({reservation: this.reservationSearchFeedback, indexReservation : this.indexReservation})
+        });
+    }
   }
 }
