@@ -85,9 +85,15 @@ mat-icon{
   color: rgb(28, 71, 151);
   font-weight: bold;
 }
-.icecard{
+.content{
   max-width: 1300px;
   margin: 0 auto;
   padding: 35px 40px;
   border-radius: 10px;
+}
+
+@media (max-width: 995px){
+  .content {
+      padding: 15px 0px;
+  }
 }

@@ -1,4 +1,4 @@
-<mat-horizontal-stepper class="stepper" [linear]="true" #stepper>
+<mat-horizontal-stepper class="stepper"  [linear]="false" #stepper>
     <mat-step>
         <ng-template matStepLabel>Date & Objet</ng-template>
         <app-criteres (recurrenceChangeEvent)="onChangeRecurrence($event)"
