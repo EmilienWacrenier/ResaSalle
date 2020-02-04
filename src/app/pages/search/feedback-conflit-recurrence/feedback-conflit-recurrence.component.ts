@@ -13,22 +13,16 @@ import { User } from 'src/app/classes/user';
 export class FeedbackConflitRecurrenceComponent implements OnInit {
 
   @Input() user: User;
-
-  //reservation a afficher dans planning
-  reservation: any
-  indexReservation: number;
-
   //reponse avec la liste des reservations de la recurrence avec et sans conflit
-  reservationsToCheck: any;
-
-  planningClicked: boolean = false;
+  reservationsToCheck= [];
+  listeReservations= [];
 
   object: string;
   labelRecurrence: string;
   startDateRecurrence: string;
   endDateRecurrence: string;
 
-  listeReservations: [];
+  
 
   constructor(
     private reservationService: ReservationService,
@@ -50,22 +44,13 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
     this.reservationsToCheck.splice(i, 1)
   }
 
-  //fonction quand on clique sur une resa avec un conflit
-  displayPlanning(reservation: any, indexReservation: number) {
-    this.reservation = reservation;
-    this.indexReservation = indexReservation;
-  }
-
   updateReservation(event) {
-    console.log(event);
-    let index = event.indexReservation;
+    const index = event.indexReservation;
     let newReservation = event.reservation;
 
     this.reservationService.getCheckReservation(newReservation.roomId, newReservation.startDate, newReservation.endDate)
       .subscribe(res => {
-        console.log(res);
         this.reservationsToCheck[index] = res['result'];
-        console.log(this.reservationsToCheck)
       })
   }
 

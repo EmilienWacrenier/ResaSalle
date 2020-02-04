@@ -5,8 +5,7 @@
     <div class="row justify-content-center">
 
         <mat-accordion class="w-100">
-            <mat-expansion-panel *ngFor="let resa of reservationsToCheck; let i = index"
-                (opened)="displayPlanning(resa, i)">
+            <mat-expansion-panel *ngFor="let resa of reservationsToCheck; let i = index">
                 <mat-expansion-panel-header [ngClass]="resa.conflit || !resa.workingDay ? 'bg-danger':''">
                     <mat-panel-title>
                         <div class="container-fluid">

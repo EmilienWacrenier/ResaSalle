@@ -29,13 +29,11 @@ export class HoursFeedbackStepComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.data);
     this.setParamsOnInit(this.data.day, this.data.hour);
   }
 
   setParamsOnInit(day, hour) {
     this.selectedDate = new Date(moment(this.data.selectedDate).isoWeekday(day + 1).format());
-    console.log(this.selectedDate);
 
     if (hour % 2 == 0) {
       this.selectedHourStart = this.bookingHours[hour / 2];
