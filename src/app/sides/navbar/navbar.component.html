@@ -58,12 +58,13 @@
         </mat-nav-list>
 
         <div id="profileItems">
-            <button mat-button >
+            <mat-list-item class="pt-1 pr-1" >
                 <span class="user-name">{{user.firstName}} {{user.lastName | uppercase}} </span>
-                <mat-icon class="user-img-circle">
-                    account_circle
-                </mat-icon>
-            </button>
+
+            </mat-list-item>
+          <mat-icon class="user-img-circle pt-2">
+            account_circle
+          </mat-icon>
             <button mat-button (click)="logoutConfirm()">
               <mat-icon class="material-icons md-light">
                 logout
