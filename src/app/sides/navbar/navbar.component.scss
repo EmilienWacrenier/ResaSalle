@@ -41,7 +41,7 @@ mat-nav-list.list-horizontal {
       color: #fff;
     }
     .active-list-item{
-        background: #3d61a3e8;
+        background: #3a5ea2 !important;
     }
   }
 
@@ -57,4 +57,10 @@ mat-nav-list.list-horizontal {
     #navbar{
         height: 56px;
     }
+}
+mat-list-item:hover{
+  background: #1c4797 !important;
+}
+mat-list-item a:target, mat-list-item a:hover {
+  background: #3a5ea2 !important;
 }
