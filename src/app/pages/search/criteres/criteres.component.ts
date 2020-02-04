@@ -100,17 +100,10 @@ export class CriteresComponent implements OnInit {
       || this.dateIsWrong(this.selectedDate)
       || this.hoursAreWrong()) {
       this.errorCheck();
-      console.log(this.selectedDate);
-      console.log(this.selectedHourStart);
-      console.log(this.selectedMinuteStart);
-      console.log(this.selectedHourEnd);
-      console.log(this.selectedMinuteEnd);
       this.datasAreGood = false;
-      console.log(this.datasAreGood);
     }
     else {
       this.datasAreGood = true;
-      console.log(this.datasAreGood);
     }
   }
 
@@ -176,12 +169,10 @@ export class CriteresComponent implements OnInit {
 
   changeRecurrence() {
     this.recurrenceIsChecked = !this.recurrenceIsChecked;
-    console.log(this.recurrenceIsChecked);
     this.recurrenceChangeEvent.emit(this.recurrenceIsChecked);
   }
 
   clickWithoutRecurrence() {
-    console.log("Should load available rooms");
     this.loadAvailablesRoomsEvent.emit();
   }
 

@@ -86,8 +86,6 @@ export class RoomPlanningComponent implements OnInit {
     this.roomService.getRooms().subscribe(res => {
       this.rooms = res['result'];
 
-      console.log(this.reservationSearchFeedback);
-
       for (const room of this.rooms) {
         if (room.roomId == this.reservationSearchFeedback.room_id) {
           this.selectedRoom = room;
@@ -96,8 +94,8 @@ export class RoomPlanningComponent implements OnInit {
       if (!this.selectedRoom || this.selectedRoom == undefined || this.selectedRoom == null) {
         this.selectedRoom = this.rooms[0];
       }
-      this.selectedDate = new Date(this.reservationSearchFeedback.startDate);
 
+      this.selectedDate = new Date(this.reservationSearchFeedback.startDate);
       this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
     });
   }
@@ -106,11 +104,9 @@ export class RoomPlanningComponent implements OnInit {
     this.planningService.roomId$.subscribe(res => {
 
       this.roomIdFromHomeComponent = res;
-      console.log(this.roomIdFromHomeComponent);
       //récupération des salles en base
       this.roomService.getRooms().subscribe(res => {
         this.rooms = res['result'];
-        console.log(this.rooms);
 
         //pour instancier le planning avec la salle sélectionnée dans le component précédent (home),
         //on fait passer l'ID de la salle dans l'URL
@@ -124,7 +120,6 @@ export class RoomPlanningComponent implements OnInit {
         if (!this.selectedRoom || this.selectedRoom == undefined || this.selectedRoom == null) {
           this.selectedRoom = this.rooms[0];
         }
-        console.log(this.selectedRoom);
         //on initialise la date sélectionnée à la date d'aujourd'hui
         this.selectedDate = new Date();
 
@@ -165,7 +160,6 @@ export class RoomPlanningComponent implements OnInit {
       .getReservationsOfThisWeek(salleId, startDate, endDate)
       .subscribe(data => {
         this.listeReservation = data['result'];
-        console.log(this.listeReservation);
         //Traitement de la liste de réservation et création du tableau planning
         this.createBookingListsbyDay(this.listeReservation);
       })
@@ -270,7 +264,7 @@ export class RoomPlanningComponent implements OnInit {
   openDialog(day, hour) {
 
     if (!this.reservationSearchFeedback || this.reservationSearchFeedback == undefined || this.reservationSearchFeedback == null) {
-      console.log("init home");
+      console.log("dialog home");
       //config de ma modale :
       //dans la partie data : room et selectedDate sont explicites, day et hour correspondent aux valeurs récupérés en paramètre
       //venues du front. Ce sont des index de boucles ngFor.
@@ -285,20 +279,19 @@ export class RoomPlanningComponent implements OnInit {
 
       this.dialog.open(BookingdetailsComponent, bookingDetailsDialogConfig)
         .afterClosed().subscribe((data) => {
-          console.log(data);
-          if(data){
+          if (data) {
             this.getPlanning(data.roomId, data.selectedDate);
           }
-          
+
         });
 
     }
     else {
-      console.log("init search");
+      console.log("dialog search");
       const hoursFeedbackStepDialogConfig = new MatDialogConfig();
       hoursFeedbackStepDialogConfig.width = "400px";
       hoursFeedbackStepDialogConfig.data = {
-        reservation: this.reservationSearchFeedback,
+        selectedDate: this.selectedDate,
         day: day,
         hour: hour,
         roomId: this.selectedRoom.roomId
@@ -306,12 +299,9 @@ export class RoomPlanningComponent implements OnInit {
 
       this.dialog.open(HoursFeedbackStepComponent, hoursFeedbackStepDialogConfig)
         .afterClosed().subscribe((res) => {
-
           if (res) {
-            this.reservationSearchFeedback = res;
-            this.reservationToChange.emit({ reservation: this.reservationSearchFeedback, indexReservation: this.indexReservation })
+            this.reservationToChange.emit({ reservation: res, indexReservation: this.indexReservation })
           }
-
         });
     }
   }

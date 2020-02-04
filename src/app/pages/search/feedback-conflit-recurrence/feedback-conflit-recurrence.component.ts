@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
-import { Booking } from 'src/app/classes/booking';
-import { RoomService } from 'src/app/services/room.service';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ReservationService } from 'src/app/services/reservation.service';
 import { SearchDataServiceService } from 'src/app/services/search-data-service.service';
 import { ConfirmationReservationRecurrenceComponent } from 'src/app/modals/confirmation-reservation-recurrence/confirmation-reservation-recurrence.component';
@@ -43,7 +41,6 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
         this.reservationsToCheck = res['result'];
         console.log(this.reservationsToCheck);
       }, (error) => {
-        console.log(error);
       }
     )
   }
@@ -55,27 +52,20 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
 
   //fonction quand on clique sur une resa avec un conflit
   displayPlanning(reservation: any, indexReservation: number) {
-    console.log(reservation, indexReservation);
     this.reservation = reservation;
     this.indexReservation = indexReservation;
   }
 
   updateReservation(event) {
+    console.log(event);
     let index = event.indexReservation;
     let newReservation = event.reservation;
-
-    this.reservationsToCheck[index] = newReservation;
-
-    console.log(this.reservationsToCheck);
-    this.planningClicked = false;
 
     this.reservationService.getCheckReservation(newReservation.roomId, newReservation.startDate, newReservation.endDate)
       .subscribe(res => {
         console.log(res);
-        let reservationIsGood = res['result'];
-        if (reservationIsGood.isConflict == false) {
-          newReservation.conflit = false;
-        }
+        this.reservationsToCheck[index] = res['result'];
+        console.log(this.reservationsToCheck)
       })
   }
 
@@ -92,7 +82,6 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
       Object.assign(reservation, { user_id: this.user.userId });
       Object.assign(reservation, { state: "1" });
     }
-    console.log(this.listeReservations);
 
     const listeReservationsWithConflit = this.reservationsToCheck.filter(resa => resa.conflit == true || resa.workingDay == false);
 
