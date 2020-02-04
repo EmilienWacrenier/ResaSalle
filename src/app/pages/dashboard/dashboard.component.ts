@@ -21,85 +21,42 @@ import { Room } from 'src/app/classes/room';
 })
 export class DashboardComponent implements OnInit {
 
-
-  dsBooking: MatTableDataSource<Booking>;
-  reservations$: Observable<Booking[]>;
-  displayedColumns: string[] = ['date', 'start', 'end', 'room', 'subject', 'participants', 'actions'];
-  dataSource$: Observable<Booking[]>;
+  reservations: Booking[];
+  reservationsFilteredByObject : Booking[];
 
   rooms: Room[];
-  selectedRoomId: number = 1;
-  resaPonctuelles: boolean = true;
-  resaRecurrence: boolean = false;
-  resaParSalles: boolean = false;
-  resaOfToday: boolean = false;
-  reservationsOfUser: Booking[];
-  resaToday: Booking[];
-  reservationsFilteredByObject: Booking[];
 
+  selectedRoomId: number = 1;
+
+  isRecurrence: boolean = false;
 
   constructor(
     private reservationService: ReservationService,
     private roomService: RoomService,
     public dialog: MatDialog,
     private cst: ApiConstants,
-    private toastr: ToastrService) {
-    this.dsBooking = new MatTableDataSource<Booking>();
-    this.dsBooking.data = [];
-  }
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     this.updateReservations();
-    this.getRooms();
   }
 
-  //recherche de participants
+  
+
+  /*
   onKey(event) {
     this.reservationsFilteredByObject = [];
-
-    let resaObjet = event.target.value.toLowerCase();
+    const resaObjet = event.target.value;
     console.log(resaObjet);
 
-    this.reservationsFilteredByObject = this.reservationsOfUser.filter(resa =>
-      resa.object.toLowerCase().includes(resaObjet));
-  }
-
-  onClickResaPonctuelles() {
-    this.resaPonctuelles = true;
-    this.resaRecurrence = false;
-    this.resaParSalles = false;
-    this.resaOfToday = false;
-  }
-
-  onClickResaRecurrence() {
-    this.resaPonctuelles = false;
-    this.resaRecurrence = true;
-    this.resaParSalles = false;
-    this.resaOfToday = false;
-  }
-
-  onClickResaParSalles() {
-    this.resaPonctuelles = false;
-    this.resaRecurrence = false;
-    this.resaParSalles = true;
-    this.resaOfToday = false;
-  }
-
-  onClickResaOfToday() {
-    this.resaPonctuelles = false;
-    this.resaRecurrence = false;
-    this.resaParSalles = false;
-    this.resaOfToday = true;
-
-    this.resaToday = [];
-
-    for (const resa of this.reservationsOfUser) {
-      let resaDate = moment(resa.startDate).format('dddd DD MMM');
-      if (resaDate == moment().format('dddd DD MMM')) {
-        this.resaToday.push(resa);
+    this.reservationsFilteredByObject = this.reservations.filter(
+      resa => {
+        if(resa.object == null) resa.object = "";
+        resa.object.includes(resaObjet) == true;
       }
-    }
-  }
+    );
+    console.log(this.reservationsFilteredByObject);
+  }*/
 
   getRooms() {
     this.roomService.getRooms().subscribe(res => {
@@ -110,12 +67,6 @@ export class DashboardComponent implements OnInit {
   getSelectedRoom(roomId) {
     this.selectedRoomId = roomId;
   }
-
-
-
-  /*getReservationsbyUser(): Observable<Booking[]> {
-    this.reservationService.getReservationsFromUserConnected();
-  }*/
 
   deleteBooking(reservationId): void {
     const message = 'Souhaitez-vous vraiment supprimer cette réservation ? \n La suppression sera définitive';
@@ -166,23 +117,11 @@ export class DashboardComponent implements OnInit {
   }
 
   updateReservations() {
-    this.dsBooking.data = [];
     this.reservationService.getReservationsFromUserConnected().subscribe(
       (response) => {
-        this.reservationsOfUser = response['result'];
-        this.dsBooking.data = (response['result']);
-
-        //for(const resa of this.dsBooking.data){
-        //  resa.startDate = moment(resa.startDate).locale('fr').format('HH mm');
-        //}
-
-        console.log(this.dsBooking.data)
+        console.log(response);
+        this.reservations = response['result'];
       }
     );
   }
-
-  /*displayReservations(){
-    this.reservationService.getReservationsFromUserConnected()
-    .subscribe((response) => { this.dataSource = response['result']; console.log(this.dataSource) });
-  }*/
 }

@@ -1,4 +1,4 @@
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="onNoClick()">&times;</button>
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="closeModal()">&times;</button>
 
 <div class="container-fluid" id="createReservation">
 <!-- objet -->
@@ -7,21 +7,21 @@
             <div class="modal-header">
                 <!-- titre -->
                 <p class="modal-title">
-                    {{title}}
+                    Confirmation de réservation
                 </p>
             </div>
             <!-- message -->
             <div class="modal-body">
-                <p>{{message}}
+                <p>Souhaitez-vous vraiment réserver la salle
                     <span class="infoResa">{{roomName}}</span>&nbsp;le
-                    <span class="infoResa">{{startFullStartDate}}</span>
-                    <span class="infoResa">{{startFullEndHour}}</span>&nbsp;qui a pour objet
+                    <span class="infoResa">{{startDateDisplay}}</span>à
+                    <span class="infoResa">{{endDateDisplay}}</span>&nbsp;qui a pour objet
                     <span class="infoResa">{{modalobject}}</span>&nbsp;?
                 </p>
             </div>
              <!-- bouton -->
             <div class="modal-footer" mat-dialog-actions>
-                <button type="button" class="btn btn-info" (click)="onNoClick()">Annuler</button>
+                <button type="button" class="btn btn-info" (click)="closeModal()">Annuler</button>
                 <button matButton class="mat-raised-button" (click)="onSubmit()">Créer la réservation</button>
             </div>
         </div>

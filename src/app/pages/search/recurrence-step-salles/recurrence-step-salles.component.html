@@ -43,7 +43,7 @@
         </button>
         <div class="col-8">
             <button class="bouton-back-next" mat-button
-                (click)="recurrenceMode ? sendToVerification() : createReservation()" matStepperNext
+                (click)="recurrenceMode ? sendToVerification() : openReservationSimpleConfirmationModal()" matStepperNext
                 [disabled]="!selectedRoom">Réserver</button>
         </div>
     </div>

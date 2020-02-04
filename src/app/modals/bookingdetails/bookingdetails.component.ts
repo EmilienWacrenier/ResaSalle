@@ -64,7 +64,7 @@ export class BookingdetailsComponent implements OnInit {
 
   //set les paramètres en fonction de la case cliquée sur le planning
   setParamsOnInit(day, hour) {
-    this.selectedDate = new Date(moment().isoWeekday(day + 1).format());
+    this.selectedDate = new Date(moment(this.data.selectedDate).isoWeekday(day + 1).format());
     console.log(this.selectedDate);
 
     if (hour % 2 == 0) {
@@ -149,7 +149,7 @@ export class BookingdetailsComponent implements OnInit {
             selectedDate: this.selectedDate
           }
           
-          setTimeout( () => this.bookingDetailsDialogRef.close(data), 1000 );
+          setTimeout( () => this.bookingDetailsDialogRef.close(data), 500 );
         }, (error) => {
           console.log(error);
           this.baseMessage = error;

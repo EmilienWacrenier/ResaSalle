@@ -23,6 +23,6 @@
     <!-- FeedBack/Conflit recurrence -->
     <mat-step *ngIf="recurrenceIsChecked">
         <ng-template matStepLabel>Récap</ng-template>
-        <app-feedback-conflit-recurrence #appStepFeedBack></app-feedback-conflit-recurrence>
+        <app-feedback-conflit-recurrence #appStepFeedBack [user]="currentUser"></app-feedback-conflit-recurrence>
     </mat-step>
 </mat-horizontal-stepper>

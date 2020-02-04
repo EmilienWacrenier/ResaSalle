@@ -27,7 +27,7 @@ export class RoomPlanningComponent implements OnInit {
   @Input() reservationSearchFeedback: any;
   @Input() indexReservation: number;
 
-  @Output() reservationToChange = new EventEmitter<{reservation : any, indexReservation : number}>();
+  @Output() reservationToChange = new EventEmitter<{ reservation: any, indexReservation: number }>();
 
   //jour de la semaine du planning
   daysOfPlanning: string[] = JOUR_SEMAINE;
@@ -61,12 +61,12 @@ export class RoomPlanningComponent implements OnInit {
     private roomService: RoomService,
     public dialog: MatDialog,
     private planningService: PlanningService,
-    private route : Router
+    private route: Router
   ) { }
 
   ngOnInit() {
     document.getElementById('homeNavItem').classList.add('active-list-item');
-    
+
     let isSearch = this.route.url.includes('search');
 
     console.log("isSearch = " + isSearch);
@@ -86,8 +86,10 @@ export class RoomPlanningComponent implements OnInit {
     this.roomService.getRooms().subscribe(res => {
       this.rooms = res['result'];
 
+      console.log(this.reservationSearchFeedback);
+
       for (const room of this.rooms) {
-        if (room.roomId == this.reservationSearchFeedback.roomId) {
+        if (room.roomId == this.reservationSearchFeedback.room_id) {
           this.selectedRoom = room;
         }
       }
@@ -284,7 +286,10 @@ export class RoomPlanningComponent implements OnInit {
       this.dialog.open(BookingdetailsComponent, bookingDetailsDialogConfig)
         .afterClosed().subscribe((data) => {
           console.log(data);
-          this.getPlanning(data.roomId, data.selectedDate);
+          if(data){
+            this.getPlanning(data.roomId, data.selectedDate);
+          }
+          
         });
 
     }
@@ -301,8 +306,12 @@ export class RoomPlanningComponent implements OnInit {
 
       this.dialog.open(HoursFeedbackStepComponent, hoursFeedbackStepDialogConfig)
         .afterClosed().subscribe((res) => {
-          this.reservationSearchFeedback = res;
-          this.reservationToChange.emit({reservation: this.reservationSearchFeedback, indexReservation : this.indexReservation})
+
+          if (res) {
+            this.reservationSearchFeedback = res;
+            this.reservationToChange.emit({ reservation: this.reservationSearchFeedback, indexReservation: this.indexReservation })
+          }
+
         });
     }
   }
