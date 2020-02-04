@@ -1,5 +1,5 @@
 <mat-toolbar id="navbar">
-    <mat-toolbar-row>
+    <!--<mat-toolbar-row>
         <span class="spacer"></span>
         <button mat-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
             <span class="user-name">{{user.firstName}} {{user.lastName | uppercase}} </span>
@@ -18,5 +18,70 @@
             <mat-icon>power_settings_new</mat-icon>
             <span>Me déconnecter</span>
         </button>
-    </mat-menu>
+    </mat-menu>-->
+
+    <!-- NEW TOOLBAR -->
+    <mat-toolbar-row>
+        <button class="hamburger-menu" mat-icon-button (click)="toggleSidenav.emit()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <img class="atos-brand" src="assets/Image1.png" alt="ATOS">
+
+        <mat-nav-list class="list-horizontal">
+            <mat-list-item>
+                <a mat-list-item routerLink="/" style="height: 0;width:0;"></a>
+            </mat-list-item>
+            <mat-list-item>
+                <a mat-list-item routerLink="/" routerLinkActive="active-list-item"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    ACCUEIL
+                </a>
+            </mat-list-item>
+            <mat-list-item>
+                <a mat-list-item routerLink="/dashboard" routerLinkActive="active-list-item"
+                [routerLinkActiveOptions]="{exact: true}">
+                MES RESERVATIONS
+            </a>
+            </mat-list-item>
+            <mat-list-item>
+                <a mat-list-item routerLink="/search" routerLinkActive="active-list-item"
+                [routerLinkActiveOptions]="{exact: true}">
+                RESERVER
+            </a>
+            </mat-list-item>
+            <mat-list-item>
+                <a mat-list-item routerLink="/admin" routerLinkActive="active-list-item"
+                [routerLinkActiveOptions]="{exact: true}">
+                ADMIN
+            </a>
+            </mat-list-item>
+        </mat-nav-list>
+
+        <div id="profileItems">
+            <mat-list-item class="pt-1 pr-1" >
+                <span class="user-name">{{user.firstName}} {{user.lastName | uppercase}} </span>
+
+            </mat-list-item>
+          <mat-icon class="user-img-circle pt-2">
+            account_circle
+          </mat-icon>
+            <button mat-button (click)="logoutConfirm()">
+              <mat-icon class="material-icons md-light">
+                logout
+              </mat-icon>
+            </button>
+            <!-- <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item disabled>
+                    <mat-icon>person</mat-icon>
+                    <span>Mon Profil</span>
+                </button>
+                <button mat-menu-item (click)="logout()">
+                    <mat-icon>power_settings_new</mat-icon>
+                    <span>Me déconnecter</span>
+                </button>
+            </mat-menu>-->
+        </div>
+    </mat-toolbar-row>
+
 </mat-toolbar>
+

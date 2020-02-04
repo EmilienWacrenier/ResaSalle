@@ -19,7 +19,7 @@ export class SidebarComponent implements OnInit {
   }
 
   forceDeactiveHome() {
-    document.getElementById('homeNavItem').classList.remove('active-list-item');
+    //document.getElementById('homeNavItem').classList.remove('active-list-item');
   }
 }
 

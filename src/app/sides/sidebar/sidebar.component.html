@@ -1,11 +1,11 @@
-<mat-sidenav-container class="h-100">
-  <mat-sidenav mode="side" opened id="sidebar">
+<app-navbar (toggleSidenav)="sidenav.toggle()"></app-navbar>
+<mat-sidenav-container>
+  <!-- <mat-sidenav mode="side" opened id="sidebar">
 
     <mat-toolbar class="brand">
       <img src="assets/Image1.png" id="logo" alt="atos">
     </mat-toolbar>
 
-    <!-- NAV LIST ITEMS -->
 
     <div class="container-fluid mt-3">
       <a class="row tabs px-0 py-2 align-items-center" routerLink="/" id="homeNavItem" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
@@ -49,6 +49,40 @@
 
   <mat-sidenav-content>
     <app-navbar></app-navbar>
+    <div class="grid-container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content> -->
+
+  <!-- NEW SIDEBAR -->
+  <mat-sidenav #sidenav mode="over" role="navigation" closed class="sidenav">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/" style="height: 0;"></a>
+      <a mat-list-item (click)="sidenav.close();forceDeactiveHome()" routerLink="/" routerLinkActive="active-list-item"
+        [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon matListIcon class="nav-list-icon"> home </mat-icon>
+        Accueil
+      </a>
+      <a mat-list-item (click)="sidenav.close();forceDeactiveHome()" routerLink="/dashboard"
+        routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon matListIcon class="nav-list-icon"> assignment </mat-icon>
+        Mes réservations
+      </a>
+      <a mat-list-item (click)="sidenav.close();forceDeactiveHome()" routerLink="/search"
+        routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon matListIcon class="nav-list-icon"> today </mat-icon>
+        Réserver
+      </a>
+      <a mat-list-item (click)="sidenav.close();forceDeactiveHome()" routerLink="/admin"
+        routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon matListIcon class="nav-list-icon"> build </mat-icon>
+        Admin
+      </a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
     <div class="grid-container">
       <router-outlet></router-outlet>
     </div>
