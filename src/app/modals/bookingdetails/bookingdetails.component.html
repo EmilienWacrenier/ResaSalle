@@ -1,5 +1,5 @@
 <button type="button" class="close_button" data-dismiss="modal" aria-hidden="true"
-  (click)="onNoClick()">&times;</button>
+  (click)="closeModal()">&times;</button>
 
 
 <div class="container-fluid" id="createReservation">
@@ -79,42 +79,3 @@
     </mat-dialog-actions>
   </div>
 </div>
-
-
-  <!-- <div class="col-6 border rounded p-2">
-      <div class="container-fluid">
-        <div class="row justify-content-center text-center align-items-center">
-
-          <div class="col-auto">
-            <mat-form-field class="search-form">
-              <mat-label>Participants</mat-label>
-              <input matInput autocomplete="off" (keyup)="onKey($event)" (keyup.enter)="onKeyEnter($event)">
-              <mat-icon matPrefix>search</mat-icon>
-            </mat-form-field>
-          </div>
-
-          <div class="col">
-            <button mat-stroked-button color="primary" (click)="resetParticipants()">Reset</button>
-          </div>
-        </div>
-
-        <div class="row liste">
-          <mat-list>
-            <mat-list-item *ngFor="let user of usersList" (click)="onSelectParticipant(user)">
-              {{user.firstName|titlecase}} {{user.lastName|titlecase}}
-            </mat-list-item>
-          </mat-list>
-        </div>
-        <mat-divider></mat-divider>
-        <div class="row p-2 justify-content-around">
-          <div class="col-3 m-1 p-1 border rounded text-center" *ngFor="let participant of selectedParticipants" (click)="removeParticipant(participant)">
-              {{participant.firstName | slice:0:1}}. {{participant.lastName}}
-          </div>
-        </div>
-        <div class="row p-2 justify-content-around">
-          <div class="col-3 m-1 p-1 border rounded text-center" *ngFor="let email of emailList" (click)="removeEmail(email)">
-              {{email}}
-          </div>
-        </div>
-      </div>
-    </div> -->

@@ -3,7 +3,7 @@
 
     <div class="row">
         <button class="bouton-back-next" mat-button
-            (click)="createReservationRecurrence()">Réserver ces dates</button>
+            (click)="openReservationSimpleConfirmationModal()">Réserver ces dates</button>
     </div>
 
 
@@ -28,7 +28,7 @@
                             </td>
                             <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.startDate | date: 'HH:mm'}}</td>
                             <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.endDate | date: 'HH:mm'}}</td>
-                            <td>{{resa.roomId}}</td>
+                            <td>{{resa.roomName}}</td>
                             <td>
                                 <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
                                     edit

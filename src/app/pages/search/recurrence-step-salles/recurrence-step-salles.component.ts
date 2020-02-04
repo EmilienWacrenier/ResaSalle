@@ -5,8 +5,9 @@ import { Subscription } from 'rxjs';
 import { SearchDataServiceService } from 'src/app/services/search-data-service.service';
 import { ReservationService } from 'src/app/services/reservation.service';
 import { User } from 'src/app/classes/user';
-import { ConfirmationReservation, ConfirmationReservationComponent } from 'src/app/modals/confirmation-reservation/confirmation-reservation.component';
+import { ConfirmationReservationComponent } from 'src/app/modals/confirmation-reservation/confirmation-reservation.component';
 import * as moment from 'moment';
+import { MatDialogConfig, MatDialog } from '@angular/material';
 
 
 @Component({
@@ -43,7 +44,8 @@ export class RecurrenceStepSallesComponent implements OnInit {
   constructor(
     private roomService: RoomService,
     private reservationService: ReservationService,
-    private searchDataService: SearchDataServiceService
+    private searchDataService: SearchDataServiceService,
+    public dialog: MatDialog,
   ) {
   }
 
@@ -100,29 +102,19 @@ export class RecurrenceStepSallesComponent implements OnInit {
     this.searchDataService.endDateRecurrence$.subscribe(res => this.endDateRecurrence = res);
     this.getRooms();
   }
-  createReservation() {
-    let reservation = {
+
+  openReservationSimpleConfirmationModal() {
+
+    const confirmationReservationDialogConfig = new MatDialogConfig();
+    confirmationReservationDialogConfig.width = "400px";
+    confirmationReservationDialogConfig.data = {
       startDate: this.fullStartDate,
       endDate: this.fullEndDate,
       object: this.object,
       userId: this.user.userId,
-      roomId: this.selectedRoom.roomId
-    }
-    console.log(reservation);
-    //this.reservationService.createReservation(reservation);
-    /*const message =`Souhaitez-vous vraiment réserver la salle` ;
-      const dialogData = new ConfirmationReservation(
-        `Confirmer votre réservation`, 
-        message, 
-        this.selectedRoom.name, 
-        this.fullStartDate =moment(this.fullStartDate).locale("fr").format('dddd Do MMMM YYYY [de] H[h]mm'),
-        this.fullEndDate =moment(this.fullEndDate).format('[ à] H[h]mm'),
-        this.object
-        );
-      const dialogRef = this.dialog.open(ConfirmationReservationComponent, {
-        width: '400px',
-        data: dialogData
-      });*/
+      room: this.selectedRoom
+    };
+    this.dialog.open(ConfirmationReservationComponent, confirmationReservationDialogConfig);
   }
 
   sendToVerification() {
