@@ -42,11 +42,13 @@ export class ConfirmationReservationRecurrenceComponent implements OnInit {
       endDateRecurrence: this.data.endDateRecurrence,
       listeReservations: this.data.listeReservations
     }
+
+    console.log(reservation);
     
     this.reservationService.createReservationRecurrence(reservation).subscribe(
       (response) => {
         console.log(response);
-        this.baseMessage = "Réservations sans conflits créées";
+        console.log("Réservations sans conflits créées");
         setTimeout( () => this.dialogRef.close(), 500 );
       },
       (error) => {

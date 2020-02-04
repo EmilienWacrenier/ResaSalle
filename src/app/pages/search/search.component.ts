@@ -24,7 +24,6 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.recurrenceIsChecked);
   }
 
   onChangeRecurrence($event) {
