@@ -1,4 +1,4 @@
-.modal-confirm {		
+.modal-confirm {
     color: #636363;
 }
 .modal-confirm .modal-content {
@@ -8,7 +8,7 @@
     font-size: 14px;
 }
 .modal-confirm .modal-header {
-    border-bottom: none;   
+    border-bottom: none;
     position: relative;
     display: contents;
 }
@@ -27,7 +27,7 @@
 }
 .modal-confirm .modal-footer {
     border: none;
-    text-align: center;		
+    text-align: center;
     border-radius: 5px;
     font-size: 13px;
     padding: 10px 15px 25px;
@@ -35,7 +35,7 @@
 }
 .modal-confirm .modal-footer a {
     color: #999;
-}		
+}
 .modal-confirm .icon-box {
     width: 80px;
     height: 80px;
@@ -51,31 +51,11 @@
     display: inline-block;
     margin-top: 13px;
 }
-.modal-confirm .btn {
-    color: #fff;
-    border-radius: 4px;
-    background: #60c7c1;
-    text-decoration: none;
-    transition: all 0.4s;
-    line-height: normal;
-    min-width: 120px;
-    border: none;
-    min-height: 40px;
-    border-radius: 3px;
-    margin: 0 5px;
-    outline: none !important;
-}
 .modal-confirm .btn-info {
     background: #c1c1c1;
 }
 .modal-confirm .btn-info:hover, .modal-confirm .btn-info:focus {
     background: #a8a8a8;
-}
-.modal-confirm .btn-primary {
-    background: #685ef1a2;
-}
-.modal-confirm .btn-primary:hover, .modal-confirm .btn-primary:focus {
-    background: #685ef1;
 }
 
 .modal-confirm .btn-capacity{
