@@ -1,13 +1,76 @@
 <div class="container-fluid">
     <ng-template matStepLabel>Résultats</ng-template>
 
-    <div class="row">
-        <button class="bouton-back-next" mat-button
-            (click)="openReservationSimpleConfirmationModal()">Réserver ces dates</button>
+
+    <div class="row justify-content-center">
+
+        <mat-accordion class="w-100">
+            <mat-expansion-panel *ngFor="let resa of reservationsToCheck; let i = index"
+                (opened)="displayPlanning(resa, i)">
+                <mat-expansion-panel-header [ngClass]="resa.conflit || !resa.workingDay ? 'bg-danger':''">
+                    <mat-panel-title>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col hoverable">
+                                    {{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
+                                </div>
+
+                                <div class="col hoverable">
+                                    {{resa.startDate | date: 'HH:mm'}}
+                                </div>
+
+                                <div class="col hoverable">
+                                    {{resa.endDate | date: 'HH:mm'}}
+                                </div>
+
+                                <div class="col hoverable">
+                                    {{resa.roomName}}
+                                </div>
+                            </div>
+                        </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <button class="bouton-back-next" mat-button (click)="deleteDate(i)">Supprimer cette date</button>
+                <app-room-planning [reservationSearchFeedback]="resa" [indexReservation]="i"
+                    (reservationToChange)="updateReservation($event)">
+                </app-room-planning>
+            </mat-expansion-panel>
+        </mat-accordion>
     </div>
 
 
     <div class="row">
+        <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
+        <button class="bouton-back-next" mat-button (click)="openReservationSimpleConfirmationModal()">Réserver ces
+            dates</button>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+
         <div class="container-fluid">
 
             <div class="table-responsive-md">
@@ -23,11 +86,14 @@
                     </thead>
                     <tbody class="bg-white">
                         <tr *ngFor="let resa of reservationsToCheck; let i = index"
-                            [ngClass]="resa.conflit ? 'bg-danger':''">
-                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
+                            [ngClass]="resa.conflit || !resa.workingDay ? 'bg-danger':''">
+                            <td class="hoverable" (click)="displayPlanning(resa, i)">
+                                {{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
                             </td>
-                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.startDate | date: 'HH:mm'}}</td>
-                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.endDate | date: 'HH:mm'}}</td>
+                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.startDate | date: 'HH:mm'}}
+                            </td>
+                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.endDate | date: 'HH:mm'}}
+                            </td>
                             <td>{{resa.roomName}}</td>
                             <td>
                                 <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
@@ -44,19 +110,4 @@
             </div>
         </div>
     </div>
-
-
-    <!-- Calendrier -->
-    <div class="row" *ngIf="planningClicked">
-        <div class="container">
-            <div class="row" (click)="closePlanning()">X</div>
-            <div class="row">
-                <app-room-planning 
-                    [reservationSearchFeedback]="reservation" 
-                    [indexReservation]="indexReservation"
-                    (reservationToChange)="updateReservation($event)"></app-room-planning>
-            </div>
-        </div>
-    </div>
-
-</div>
+    -->

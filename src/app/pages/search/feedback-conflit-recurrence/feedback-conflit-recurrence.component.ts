@@ -25,6 +25,7 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
 
   planningClicked: boolean = false;
 
+  object: string;
   labelRecurrence: string;
   startDateRecurrence: string;
   endDateRecurrence: string;
@@ -48,19 +49,15 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
   }
 
   //STEP FINAL
-  deleteBooking(booking) {
-    console.log(booking);
+  deleteDate(i) {
+    this.reservationsToCheck.splice(i, 1)
   }
 
   //fonction quand on clique sur une resa avec un conflit
   displayPlanning(reservation: any, indexReservation: number) {
-    this.planningClicked = true;
+    console.log(reservation, indexReservation);
     this.reservation = reservation;
     this.indexReservation = indexReservation;
-  }
-
-  closePlanning() {
-    this.planningClicked = false;
   }
 
   updateReservation(event) {
@@ -86,11 +83,14 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
     this.searchDataService.recurrenceName$.subscribe(res => this.labelRecurrence = res);
     this.searchDataService.fullStartDate$.subscribe(res => this.startDateRecurrence = res);
     this.searchDataService.endDateRecurrence$.subscribe(res => this.endDateRecurrence = res);
+    this.searchDataService.object$.subscribe(res => this.object = res);
 
     this.listeReservations = this.reservationsToCheck.filter(resa => resa.conflit == false && resa.workingDay == true);
 
     for (const reservation of this.listeReservations) {
+      Object.assign(reservation, { object: this.object });
       Object.assign(reservation, { user_id: this.user.userId });
+      Object.assign(reservation, { state: "1" });
     }
     console.log(this.listeReservations);
 

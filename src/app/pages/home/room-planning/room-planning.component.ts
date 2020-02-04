@@ -65,7 +65,7 @@ export class RoomPlanningComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    document.getElementById('homeNavItem').classList.add('active-list-item');
+    //document.getElementById('homeNavItem').classList.add('active-list-item');
 
     let isSearch = this.route.url.includes('search');
 

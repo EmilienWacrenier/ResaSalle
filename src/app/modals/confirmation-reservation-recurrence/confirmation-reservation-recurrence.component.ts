@@ -42,6 +42,8 @@ export class ConfirmationReservationRecurrenceComponent implements OnInit {
       endDateRecurrence: this.data.endDateRecurrence,
       listeReservations: this.data.listeReservations
     }
+
+    console.log(reservation);
     
     this.reservationService.createReservationRecurrence(reservation).subscribe(
       (response) => {
