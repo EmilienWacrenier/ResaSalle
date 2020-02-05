@@ -2,47 +2,35 @@
 
 
   <div class="row mb-5">
-    <div class="col-md-2 col-xs-12">
-      <!-- CARD DE PARAMETRAGE DU PLANNING -->
-      <mat-card class="example-card mat-elevation-z2 mb-2">
-        <mat-card-header>
-          <mat-card-title class="pt-3 pb-3"><h3>Paramètres</h3></mat-card-title>
-        </mat-card-header>
-
-        <mat-card-content class="mt-2">
-          <div class="row">
-            <div class="col-auto " *ngIf="rooms">
-              <h6 class="ml-3">Salle désirée</h6>
-              <mat-form-field class="col-12" appearance="outline">
-                <mat-select [(value)]="selectedRoom" (selectionChange)="onSelectRoom()">
-                  <mat-option *ngFor="let room of rooms" [value]="room">
-                    Salle {{room.name}} - Zone {{room.area}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-
-          <!-- CARD CONTENANT LE PLANNING -->
-          <div class="row">
-            <div class="col-auto">
-              <h6 class="ml-3">Date désirée</h6>
-              <mat-form-field class="col-12" appearance="outline">
-                <input matInput [matDatepicker]="picker" placeholder="Selectionner une date"
-                       (dateChange)="onSelectDate($event)" [value]="selectedDate">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker startAt="today"></mat-datepicker>
-              </mat-form-field>
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-
     <div class="col-md-10 col-xs-12">
       <mat-card class="example-card mat-elevation-z2 mb-2">
         <mat-card-header>
           <mat-card-title class="pt-3 pb-3"><h3>Planning de la salle <b>{{selectedRoom.name}}</b></h3></mat-card-title>
+
+          <mat-card-subtitle>
+            <div class="row">
+              <div class="col-auto " *ngIf="rooms">
+                <h6 class="ml-3">Salle désirée</h6>
+                <mat-form-field class="col-12" appearance="outline">
+                  <mat-select [(value)]="selectedRoom" (selectionChange)="onSelectRoom()">
+                    <mat-option *ngFor="let room of rooms" [value]="room">
+                      Salle {{room.name}} - Zone {{room.area}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-auto">
+                <h6 class="ml-3">Date désirée</h6>
+                <mat-form-field class="col-12" appearance="outline">
+                  <input matInput [matDatepicker]="picker" placeholder="Selectionner une date"
+                         (dateChange)="onSelectDate($event)" [value]="selectedDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker startAt="today"></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-subtitle>
         </mat-card-header>
         <div class="mat-card-content mr-2 ml-2">
           <div class="container-fluid">
