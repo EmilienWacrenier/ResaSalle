@@ -35,6 +35,10 @@ export const HOURS_PLANNING: string[] = [
     "17", "17:30"
 ]
 
+export const DAYCONTENT: number[] = [
+  0, 1, 2
+]
+
 export class ApiConstants {
     public readonly apiUrl: string = 'http://localhost:3000/';
     public readonly toastrTitle: string = 'ResaSalles';

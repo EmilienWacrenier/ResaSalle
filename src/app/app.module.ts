@@ -43,6 +43,7 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { ConfirmationReservationRecurrenceComponent } from './modals/confirmation-reservation-recurrence/confirmation-reservation-recurrence.component';
 import { LogoutConfirmationComponent } from './modals/logout-confirmation/logout-confirmation.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeFr, 'fr');
@@ -91,6 +92,7 @@ export function tokenGetter() {
     ReactiveFormsModule,
     MaterialModule,
     NgbModule,
+    DragDropModule,
     ToastrModule.forRoot(),
     JwtModule.forRoot({
       config: {

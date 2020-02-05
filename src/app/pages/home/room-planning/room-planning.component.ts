@@ -1,20 +1,22 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Room } from '../../../classes/room'
-import { Booking } from '../../../classes/booking'
+import { Room } from '../../../classes/room';
+import { Booking } from '../../../classes/booking';
 
 import { RoomService } from '../../../services/room.service';
 import { ReservationService } from 'src/app/services/reservation.service';
 
-import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { BookingdetailsComponent } from 'src/app/modals/bookingdetails/bookingdetails.component';
 
-import { JOUR_SEMAINE, HOURS_PLANNING } from '../../../constantes/constantes'
+import { JOUR_SEMAINE, HOURS_PLANNING } from '../../../constantes/constantes';
 
-import * as moment from 'moment'
+import * as moment from 'moment';
 import { PlanningService } from 'src/app/services/planning.service';
 import { HoursFeedbackStepComponent } from 'src/app/modals/hours-feedback-step/hours-feedback-step.component';
 import { Router } from '@angular/router';
+import {CdkDragEnd, CdkDragMove, CdkDragStart} from '@angular/cdk/drag-drop';
+
 
 
 @Component({
@@ -29,32 +31,40 @@ export class RoomPlanningComponent implements OnInit {
 
   @Output() reservationToChange = new EventEmitter<{ reservation: any, indexReservation: number }>();
 
-  //jour de la semaine du planning
+  // jour de la semaine du planning
   daysOfPlanning: string[] = JOUR_SEMAINE;
 
-  //heures du planning
+  // heures du planning
   hoursOfPlanning: string[] = HOURS_PLANNING;
 
-  //liste des salles
+  // liste des salles
   rooms: Room[];
 
-  //variable pour stocker la salle selectionnée
+  // variable pour stocker la salle selectionnée
   selectedRoom: Room;
 
-  //variable pour stocker la date sélectionnée
+  // variable pour stocker la date sélectionnée
   selectedDate: Date;
 
-  //tableau qui récupère les 5 jours de la semaine en fonction de la date selectionnée
+  // tableau qui récupère les 5 jours de la semaine en fonction de la date selectionnée
   weekDays: string[] = [];
 
-  //tableau d'objets Booking qui sert à stocker la réponse de l'API
+  // tableau d'objets Booking qui sert à stocker la réponse de l'API
   listeReservation: Booking[];
 
-  //Tableau planning : tableau de 5 entrées qui contiennent un tableau à 20 entrées
+  // Tableau planning : tableau de 5 entrées qui contiennent un tableau à 20 entrées
+  // A PASSER AVEC DAYCONTENT : identifier les jours passés, les horaires réservés et les horaires ok
   bookingsOfTheWeek = [];
 
-  //roomId recupérer du component HOME via service
-  roomIdFromHomeComponent: number = 0;
+  // roomId recupérer du component HOME via service
+  roomIdFromHomeComponent = 0;
+
+  // Enregistrement du début de drag&drop
+  beginDrag = 0;
+
+  // Ou je suis dans les semaines
+  whereIAm  = 0;
+
 
   constructor(
     private reservationService: ReservationService,
@@ -65,19 +75,17 @@ export class RoomPlanningComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //document.getElementById('homeNavItem').classList.add('active-list-item');
+    // document.getElementById('homeNavItem').classList.add('active-list-item');
+    const isSearch = this.route.url.includes('search');
 
-    let isSearch = this.route.url.includes('search');
-
-    console.log("isSearch = " + isSearch);
+    console.log('isSearch = ' + isSearch);
 
     if (!isSearch) {
-      console.log("init home");
+      console.log('init home');
       this.initPlanningHome();
 
-    }
-    else {
-      console.log("init search");
+    } else {
+      console.log('init search');
       this.initPlanningSearch();
     }
   }
@@ -87,11 +95,11 @@ export class RoomPlanningComponent implements OnInit {
       this.rooms = res['result'];
 
       for (const room of this.rooms) {
-        if (room.roomId == this.reservationSearchFeedback.room_id) {
+        if (room.roomId === this.reservationSearchFeedback.room_id) {
           this.selectedRoom = room;
         }
       }
-      if (!this.selectedRoom || this.selectedRoom == undefined || this.selectedRoom == null) {
+      if (!this.selectedRoom || this.selectedRoom === undefined || this.selectedRoom == null) {
         this.selectedRoom = this.rooms[0];
       }
 
@@ -104,23 +112,24 @@ export class RoomPlanningComponent implements OnInit {
     this.planningService.roomId$.subscribe(res => {
 
       this.roomIdFromHomeComponent = res;
-      //récupération des salles en base
+      // récupération des salles en base
       this.roomService.getRooms().subscribe(res => {
         this.rooms = res['result'];
 
-        //pour instancier le planning avec la salle sélectionnée dans le component précédent (home),
-        //on fait passer l'ID de la salle dans l'URL
-        //on parcourt la liste des salles et on checke jusqu'à ce que l'ID récupéré dans l'URL correspond à celui dans la liste
-        //une fois que les ID matchent, on inialise la variable selectedRoom avec la salle matchée dans la liste.
+        // pour instancier le planning avec la salle sélectionnée dans le component précédent (home),
+        // on fait passer l'ID de la salle dans l'URL
+        // on parcourt la liste des salles et on checke jusqu'à ce que l'ID récupéré dans l'URL correspond à celui
+        // dans la liste
+        // une fois que les ID matchent, on inialise la variable selectedRoom avec la salle matchée dans la liste.
         for (const room of this.rooms) {
-          if (room.roomId == this.roomIdFromHomeComponent) {
+          if (room.roomId === this.roomIdFromHomeComponent) {
             this.selectedRoom = room;
           }
         }
-        if (!this.selectedRoom || this.selectedRoom == undefined || this.selectedRoom == null) {
+        if (!this.selectedRoom || this.selectedRoom === undefined || this.selectedRoom == null) {
           this.selectedRoom = this.rooms[0];
         }
-        //on initialise la date sélectionnée à la date d'aujourd'hui
+        // on initialise la date sélectionnée à la date d'aujourd'hui
         this.selectedDate = new Date();
 
         this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
@@ -128,83 +137,89 @@ export class RoomPlanningComponent implements OnInit {
     });
   }
 
-  //au changement de salle, on change le planning en fonction de la salle selectionnée en appelant la fonction getPlanning
+  // au changement de salle, on change le planning en fonction de la salle selectionnée en appelant la
+  // fonction getPlanning
   onSelectRoom() {
     this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
   }
 
-  //au changement de la date, on change la valeur de la date et on appel la fonction getPlanning
+  // au changement de la date, on change la valeur de la date et on appel la fonction getPlanning
   onSelectDate(event) {
     this.selectedDate = event.value;
+    console.log(event.value);
     this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
   }
 
-  //inialise le tableau des jours de la semaine, le 1er jour de la semaine et le dernier pour les paramètres de la fonction getReservationsOfThisWeek
+  // inialise le tableau des jours de la semaine, le 1er jour de la semaine et le dernier pour les paramètres de la
+  // fonction getReservationsOfThisWeek
   getPlanning(roomId, selectedDate) {
-    //recupère les jours de la semaine pour le header en affichage
+    // recupère les jours de la semaine pour le header en affichage
     this.getDaysOfThisWeek(selectedDate);
 
-    //récupère le lundi de la semaine du jour sélectionné
-    let startWeek = this.findStartOfWeek(selectedDate);
+    // récupère le lundi de la semaine du jour sélectionné
+    const startWeek = this.findStartOfWeek(selectedDate);
 
-    //récupère le dimanche de la semaine du jour sélectionné
-    let endWeek = this.findEndOfWeek(selectedDate);
+    // récupère le dimanche de la semaine du jour sélectionné
+    const endWeek = this.findEndOfWeek(selectedDate);
 
-    //appel à l'API pour récupèrer les reservations en base
+    // appel à l'API pour récupèrer les reservations en base
     this.getReservationsOfThisWeek(roomId, startWeek, endWeek);
   }
 
-  //Appel à l'api
+  // Appel à l'api
   getReservationsOfThisWeek(salleId, startDate, endDate) {
     this.reservationService
       .getReservationsOfThisWeek(salleId, startDate, endDate)
       .subscribe(data => {
-        this.listeReservation = data['result'];
-        //Traitement de la liste de réservation et création du tableau planning
+        this.listeReservation = data["result"];
+        // Traitement de la liste de réservation et création du tableau planning
         this.createBookingListsbyDay(this.listeReservation);
-      })
+      });
   }
 
-  //retourne la date du lundi de la semaine du jour selectionné
+  // retourne la date du lundi de la semaine du jour selectionné
   findStartOfWeek(date) {
-    return moment(date).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).isoWeekday(1).format('YYYY-MM-DD HH:mm:ss');
+    return moment(date).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+      .isoWeekday(1).format('YYYY-MM-DD HH:mm:ss');
   }
 
-  //retourne la date du dimanche de la semaine du jour selectionné
+  // retourne la date du dimanche de la semaine du jour selectionné
   findEndOfWeek(date) {
-    return moment(date).set({ hour: 23, minute: 59, second: 59, millisecond: 0 }).isoWeekday(7).format('YYYY-MM-DD HH:mm:ss');
+    return moment(date).set({ hour: 23, minute: 59, second: 59, millisecond: 0 })
+      .isoWeekday(7).format('YYYY-MM-DD HH:mm:ss');
   }
 
-  //retourne un tableau avec la date des jours de la semaine selectionnée
+  // retourne un tableau avec la date des jours de la semaine selectionnée
   getDaysOfThisWeek(date) {
     this.weekDays = [];
-    for (var i = 1; i < 6; i++) {
+    for (let i = 1; i < 6; i++) {
       this.weekDays.push(moment(date).locale('fr').isoWeekday(i).format('dddd DD MMM'));
     }
   }
 
-  //créer des listes en fonction des jours du tableau daysOfPlanning (qui est un tableau de jour de la semaine)
-  //ca met les reservations dans une liste en fonction du jour de la semaine
-  //en gros ca trie la liste des réservations en fonction du jour de la semaine
+  // créer des listes en fonction des jours du tableau daysOfPlanning (qui est un tableau de jour de la semaine)
+  // ca met les reservations dans une liste en fonction du jour de la semaine
+  // en gros ca trie la liste des réservations en fonction du jour de la semaine
   createBookingListsbyDay(liste) {
 
-    //initialisation du tableau planning avec des valeurs "null"
-    var objet = null;
+    // initialisation du tableau planning avec des valeurs "null"
+    const objet = null;
 
-    for (var i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
       this.bookingsOfTheWeek[i] = [];
     }
 
-    for (var i = 0; i < 5; i++) {
-      for (var j = 0; j < 20; j++) {
+    for (let i = 0; i < 5; i++) {
+      for (let j = 0; j < 20; j++) {
         this.bookingsOfTheWeek[i].push(objet);
       }
     }
 
-    // pour chaque réservation de la liste, on lui donne une variable "day" dont la valeur correspond au jour de la semaine (lundi = 0, mardi= 1, ect)
+    // pour chaque réservation de la liste, on lui donne une variable "day" dont la valeur correspond au jour de la
+    // semaine (lundi = 0, mardi= 1, ect)
     // puis on appelle la fonction sortReservationOfTheDayByHours
     for (const element of liste) {
-      let day = 0;;
+      let day = 0;
 
       switch (moment(element.startDate).locale('fr').format('dddd')) {
         case 'lundi': day = 0; break;
@@ -223,58 +238,68 @@ export class RoomPlanningComponent implements OnInit {
   // et on remplace la valeur null autant de fois que la réservation dure
   sortReservationOfTheDayByHours(day, element) {
     // on cherche l'heure de début, l'heure de fin et la durée de la réservation en minutes
-    let hDebut = new Date(element.startDate).getHours() * 60 + new Date(element.startDate).getMinutes();
-    let hFin = new Date(element.endDate).getHours() * 60 + new Date(element.endDate).getMinutes();
-    let dureeResa = (hFin - hDebut);
+    const hDebut = new Date(element.startDate).getHours() * 60 + new Date(element.startDate).getMinutes();
+    const hFin = new Date(element.endDate).getHours() * 60 + new Date(element.endDate).getMinutes();
+    const dureeResa = (hFin - hDebut);
 
-    //on démarre le compteur de minute à 8h donc 480 minutes
+    // on démarre le compteur de minute à 8h donc 480 minutes
     let compteurMinute = 480;
-    //on démarre le compteur d'index à 0
+    // on démarre le compteur d'index à 0
     let compteurIndex = 0;
 
-    //iteration pour savoir quand remplir le tableau:
-    //On ajoute 30 minutes au compteur de minutes tant que le compteur de minute est différent de l'heure de début
-    //Tant que la condition on ajoute 1 au compteur d'index. On aura alors la valeur de l'index ou il faut ajouter la réservation
-    while (hDebut != compteurMinute) {
+    // iteration pour savoir quand remplir le tableau:
+    // On ajoute 30 minutes au compteur de minutes tant que le compteur de minute est différent de l'heure de début
+    // Tant que la condition on ajoute 1 au compteur d'index. On aura alors la valeur de l'index ou il faut ajouter la
+    // réservation
+    while (hDebut !== compteurMinute) {
       compteurMinute = compteurMinute + 30;
       compteurIndex = compteurIndex + 1;
     }
 
-    //on remplit le tableau à l'index calculé et on le remplit autant de fois que la condition le peut (en fonction de la durée de la réservation)
+    // on remplit le tableau à l'index calculé et on le remplit autant de fois que la condition le peut (en fonction de
+    // la durée de la réservation)
     for (let k = 0; k < dureeResa; k = k + 30) {
       this.bookingsOfTheWeek[day][compteurIndex] = element;
       compteurIndex = compteurIndex + 1;
     }
   }
 
-  //bouton pour aller à la semaine précédente
+  // bouton pour aller à la semaine précédente
   previousWeek() {
     this.selectedDate = new Date(moment(this.selectedDate).subtract(7, 'days').format());
     this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+    this.whereIAm--;
   }
 
-  //bouton pour aller à la semaine suivante
+  // bouton pour aller à la semaine suivante
   nextWeek() {
     this.selectedDate = new Date(moment(this.selectedDate).add(7, 'days').format());
     this.getPlanning(this.selectedRoom.roomId, this.selectedDate);
+    this.whereIAm++;
   }
 
-  //modale de céation de la réservation, la fonction prend en paramètre day et hour qui sont récupéré dans la partie HTML
-  //cela permet de préremplir les champs dans la modale en fonction de la case cliquée.
-  openDialog(day, hour) {
+  // modale de céation de la réservation, la fonction prend en paramètre day et hour qui sont récupéré dans la partie HTML
+  // cela permet de préremplir les champs dans la modale en fonction de la case cliquée.
+  openDialog(day, beginh, hour) {
 
-    if (!this.reservationSearchFeedback || this.reservationSearchFeedback == undefined || this.reservationSearchFeedback == null) {
-      console.log("dialog home");
-      //config de ma modale :
-      //dans la partie data : room et selectedDate sont explicites, day et hour correspondent aux valeurs récupérés en paramètre
-      //venues du front. Ce sont des index de boucles ngFor.
+    if (beginh === -1) {
+      this.beginDrag = hour;
+      hour += 2;
+    }
+
+    if (!this.reservationSearchFeedback || this.reservationSearchFeedback === undefined || this.reservationSearchFeedback == null) {
+      console.log('dialog home');
+      // config de ma modale :
+      // dans la partie data : room et selectedDate sont explicites, day et hour correspondent aux valeurs récupérés en paramètre
+      // venues du front. Ce sont des index de boucles ngFor.
       const bookingDetailsDialogConfig = new MatDialogConfig();
-      bookingDetailsDialogConfig.width = "400px";
+      bookingDetailsDialogConfig.width = '400px';
       bookingDetailsDialogConfig.data = {
         room: this.selectedRoom,
         selectedDate: this.selectedDate,
-        day: day,
-        hour: hour,
+        day,
+        beginhour: this.beginDrag,
+        hour,
       };
 
       this.dialog.open(BookingdetailsComponent, bookingDetailsDialogConfig)
@@ -285,24 +310,40 @@ export class RoomPlanningComponent implements OnInit {
 
         });
 
-    }
-    else {
-      console.log("dialog search");
+    } else {
+      console.log('dialog search');
       const hoursFeedbackStepDialogConfig = new MatDialogConfig();
-      hoursFeedbackStepDialogConfig.width = "400px";
+      hoursFeedbackStepDialogConfig.width = '400px';
       hoursFeedbackStepDialogConfig.data = {
         selectedDate: this.selectedDate,
-        day: day,
-        hour: hour,
+        day,
+        beginhour: this.beginDrag,
+        hour,
         roomId: this.selectedRoom.roomId
       };
 
       this.dialog.open(HoursFeedbackStepComponent, hoursFeedbackStepDialogConfig)
         .afterClosed().subscribe((res) => {
           if (res) {
-            this.reservationToChange.emit({ reservation: res, indexReservation: this.indexReservation })
+            this.reservationToChange.emit({ reservation: res, indexReservation: this.indexReservation });
           }
         });
     }
+  }
+  dragStarted(event: CdkDragStart) {
+    console.log('dragStarted ' + Number(event.source.dropContainer.getItemIndex(event.source)));
+    this.beginDrag = Number(event.source.dropContainer.getItemIndex(event.source));
+  }
+
+  dragEnded(event: CdkDragEnd) {
+    console.log(`dragEnded` + (Number(event.source.dropContainer.id.charAt(event.source.dropContainer.id.length - 1)) / (1 + this.whereIAm)).toFixed(0));
+    this.openDialog(
+      Number(event.source.dropContainer.id.charAt(event.source.dropContainer.id.length - 1)) - (5 * this.whereIAm),
+      0,
+      Number(event.source.dropContainer.getItemIndex(event.source)));
+  }
+
+  dragMoved(event: CdkDragMove) {
+    console.log('dragMOVed Event');
   }
 }

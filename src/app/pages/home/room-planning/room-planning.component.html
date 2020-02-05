@@ -1,100 +1,127 @@
-<div class="container">
+<div class="container-fluid p-5">
 
-    <div class="row align-items-center">
-        <!--
-        <div class="col-auto p-0">
-            <button mat-raised-button (click)="goBack()">Retour</button>
-        </div>
-        -->
-        <div class="col-auto text-center" *ngIf="rooms">
-            <mat-form-field>
+
+  <div class="row mb-5">
+    <div class="col-md-2 col-xs-12">
+      <!-- CARD DE PARAMETRAGE DU PLANNING -->
+      <mat-card class="example-card mat-elevation-z2 mb-2">
+        <mat-card-header>
+          <mat-card-title class="pt-3 pb-3"><h3>Paramètres</h3></mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="mt-2">
+          <div class="row">
+            <div class="col-auto " *ngIf="rooms">
+              <h6 class="ml-3">Salle désirée</h6>
+              <mat-form-field class="col-12" appearance="outline">
                 <mat-select [(value)]="selectedRoom" (selectionChange)="onSelectRoom()">
-                    <mat-option *ngFor="let room of rooms" [value]="room">
-                        Salle {{room.name}} - Zone {{room.area}}
-                    </mat-option>
+                  <mat-option *ngFor="let room of rooms" [value]="room">
+                    Salle {{room.name}} - Zone {{room.area}}
+                  </mat-option>
                 </mat-select>
-            </mat-form-field>
+              </mat-form-field>
+            </div>
+          </div>
 
-        </div>
-
-        <div class="col pr-5">
-            <mat-form-field class="float-right">
+          <!-- CARD CONTENANT LE PLANNING -->
+          <div class="row">
+            <div class="col-auto">
+              <h6 class="ml-3">Date désirée</h6>
+              <mat-form-field class="col-12" appearance="outline">
                 <input matInput [matDatepicker]="picker" placeholder="Selectionner une date"
-                    (dateChange)="onSelectDate($event)" [value]="selectedDate">
+                       (dateChange)="onSelectDate($event)" [value]="selectedDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker startAt="today"></mat-datepicker>
-            </mat-form-field>
-        </div>
-    </div>
-</div>
-
-<div class="container shadow mt-2 border">
-
-    <div class="row mb-2">
-        <div class="col-1 col-arrow-left position-relative" (click)="previousWeek()">
-            <mat-icon class="arrow-left">keyboard_arrow_left</mat-icon>
-        </div>
-        <div class="col">
-            <div class="row bg-white">
-                <div class="col-auto">
-                    <div class="row">
-                        <div class="w-100 text-right">
-                            &nbsp;
-                        </div>
-                    </div>
-                </div>
-                <div class="col border border-white text-center p-3 text-capitalize" *ngFor="let day of weekDays">
-                    {{day}}</div>
+              </mat-form-field>
             </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-            <div class="row light-blue-bg" id="week-header">
-                <div class="col-auto">
-                    <div class="row bg-white px-2" *ngFor="let hourOfPlanning of hoursOfPlanning; let i = index">
-                        <div class="w-100 border border-white border-bottom-0 text-right" *ngIf="i%2 == 0">
-                            {{hourOfPlanning}}
-                        </div>
-                        <div class="w-100 border border-white border-bottom-0" *ngIf="i%2 !== 0">
-                            &nbsp;
-                        </div>
+    <div class="col-md-10 col-xs-12">
+      <mat-card class="example-card mat-elevation-z2 mb-2">
+        <mat-card-header>
+          <mat-card-title class="pt-3 pb-3"><h3>Planning de la salle <b>{{selectedRoom.name}}</b></h3></mat-card-title>
+        </mat-card-header>
+        <div class="mat-card-content mr-2 ml-2">
+          <div class="container-fluid">
+
+
+            <div class="row mb-2">
+              <div class="col-1 col-arrow-left position-relative" (click)="previousWeek()">
+                <mat-icon class="arrow-left">keyboard_arrow_left</mat-icon>
+              </div>
+              <div class="col">
+                <div class="row bg-white">
+                  <div class="col-auto">
+                    <div class="row">
+                      <div class="w-100 text-right">
+                        &nbsp;
+                      </div>
                     </div>
+                  </div>
+                  <div class="col border border-white text-center p-3 text-capitalize" *ngFor="let day of weekDays">
+                    {{day}}</div>
                 </div>
-                <div class="col p-0" *ngFor="let resa of bookingsOfTheWeek; let i = index">
-                    <div class="container">
-                        <div class="row" *ngFor="let item of resa; let j = index">
-                            <div class=" w-100 border border-bottom-0 border-white text-right" *ngIf="j%2 == 0">
-                                <div class="item-is-true" *ngIf="item" matTooltip='
+
+                <div class="row light-blue-bg" id="week-header">
+                  <div class="col-auto">
+                    <div class="row bg-white px-2" *ngFor="let hourOfPlanning of hoursOfPlanning; let i = index">
+                      <div class="w-100 border border-white border-bottom-2 text-right" *ngIf="i%2 == 0">
+                        {{hourOfPlanning}}
+                      </div>
+                      <div class="w-100 border border-white border-bottom-0" *ngIf="i%2 !== 0">
+                        &nbsp;
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col p-0" *ngFor="let resa of bookingsOfTheWeek; let i = index">
+                    <div class="container" cdkDropList>
+                      <div class="row" *ngFor="let item of resa; let j = index" cdkDrag
+                           (cdkDragStarted)="dragStarted($event)"
+                           (cdkDragEnded)="dragEnded($event)"
+                           (cdkDragMoved)="dragMoved($event)"
+                           cdkDragLockAxis="y">
+                        <div class=" w-100 border border-bottom-2 border-white text-right" *ngIf="j%2 == 0">
+                          <div class="item-is-true" *ngIf="item" matTooltip='
                                                 Réservé par : {{item.firstName}} {{item.lastName}},
                                                 Objet : {{item.object}},
                                                 Capacité : {{item.capacity}} pers.'>
-                                    &nbsp;
-                                </div>
+                            &nbsp;
+                          </div>
 
-                                <div class="item-is-false" *ngIf="!item" (click)="openDialog(i, j)">
-                                    &nbsp;
-                                </div>
-                            </div>
-                            <div class="w-100 border border-top-0 border-white" *ngIf="j%2 !== 0">
-                                <div class="item-is-true" *ngIf="item" matTooltip='
+                          <div class="item-is-false" *ngIf="!item" (click)="openDialog(i, -1, j)">
+                            &nbsp;
+                          </div>
+                        </div>
+                        <div class="w-100 border border-top-0 border-white" *ngIf="j%2 !== 0">
+                          <div class="item-is-true " *ngIf="item" matTooltip='
                                             Réservé par : {{item.firstName}} {{item.lastName}},
                                             Objet : {{item.object}},
                                             Capacité : {{item.capacity}} pers.'>
-                                    &nbsp;
-                                </div>
+                            &nbsp;
+                          </div>
 
-                                <div class="item-is-false" *ngIf="!item" (click)="openDialog(i, j)">
-                                    &nbsp;
-                                </div>
-                            </div>
+                          <div class="item-is-false" *ngIf="!item" (click)="openDialog(i, -1, j)">
+                            &nbsp;
+                          </div>
                         </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
+
+              </div>
+
+              <div class="col-1 col-arrow-right position-relative" (click)="nextWeek()">
+                <mat-icon class="arrow-right">keyboard_arrow_right</mat-icon>
+              </div>
+
             </div>
-
+          </div>
         </div>
-
-        <div class="col-1 col-arrow-right position-relative" (click)="nextWeek()">
-            <mat-icon class="arrow-right">keyboard_arrow_right</mat-icon>
-        </div>
-
+      </mat-card>
     </div>
+  </div>
 </div>
