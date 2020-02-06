@@ -31,14 +31,14 @@
   width: 99%;
   position: relative;
   height: 30px;
-  background-color: rgb(115, 154, 224);
+  background-color: rgb(128, 179, 208);
   margin: 0 auto;
 }
 
 .timeline-tile{
   position: absolute;
   top:0;
-  background-color: rgb(57, 77, 112);
+  background-color: rgb(0, 102, 161);
   height: 100%;
 }
 
@@ -58,7 +58,7 @@
 
   font-size: 1rem;
   font-weight: bold;
-  color: rgb(57, 77, 112);;
+  color: rgb(0, 102, 161);
 }
 
 .timeline-flag-heure-last{
@@ -69,20 +69,15 @@ mat-icon{
   vertical-align: bottom;
 }
 
-.periodBtn:hover{
-  color: rgb(28, 71, 151);
-  cursor: pointer;
-  text-decoration: underline;
-}
 .roomDetails{
   font-size: smaller;
 }
 
-.period-selected{
+.period-selected, .periodBtn:hover{
   font-size: 16px;
-  text-decoration: underline;
   color: rgb(28, 71, 151);
   font-weight: bold;
+  cursor: pointer;
 }
 
 .icecard{

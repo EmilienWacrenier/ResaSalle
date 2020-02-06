@@ -29,7 +29,7 @@
 
   <!-- date debut -->
   <div class="row justify-content-center border rounded p-2 my-2">
-    <h6 class="w-100 text-center">Debut</h6>
+    <h6 class="w-100 text-center titre">Debut</h6>
     <mat-form-field class="w-50 px-2">
       <mat-label>Heure</mat-label>
       <mat-select [(value)]="selectedHourStart">
@@ -51,9 +51,9 @@
 
   <!-- date fin -->
   <div class="row justify-content-center border rounded p-2 my-2">
-    <h6 class="w-100 text-center">Fin</h6>
+    <h6 class="w-100 text-center titre">Fin</h6>
     <mat-form-field class="w-50 px-2">
-      <mat-label>Heure</mat-label>
+      <mat-label >Heure</mat-label>
       <mat-select [(value)]="selectedHourEnd">
         <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
           {{hourEnd}}
@@ -75,7 +75,6 @@
   <div class="row justify-content-center my-2">
     <mat-dialog-actions>
       <button matButton class="mat-raised-button" (click)="onSubmit()">Créer la réservation</button>
-      <span class="d-block text-danger small p-1" *ngIf="baseMessage">{{baseMessage}}</span>
     </mat-dialog-actions>
   </div>
 </div>

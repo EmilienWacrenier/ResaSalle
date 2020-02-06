@@ -53,7 +53,6 @@ export class BookingdetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.currentUser);
     //récupération des infos de la salle selectionnée par rapport au component parent
     this.room = this.data.room;
 
@@ -68,7 +67,6 @@ export class BookingdetailsComponent implements OnInit {
   //set les paramètres en fonction de la case cliquée sur le planning
   setParamsOnInit(day, hour) {
     this.selectedDate = new Date(moment(this.data.selectedDate).isoWeekday(day + 1).format());
-    console.log(this.selectedDate);
 
     if (hour % 2 == 0) {
       this.selectedHourStart = this.bookingHours[hour / 2];
@@ -87,7 +85,6 @@ export class BookingdetailsComponent implements OnInit {
   //quand on change la date
   onSelectDate(event) {
     this.selectedDate = event.value;
-    console.log(this.selectedDate);
   }
 
   //au clic de la création de la réservation
@@ -107,18 +104,11 @@ export class BookingdetailsComponent implements OnInit {
       || this.dateIsWrong(this.selectedDate)
       || this.hoursAreWrong()) {
       this.errorCheck();
-      console.log(this.objet)
-      console.log(this.selectedDate);
-      console.log(this.selectedHourStart);
-      console.log(this.selectedMinuteStart);
-      console.log(this.selectedHourEnd);
-      console.log(this.selectedMinuteEnd);
     }
     else {
 
       let startDate = moment(this.selectedDate).hour(this.selectedHourStart).minute(this.selectedMinuteStart).second(0).format("YYYY-MM-DD HH:mm:ss");
       let endDate = moment(this.selectedDate).hour(this.selectedHourEnd).minute(this.selectedMinuteEnd).second(0).format("YYYY-MM-DD HH:mm:ss");
-      console.log("startDate : " + startDate + " . endDate : " + endDate);
 
       let reservation = {
         startDate: startDate,
@@ -127,12 +117,6 @@ export class BookingdetailsComponent implements OnInit {
         userId: this.currentUser.userId,
         roomId: this.room.roomId
       };
-
-      console.log('La réservation : ' + reservation.startDate);
-      console.log('La réservation : ' + reservation.endDate);
-      console.log('La réservation : ' + reservation.object);
-      console.log('La réservation : ' + reservation.userId);
-      console.log('La réservation : ' + reservation.roomId);
 
       this.createReservation(reservation);
     }
@@ -151,14 +135,15 @@ export class BookingdetailsComponent implements OnInit {
             selectedDate: this.selectedDate
           }
 
-          //setTimeout(() => this.bookingDetailsDialogRef.close(data), 500);
+          setTimeout(() => this.bookingDetailsDialogRef.close(data), 500);
         }, (error) => {
           console.log(error);
           const message = "Créneau Indisponible"
           this.toastr.error(message, this.cst.toastrTitle, this.cst.toastrOptions);
+          this.bookingDetailsDialogRef.close();
         }
       )
-      this.bookingDetailsDialogRef.close();
+      
   }
 
 

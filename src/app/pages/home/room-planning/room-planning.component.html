@@ -38,14 +38,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col border border-white text-center p-3 text-capitalize" *ngFor="let day of weekDays">
+                <div class="col border border-white text-center p-3 text-capitalize planning-text" *ngFor="let day of weekDays">
                     {{day}}</div>
             </div>
 
             <div class="row light-blue-bg" id="week-header">
                 <div class="col-auto">
                     <div class="row bg-white px-2" *ngFor="let hourOfPlanning of hoursOfPlanning; let i = index">
-                        <div class="w-100 border border-white border-bottom-0 text-right" *ngIf="i%2 == 0">
+                        <div class="w-100 border border-white border-bottom-0 text-right planning-text" *ngIf="i%2 == 0">
                             {{hourOfPlanning}}
                         </div>
                         <div class="w-100 border border-white border-bottom-0" *ngIf="i%2 !== 0">

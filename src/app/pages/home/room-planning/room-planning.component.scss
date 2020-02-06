@@ -3,6 +3,12 @@
   font-size:1.5em;
 }
 
+.planning-text{
+  font-weight: bold;
+  color: rgb(0, 102, 161);
+  user-select: disabled;
+}
+
 .item-is-true{
   display: block;
   width: 100%;
@@ -14,7 +20,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  background-color: rgb(191, 217, 232) ;
+  background-color: rgb(128, 179, 208) ;
   cursor: pointer;
 }
 
@@ -32,7 +38,7 @@
 }
 
 .col-arrow-left:hover, .col-arrow-right:hover{
-  background-color: rgb(191, 217, 232);
+  background-color: rgb(128, 179, 208);
 }
 
 .arrow-left, .arrow-right{

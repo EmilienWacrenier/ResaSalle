@@ -280,7 +280,7 @@ export class RoomPlanningComponent implements OnInit {
       this.dialog.open(BookingdetailsComponent, bookingDetailsDialogConfig)
         .afterClosed().subscribe((data) => {
           if (data) {
-            this.getPlanning(data.roomId, data.selectedDate);
+            this.getPlanning(this.selectedRoom.roomId, data.selectedDate);
           }
 
         });

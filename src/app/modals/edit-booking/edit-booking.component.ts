@@ -4,10 +4,11 @@ import { Inject } from '@angular/core';
 
 import * as moment from 'moment';
 
-import { BOOKING_HOURS, BOOKING_MINUTES } from '../../constantes/constantes'
+import { BOOKING_HOURS, BOOKING_MINUTES, ApiConstants } from '../../constantes/constantes'
 
 import { ReservationService } from '../../services/reservation.service'
 import { Room } from 'src/app/classes/room';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-booking',
@@ -37,6 +38,8 @@ export class EditBookingComponent implements OnInit {
   errorBase: string;
 
   constructor(
+    private toastr: ToastrService,
+    private cst: ApiConstants,
     private reservationService: ReservationService,
     public bookingDetailsDialogRef: MatDialogRef<EditBookingComponent>,
     @Inject(MAT_DIALOG_DATA) public data: EditBookingModel) {
@@ -111,6 +114,8 @@ export class EditBookingComponent implements OnInit {
       console.log('La réservation : ' + reservation.object);
       console.log('La réservation : ' + reservation.roomId);
       this.modifyReservation(reservation);
+
+      this.bookingDetailsDialogRef.close();
     }
   }
 
@@ -119,9 +124,11 @@ export class EditBookingComponent implements OnInit {
       .subscribe(
         (res) => {
           console.log(res);
+          this.toastr.success('Réservation modifiée', this.cst.toastrTitle, this.cst.toastrOptions);
         }, (error) => {
+          const message = "Créneau Indisponible"
+          this.toastr.error(message, this.cst.toastrTitle, this.cst.toastrOptions);
           console.log('Erreur ! : ' + error.error['result']);
-          this.errorBase = error.error['result'];
         }
       );
   }
