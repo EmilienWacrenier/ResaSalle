@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { ReservationService } from 'src/app/services/reservation.service';
 import { SearchDataServiceService } from 'src/app/services/search-data-service.service';
 import { ConfirmationReservationRecurrenceComponent } from 'src/app/modals/confirmation-reservation-recurrence/confirmation-reservation-recurrence.component';
 import { User } from 'src/app/classes/user';
+import * as moment from 'moment';
+import { Room } from 'src/app/classes/room';
 
 @Component({
   selector: 'app-feedback-conflit-recurrence',
@@ -14,52 +16,97 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
 
   @Input() user: User;
   //reponse avec la liste des reservations de la recurrence avec et sans conflit
-  reservationsToCheck= [];
-  listeReservations= [];
+  reservationsToCheck = [];
+  listeReservations = [];
+
+  modifiedReservationsList = [];
 
   object: string;
   labelRecurrence: string;
   startDateRecurrence: string;
   endDateRecurrence: string;
-
-  
+  room: Room;
+  startDate: string;
+  endDate: string;
+  conflictCount: number = 0;
 
   constructor(
     private reservationService: ReservationService,
     private searchDataService: SearchDataServiceService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar) {
+    this.searchDataService.fullStartDate$.subscribe(res => this.startDate = res);
+    this.searchDataService.fullEndDate$.subscribe(res => this.endDate = res);
+    this.searchDataService.room$.subscribe(res => this.room = res);
+
+    this.searchDataService.object$.subscribe(res => this.object = res);
+
+    this.searchDataService.recurrenceName$.subscribe(res => this.labelRecurrence = res);
+    this.searchDataService.endDateRecurrence$.subscribe(res => this.endDateRecurrence = res);
+  }
 
   ngOnInit() {
+    console.log(this.room);
     this.searchDataService.listeReservationCheckRecurrence$.subscribe(
       (res) => {
         this.reservationsToCheck = res['result'];
-        console.log(this.reservationsToCheck);
+        if (this.reservationsToCheck) {
+          console.log(this.reservationsToCheck);
+          this.conflictCount = this.countResaConflict(this.reservationsToCheck);
+        }
       }, (error) => {
       }
     )
   }
 
-  //STEP FINAL
-  deleteDate(i) {
-    this.reservationsToCheck.splice(i, 1)
+  deleteDate(index: number) {
+    this.reservationsToCheck.splice(index, 1);
   }
 
   updateReservation(event) {
     const index = event.indexReservation;
     let newReservation = event.reservation;
 
-    this.reservationService.getCheckReservation(newReservation.roomId, newReservation.startDate, newReservation.endDate)
-      .subscribe(res => {
-        this.reservationsToCheck[index] = res['result'];
-      })
+    const newReservationIsConflict: boolean = this.checkReservations(newReservation, this.reservationsToCheck);
+    if (newReservationIsConflict == true) {
+      this.snackBar.open('Cette date est déjà présente dans la liste', '', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
+      console.log("UR newResa ne doit pas etre ajoutée");
+    }
+    else {
+      this.reservationService.getCheckReservation(newReservation.roomId, newReservation.startDate, newReservation.endDate)
+        .subscribe(res => {
+          this.reservationsToCheck[index] = res['result'];
+        });
+    }
+    this.conflictCount = this.countResaConflict(this.reservationsToCheck);
+  }
+
+  countResaConflict(reservationList: Array<any>): number {
+    let count = reservationList.filter(reservation => reservation.conflit == true || reservation.workingDay == false).length;
+    console.log(count);
+    return count;
+  }
+
+  checkReservations(newReservation: any, reservationList: Array<any>) {
+
+    for (const reservation of reservationList) {
+      console.log(newReservation);
+      console.log(reservation);
+      if (
+        reservation.roomId == newReservation.roomId &&
+        moment(newReservation.startDate).isAfter(reservation.startDate) && moment(newReservation.endDate).isSameOrBefore(reservation.endDate)
+        || moment(newReservation.startDate).isSameOrAfter(reservation.startDate) && moment(newReservation.startDate).isBefore(reservation.endDate)
+        || moment(newReservation.startDate).isSameOrBefore(reservation.startDate) && moment(newReservation.endDate).isSameOrAfter(reservation.endDate)
+      ) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
   }
 
   openReservationSimpleConfirmationModal() {
-    this.searchDataService.recurrenceName$.subscribe(res => this.labelRecurrence = res);
-    this.searchDataService.fullStartDate$.subscribe(res => this.startDateRecurrence = res);
-    this.searchDataService.endDateRecurrence$.subscribe(res => this.endDateRecurrence = res);
-    this.searchDataService.object$.subscribe(res => this.object = res);
-
     this.listeReservations = this.reservationsToCheck.filter(resa => resa.conflit == false && resa.workingDay == true);
 
     for (const reservation of this.listeReservations) {

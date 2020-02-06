@@ -1,28 +1,36 @@
 <div class="container-fluid">
     <ng-template matStepLabel>Résultats</ng-template>
 
+    <div class="row mt-2 border rounded bg-white">
+        <div class="col p-3 text-center">
+            Vous souhaitez réserver {{labelRecurrence}}ment du {{startDate | date: 'dd MMMM yyyy'}} au
+            {{endDateRecurrence | date: 'dd MMMM yyyy'}} de {{startDate | date: 'HH:mm'}} à {{endDate | date: 'HH:mm'}}
+            en salle {{room.name}}. <br>
+            <span *ngIf="conflictCount > 0">Il y a {{conflictCount}} conflits, cliquer sur les réservations en rouge
+                pour les modifier.</span>
+        </div>
+    </div>
 
-    <div class="row justify-content-center">
-
+    <div class="row my-2 justify-content-center">
         <mat-accordion class="w-100">
             <mat-expansion-panel *ngFor="let resa of reservationsToCheck; let i = index">
                 <mat-expansion-panel-header [ngClass]="resa.conflit || !resa.workingDay ? 'bg-danger':''">
                     <mat-panel-title>
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col hoverable">
+                                <div class="col-12 col-md-3 hoverable">
                                     {{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
                                 </div>
 
-                                <div class="col hoverable">
+                                <div class="col-4 col-md-3 hoverable">
                                     {{resa.startDate | date: 'HH:mm'}}
                                 </div>
 
-                                <div class="col hoverable">
+                                <div class="col-4 col-md-3 hoverable">
                                     {{resa.endDate | date: 'HH:mm'}}
                                 </div>
 
-                                <div class="col hoverable">
+                                <div class="col-4 col-md-3 hoverable">
                                     {{resa.roomName}}
                                 </div>
                             </div>
@@ -38,8 +46,7 @@
         </mat-accordion>
     </div>
 
-
-    <div class="row">
+    <div class="row mt-2">
         <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
         <button class="bouton-back-next" mat-button (click)="openReservationSimpleConfirmationModal()">Réserver ces
             dates</button>

@@ -115,6 +115,8 @@ export class RecurrenceStepSallesComponent implements OnInit {
   }
 
   sendToVerification() {
+    console.log(this.selectedRoom);
+    this.searchDataService.getRoom(this.selectedRoom);
 
     let checkReservationRecurrence = {
       startDate: this.fullStartDate,
@@ -131,8 +133,6 @@ export class RecurrenceStepSallesComponent implements OnInit {
         this.searchDataService.getlisteReservationCheckRecurrence(res);
       }
     )
-    //this.onValidationRecurrenceEvent.emit(checkReservationRecurrence);
-    //this.reservationService.getCheckRecurrence(reservationRecurrenceParameters);
   }
 
 }

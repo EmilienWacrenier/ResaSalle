@@ -68,6 +68,20 @@ export class CriteresComponent implements OnInit {
   ngOnInit() {
     this.onSelectDate(new Date());
     this.checkInput();
+
+    console.log(moment().hour());
+    console.log(moment().minute());
+
+    if(moment().hour() == 17 && moment().minute() <= 30){
+      this.selectedHourStart = 17;
+      this.selectedMinuteStart = 30;
+      this.selectedHourEnd = 18 ;
+      
+    }
+    if(moment().hour() >= 17 && moment().minute() > 30){
+      this.selectedHourStart = 8;
+      this.selectedHourEnd = this.selectedHourStart + 1;
+    }
   }
 
 

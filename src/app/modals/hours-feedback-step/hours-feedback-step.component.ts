@@ -64,8 +64,6 @@ export class HoursFeedbackStepComponent implements OnInit {
       endDate : this.endDateWithHours
     }
     console.log(reservation);
-
-    this.baseMessage = "Horaires validés";
     
     setTimeout( () => this.hoursFeedbackStepDialogRef.close(reservation), 500 );
   }
