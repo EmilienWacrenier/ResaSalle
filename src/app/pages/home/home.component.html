@@ -28,7 +28,7 @@
 
         <div class="row align-items-center rounded border bg-white my-2 px-3 rowRoom"
             *ngFor="let room of rooms; let i = index" (click)="onClickRoom(room.roomId)"
-            routerLink="/planning/{{room.roomId}}" matTooltip="Cliquez pour aller réserver cette salle">
+            routerLink="/planning/{{room.roomId}}" matTooltip="Cliquez pour réserver cette salle">
             <mat-icon class="mx-3 mt-2">meeting_room</mat-icon>
             <div class="col-md-3 col-xs-6">
                 <span class="my-auto mx-3">{{room.name}} </span>

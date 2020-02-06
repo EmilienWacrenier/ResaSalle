@@ -74,7 +74,6 @@ export class RecurrenceStepSallesComponent implements OnInit {
     this.roomService.getRooms()
       .subscribe(data => {
         this.roomList = data['result'];
-        console.log(this.roomList)
       })
   }
 
@@ -84,7 +83,6 @@ export class RecurrenceStepSallesComponent implements OnInit {
       .getAvailableRooms(capacity, startDate, endDate)
       .subscribe(data => {
         this.roomList = data['result'];
-        console.log(this.roomList)
       });
   }
 
@@ -93,7 +91,6 @@ export class RecurrenceStepSallesComponent implements OnInit {
       .getAvailableRooms(this.roomRequiredCapacity, this.fullStartDate, this.fullEndDate)
       .subscribe(data => {
         this.roomList = data['result'];
-        console.log(this.roomList)
       });
   }
 
@@ -118,6 +115,8 @@ export class RecurrenceStepSallesComponent implements OnInit {
   }
 
   sendToVerification() {
+    console.log(this.selectedRoom);
+    this.searchDataService.getRoom(this.selectedRoom);
 
     let checkReservationRecurrence = {
       startDate: this.fullStartDate,
@@ -128,16 +127,12 @@ export class RecurrenceStepSallesComponent implements OnInit {
       object: this.object,
       userId: this.user.userId
     }
-    console.log(checkReservationRecurrence);
 
     this.reservationService.checkReservationRecurrence(checkReservationRecurrence).subscribe(
       (res) => {
-        console.log(res);
         this.searchDataService.getlisteReservationCheckRecurrence(res);
       }
     )
-    //this.onValidationRecurrenceEvent.emit(checkReservationRecurrence);
-    //this.reservationService.getCheckRecurrence(reservationRecurrenceParameters);
   }
 
 }

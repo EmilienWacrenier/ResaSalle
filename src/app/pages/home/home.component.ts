@@ -94,7 +94,6 @@ export class HomeComponent implements OnInit {
 
     //total de l'heure de début en minutes
     let hoursDebut = new Date(reservation.startDate).getHours();
-    console.log(hoursDebut);
     
     let minutesDebut = (new Date(reservation.startDate)).getMinutes();
     let totalHoursDebut = hoursDebut*60 + minutesDebut;

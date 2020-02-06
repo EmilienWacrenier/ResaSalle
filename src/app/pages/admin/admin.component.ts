@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Room } from 'src/app/classes/room';
 import { MatTableDataSource } from '@angular/material';
-import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { DeleteConfirmationComponent, ConfirmDeleteModel } from '../../modals/delete-confirmation/delete-confirmation.component';
 
 import { RoomService } from 'src/app/services/room.service';
@@ -22,14 +22,14 @@ export class AdminComponent implements OnInit {
   selectedName: string;
   areas: string[] = ['A', 'B', 'C', 'D'];
   names: string[] = ['Grande Ourse', 'Céphée', 'Bouvier', 'Hercule', 'Lyre', 'Cygne', 'Cassiopée', 'Andromède',
-                      'Pégase','Bélier', 'Taureau', 'Gémeaux', 'Cancer', 'Lion', 'Vierge', 'Balance', 'Scorpion',
-                      'Sagittaire','Capricorne', 'Verseau', 'Poissons', 'Baleine', 'Eridan', 'Orion', 'Grand Chien',
-                      'Poisson austral', 'Carène','Croix du Sud'
+                      'Pégase', 'Bélier', 'Taureau', 'Gémeaux', 'Cancer', 'Lion', 'Vierge', 'Balance', 'Scorpion',
+                      'Sagittaire', 'Capricorne', 'Verseau', 'Poissons', 'Baleine', 'Eridan', 'Orion', 'Grand Chien',
+                      'Poisson austral', 'Carène', 'Croix du Sud'
                     ];
 
   dsRoom: MatTableDataSource<Room>;
   displayedColumns: string[] = ['room', 'area', 'capacity', 'actions'];
-  public newRoomCapacity: number = 2;
+  public newRoomCapacity = 2;
 
   constructor(private roomService: RoomService, private toastr: ToastrService, private cst: ApiConstants, public dialog: MatDialog) {
     this.createRoomForm = new FormGroup({
@@ -45,15 +45,14 @@ export class AdminComponent implements OnInit {
 
   createRoom() {
     if (this.newRoomCapacity < 2 || this.newRoomCapacity > 10 || isNaN(this.newRoomCapacity)) {
-      console.log('Capacité incorrecte')
-    }
-    else {
+      console.log('Capacité incorrecte');
+    } else {
 
       const body = {
         name: this.createRoomForm.controls.roomName.value,
         area: this.createRoomForm.controls.roomArea.value,
         capacity: this.newRoomCapacity.toString()
-      }
+      };
 
       this.roomService.createRoom(body).subscribe(
         (response) => {
@@ -61,14 +60,15 @@ export class AdminComponent implements OnInit {
           this.updateRooms();
         },
         (error) => {
-          this.toastr.error(error.error['result'], this.cst.toastrTitle, this.cst.toastrOptions);
+          this.toastr.error(error.error.result, this.cst.toastrTitle, this.cst.toastrOptions);
         }
       );
     }
   }
 
   deleteRoom(room) {
-    const message = `Souhaitez-vous vraiment supprimer la salle ${room.name} ? \n La suppression entraînera l\'annulation de toutes les réservations associées`;
+    const message = `Souhaitez-vous vraiment supprimer la salle ${room.name} ? \n
+           La suppression entraînera l\'annulation de toutes les réservations associées`;
 
     const dialogData = new ConfirmDeleteModel(`Supprimer la salle ${room.name}`, message);
 
@@ -84,7 +84,7 @@ export class AdminComponent implements OnInit {
             this.updateRooms();
           },
           (error) => {
-            this.toastr.error(error.error['result'], this.cst.toastrTitle, this.cst.toastrOptions);
+            this.toastr.error(error.error.result, this.cst.toastrTitle, this.cst.toastrOptions);
             this.updateRooms();
           }
         );
@@ -97,7 +97,7 @@ export class AdminComponent implements OnInit {
     this.roomService.getRooms().subscribe(
       (response) => {
         this.dsRoom.data = (response['result']);
-      })
+      });
   }
   editRoom(room) {
     const dialogData = new EditRoomModel(room);
@@ -107,18 +107,20 @@ export class AdminComponent implements OnInit {
       data: dialogData
     });
     dialogRef.afterClosed().subscribe(
-      ()=> this.updateRooms() 
+      () => this.updateRooms()
     );
   }
 
   incrementCapacity() {
-    if (this.newRoomCapacity < 10)
+    if (this.newRoomCapacity < 10) {
       this.newRoomCapacity++;
+    }
   }
 
   decrementCapacity() {
-    if (this.newRoomCapacity > 2)
+    if (this.newRoomCapacity > 2) {
       this.newRoomCapacity--;
+    }
   }
 
   checkRoomCapacityValue() {
@@ -127,8 +129,7 @@ export class AdminComponent implements OnInit {
     }
     if (this.newRoomCapacity >= 10) {
       this.newRoomCapacity = 10;
-    }
-    else if (this.newRoomCapacity <= 0) {
+    } else if (this.newRoomCapacity <= 0) {
       this.newRoomCapacity = null;
     }
   }
