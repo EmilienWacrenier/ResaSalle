@@ -1,4 +1,4 @@
-<div class="name">
+<div>
     <h2> Mes Réservations </h2>
 </div>
 <div class="container-fluid">
@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody *ngFor="let resa of reservations; index as i" class=" table-striped">
-            <tr class="liste" [ngClass]="{'bg-grey' : i%2 == 1}">
+            <tr [ngClass]="{'bg-grey' : i%2 == 1}">
                 <th id="date">{{resa.startDate | date: 'dd MMMM'}}</th>
                 <th id="debut">{{resa.startDate | date: 'HH:mm' : 'GMT+0'}}</th>
                 <th id="fin">{{resa.endDate | date: 'HH:mm' : 'GMT+0'}}</th>
@@ -27,12 +27,12 @@
                 </th>
                 <th>
                     <div class="row ">
-                        <div class="">
+                        <div>
                             <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
                                 edit
                             </i>
                         </div> 
-                        <div class="">
+                        <div>
                             <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(resa.reservationId)">
                                 clear
                             </i>
