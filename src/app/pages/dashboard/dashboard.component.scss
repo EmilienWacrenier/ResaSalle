@@ -1,40 +1,53 @@
 .deleteBtn{
     color: red;
     cursor: pointer;
-    margin-right: 5px;
 }
 
 .editBtn{
     color: royalblue;
     cursor: pointer;
-    margin-right: 5px;
+     margin-right: 15px; 
 }
-
-.tableHeader{
-    background-color: #1c4797;
-}
-
-mat-header-cell{
+ 
+#title{
+    background-color: #1a3994 !important;
     color: white;
-    font-size: 15px;
-    text-align: center !important;
-    justify-content: center;
+    font-weight: 750; 
 }
 
-mat-cell {
-    justify-content: center;
+#date{
+    font-weight:710;
 }
 
-mat-table{
+#debut, #fin{
+    color:#093ea1;
+}
+#salle{
+    color: #598ae4;
+}
+
+table {
     width: 100%;
+    text-align: center;
 }
 
-.dateTableCell{
-    font-weight: bold;
-    color: #1c4797;
+#objet{
+    font-weight:400;
 }
+/*  tbody tr:nth-child(2+n){
+    background-color: red;
+} */
+/* tbody tr:nth-child(2n+1){
+    background-color: rgb(14, 201, 23);
+}
+tbody tr:nth-child(3n+1){
+    background-color: rgb(14, 27, 201);
+} */
 
-.roomTableCell{
-    font-weight: bold;
-    color:#739ae0;
-}
+/* tr:nth-child(even){
+    background-color: red;
+} */
+/* #period{
+    margin-left: 5px;
+} */
+

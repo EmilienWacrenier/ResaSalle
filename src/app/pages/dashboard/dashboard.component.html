@@ -1,55 +1,45 @@
-<div class="container-fluid p-5">
-
-    <div class="row mb-3">
-
-        <div class="col-auto">
-            <h2> Mes Réservations </h2>
-        </div>
-    </div>
-
-    <div class="row my-2">
-
-        <div class="col-auto">
-            <mat-form-field class="search-form">
-                <mat-label>Objet</mat-label>
-                <input matInput autocomplete="off" (keyup)="onKey($event)">
-                <mat-icon matPrefix>search</mat-icon>
-            </mat-form-field>
-        </div>
-    </div>
-
-    <div class="row border-top border-bottom bg-info text-white p-3">
-        <div class="col-2">Date</div>
-        <div class="col-1">Début</div>
-        <div class="col-1">Fin</div>
-        <div class="col-2">Salle</div>
-        <div class="col-2">Objet</div>
-        <div class="col-2">.</div>
-    </div>
-
-    <div class="row border-bottom p-3 bg-white" *ngFor="let resa of reservations">
-        <div class="col-2">
-            {{resa.startDate | date: 'dd MMMM'}}
-        </div>
-        <div class="col-1">
-            {{resa.startDate | date: 'HH:mm' : 'GMT+0'}}
-        </div>
-        <div class="col-1">
-            {{resa.endDate | date: 'HH:mm' : 'GMT+0'}}
-        </div>
-        <div class="col-2">
-            {{resa.room.name}}
-        </div>
-        <div class="col-2">
-            {{resa.object}}
-        </div>
-        <div class="col-2">
-            <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
-                edit
-            </i>
-            <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(resa.reservationId)">
-                clear
-            </i>
-        </div>
-    </div>
+<div class="name">
+    <h2> Mes Réservations </h2>
+</div>
+<div class="container-fluid">
+    <table class="table">
+        <thead id="title">
+            <tr>
+                <th>Date</th>
+                <th>Début</th>
+                <th>Fin</th>
+                <th>Salle</th>
+                <th>Objet</th>
+                <th>Périodique</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let resa of reservations" class=" table-striped">
+            <tr class="liste">
+                <th id="date">{{resa.startDate | date: 'dd MMMM'}}</th>
+                <th id="debut">{{resa.startDate | date: 'HH:mm' : 'GMT+0'}}</th>
+                <th id="fin">{{resa.endDate | date: 'HH:mm' : 'GMT+0'}}</th>
+                <th id="salle">{{resa.room.name}}</th>
+                <th id="objet">{{resa.object}}</th>
+                <th id="period">
+                    <p *ngIf="resa.recurence_id != null">Oui</p>
+                    <p *ngIf="resa.recurence_id == null">Non</p>
+                </th>
+                <th>
+                    <div class="row ">
+                        <div class="">
+                            <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
+                                edit
+                            </i>
+                        </div> 
+                        <div class="">
+                            <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(resa.reservationId)">
+                                clear
+                            </i>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </tbody>
+    </table>
 </div>
