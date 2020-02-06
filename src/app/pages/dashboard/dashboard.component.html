@@ -14,8 +14,8 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody *ngFor="let resa of reservations" class=" table-striped">
-            <tr class="liste">
+        <tbody *ngFor="let resa of reservations; index as i" class=" table-striped">
+            <tr class="liste" [ngClass]="{'bg-grey' : i%2 == 1}">
                 <th id="date">{{resa.startDate | date: 'dd MMMM'}}</th>
                 <th id="debut">{{resa.startDate | date: 'HH:mm' : 'GMT+0'}}</th>
                 <th id="fin">{{resa.endDate | date: 'HH:mm' : 'GMT+0'}}</th>
