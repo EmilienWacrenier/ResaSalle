@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ReservationService } from 'src/app/services/reservation.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-confirmation-reservation-recurrence',
@@ -14,8 +15,10 @@ export class ConfirmationReservationRecurrenceComponent implements OnInit {
   listeReservations: [];
   listeReservationsWithConflit: [];
   baseMessage: string;
+  someConflict: boolean = false;
 
   constructor(
+    public router: Router,
     public dialogRef: MatDialogRef<ConfirmationReservationRecurrenceComponent>,
     private reservationService: ReservationService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -27,7 +30,9 @@ export class ConfirmationReservationRecurrenceComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log(this.listeReservationsWithConflit);
+    if(this.listeReservationsWithConflit.length > 0){ this.someConflict = true; }
+    else this.someConflict = false;
   }
 
   closeModal(): void {
@@ -50,6 +55,7 @@ export class ConfirmationReservationRecurrenceComponent implements OnInit {
         console.log(response);
         console.log("Réservations sans conflits créées");
         setTimeout( () => this.dialogRef.close(), 500 );
+        this.router.navigate(['/dashboard'])
       },
       (error) => {
         this.baseMessage = error;

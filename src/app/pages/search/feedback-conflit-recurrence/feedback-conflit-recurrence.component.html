@@ -13,8 +13,8 @@
 
     <div class="row my-2 justify-content-center">
         <mat-accordion class="w-100">
-            <mat-expansion-panel *ngFor="let resa of reservationsToCheck; let i = index">
-                <mat-expansion-panel-header [ngClass]="resa.conflit || !resa.workingDay ? 'bg-danger':''">
+            <mat-expansion-panel *ngFor="let resa of reservationsToCheck; let i = index" (click)="showPlanning()">
+                <mat-expansion-panel-header [ngClass]="resa.conflit || !resa.workingDay ? 'bg-conflit':''">
                     <mat-panel-title>
                         <div class="container-fluid">
                             <div class="row">
@@ -38,8 +38,12 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <button class="bouton-back-next" mat-button (click)="deleteDate(i)">Supprimer cette date</button>
-                <app-room-planning [reservationSearchFeedback]="resa" [indexReservation]="i"
+                <button class="bouton-back-next mt-4 ml-5" mat-button (click)="deleteDate(i)">Supprimer cette date</button>
+
+                <app-room-planning 
+                    *ngIf="planningLoadTrue" 
+                    [reservationSearchFeedback]="resa" 
+                    [indexReservation]="i"
                     (reservationToChange)="updateReservation($event)">
                 </app-room-planning>
             </mat-expansion-panel>

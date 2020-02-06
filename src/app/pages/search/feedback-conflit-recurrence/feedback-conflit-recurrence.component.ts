@@ -30,6 +30,8 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
   endDate: string;
   conflictCount: number = 0;
 
+  planningLoadTrue: boolean = false;
+
   constructor(
     private reservationService: ReservationService,
     private searchDataService: SearchDataServiceService,
@@ -59,6 +61,10 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
     )
   }
 
+  showPlanning(): void{
+    this.planningLoadTrue = true;
+  }
+
   deleteDate(index: number) {
     this.reservationsToCheck.splice(index, 1);
   }
@@ -68,6 +74,8 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
     let newReservation = event.reservation;
 
     const newReservationIsConflict: boolean = this.checkReservations(newReservation, this.reservationsToCheck);
+    console.log(newReservationIsConflict);
+
     if (newReservationIsConflict == true) {
       this.snackBar.open('Cette date est déjà présente dans la liste', '', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
       console.log("UR newResa ne doit pas etre ajoutée");
@@ -83,7 +91,6 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
 
   countResaConflict(reservationList: Array<any>): number {
     let count = reservationList.filter(reservation => reservation.conflit == true || reservation.workingDay == false).length;
-    console.log(count);
     return count;
   }
 
@@ -120,7 +127,7 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
     const confirmationReservationRecurrenceDialogConfig = new MatDialogConfig();
     confirmationReservationRecurrenceDialogConfig.data = {
       labelRecurrence: this.labelRecurrence,
-      startDateRecurrence: this.startDateRecurrence,
+      startDateRecurrence: this.startDate,
       endDateRecurrence: this.endDateRecurrence,
       listeReservations: this.listeReservations,
       listeReservationsWithConflit: listeReservationsWithConflit

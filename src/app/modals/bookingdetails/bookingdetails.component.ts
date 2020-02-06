@@ -4,8 +4,11 @@ import { Inject } from '@angular/core';
 
 import * as moment from 'moment';
 
-import { BOOKING_HOURS, BOOKING_MINUTES } from '../../constantes/constantes'
+import { BOOKING_HOURS, BOOKING_MINUTES, ApiConstants } from '../../constantes/constantes'
 import { ReservationService } from '../../services/reservation.service'
+import { ToastrService } from 'ngx-toastr';
+import { Room } from 'src/app/classes/room';
+import { User } from 'src/app/classes/user';
 
 
 @Component({
@@ -16,9 +19,9 @@ import { ReservationService } from '../../services/reservation.service'
 
 export class BookingdetailsComponent implements OnInit {
 
-  room;
+  room: Room;
 
-  currentUser;
+  currentUser : User;
 
   selectedMiniatures: string[] = []; //affichage des miniatures cf méthode onSelect()
 
@@ -39,10 +42,10 @@ export class BookingdetailsComponent implements OnInit {
   errorDate: string;
   baseMessage: string;
 
-  selectedDateFromPlanning;
-
 
   constructor(
+    private toastr: ToastrService,
+    private cst: ApiConstants,
     private reservationService: ReservationService,
     public bookingDetailsDialogRef: MatDialogRef<BookingdetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -86,7 +89,7 @@ export class BookingdetailsComponent implements OnInit {
     this.selectedDate = event.value;
     console.log(this.selectedDate);
   }
-  
+
   //au clic de la création de la réservation
   onSubmit() {
 
@@ -115,9 +118,7 @@ export class BookingdetailsComponent implements OnInit {
 
       let startDate = moment(this.selectedDate).hour(this.selectedHourStart).minute(this.selectedMinuteStart).second(0).format("YYYY-MM-DD HH:mm:ss");
       let endDate = moment(this.selectedDate).hour(this.selectedHourEnd).minute(this.selectedMinuteEnd).second(0).format("YYYY-MM-DD HH:mm:ss");
-      console.log(
-        "startDate : " + startDate + " . endDate : " + endDate
-      )
+      console.log("startDate : " + startDate + " . endDate : " + endDate);
 
       let reservation = {
         startDate: startDate,
@@ -132,31 +133,34 @@ export class BookingdetailsComponent implements OnInit {
       console.log('La réservation : ' + reservation.object);
       console.log('La réservation : ' + reservation.userId);
       console.log('La réservation : ' + reservation.roomId);
-      //this.createReservation(reservation);
 
       this.createReservation(reservation);
     }
   }
 
   createReservation(reservation) {
+    this.baseMessage = '';
     this.reservationService.createReservation(reservation)
       .subscribe(
-        () => {
+        (res) => {
           this.baseMessage = "Réservation créée";
+          this.toastr.success('Réservation créée', this.cst.toastrTitle, this.cst.toastrOptions);
           //data à renvoyer dans le component parent (planning)
-          let data = { 
+          let data = {
             roomId: this.data.room.roomId,
             selectedDate: this.selectedDate
           }
-          
-          setTimeout( () => this.bookingDetailsDialogRef.close(data), 500 );
+
+          //setTimeout(() => this.bookingDetailsDialogRef.close(data), 500);
         }, (error) => {
           console.log(error);
-          this.baseMessage = error;
-          console.log(this.baseMessage);
+          const message = "Créneau Indisponible"
+          this.toastr.error(message, this.cst.toastrTitle, this.cst.toastrOptions);
         }
-      );
+      )
+      this.bookingDetailsDialogRef.close();
   }
+
 
   errorCheck() {
     //check si le champ objet est vide
@@ -169,10 +173,10 @@ export class BookingdetailsComponent implements OnInit {
     if (this.dateIsWrong(this.selectedDate)) { this.errorDate = "Selectionner une date non passée" }
 
     //check si l'heure de début est entrée
-    if (!this.selectedHourStart || !this.selectedMinuteStart) { this.errorHourStart = "Veuillez entrer une heure" };
+    if (this.selectedHourStart == null || !this.selectedMinuteStart == null) { this.errorHourStart = "Veuillez entrer une heure" };
 
     //check si l'heure de fin est entrée
-    if (!this.selectedHourEnd || !this.selectedMinuteEnd) { this.errorHourEnd = "Veuillez entrer une heure" };
+    if (!this.selectedHourEnd == null || !this.selectedMinuteEnd == null) { this.errorHourEnd = "Veuillez entrer une heure" };
 
     //check si une des heures ne dépasse pas 18h
     if (this.selectedHourStart == 18 && this.selectedMinuteStart == 30) { this.errorHourStart = "L'heure est incorrecte" }

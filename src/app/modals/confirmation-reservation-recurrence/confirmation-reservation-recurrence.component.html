@@ -5,12 +5,22 @@
         <h3>Confirmation de réservation</h3>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="!someConflict">
+        <div class="col">
+            <p>Souhaitez-vous vraiment réserver ces dates ?</p>
+            <div class="p-2" *ngFor="let reservation of listeReservations">
+                • {{reservation.startDate | date: 'dd MMM'}} de {{reservation.startDate | date: 'HH:mm' : 'GMT+0'}} à
+                {{reservation.endDate | date: 'HH:mm' : 'GMT+0'}} en salle {{reservation.roomName}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="someConflict">
         <div class="col">
             <p>Ces dates sont conflictuelles, elles seront ignorées si vous souhaitez quand même réserver :</p>
-            <div class="p-2"
-            *ngFor="let reservation of listeReservationsWithConflit">
-                • {{reservation.startDate | date: 'dd MMM'}} de {{reservation.startDate | date: 'HH:mm' : 'GMT+0'}} à
+            <div class="p-2" *ngFor="let reservation of listeReservationsWithConflit">
+                • {{reservation.startDate | date: 'dd MMM'}} de {{reservation.startDate | date: 'HH:mm' : 'GMT+0'}}
+                à
                 {{reservation.endDate | date: 'HH:mm' : 'GMT+0'}} en salle {{reservation.roomName}}
                 <span class="ml-3">Raison : </span>
                 <span *ngIf="reservation.conflit == true">Créneau indisponible</span>
@@ -18,8 +28,10 @@
             </div>
         </div>
     </div>
+
     <div class="row justify-content-around mt-3">
         <button matButton mat-raised-button (click)="closeModal()">Retourner à la page de régulation</button>
-        <button matButton mat-raised-button (click)="onSubmit()">Réserver quand même</button>
+        <button matButton mat-raised-button (click)="onSubmit()">Réserver<span *ngIf="someConflict"> quand
+                même</span></button>
     </div>
 </div>

@@ -82,6 +82,10 @@ export class ReservationService {
 
   }
 
+  modifyReservation(reservation): Observable<any>{
+    return this.httpClient.put(this.cst.apiUrl + 'reservation/modifyReservation', reservation)
+  }
+
   getReservationsOfThisWeek(room_id: number, startDate, endDate) {
 
     let roomId: string = room_id.toString();

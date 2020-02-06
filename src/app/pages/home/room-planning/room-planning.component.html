@@ -1,11 +1,6 @@
-<div class="container">
+<div class="container pt-4">
 
     <div class="row align-items-center">
-        <!--
-        <div class="col-auto p-0">
-            <button mat-raised-button (click)="goBack()">Retour</button>
-        </div>
-        -->
         <div class="col-auto text-center" *ngIf="rooms">
             <mat-form-field>
                 <mat-select [(value)]="selectedRoom" (selectionChange)="onSelectRoom()">

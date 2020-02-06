@@ -61,7 +61,7 @@ export class RecurrenceComponent implements OnInit {
   errorCheckRecurrence() {
     //check si la date est selectionnée
     if (!this.selectedEndDateRecurrence || this.selectedEndDateRecurrence == null) {
-      this.errorEndDateRecurrence = "Veuillez renseigner une date";
+      this.errorEndDateRecurrence = "Veuillez renseigner une date de fin de récurrence";
     }
     //check si la date selectionnée n'est pas passée
     else if (this.endDateIsWrong(this.startDate, this.selectedEndDateRecurrence)) {

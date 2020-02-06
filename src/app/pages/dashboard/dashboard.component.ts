@@ -41,23 +41,6 @@ export class DashboardComponent implements OnInit {
     this.updateReservations();
   }
 
-  
-
-  /*
-  onKey(event) {
-    this.reservationsFilteredByObject = [];
-    const resaObjet = event.target.value;
-    console.log(resaObjet);
-
-    this.reservationsFilteredByObject = this.reservations.filter(
-      resa => {
-        if(resa.object == null) resa.object = "";
-        resa.object.includes(resaObjet) == true;
-      }
-    );
-    console.log(this.reservationsFilteredByObject);
-  }*/
-
   getRooms() {
     this.roomService.getRooms().subscribe(res => {
       this.rooms = res['result'];
@@ -107,8 +90,6 @@ export class DashboardComponent implements OnInit {
     const dialogData = new EditBookingModel(booking);
 
     const dialogRef = this.dialog.open(EditBookingComponent, {
-      width: '60vw',
-      height: '80vh',
       data: dialogData
     });
     dialogRef.afterClosed().subscribe(

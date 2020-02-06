@@ -1,45 +1,52 @@
-<div>
-    <h2> Mes Réservations </h2>
-</div>
-<div class="container-fluid">
-    <table class="table">
-        <thead id="title">
-            <tr>
-                <th>Date</th>
-                <th>Début</th>
-                <th>Fin</th>
-                <th>Salle</th>
-                <th>Objet</th>
-                <th>Périodique</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody *ngFor="let resa of reservations; index as i" class=" table-striped">
-            <tr [ngClass]="{'bg-grey' : i%2 == 1}">
-                <th id="date">{{resa.startDate | date: 'dd MMMM'}}</th>
-                <th id="debut">{{resa.startDate | date: 'HH:mm' : 'GMT+0'}}</th>
-                <th id="fin">{{resa.endDate | date: 'HH:mm' : 'GMT+0'}}</th>
-                <th id="salle">{{resa.room.name}}</th>
-                <th id="objet">{{resa.object}}</th>
-                <th id="period">
-                    <p *ngIf="resa.recurence_id != null">Oui</p>
-                    <p *ngIf="resa.recurence_id == null">Non</p>
-                </th>
-                <th>
-                    <div class="row ">
-                        <div>
-                            <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
-                                edit
-                            </i>
-                        </div> 
-                        <div>
-                            <i class="material-icons deleteBtn" focusable="false" (click)="deleteBooking(resa.reservationId)">
-                                clear
-                            </i>
+<div class="container-fluid p-5">
+
+    <div class="row mb-5">
+        <div class="col-auto">
+            <h2 class="title"> Mes Réservations </h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table">
+            <thead id="title">
+                <tr>
+                    <th>Date</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Salle</th>
+                    <th>Objet</th>
+                    <th>Périodique</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let resa of reservations; index as i" class=" table-striped">
+                <tr [ngClass]="{'bg-grey' : i%2 == 1}">
+                    <th id="date">{{resa.startDate | date: 'dd MMMM'}}</th>
+                    <th id="debut">{{resa.startDate | date: 'HH:mm'}}</th>
+                    <th id="fin">{{resa.endDate | date: 'HH:mm'}}</th>
+                    <th id="salle">{{resa.room.name}}</th>
+                    <th id="objet">{{resa.object}}</th>
+                    <th id="period">
+                        <p *ngIf="resa.recurrence_id != null">Oui</p>
+                        <p *ngIf="resa.recurrence_id == null">Non</p>
+                    </th>
+                    <th>
+                        <div class="row ">
+                            <div>
+                                <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
+                                    edit
+                                </i>
+                            </div>
+                            <div>
+                                <i class="material-icons deleteBtn" focusable="false"
+                                    (click)="deleteBooking(resa.reservationId)">
+                                    clear
+                                </i>
+                            </div>
                         </div>
-                    </div>
-                </th>
-            </tr>
-        </tbody>
-    </table>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

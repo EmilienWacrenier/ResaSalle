@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { ReservationService } from '../../services/reservation.service'
 import { ToastrService } from 'ngx-toastr';
 import { ApiConstants } from 'src/app/constantes/constantes';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -26,7 +27,9 @@ export class ConfirmationReservationComponent implements OnInit {
 
   userId: number;
 
-  constructor(public dialogRef: MatDialogRef<ConfirmationReservationComponent>,
+  constructor(
+    public router : Router,
+    public dialogRef: MatDialogRef<ConfirmationReservationComponent>,
     private toastr: ToastrService,
     private cst: ApiConstants,
     private reservationService: ReservationService,
@@ -59,6 +62,7 @@ export class ConfirmationReservationComponent implements OnInit {
       (response) => {
         this.toastr.success(`Réservation validé !`, this.cst.toastrTitle, this.cst.toastrOptions);
         this.dialogRef.close();
+        this.router.navigate(['/dashboard'])
       },
       (error) => {
         this.toastr.error(error.error['result'], this.cst.toastrTitle, this.cst.toastrOptions);
