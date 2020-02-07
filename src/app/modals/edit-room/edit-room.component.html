@@ -1,81 +1,57 @@
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="onNoClick()">&times;</button>
 <div class="modal-dialog modal-confirm">
-    <div class="modal-content">
-        <div class="modal-header">
-            <div class="icon-box">
-                <i class="material-icons deleteIcon" focusable="false">
-                    edit
-                </i>
-            </div>
-            <h4 class="modal-title">
-                Modifier une Salle
-            </h4>
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="icon-box">
+        <i class="material-icons deleteIcon" focusable="false">
+          edit
+        </i>
+      </div>
+      <h4 class="modal-title">
+        Modifier une Salle
+      </h4>
 
-        </div>
-        <div class="modal-body">
-            <form class="example-form" [formGroup]="updateRoomForm">
-                <div class="row">
-                       <mat-form-field class="col-8" appearance="outline">
-                        <mat-label> Nom </mat-label>
-                        <input type="text" placeholder="Nom" aria-label="roomName" matInput formControlName="roomName"
-                            [matAutocomplete]="auto" required>
-                        <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let name of names" [value]="name">
-                                {{name}}
-                            </mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field>
-
-                    <mat-form-field class=" col-4 f-right">
-                        <mat-label>Zone</mat-label>
-                        <mat-select matInput formControlName="roomArea" placeholder="Zone" required>
-                            <mat-option *ngFor="let area of areas" [value]="area">
-                                {{area}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-
-<!--  CHANTIER NOUVELLE MODALE
-                    <div class="form-group col-8">
-                        <label class="d-inline-block" for="roomName">Nom</label>
-                        <input type="text" class="form-control d-inline-block" id="roomName" placeholder="Nom"
-                            formControlName="roomName" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let name of names" [value]="name">
-                                {{name}}
-                            </mat-option>
-                        </mat-autocomplete>
-                    </div>
-
-                    <div class="form-group col-4 f-right">
-                        <label for="roomArea">Zone</label>
-                        <select id="roomArea" class="form-control" formControlName="roomArea" placeholder="Zone" required>
-                            <option *ngFor="let name of names" [value]="name" value="">
-                                {{name}}
-                            </option>
-                        </select>
-                    </div>
--->
-
-            </form>
-            <table class="example-full-width" cellspacing="0">
-                <tr>
-                    <td><span class="btn btn-capacity" (click)="decrementCapacity()">-</span></td>
-                    <td>
-                        <input matInput maxlength=2 numbersOnly class="form-control" (keyup)="checkRoomCapacityValue()"
-                            [(ngModel)]="updatedRoomCapacity" />
-                    </td>
-                    <td><span class="btn btn-capacity" (click)="incrementCapacity()">+</span></td>
-                </tr>
-            </table>
-
-<!-- new gen -->
-
-        </div>
-        <div class="modal-footer" mat-dialog-actions>
-            <button type="button" class="btn btn-info" (click)="onNoClick()">Annuler</button>
-            <button type="button" class="btn btn-primary" (click)="editRoom()" cdkFocusInitial>Modifier</button>
-        </div>
     </div>
+    <div class="modal-body">
+      <form class="example-form" [formGroup]="updateRoomForm">
+        <div class="row">
+          <h6 class="ml-3">Nom</h6>
+          <mat-form-field class="col-12" appearance="outline">
+            <input type="text" placeholder="Nom" aria-label="roomName" matInput formControlName="roomName"
+                   [matAutocomplete]="auto" required>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let name of names" [value]="name">
+                {{name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <h6 class="ml-3">Zone</h6>
+          <mat-form-field class="col-12" appearance="outline">
+            <mat-select matInput formControlName="roomArea" placeholder="Zone" required>
+              <mat-option *ngFor="let area of areas" [value]="area">
+                {{area}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
+
+      <div class="row">
+        <h6 class="ml-3">Capacité</h6>
+        <div class="col-12 form-inline">
+          <button class="btn btn-primary col-2" (click)="decrementCapacity()">-</button>
+          <input maxlength=2 numbersOnly [value]="updatedRoomCapacity" class="form-control text-center col-8"
+                 (keyup)="checkRoomCapacityValue()" [(ngModel)]="updatedRoomCapacity"/>
+          <button class="btn btn-primary col-2" (click)="incrementCapacity()">+</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer" mat-dialog-actions>
+      <button type="button" class="btn btn-info" (click)="onNoClick()">Annuler</button>
+      <button type="button" class="btn btn-primary" (click)="editRoom()" cdkFocusInitial>Modifier</button>
+    </div>
+  </div>
 </div>

@@ -29,13 +29,11 @@ export class HoursFeedbackStepComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.data);
     this.setParamsOnInit(this.data.day, this.data.hour);
   }
 
   setParamsOnInit(day, hour) {
-    this.selectedDate = new Date(moment().isoWeekday(day + 1).format());
-    console.log(this.selectedDate);
+    this.selectedDate = new Date(moment(this.data.selectedDate).isoWeekday(day + 1).format());
 
     if (hour % 2 == 0) {
       this.selectedHourStart = this.bookingHours[hour / 2];
@@ -60,15 +58,12 @@ export class HoursFeedbackStepComponent implements OnInit {
       .set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
       .format("YYYY-MM-DD HH:mm:ss");
 
-      this.data.reservation.startDate = this.startDateWithHours;
-      this.data.reservation.endDate = this.endDateWithHours;
-      this.data.reservation.roomId = this.data.roomId.toString();
-
-    let reservation = this.data.reservation;
-
+    const reservation = {
+      roomId : this.data.roomId.toString(),
+      startDate : this.startDateWithHours,
+      endDate : this.endDateWithHours
+    }
     console.log(reservation);
-
-    this.baseMessage = "Horaires validés";
     
     setTimeout( () => this.hoursFeedbackStepDialogRef.close(reservation), 500 );
   }

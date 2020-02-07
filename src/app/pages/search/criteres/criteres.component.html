@@ -140,10 +140,10 @@
         <p class="m-0">
             <mat-icon class="mr-2 blue-color">info</mat-icon>
             <span *ngIf="selectedObjet">
-                {{selectedObjet}}
+                {{selectedObjet}} : 
             </span>
             <span *ngIf="selectedDate">
-                {{selectedDateDisplay}}
+                le {{selectedDateDisplay}}
             </span>
             <span *ngIf="timeStart != null">
                 de {{ timeStart.hour }}h{{ (timeStart.minute == 0) ? '00' : '30' }}

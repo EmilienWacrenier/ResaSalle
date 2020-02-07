@@ -1,40 +1,46 @@
 .deleteBtn{
     color: red;
     cursor: pointer;
-    margin-right: 5px;
 }
 
 .editBtn{
     color: royalblue;
     cursor: pointer;
-    margin-right: 5px;
+     margin-right: 15px; 
 }
-
-.tableHeader{
-    background-color: #1c4797;
-}
-
-mat-header-cell{
+ 
+#title{
+    background-color: rgb(0,102,161) !important;
     color: white;
-    font-size: 15px;
-    text-align: center !important;
-    justify-content: center;
+    font-weight: 750; 
 }
 
-mat-cell {
-    justify-content: center;
+.title{
+    color: black;
+    font-size: 2.5em;
+  }
+
+#date{
+    font-weight:710;
 }
 
-mat-table{
+#debut, #fin{
+    color: rgb(0,102,161);
+}
+#salle{
+    color: rgb(128,179,208);
+}
+
+table {
     width: 100%;
+    text-align: center;
 }
 
-.dateTableCell{
-    font-weight: bold;
-    color: #1c4797;
+#objet{
+    font-weight:400;
 }
 
-.roomTableCell{
-    font-weight: bold;
-    color:#739ae0;
+.bg-grey{
+    background-color: rgba(231, 231, 231, 0.7);
 }
+

@@ -1,3 +1,20 @@
+.bg-conflit{
+    background-color: rgba(161, 0, 21, 0.2);
+    color:white;
+}
+
+.bouton-back-next{
+    margin-right: 10px ;
+    float: right;
+    color: rgb(115, 154, 224);
+    border: 1px solid rgb(115, 154, 224);
+}
+
+.bouton-back-next:disabled{
+  color: rgba(155, 152, 152, 0.585);
+  border: 1px solid rgba(155, 152, 152, 0.585);
+}
+
 thead{
     background-color: #1c4797;
     color: #fff;

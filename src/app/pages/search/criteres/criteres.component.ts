@@ -91,6 +91,24 @@ export class CriteresComponent implements OnInit {
     this.today = new Date();
     this.onSelectDate(new Date());
     this.checkInput();
+
+    console.log(moment().hour());
+    console.log(moment().minute());
+
+    if(moment().hour() == 17 && moment().minute() <= 30){
+      //this.selectedHourStart = 17;
+      //this.selectedMinuteStart = 30;
+      //this.selectedHourEnd = 18 ;
+      this.timeStart = {hour: 17, minute: 30};
+      this.timeEnd = {hour:18, minute:0}
+      
+    }
+    if(moment().hour() >= 17 && moment().minute() > 30){
+      this.selectedHourStart = 8;
+      this.selectedHourEnd = this.selectedHourStart + 1;
+      this.timeStart = {hour: 8, minute: 0};
+      this.timeEnd = {hour: 9, minute:0};
+    }
   }
 
 
@@ -125,13 +143,7 @@ export class CriteresComponent implements OnInit {
       || this.dateIsWrong(this.selectedDate)
       || this.hoursAreWrong()) {
       this.errorCheck();
-      console.log(this.selectedDate);
-      console.log(this.selectedHourStart);
-      console.log(this.selectedMinuteStart);
-      console.log(this.selectedHourEnd);
-      console.log(this.selectedMinuteEnd);
       this.datasAreGood = false;
-      console.log(this.datasAreGood);
     }
     else {
       this.datasAreGood = true;
@@ -194,8 +206,8 @@ export class CriteresComponent implements OnInit {
 
     let momentTimeStart = this.timeStart.hour * 60 + this.timeStart.minute;
     let momentTimeEnd = this.timeEnd.hour * 60 + this.timeEnd.minute;
-    let startingHour = this.selectedHourStart * 60 + this.selectedMinuteStart;
-    let endingHour = this.selectedHourEnd * 60 + this.selectedMinuteEnd;
+    //let startingHour = this.selectedHourStart * 60 + this.selectedMinuteStart;
+    //let endingHour = this.selectedHourEnd * 60 + this.selectedMinuteEnd;
     if (momentTimeStart >= momentTimeEnd) { return true; }
     //if (startingHour >= endingHour) { return true; }
     else return false;
@@ -204,11 +216,13 @@ export class CriteresComponent implements OnInit {
   //formate les dates pour le back
   formatDates() {
     this.startDateWithHours = moment(this.selectedDate)
-      .set({ hour: this.selectedHourStart, minute: this.selectedMinuteStart, second: 0, millisecond: 0 })
+      //.set({ hour: this.selectedHourStart, minute: this.selectedMinuteStart, second: 0, millisecond: 0 })
+      .set({hour: this.timeStart.hour, minute: this.timeStart.minute, second: 0, millisecond: 0})
       .format('YYYY-MM-DD HH:mm:ss');
 
     this.endDateWithHours = moment(this.selectedDate)
-      .set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
+      //.set({ hour: this.selectedHourEnd, minute: this.selectedMinuteEnd, second: 0, millisecond: 0 })
+      .set({hour: this.timeEnd.hour, minute: this.timeEnd.minute, second: 0, millisecond:0})
       .format('YYYY-MM-DD HH:mm:ss');
 
     this.searchDataService.getfullStartDate(this.startDateWithHours);
@@ -219,12 +233,10 @@ export class CriteresComponent implements OnInit {
 
   changeRecurrence() {
     this.recurrenceIsChecked = !this.recurrenceIsChecked;
-    console.log(this.recurrenceIsChecked);
     this.recurrenceChangeEvent.emit(this.recurrenceIsChecked);
   }
 
   clickWithoutRecurrence() {
-    console.log("Should load available rooms");
     this.loadAvailablesRoomsEvent.emit();
   }
 

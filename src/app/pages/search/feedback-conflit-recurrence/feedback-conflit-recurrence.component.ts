@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
-import { Booking } from 'src/app/classes/booking';
-import { RoomService } from 'src/app/services/room.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { ReservationService } from 'src/app/services/reservation.service';
 import { SearchDataServiceService } from 'src/app/services/search-data-service.service';
+import { ConfirmationReservationRecurrenceComponent } from 'src/app/modals/confirmation-reservation-recurrence/confirmation-reservation-recurrence.component';
+import { User } from 'src/app/classes/user';
+import * as moment from 'moment';
+import { Room } from 'src/app/classes/room';
 
 @Component({
   selector: 'app-feedback-conflit-recurrence',
@@ -12,113 +14,125 @@ import { SearchDataServiceService } from 'src/app/services/search-data-service.s
 })
 export class FeedbackConflitRecurrenceComponent implements OnInit {
 
-  //reservation a afficher dans planning
-  reservation: any
-  indexReservation: number;
-
+  @Input() user: User;
   //reponse avec la liste des reservations de la recurrence avec et sans conflit
-  reservationsToCheck: any;
+  reservationsToCheck = [];
+  listeReservations = [];
 
-  planningClicked: boolean = false;
+  modifiedReservationsList = [];
 
+  object: string;
   labelRecurrence: string;
   startDateRecurrence: string;
   endDateRecurrence: string;
+  room: Room;
+  startDate: string;
+  endDate: string;
+  conflictCount: number = 0;
+
+  planningLoadTrue: boolean = false;
 
   constructor(
     private reservationService: ReservationService,
-    private searchDataService: SearchDataServiceService) { }
+    private searchDataService: SearchDataServiceService,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar) {
+    this.searchDataService.fullStartDate$.subscribe(res => this.startDate = res);
+    this.searchDataService.fullEndDate$.subscribe(res => this.endDate = res);
+    this.searchDataService.room$.subscribe(res => this.room = res);
+
+    this.searchDataService.object$.subscribe(res => this.object = res);
+
+    this.searchDataService.recurrenceName$.subscribe(res => this.labelRecurrence = res);
+    this.searchDataService.endDateRecurrence$.subscribe(res => this.endDateRecurrence = res);
+  }
 
   ngOnInit() {
+    console.log(this.room);
     this.searchDataService.listeReservationCheckRecurrence$.subscribe(
       (res) => {
         this.reservationsToCheck = res['result'];
-        console.log(this.reservationsToCheck);
+        if (this.reservationsToCheck) {
+          console.log(this.reservationsToCheck);
+          this.conflictCount = this.countResaConflict(this.reservationsToCheck);
+        }
       }, (error) => {
-        console.log(error);
       }
     )
   }
 
-  //STEP FINAL
-  deleteBooking(booking) {
-    console.log(booking);
+  showPlanning(): void{
+    this.planningLoadTrue = true;
   }
 
-  //fonction quand on clique sur une resa avec un conflit
-  displayPlanning(reservation: any, indexReservation : number){
-    this.planningClicked = true;
-    this.reservation = reservation;
-    this.indexReservation = indexReservation;
-}
-
-  closePlanning(){
-    this.planningClicked = false;
+  deleteDate(index: number) {
+    this.reservationsToCheck.splice(index, 1);
   }
-  
-  updateReservation(event){
-    let index = event.indexReservation;
+
+  updateReservation(event) {
+    const index = event.indexReservation;
     let newReservation = event.reservation;
 
-    console.log(index + newReservation);
+    const newReservationIsConflict: boolean = this.checkReservations(newReservation, this.reservationsToCheck);
+    console.log(newReservationIsConflict);
 
-    this.reservationsToCheck[index] = newReservation;
-
-    console.log(this.reservationsToCheck);
-    this.planningClicked = false;
-    
-    this.reservationService.getCheckReservation(newReservation.roomId, newReservation.startDate, newReservation.endDate)
-    .subscribe( res => 
-      {
-        let reservationIsGood = res['result'];
-        if (reservationIsGood){
-          newReservation.conflit = false;
-        }
-        else newReservation.conflit = true;
-      }
-    )
+    if (newReservationIsConflict == true) {
+      this.snackBar.open('Cette date est déjà présente dans la liste', '', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
+      console.log("UR newResa ne doit pas etre ajoutée");
+    }
+    else {
+      this.reservationService.getCheckReservation(newReservation.roomId, newReservation.startDate, newReservation.endDate)
+        .subscribe(res => {
+          this.reservationsToCheck[index] = res['result'];
+        });
+    }
+    this.conflictCount = this.countResaConflict(this.reservationsToCheck);
   }
 
-  createReservationRecurrence(){
-    this.searchDataService.recurrenceName$.subscribe( res => this.labelRecurrence = res );
-    this.searchDataService.fullStartDate$.subscribe( res => this.startDateRecurrence = res );
-    this.searchDataService.endDateRecurrence$.subscribe( res => this.endDateRecurrence = res );
+  countResaConflict(reservationList: Array<any>): number {
+    let count = reservationList.filter(reservation => reservation.conflit == true || reservation.workingDay == false).length;
+    return count;
+  }
 
-    const listeReservations = this.reservationsToCheck.filter( resa => resa.conflit == false && resa.isWorkingDay == true );
-    console.log(listeReservations);
+  checkReservations(newReservation: any, reservationList: Array<any>) {
 
-    const listeReservationsWithConflit = this.reservationsToCheck.filter( resa => resa.conflit == true );
-
-    let confirmText = "Attention plusieurs créneaux ne sont pas disponibles et vont être ignorés. \r";
-
-    if(listeReservationsWithConflit || listeReservationsWithConflit != null || listeReservationsWithConflit != undefined){
-
-      for(const i in listeReservationsWithConflit){
-        confirmText += "• Début : " + listeReservationsWithConflit[i].startDate + ", Fin : " + listeReservationsWithConflit[i].endDate + ", Salle : " + listeReservationsWithConflit[i].roomId + "\r";
+    for (const reservation of reservationList) {
+      console.log(newReservation);
+      console.log(reservation);
+      if (
+        reservation.roomId == newReservation.roomId &&
+        moment(newReservation.startDate).isAfter(reservation.startDate) && moment(newReservation.endDate).isSameOrBefore(reservation.endDate)
+        || moment(newReservation.startDate).isSameOrAfter(reservation.startDate) && moment(newReservation.startDate).isBefore(reservation.endDate)
+        || moment(newReservation.startDate).isSameOrBefore(reservation.startDate) && moment(newReservation.endDate).isSameOrAfter(reservation.endDate)
+      ) {
+        return true;
       }
-
-      confirmText += "Si vous êtes d'accord, cliquez sur OK, sinon sur Annuler";
-
-
-
-      const res = window.confirm(confirmText)
-      if(res){
-        console.log("creation resa");
+      else {
+        return false;
       }
     }
-    
-    const createReservationParameters = {
-      labelRecurrence : this.labelRecurrence,
-      startDateRecurrence : this.startDateRecurrence,
-      endDateRecurrence : this.endDateRecurrence,
-      listeReservation : listeReservations
+  }
+
+  openReservationSimpleConfirmationModal() {
+    this.listeReservations = this.reservationsToCheck.filter(resa => resa.conflit == false && resa.workingDay == true);
+
+    for (const reservation of this.listeReservations) {
+      Object.assign(reservation, { object: this.object });
+      Object.assign(reservation, { user_id: this.user.userId });
+      Object.assign(reservation, { state: "1" });
     }
 
+    const listeReservationsWithConflit = this.reservationsToCheck.filter(resa => resa.conflit == true || resa.workingDay == false);
 
-
-    //createResa
-
-
+    const confirmationReservationRecurrenceDialogConfig = new MatDialogConfig();
+    confirmationReservationRecurrenceDialogConfig.data = {
+      labelRecurrence: this.labelRecurrence,
+      startDateRecurrence: this.startDate,
+      endDateRecurrence: this.endDateRecurrence,
+      listeReservations: this.listeReservations,
+      listeReservationsWithConflit: listeReservationsWithConflit
+    };
+    this.dialog.open(ConfirmationReservationRecurrenceComponent, confirmationReservationRecurrenceDialogConfig);
   }
 
 }

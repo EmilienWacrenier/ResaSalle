@@ -52,27 +52,21 @@ export class RecurrenceComponent implements OnInit {
     this.errorEndDateRecurrence = null;
     this.errorLabelRecurrence = null;
 
-    console.log(this.selectedRecurrenceName);
-
     if (!this.selectedEndDateRecurrence
       || !this.selectedRecurrenceName
       || this.endDateIsWrong(this.startDate, this.selectedEndDateRecurrence)) {
       this.errorCheckRecurrence();
-      console.log(this.selectedEndDateRecurrence);
-      console.log(this.selectedRecurrenceName);
       this.datasRecurrenceAreGood = false;
-      console.log(this.datasRecurrenceAreGood);
     }
     else {
       this.datasRecurrenceAreGood = true;
-      console.log(this.datasRecurrenceAreGood);
     }
   }
 
   errorCheckRecurrence() {
     //check si la date est selectionnée
     if (!this.selectedEndDateRecurrence || this.selectedEndDateRecurrence == null) {
-      this.errorEndDateRecurrence = "Veuillez renseigner une date";
+      this.errorEndDateRecurrence = "Veuillez renseigner une date de fin de récurrence";
     }
     //check si la date selectionnée n'est pas passée
     else if (this.endDateIsWrong(this.startDate, this.selectedEndDateRecurrence)) {
@@ -85,9 +79,6 @@ export class RecurrenceComponent implements OnInit {
   }
 
   endDateIsWrong(startDate, endDate) {
-    console.log(startDate.getTime());
-    console.log(endDate.getTime());
-
     if (endDate.getTime() < startDate.getTime()) { return true; }
     else return false;
   }

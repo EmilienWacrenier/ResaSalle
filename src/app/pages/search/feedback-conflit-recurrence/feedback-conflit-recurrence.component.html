@@ -1,13 +1,86 @@
 <div class="container-fluid">
     <ng-template matStepLabel>Résultats</ng-template>
 
-    <div class="row">
-        <button class="bouton-back-next" mat-button
-            (click)="createReservationRecurrence()">Réserver ces dates</button>
+    <div class="row mt-2 border rounded bg-white">
+        <div class="col p-3 text-center">
+            Vous souhaitez réserver {{labelRecurrence}}ment du {{startDate | date: 'dd MMMM yyyy'}} au
+            {{endDateRecurrence | date: 'dd MMMM yyyy'}} de {{startDate | date: 'HH:mm'}} à {{endDate | date: 'HH:mm'}}
+            en salle {{room.name}}. <br>
+            <span *ngIf="conflictCount > 0">Il y a {{conflictCount}} conflits, cliquer sur les réservations en rouge
+                pour les modifier.</span>
+        </div>
     </div>
 
+    <div class="row my-2 justify-content-center">
+        <mat-accordion class="w-100">
+            <mat-expansion-panel *ngFor="let resa of reservationsToCheck; let i = index" (click)="showPlanning()">
+                <mat-expansion-panel-header [ngClass]="resa.conflit || !resa.workingDay ? 'bg-conflit':''">
+                    <mat-panel-title>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12 col-md-3 hoverable">
+                                    {{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
+                                </div>
 
-    <div class="row">
+                                <div class="col-4 col-md-3 hoverable">
+                                    {{resa.startDate | date: 'HH:mm'}}
+                                </div>
+
+                                <div class="col-4 col-md-3 hoverable">
+                                    {{resa.endDate | date: 'HH:mm'}}
+                                </div>
+
+                                <div class="col-4 col-md-3 hoverable">
+                                    {{resa.roomName}}
+                                </div>
+                            </div>
+                        </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <button class="bouton-back-next mt-4 ml-5" mat-button (click)="deleteDate(i)">Supprimer cette date</button>
+
+                <app-room-planning 
+                    *ngIf="planningLoadTrue" 
+                    [reservationSearchFeedback]="resa" 
+                    [indexReservation]="i"
+                    (reservationToChange)="updateReservation($event)">
+                </app-room-planning>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
+    <div class="row mt-2">
+        <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
+        <button class="bouton-back-next" mat-button (click)="openReservationSimpleConfirmationModal()">Réserver ces
+            dates</button>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+
         <div class="container-fluid">
 
             <div class="table-responsive-md">
@@ -23,12 +96,15 @@
                     </thead>
                     <tbody class="bg-white">
                         <tr *ngFor="let resa of reservationsToCheck; let i = index"
-                            [ngClass]="resa.conflit ? 'bg-danger':''">
-                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
+                            [ngClass]="resa.conflit || !resa.workingDay ? 'bg-danger':''">
+                            <td class="hoverable" (click)="displayPlanning(resa, i)">
+                                {{resa.startDate | date: 'EEEE dd MMM' | titlecase}}
                             </td>
-                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.startDate | date: 'HH:mm'}}</td>
-                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.endDate | date: 'HH:mm'}}</td>
-                            <td>{{resa.roomId}}</td>
+                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.startDate | date: 'HH:mm'}}
+                            </td>
+                            <td class="hoverable" (click)="displayPlanning(resa, i)">{{resa.endDate | date: 'HH:mm'}}
+                            </td>
+                            <td>{{resa.roomName}}</td>
                             <td>
                                 <i class="material-icons editBtn" focusable="false" (click)="editBooking(resa)">
                                     edit
@@ -44,19 +120,4 @@
             </div>
         </div>
     </div>
-
-
-    <!-- Calendrier -->
-    <div class="row" *ngIf="planningClicked">
-        <div class="container">
-            <div class="row" (click)="closePlanning()">X</div>
-            <div class="row">
-                <app-room-planning 
-                    [reservationSearchFeedback]="reservation" 
-                    [indexReservation]="indexReservation"
-                    (reservationToChange)="updateReservation($event)"></app-room-planning>
-            </div>
-        </div>
-    </div>
-
-</div>
+    -->

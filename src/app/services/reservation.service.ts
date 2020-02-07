@@ -29,7 +29,7 @@ export class ReservationService {
 
   createReservationRecurrence(reservation): Observable<string> {
     return this.httpClient
-      .post<string>(this.cst.apiUrl + 'reservation/createReservation', reservation)
+      .post<string>(this.cst.apiUrl + 'reservation/createRecurrence', reservation)
       .pipe(
         catchError(this.handleError)
       );
@@ -80,6 +80,10 @@ export class ReservationService {
       );*/
     return this.httpClient.delete(this.cst.apiUrl + 'reservation/deleteReservation', { params: param });
 
+  }
+
+  modifyReservation(reservation): Observable<any>{
+    return this.httpClient.put(this.cst.apiUrl + 'reservation/modifyReservation', reservation)
   }
 
   getReservationsOfThisWeek(room_id: number, startDate, endDate) {

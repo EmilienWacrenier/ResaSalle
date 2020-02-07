@@ -42,6 +42,8 @@ import { HoursFeedbackStepComponent } from './modals/hours-feedback-step/hours-f
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { CdkStepper } from '@angular/cdk/stepper';
+import { ConfirmationReservationRecurrenceComponent } from './modals/confirmation-reservation-recurrence/confirmation-reservation-recurrence.component';
+import { LogoutConfirmationComponent } from './modals/logout-confirmation/logout-confirmation.component';
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeFr, 'fr');
@@ -75,7 +77,9 @@ export function tokenGetter() {
     RecurrenceComponent,
     ConfirmationReservationComponent,
     RecurrenceStepSallesComponent,
-    HoursFeedbackStepComponent
+    HoursFeedbackStepComponent,
+    ConfirmationReservationRecurrenceComponent,
+    LogoutConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +112,9 @@ export function tokenGetter() {
     EditBookingComponent,
     BookingsearchComponent,
     ConfirmationReservationComponent,
-    HoursFeedbackStepComponent
+    HoursFeedbackStepComponent,
+    ConfirmationReservationRecurrenceComponent,
+    LogoutConfirmationComponent
   ]
 })
 export class AppModule { }
