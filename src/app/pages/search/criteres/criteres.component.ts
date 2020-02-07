@@ -1,4 +1,5 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import * as moment from 'moment';
 
 import {
@@ -8,8 +9,11 @@ import {
   BOOKING_MINUTES
 } from "../../../constantes/constantes";
 
+import { WEEK_DAYS_FILTER } from '../../../constantes/weekDaysFilter';
 import { EventEmitter } from '@angular/core';
 import { SearchDataServiceService } from 'src/app/services/search-data-service.service';
+import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { timestamp } from 'rxjs/operators';
 
 @Component({
   selector: 'app-criteres',
@@ -17,6 +21,17 @@ import { SearchDataServiceService } from 'src/app/services/search-data-service.s
   styleUrls: ['./criteres.component.scss']
 })
 export class CriteresComponent implements OnInit {
+
+  // Date du jour, utilisée pour limiter la période réservable
+  today: Date;
+
+  // Définition du nombre h/min incrémenté sur le timepicker
+  hourStep: number = 1;
+  minuteStep: number = 30;
+
+  //
+  timeStart = { hour: new Date().getHours() + 1, minute: 0 };
+  timeEnd = { hour: new Date().getHours() + 2, minute: 0 };
 
   //heures et minutes dans le select
   bookingHours: number[] = BOOKING_HOURS;
@@ -58,14 +73,22 @@ export class CriteresComponent implements OnInit {
   //variables pour le slide toggle pour activer la récurrence ou non
   recurrenceIsChecked: boolean = false;
 
+  weekDaysFilter = WEEK_DAYS_FILTER;
+
+
+
+  @Input() desktop: boolean;
   @Output() recurrenceChangeEvent = new EventEmitter<boolean>();
   @Output() loadAvailablesRoomsEvent = new EventEmitter();
+
+
 
   constructor(
     private searchDataService: SearchDataServiceService
   ) { }
 
   ngOnInit() {
+    this.today = new Date();
     this.onSelectDate(new Date());
     this.checkInput();
   }
@@ -84,19 +107,21 @@ export class CriteresComponent implements OnInit {
   // + passe dans errorCheck() pour avoir un feedback
   //SI NON => on peut passer à la fonction suivante
   checkInput() {
+    console.log(this.selectedDate);
+    
     this.errorHourStart = null;
     this.errorHourEnd = null;
     this.errorDate = null;
     this.errorObjet = null;
-
     // .replace(/\s/g, "") supprime tous les espaces d'une string
-    if (!this.selectedDate
+    /*if (!this.selectedDate
       || this.selectedObjet == null
       || this.selectedObjet.replace(/\s/g, "") == ""
-      || this.selectedHourStart == null
-      || this.selectedMinuteStart == null
-      || this.selectedHourEnd == null
-      || this.selectedMinuteEnd == null
+      //|| this.selectedHourStart == null
+      //|| this.selectedMinuteStart == null
+      //|| this.selectedHourEnd == null
+      //|| this.selectedMinuteEnd == null
+      || this.timeEnd
       || this.dateIsWrong(this.selectedDate)
       || this.hoursAreWrong()) {
       this.errorCheck();
@@ -111,36 +136,50 @@ export class CriteresComponent implements OnInit {
     else {
       this.datasAreGood = true;
       console.log(this.datasAreGood);
+    }*/
+    if(this.errorCheck()){
+      this.datasAreGood = false;
+    }
+    else{
+      this.datasAreGood = true;
     }
   }
 
   //check quelle valeur n'est pas bonne et donne le feedback necessaire
   errorCheck() {
+    console.log('On verif les dates');
+
     //check si un objet est renseigné
-    if (!this.selectedObjet || this.selectedObjet.replace(/\s/g, "") == "" || this.selectedObjet == null) { this.errorObjet = "Veuillez renseigner un objet" };
+    if (!this.selectedObjet || this.selectedObjet.replace(/\s/g, "") == "" || this.selectedObjet == null) { this.errorObjet = "Veuillez renseigner un objet"; return true; };
 
     //check si la date est selectionnée
-    if (!this.selectedDate) { this.errorDate = "Veuillez renseigner une date" };
+    if (!this.selectedDate) { this.errorDate = "Veuillez renseigner une date"; return true; };
 
     //check si la date selectionnée n'est pas passée
     if (this.dateIsWrong(this.selectedDate)) {
-      this.errorDate = "Selectionner une date non passée"
+      this.errorDate = "Selectionner une date non passée" ; return true;
     }
 
     //check si l'heure de début est entrée
-    if (this.selectedHourStart == null || this.selectedMinuteStart == null) { this.errorHourStart = "Veuillez entrer une heure" };
+    if (this.selectedHourStart == null || this.selectedMinuteStart == null) { this.errorHourStart = "Veuillez entrer une heure"; return true; };
 
     //check si l'heure de fin est entrée
-    if (this.selectedHourEnd == null || this.selectedMinuteEnd == null) { this.errorHourEnd = "Veuillez entrer une heure" };
+    if (this.selectedHourEnd == null || this.selectedMinuteEnd == null) { this.errorHourEnd = "Veuillez entrer une heure"; return true; };
 
     //check si une des heures ne dépasse pas 18h
-    if (this.selectedHourStart == 18 && this.selectedMinuteStart == 30) { this.errorHourStart = "L'heure est incorrecte" }
-    if (this.selectedHourEnd == 18 && this.selectedMinuteEnd == 30) { this.errorHourEnd = "L'heure est incorrecte" }
+    if (this.selectedHourStart == 18 && this.selectedMinuteStart == 30) { this.errorHourStart = "L'heure est incorrecte"; return true; }
+    if (this.selectedHourEnd == 18 && this.selectedMinuteEnd == 30) { this.errorHourEnd = "L'heure est incorrecte"; return true; }
 
+    if (this.timeStart.hour >= 18) { this.errorHourStart = "Les salles ferment à 18h00"; return true; };
+    if ((this.timeEnd.hour >= 18 && this.timeEnd.minute == 30) ||this.timeEnd.hour > 18) { this.errorHourEnd = "Les salles ferment à 18h00"; return true; };
+    if (this.timeStart.hour <= 7) { this.errorHourStart = "Les salles ouvrent à 8h00"; return true; };
+    if (this.timeEnd.hour <= 7) { this.errorHourEnd = "Les salles ouvrent à 8h00"; return true; };
     //check si l'heure de fin n'est pas avant l'heure de début
     if (this.hoursAreWrong()) {
-      this.errorHourEnd = "L'heure de fin doit être après l'heure de début"
+      this.errorHourEnd = "L'heure de fin doit être après l'heure de début"; return true;
     }
+    console.log('Verif terminee');
+
   }
 
   //fonction qui check si la date sélectionnée est hier ou avant
@@ -152,9 +191,13 @@ export class CriteresComponent implements OnInit {
 
   //fonction qui check si l'heure de début est avant l'heure de fin
   hoursAreWrong() {
+
+    let momentTimeStart = this.timeStart.hour * 60 + this.timeStart.minute;
+    let momentTimeEnd = this.timeEnd.hour * 60 + this.timeEnd.minute;
     let startingHour = this.selectedHourStart * 60 + this.selectedMinuteStart;
     let endingHour = this.selectedHourEnd * 60 + this.selectedMinuteEnd;
-    if (startingHour >= endingHour) { return true; }
+    if (momentTimeStart >= momentTimeEnd) { return true; }
+    //if (startingHour >= endingHour) { return true; }
     else return false;
   }
 

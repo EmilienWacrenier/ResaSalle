@@ -1,3 +1,140 @@
+<!-- Template Format Mobile -->
+<ng-template #mobileView>
+    This is mobile
+</ng-template>
+
+<ng-template #selectStartDateOnMobile>
+    <div style="display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;">
+
+        <button mat-raised-button class="mb-3 btn-date" (click)="picker.open()">Choisir une date</button>
+        <mat-form-field style="text-align:center;">
+            <input matInput [disabled]="true" [matDatepicker]="picker" placeholder="Date de début choisie" [min]="today"
+                [matDatepickerFilter]="weekDaysFilter" (dateChange)="onSelectDate($event.value); checkInput()">
+            <!--<mat-datepicker-toggle [disabled]="false" matSuffix [for]="picker"></mat-datepicker-toggle>-->
+            <mat-datepicker touchUi #picker [disabled]="false" [startAt]="today"
+                (selectedChange)="onSelectDate($event); checkInput()"></mat-datepicker>
+        </mat-form-field>
+    </div>
+</ng-template>
+
+<!-- Template format Desktop -->
+<ng-template #desktopView>
+    <div class="col-lg-3 col-md-12 p-3 border rounded bg-white mb-3">
+        <mat-calendar *ngIf="desktop; else selectStartDateOnMobile" [dateFilter]="weekDaysFilter" [minDate]="today"
+            [selected]="selectedDate" (selectedChange)="onSelectDate($event); checkInput()">
+        </mat-calendar>
+
+        <div class="d-block text-danger small" *ngIf="errorDate">{{errorDate}}</div>
+    </div>
+
+    <div class="mb-3 timers-item"
+        [ngClass]="{'col-lg-5 col-md-12' : recurrenceIsChecked, 'col-lg-9 col-md-12 no-recurrence' : !recurrenceIsChecked}">
+
+        <div class="content-item">
+            <mat-form-field class="d-block">
+                <input matInput autocomplete="off" placeholder="Objet" [(ngModel)]="selectedObjet"
+                    (input)="checkInput()" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+            <div class="w-100 text-danger small pl-4" *ngIf="errorObjet">{{errorObjet}}</div>
+
+            <!-- Grid row -->
+            <div class="form-row">
+                <!-- Time Start input -->
+                <div class="form-group col-md-6" [ngClass]="{'timerStart' : desktop}">
+                    <label for="inputStartTime">Début</label>
+                    <ngb-timepicker mdbInput [(ngModel)]="timeStart" [hourStep]="hourStep" [minuteStep]="minuteStep"
+                        [readonlyInputs]="true" id="inputStartTime" (ngModelChange)="checkInput()">
+                    </ngb-timepicker>
+                    <div class="w-100 text-danger small text-center" *ngIf="errorHourStart">{{errorHourStart}}</div>
+                </div>
+                <!-- Time End input -->
+                <div class="form-group col-md-6">
+                    <label for="inputEndTime">Fin</label>
+                    <ngb-timepicker [(ngModel)]="timeEnd" [hourStep]="hourStep" [minuteStep]="minuteStep"
+                        [readonlyInputs]="true" id="inputEndTime" (ngModelChange)="checkInput()">
+                    </ngb-timepicker>
+                    <div class="w-100 text-center text-danger small" *ngIf="errorHourEnd">{{errorHourEnd}}</div>
+                </div>
+                <!-- Extended default form grid -->
+                <!-- <div class="col-6">
+                        
+                        <mat-form-field class="pl-4 pr-2">
+                            <mat-label>Heure</mat-label>
+                            <mat-select [(value)]="selectedHourStart" (openedChange)="checkInput()">
+                                <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart">
+                                    {{hourStart}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="pl-2 pr-4">
+                            <mat-label>Minute</mat-label>
+                            <mat-select [(value)]="selectedMinuteStart" (openedChange)="checkInput()">
+                                <mat-option *ngFor="let minuteStart of bookingMinutes" [value]="minuteStart">
+                                    {{minuteStart}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div class="w-100 text-danger small text-center" *ngIf="errorHourStart">{{errorHourStart}}</div>
+                    
+                        <div class="form-group">
+                            <ngb-timepicker [formControl]="ctrlTimeStart" required [(ngModel)]="timeStart"
+                                [hourStep]="hourStep" [minuteStep]="minuteStep" [readonlyInputs]="true">
+                            </ngb-timepicker>
+                            <div class="small form-text text-danger" *ngIf="!ctrlTimeStart.valid">
+                                <div *ngIf="ctrlTimeStart.errors['required']">Choisir une date de début de réversation
+                                </div>
+                                <div *ngIf="ctrlTimeStart.errors['tooLate']">Les salles ferment à 18h00</div>
+                                <div *ngIf="ctrlTimeStart.errors['tooEarly']">Les salles ouvrent à 8h00</div>
+                                <div *ngIf="ctrlTimeStart.errors['invalidMin']">Les réservations se font par demi-heures
+                                </div>
+                            </div>
+                            <ngb-timepicker [formControl]="ctrlTimeEnd" required [(ngModel)]="timeStart"
+                                [hourStep]="hourStep" [minuteStep]="minuteStep" [readonlyInputs]="true">
+                            </ngb-timepicker>
+                            <div class="small form-text text-danger" *ngIf="!ctrlTimeStart.valid">
+                                <div *ngIf="ctrlTimeEnd.errors['required']">Choisir une date de début de réversation
+                                </div>
+                                <div *ngIf="ctrlTimeStart.errors['tooLate']">Les salles ferment à 18h00</div>
+                                <div *ngIf="ctrlTimeStart.errors['tooEarly']">Les salles ouvrent à 8h00</div>
+                                <div *ngIf="ctrlTimeStart.errors['invalidMin']">Les réservations se font par demi-heures
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-6">
+                        <h5 class="w-100 text-center m-auto">Fin</h5>
+                        <mat-form-field class="w-50 pl-4 pr-2">
+                            <mat-label>Heure</mat-label>
+                            <mat-select [(value)]="selectedHourEnd" (openedChange)="checkInput()">
+                                <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
+                                    {{hourEnd}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="w-50 pl-2 pr-4">
+                            <mat-label>Minute</mat-label>
+                            <mat-select [(value)]="selectedMinuteEnd" (openedChange)="checkInput()">
+                                <mat-option *ngFor="let minuteEnd of bookingMinutes" [value]="minuteEnd">
+                                    {{minuteEnd}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div class="w-100 text-center text-danger small" *ngIf="errorHourEnd">{{errorHourEnd}}</div>
+                    </div>mat
+-->
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="recurrenceIsChecked && desktop" class="col-lg-4 col-md-12 mb-3 p-3 rounded border bg-white ">
+        <app-recurrence [desktop]="desktop"></app-recurrence>
+    </div>
+</ng-template>
+
 <div class="container px-5">
     <div class="row mb-3 p-3 border rounded bg-white">
         <p class="m-0">
@@ -8,95 +145,33 @@
             <span *ngIf="selectedDate">
                 {{selectedDateDisplay}}
             </span>
-            <span *ngIf="selectedMinuteStart != null">
-                de {{selectedHourStart}} :
-                <span *ngIf="selectedMinuteStart == 0">00</span>
-                <span *ngIf="selectedMinuteStart == 30">30</span>
+            <span *ngIf="timeStart != null">
+                de {{ timeStart.hour }}h{{ (timeStart.minute == 0) ? '00' : '30' }}
             </span>
-            <span *ngIf="selectedMinuteEnd != null">
-                jusqu'à {{selectedHourEnd}} :
-                <span *ngIf="selectedMinuteEnd == 0">00</span>
-                <span *ngIf="selectedMinuteEnd == 30">30</span>.
+            <span *ngIf="timeEnd != null">
+                jusqu'à {{timeEnd.hour}}h{{ (timeEnd.minute == 0) ? '00' : '30' }}
             </span>
         </p>
     </div>
 
-    <div class="row mb-3 justify-content-between">
-        <div class="col-auto p-3 border rounded bg-white">
-                <mat-calendar min="today" [selected]="selectedDate"
-                    (selectedChange)="onSelectDate($event); checkInput()">
-                </mat-calendar>
-                <div class="d-block text-danger small" *ngIf="errorDate">{{errorDate}}</div>
-        </div>
-
-        <div class="col-7 p-3 border rounded bg-white">
-            <div class="row mb-3">
-                <h5 class="w-100 text-center m-auto">Objet</h5>
-                <mat-form-field class="w-100 pl-4 pr-4">
-                    <input matInput autocomplete="off" placeholder="Objet" [(ngModel)]="selectedObjet"
-                        (input)="checkInput()">
-                </mat-form-field>
-                <div class="w-100 text-danger small pl-4" *ngIf="errorObjet">{{errorObjet}}</div>
-
-            </div>
-
-            <div class="row mb-3">
-                <h5 class="w-100 text-center m-auto">Debut</h5>
-                <mat-form-field class="w-50 pl-4 pr-2">
-                    <mat-label>Heure</mat-label>
-                    <mat-select [(value)]="selectedHourStart" (openedChange)="checkInput()">
-                        <mat-option *ngFor="let hourStart of bookingHours" [value]="hourStart">
-                            {{hourStart}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="w-50 pl-2 pr-4">
-                    <mat-label>Minute</mat-label>
-                    <mat-select [(value)]="selectedMinuteStart" (openedChange)="checkInput()">
-                        <mat-option *ngFor="let minuteStart of bookingMinutes" [value]="minuteStart">
-                            {{minuteStart}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <div class="w-100 text-danger small text-center" *ngIf="errorHourStart">{{errorHourStart}}</div>
-
-            </div>
-
-            <div class="row">
-                <h5 class="w-100 text-center m-auto">Fin</h5>
-                <mat-form-field class="w-50 pl-4 pr-2">
-                    <mat-label>Heure</mat-label>
-                    <mat-select [(value)]="selectedHourEnd" (openedChange)="checkInput()">
-                        <mat-option *ngFor="let hourEnd of bookingHours" [value]="hourEnd">
-                            {{hourEnd}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="w-50 pl-2 pr-4">
-                    <mat-label>Minute</mat-label>
-                    <mat-select [(value)]="selectedMinuteEnd" (openedChange)="checkInput()">
-                        <mat-option *ngFor="let minuteEnd of bookingMinutes" [value]="minuteEnd">
-                            {{minuteEnd}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <div class="w-100 text-center text-danger small" *ngIf="errorHourEnd">{{errorHourEnd}}</div>
-            </div>
-        </div>
+    <div class="row mb-3">
+        <ng-container *ngTemplateOutlet="desktop ? desktopView : desktopView"></ng-container>
     </div>
-
 
     <!-- Toggle de la recurrence -->
     <div class="row align-items-center">
         <div class="col-auto">
             <mat-slide-toggle (change)="changeRecurrence()">
-                Activer la récurrence ?
+                Activer la récurrence
             </mat-slide-toggle>
+            <div *ngIf="recurrenceIsChecked" class="small text-success">Activée</div>
         </div>
         <div class="col">
             <button class="bouton-back-next" mat-button matStepperNext
-            (click)="formatDates(); !recurrenceIsChecked ? clickWithoutRecurrence() : null;" [disabled]="!datasAreGood">Suivant</button>
+                (click)="formatDates(); !recurrenceIsChecked ? clickWithoutRecurrence() : null;"
+                [disabled]="!datasAreGood">Suivant</button>
         </div>
     </div>
+
 
 </div>

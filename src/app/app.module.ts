@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -41,6 +41,7 @@ import { HoursFeedbackStepComponent } from './modals/hours-feedback-step/hours-f
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { CdkStepper } from '@angular/cdk/stepper';
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeFr, 'fr');
@@ -96,7 +97,7 @@ export function tokenGetter() {
     }),
     HttpClientModule
   ],
-  providers: [ApiConstants, { provide: LOCALE_ID, useValue: 'fr' }],
+  providers: [ApiConstants, { provide: LOCALE_ID, useValue: 'fr' }, CdkStepper],
   bootstrap: [AppComponent],
 
   entryComponents: [

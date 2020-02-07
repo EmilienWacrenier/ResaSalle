@@ -1,7 +1,9 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, Input } from '@angular/core';
 
 import { RECURRENCE } from "../../../constantes/constantes";
 import { SearchDataServiceService } from 'src/app/services/search-data-service.service';
+
+import { WEEK_DAYS_FILTER } from '../../../constantes/weekDaysFilter';
 
 import { EventEmitter } from '@angular/core';
 import * as moment from 'moment';
@@ -24,6 +26,9 @@ export class RecurrenceComponent implements OnInit {
 
   datasRecurrenceAreGood = false;
 
+  today: Date = new Date();
+  weekDaysFilter = WEEK_DAYS_FILTER;
+  @Input() desktop: boolean;
   @Output() loadRoomListEvent = new EventEmitter();
 
   constructor(

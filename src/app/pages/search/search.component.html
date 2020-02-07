@@ -1,13 +1,15 @@
-<mat-horizontal-stepper class="stepper"  [linear]="false" #stepper>
+<mat-horizontal-stepper labelPosition="bottom" class="stepper" [linear]="false" #stepper>
     <mat-step>
         <ng-template matStepLabel>Date & Objet</ng-template>
         <app-criteres (recurrenceChangeEvent)="onChangeRecurrence($event)"
-            (loadAvailablesRoomsEvent)="appStepSalles.getAvailableRoomsFromEmitter()"></app-criteres>
+            (loadAvailablesRoomsEvent)="appStepSalles.getAvailableRoomsFromEmitter()"
+            [desktop]="desktop"
+            ></app-criteres>
     </mat-step>
 
 
     <!-- Salles avec récurrence -->
-    <mat-step *ngIf="recurrenceIsChecked">
+    <mat-step *ngIf="recurrenceIsChecked && !desktop">
         <ng-template matStepLabel>Critères de récurrence</ng-template>
         <app-recurrence (loadRoomListEvent)="appStepSalles.getRoomsAndRecurrenceParams()"></app-recurrence>
     </mat-step>
@@ -15,8 +17,7 @@
     <!-- Salles -->
     <mat-step>
         <ng-template matStepLabel>Choix de Salle</ng-template>
-        <app-recurrence-step-salles #appStepSalles [user]="currentUser" [recurrenceMode]="recurrenceIsChecked"
-            >
+        <app-recurrence-step-salles #appStepSalles [user]="currentUser" [recurrenceMode]="recurrenceIsChecked">
         </app-recurrence-step-salles>
     </mat-step>
 
@@ -26,3 +27,8 @@
         <app-feedback-conflit-recurrence #appStepFeedBack></app-feedback-conflit-recurrence>
     </mat-step>
 </mat-horizontal-stepper>
+
+<!-- Variable check la taille de l'écran, 
+    Si écran mobile, active la step récurrence
+    Si écran desktop, n'active pas la step récurrence et le choix des critères se fait dans la step 1
+-->

@@ -9,3 +9,48 @@
   color: rgba(155, 152, 152, 0.585);
   border: 1px solid rgba(155, 152, 152, 0.585);
 }
+
+.timerStart:after {
+  content: "";
+    background-color: rgba(0, 0, 0, 0.353);
+    position: absolute;
+    width: 1px;
+    height: 68px;
+    top: 54px;
+    right: 0;
+    display: block;
+}
+
+ngb-timepicker {
+  position: relative;
+  justify-content: center;
+  display: flex;
+}
+
+.errorOnTimer {
+  position: absolute;
+  bottom: -10px;
+  left: 27%;
+}
+
+.timers-item.no-recurrence{
+  padding-right: 0;
+}
+.content-item {
+  height: 100%;
+  padding: 30px;
+  background-color: #fff !important;
+  border: 1px solid #dee2e6 !important;
+  border-radius: 0.25rem !important;
+}
+
+.btn-date {
+  color: #fff;
+  background-color: #1c4797;
+}
+
+@media (max-width: 991px){
+  .timers-item {
+    padding: 0;
+  }
+}

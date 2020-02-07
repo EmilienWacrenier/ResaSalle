@@ -1,5 +1,13 @@
-<div class="row my-3">
+<div class="row">
+    <div class="mx-auto">
+        {{ recurrenceMode ? 'Toutes les salles' : 'Salles disponibles pour mon créneau' }}
+    </div>
+    <div *ngIf="recurrenceMode" class="mx-auto small">
+        Les salles proposées peuvent être parfois réservées sur le crénaux sélectionné
+    </div>
+</div>
 
+<div class="row my-3">
     <div class="container-fluid">
         <h2>Capacité</h2>
         <mat-slider [(ngModel)]="roomRequiredCapacity" thumbLabel="true" tickInterval="1" min="2" max="10"

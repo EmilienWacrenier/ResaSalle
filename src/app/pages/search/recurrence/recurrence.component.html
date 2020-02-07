@@ -1,6 +1,7 @@
-<div class="row my-3">
-    <div class="col-4 border-right">
+<div class="row h-100">
+    <div class="col-12">
 
+        <h5 class="text-center mb-3">Rythme de la récurrence</h5>
         <!-- Groupe radio bouton mensualité -->
         <mat-radio-group [(ngModel)]="selectedRecurrenceName" (change)="checkInputRecurrence()">
             <mat-radio-button class="d-block marg" *ngFor="let recurrence of recurrences" [value]="recurrence">
@@ -9,24 +10,26 @@
         </mat-radio-group>
         <div class="w-100 text-center text-danger small" *ngIf="errorLabelRecurrence">{{errorLabelRecurrence}}</div>
 
+        <!-- Date de fin de la recurrence -->
+        <div style="display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;">
+            <div>Jusqu'au (inclus) </div>
+            <mat-form-field>
+                <input matInput [disabled]="true"  [matDatepicker]="picker" [matDatepickerFilter]="weekDaysFilter" [min]="today"
+                    (dateChange)="onSelectEndDateRecurrence($event); checkInputRecurrence()"
+                    [value]="selectedEndDateRecurrence">
+                <mat-datepicker-toggle [disabled]="!selectedRecurrenceName" matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker [disabled]="!selectedRecurrenceName"  #picker></mat-datepicker>
+            </mat-form-field>
+            <div class="w-100 text-center text-danger small" *ngIf="errorEndDateRecurrence">{{errorEndDateRecurrence}}
+            </div>
+        </div>
     </div>
 </div>
 
-
-<div class="row my-3">
-    <!-- Date de fin de la recurrence -->
-    <span class="finile">Fini le </span>
-    <mat-form-field>            
-        <input matInput [matDatepicker]="picker" 
-        (dateChange)="onSelectEndDateRecurrence($event); checkInputRecurrence()"
-        [value]="selectedEndDateRecurrence">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <div class="w-100 text-center text-danger small" *ngIf="errorEndDateRecurrence">{{errorEndDateRecurrence}}</div>
-</div>
-
-<div class="row">
+<div *ngIf="!desktop" class="row">
     <button class="bouton-back-next" mat-button matStepperPrevious>Retour</button>
     <button class="bouton-back-next" mat-button matStepperNext (click)="setRecurrenceParams()"
         [disabled]="!datasRecurrenceAreGood">Suivant</button>
