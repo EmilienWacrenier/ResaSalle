@@ -77,7 +77,7 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
     console.log(newReservationIsConflict);
 
     if (newReservationIsConflict == true) {
-      this.snackBar.open('Cette date est déjà présente dans la liste', '', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
+      this.snackBar.open('Cette date est déjà présente dans la liste', 'Undo', { duration: 3000 });
       console.log("UR newResa ne doit pas etre ajoutée");
     }
     else {
@@ -90,7 +90,8 @@ export class FeedbackConflitRecurrenceComponent implements OnInit {
   }
 
   countResaConflict(reservationList: Array<any>): number {
-    let count = reservationList.filter(reservation => reservation.conflit == true || reservation.workingDay == false).length;
+    let count = 0;
+    count = reservationList.filter(reservation => reservation.conflit == true || reservation.workingDay == false).length -1;
     return count;
   }
 
