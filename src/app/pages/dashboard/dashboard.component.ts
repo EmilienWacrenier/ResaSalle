@@ -93,7 +93,7 @@ export class DashboardComponent implements OnInit {
       data: dialogData
     });
     dialogRef.afterClosed().subscribe(
-      () => this.updateReservations()
+      () => {this.updateReservations()}
     );
   }
 
